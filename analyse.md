@@ -6,7 +6,7 @@
 - Fernandes Bastien : A contribué à la fiche descriptive de lancer mode progression
 - Dewaele Enzo : A contribué à la fiche descriptive de 
 - Hamiti Edi : A contribué à la fiche descriptive de 
-- Vanhoutte Amaury : A contribué à la fiche descriptive de 
+- Vanhoutte Amaury : A contribué à la fiche descriptive de déplacer le joueur
 
 ## Cas d’utilisation
 
