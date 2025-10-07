@@ -1,4 +1,4 @@
-package Cellules;
+package main.Cellules;
 
 public class Mur extends Cellule {
 

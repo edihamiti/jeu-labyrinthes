@@ -1,4 +1,6 @@
-import Cellules.Cellule;
+package main;
+
+import main.Cellules.Cellule;
 
 public class Labyrinthe {
 

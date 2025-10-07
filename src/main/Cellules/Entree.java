@@ -1,4 +1,4 @@
-package Cellules;
+package main.Cellules;
 
 public class Entree extends Cellule {
 

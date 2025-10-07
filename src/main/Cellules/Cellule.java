@@ -1,4 +1,4 @@
-package Cellules;
+package main.Cellules;
 
 public abstract class Cellule {
 
