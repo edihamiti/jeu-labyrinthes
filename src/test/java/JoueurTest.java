@@ -22,6 +22,40 @@ class JoueurTest {
     }
 
     @Test
+    void pseudoCaractereSpeciauxTest() {
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo!"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo@"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo#"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo$"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo%"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo^"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo&"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo*"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo("));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo)"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo-"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo="));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo+"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo{"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo}"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo["));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo]"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo|"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo\\"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo;"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo:"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo'"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo\""));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo<"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo>"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo,"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo."));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo?"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo/"));
+        assertThrows(PseudoException.class, () -> new Joueur("pseudo "));
+    }
+
+    @Test
     void pseudoValideTest() throws PseudoException {
         Joueur joueur1 = new Joueur("superPseudo");
         assertEquals("superPseudo", joueur1.getPseudo());
