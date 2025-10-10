@@ -1,2 +1,3 @@
-public class ModeJeu {
+public abstract class ModeJeu {
+    public void jouer();
 }
