@@ -1,6 +1,4 @@
-package main.java;
-
-import main.java.Cellules.Cellule;
+import Cellules.Cellule;
 
 public class Labyrinthe {
 

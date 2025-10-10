@@ -1,7 +1,3 @@
-package test.java;
-
-import main.java.Joueur;
-import main.java.PseudoException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

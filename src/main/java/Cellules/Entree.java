@@ -1,4 +1,4 @@
-package main.java.Cellules;
+package Cellules;
 
 public class Entree extends Cellule {
 

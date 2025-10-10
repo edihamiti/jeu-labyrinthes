@@ -1,6 +1,5 @@
-package test.java.Cellules;
+package Cellules;
 
-import main.java.Cellules.Entree;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

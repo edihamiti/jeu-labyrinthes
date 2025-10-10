@@ -1,5 +1,3 @@
-package main.java;
-
 public class Joueur {
 
     private static int count = 1;
