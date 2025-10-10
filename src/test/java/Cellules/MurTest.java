@@ -1,6 +1,6 @@
-package Cellules;
+package test.java.Cellules;
 
-import main.Cellules.Mur;
+import main.java.Cellules.Mur;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

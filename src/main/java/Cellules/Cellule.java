@@ -1,4 +1,4 @@
-package Cellules;
+package main.java.Cellules;
 
 public abstract class Cellule {
 

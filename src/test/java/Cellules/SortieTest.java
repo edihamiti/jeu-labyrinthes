@@ -1,6 +1,6 @@
-package Cellules;
+package test.java.Cellules;
 
-import main.Cellules.Sortie;
+import main.java.Cellules.Sortie;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
