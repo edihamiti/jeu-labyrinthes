@@ -28,4 +28,8 @@ public class ModeProgression extends ModeJeu {
         }
         return null;
     }
+    
+    public void jouer() {
+//TODO
+    }
 }
