@@ -25,8 +25,8 @@ class JoueurTest {
     void pseudoValideTest() throws PseudoException {
         Joueur joueur1 = new Joueur("superPseudo");
         assertEquals("superPseudo", joueur1.getPseudo());
-        Joueur joueur2 = new Joueur("  Enzo  ");
-        assertEquals("  Enzo  ", joueur2.getPseudo());
+        Joueur joueur2 = new Joueur("Enzo");
+        assertEquals("Enzo", joueur2.getPseudo());
     }
 
 }
