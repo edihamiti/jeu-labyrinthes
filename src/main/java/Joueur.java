@@ -9,6 +9,7 @@ public class Joueur {
 
         if (pseudo == null || pseudo.trim().isEmpty()) throw new PseudoException("Le pseudo ne peut pas être vide ou compose que d'espace");
         else if (pseudo.length() > 15) throw new PseudoException("Le pseudo est trop long");
+        else if (!pseudo.matches("[a-zA-Z0-9]+")) throw new PseudoException("Le pseudo ne peut contenir que des lettres et des chiffres");
         else this.pseudo = pseudo;
     }
 
