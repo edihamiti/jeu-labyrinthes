@@ -1,4 +1,4 @@
-package test.Cellules;
+package Cellules;
 
 import main.Cellules.Sortie;
 import org.junit.jupiter.api.Test;

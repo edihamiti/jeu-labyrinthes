@@ -1,4 +1,4 @@
-package main.Cellules;
+package Cellules;
 
 public class Chemin extends Cellule {
 

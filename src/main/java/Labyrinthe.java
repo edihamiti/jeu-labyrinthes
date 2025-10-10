@@ -1,6 +1,4 @@
-package main;
-
-import main.Cellules.Cellule;
+import Cellules.Cellule;
 
 public class Labyrinthe {
 
@@ -10,10 +8,11 @@ public class Labyrinthe {
     private final int distanceMin;
     private Cellule[][] cellules;
 
-    public Labyrinthe(int largeur, int hauteur, double pourcentageMurs) {
+    public Labyrinthe(int largeur, int hauteur, double pourcentageMurs, int distanceMin) {
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.pourcentageMurs = pourcentageMurs;
+        this.distanceMin = distanceMin;
     }
 
     public void generer() {
