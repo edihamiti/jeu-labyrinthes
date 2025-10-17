@@ -77,6 +77,8 @@ Scénario nominal :
 1. L’utilisateur lance le mode progression
 2. Le système charge la progression du joueur et affiche les niveaux 
 
+![image](img/nouvelle_partie.png)
+![image](img/progression.png)
 
 ### Lancer mode progression
 
