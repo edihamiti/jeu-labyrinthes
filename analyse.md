@@ -4,8 +4,8 @@
 
 Équipe I5:
 - Fernandes Bastien : A contribué à la fiche descriptive de lancer mode progression
-- Dewaele Enzo : A contribué à la fiche descriptive de 
-- Hamiti Edi : A contribué la fiche descriptive de charger profil
+- Dewaele Enzo : A contribué à la fiche descriptive d'afficher la progression
+- Hamiti Edi : A contribué à la fiche descriptive de charger un profil
 - Vanhoutte Amaury : A contribué à la fiche descriptive de déplacer le joueur
 
 ## Cas d’utilisation
@@ -14,11 +14,12 @@ Inclure le diagramme de cas d’utilisation, par exemple sous forme de capture d
 
 Inclure des fiches descriptives et des prototypes d’interface pour ces fonctionnalités:
 
-### Charger profil
+## Fiche descriptive
 
-**Labyrinthes**
+### Charger un profil
+Système : Labyrinthes 
 
-**Charger profile**
+CU : Charger un profil
 
 Acteur Principal : Joueuse
 
@@ -47,13 +48,23 @@ A: Dans l'étape 4, il y a une erreur durant le chargement du profile
 
 
 ### Afficher la progression
-Système : Labyrinthes                                                                                                                                                                                 
-CU : Afficher la progression                                                                                                                                                                                 
-Acteur Principal : Système                                                                                                                                                                                 
-Acteur Secondaire : Utilisateur                                                                                                                                                                                  
-Pré-condition : Lancer le mode progression                                                                                                                                                                                 
-Garantie en cas de succès : Afficher la progression                                                                                                                                                                                 
-Garantie Minimal : Rien ne se passe                                                                                                                                                                                 
+Système : Labyrinthes
+
+CU : Afficher la progression
+
+Acteur Principal : Système
+
+Acteur Secondaire : Utilisateur
+
+Pré-condition : 
+ * Lancer le mode progression
+
+Garantie en cas de succès : 
+ * Afficher la progression
+
+Garantie minimale :
+ * Rien ne se passe
+
 Scénario nominal : 
 1. L’utilisateur lance le mode progression
 2. Système affiche la progression
@@ -61,13 +72,23 @@ Scénario nominal :
 
 ### Lancer mode progression
 
-Système : Labyrinthes                                                                                                                                                                                 
-CU : Lancer le Mode Progression                                                                                                                                                    
-Acteur Principal : Utilisateur                                                                                                                                                                                 
-Acteur Secondaire : Système                                                                                                                                                                                 
-Pré-condition : L’utilisateur choisi le mode progression                                                                                                                                                                                  
-Garantie en cas de succès : Le labyrinthe s’affiche et l’utilisateur peut jouer                                                                                                                                                                                 
-Garantie Minimal : Rien ne se passe                                                                                                                                                                                 
+Système : Labyrinthes
+
+CU : Lancer le Mode Progression
+
+Acteur Principal : Utilisateur
+
+Acteur Secondaire : Système
+
+Pré-condition :
+* L’utilisateur choisi le mode progression
+
+Garantie en cas de succès :
+* Le labyrinthe s’affiche et l’utilisateur peut jouer
+
+Garantie minimale :
+* Rien ne se passe
+
 Scénario nominal : 
 1. L’utilisateur choisi une nouvelle partie
 2. Le système affiche les étapes et les défis 
@@ -97,7 +118,7 @@ Pré-condition :
 Garantie en cas de succès : 
 
 * Le joueur se déplace dans le labyrinthe
-                                                                                                                                                                                 
+                                                                                
 Garantie Minimal : 
 
 * Rien ne se passe, le joueur ne se déplace pas
@@ -108,13 +129,6 @@ Scénario nominal :
 
 Scénario alternatif : 
 1. le système ne valide pas le futur déplacement du joueur (retour étape 1 scénario nominal)
-
-
-
-
-
-
-
 
 ### Diagramme de classes
 <!-- 
