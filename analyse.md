@@ -62,20 +62,20 @@ CU : Afficher la progression
 
 Acteur Principal : Système
 
-Acteur Secondaire : Utilisateur
+Acteur Secondaire : Joueur
 
 Pré-condition : 
  * Lancer le mode progression
 
 Garantie en cas de succès : 
- * Afficher la progression
+ * Afficher la progression du joueur
 
 Garantie minimale :
  * Rien ne se passe
 
 Scénario nominal : 
 1. L’utilisateur lance le mode progression
-2. Système affiche la progression
+2. Le système charge la progression du joueur et affiche les niveaux 
 
 
 ### Lancer mode progression
@@ -84,12 +84,12 @@ Système : Labyrinthes
 
 CU : Lancer le Mode Progression
 
-Acteur Principal : Utilisateur
+Acteur Principal : Joueur
 
 Acteur Secondaire : Système
 
 Pré-condition :
-* L’utilisateur choisi le mode progression
+* Le joueur est sur l'interface de choix de mode de jeu
 
 Garantie en cas de succès :
 * Le labyrinthe s’affiche et l’utilisateur peut jouer
@@ -98,10 +98,10 @@ Garantie minimale :
 * Rien ne se passe
 
 Scénario nominal : 
-1. L’utilisateur choisi une nouvelle partie
-2. Le système affiche les étapes et les défis 
-3. L’utilisateur choisi une étape et un défi 
-4. Le système affiche le labyrinthe
+1. Le joueur choisit le mode progression
+2. Le système affiche la progression du joueur
+3. Le joueur choisit un niveau parmi ceux débloqués 
+4. Le système génère le labyrinthe avec les paramètres du niveau, il affiche le labyrinthe et permet au joueur de jouer 
 
 Scénario alternatif : 
 1. L’utilisateur choisit de charger une partie (retour étape 2 scénario nominal).
