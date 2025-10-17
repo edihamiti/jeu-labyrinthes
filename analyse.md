@@ -1,6 +1,6 @@
 # Le Jeu des Labyrinthes
 
-## Équipe et orgnisation du travail
+## Équipe et organisation du travail
 
 Équipe I5:
 - Fernandes Bastien : A contribué à la fiche descriptive de lancer mode progression
