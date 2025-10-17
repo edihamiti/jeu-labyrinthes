@@ -43,7 +43,7 @@ Scénario nominal :
    
 Scénario alternatif :
 A : Dans l'étape 4, il y a une erreur durant le chargement du profile
-* 4(A) : Le système affiche une notification et reviens à l'étape 2 du scénario nominal
+* 4(A) : Le système affiche une notification et revient à l'étape 2 du scénario nominal
 
 
 
