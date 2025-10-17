@@ -154,7 +154,7 @@ Scénario alternatif :
 
 ### Diagramme de classes
 
-![image](img/UML.png)
+![image](img/uml.png)
 <!-- 
 Inclure un diagramme de classes qui permet d’implémenter toutes les fonctionnalités pour le Jalon 1. Le diagramme sera construit suivant la méthode vue en analyse. L’image du diagramme doit être de résolution suffisante permettant de zoomer et lire le texte qui y figure.
 
