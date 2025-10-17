@@ -8,13 +8,11 @@
 - Hamiti Edi : A contribué à la fiche descriptive de charger un profil
 - Vanhoutte Amaury : A contribué à la fiche descriptive de déplacer le joueur
 
-## Cas d’utilisation
+## Diagrammes de cas d’utilisation
 
-Inclure le diagramme de cas d’utilisation, par exemple sous forme de capture d’écran.
+![image](img/diagramme_cas_utilisation.png)
 
-Inclure des fiches descriptives et des prototypes d’interface pour ces fonctionnalités :
-
-## Fiche descriptive
+## Fiches descriptives
 
 ### Charger un profil
 Système : Labyrinthes 
