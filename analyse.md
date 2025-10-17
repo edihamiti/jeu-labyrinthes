@@ -40,10 +40,18 @@ Scénario nominal :
 2. Le système affiche la liste des profils à charger
 3. La joueuse sélectionne le profile à charger
 4. Le système charge le profile
+
+![image](img/charger_1.png)
+![image](img/charger_2.png)
+![image](img/progression.png)
    
 Scénario alternatif :
 A : Dans l'étape 4, il y a une erreur durant le chargement du profil
 * 4(A) : Le système affiche une notification et revient à l'étape 2 du scénario nominal
+* 5(A) : La joueuse sélectionne "OK"
+* *Retour à l'étape 2 du scénario nominal*
+
+![image](img/charger_erreur.png)
 
 
 
