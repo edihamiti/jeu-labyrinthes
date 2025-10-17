@@ -135,7 +135,7 @@ Scénario nominal :
 Scénario alternatif : 
 1. le système ne valide pas le futur déplacement du joueur (retour étape 1 scénario nominal).
 
-![image](img/droite(3).png)
+![image](img/droite(1).png) <!-- Fun fact : droite(1) et droite(3) sont les memes images ducoup pas besoin de les inclure deux fois -->
 
 ### Diagramme de classes
 
