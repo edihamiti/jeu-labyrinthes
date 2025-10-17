@@ -105,10 +105,15 @@ Scénario nominal :
 3. Le joueur choisit un niveau parmi ceux débloqués 
 4. Le système génère le labyrinthe avec les paramètres du niveau, il affiche le labyrinthe et permet au joueur de jouer 
 
+![image](img/nouvelle_partie.png)
+![image](img/progression_1.png)
+![image](img/droite.png)
+
 Scénario alternatif : 
 1. L’utilisateur choisit de charger une partie (retour étape 2 scénario nominal).
 
-
+![image](img/charger_1.png)
+![image](img/charger_2.png)
 
 
 ### Déplacer joueur
