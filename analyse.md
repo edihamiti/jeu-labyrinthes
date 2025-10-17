@@ -10,7 +10,7 @@
 
 ## Diagrammes de cas d’utilisation
 
-![image](img/diagramme_cas_utilisation.png)
+![Diagramme de cas d'utilisation](img/diagramme_cas_utilisation.png)
 
 ## Fiches descriptives
 
@@ -39,9 +39,9 @@ Scénario nominal :
 3. La joueuse sélectionne le profile à charger
 4. Le système charge le profile
 
-![image](img/charger_1.png)
-![image](img/charger_2.png)
-![image](img/progression.png)
+![Etape 1](img/charger_1.png)
+![Etape 2](img/charger_2.png)
+![Etape 3](img/progression.png)
    
 Scénario alternatif :
 A : Dans l'étape 4, il y a une erreur durant le chargement du profil
@@ -49,7 +49,7 @@ A : Dans l'étape 4, il y a une erreur durant le chargement du profil
 * 5(A) : La joueuse sélectionne "OK"
 * *Retour à l'étape 2 du scénario nominal*
 
-![image](img/charger_erreur.png)
+![Etape 4A](img/charger_erreur.png)
 
 
 
@@ -75,8 +75,8 @@ Scénario nominal :
 1. L’utilisateur lance le mode progression
 2. Le système charge la progression du joueur et affiche les niveaux 
 
-![image](img/nouvelle_partie.png)
-![image](img/progression.png)
+![Etape 1](img/nouvelle_partie.png)
+![Etape 2](img/progression.png)
 
 ### Lancer mode progression
 
@@ -103,15 +103,15 @@ Scénario nominal :
 3. Le joueur choisit un niveau parmi ceux débloqués 
 4. Le système génère le labyrinthe avec les paramètres du niveau, il affiche le labyrinthe et permet au joueur de jouer 
 
-![image](img/nouvelle_partie.png)
-![image](img/progression_1.png)
-![image](img/droite.png)
+![Etape 1](img/nouvelle_partie.png)
+![Etape 2](img/progression_1.png)
+![Etape 3](img/droite.png)
 
 Scénario alternatif : 
 1. L’utilisateur choisit de charger une partie (retour étape 2 scénario nominal).
 
-![image](img/charger_1.png)
-![image](img/charger_2.png)
+![Etape 1A](img/charger_1.png)
+![Etape 2A](img/charger_2.png)
 
 
 ### Déplacer joueur
@@ -140,19 +140,19 @@ Scénario nominal :
 1. le joueur utilise les flèches du clavier pour se déplacer
 2. le système vérifie le futur déplacement du joueur et le déplace le joueur sur la case souhaité
 
-![image](img/droite.png)
-![image](img/droite(1).png)
-![image](img/droite(2).png)
+![Etape 1](img/droite.png)
+![Etape 2](img/droite(1).png)
+![Etape 3](img/droite(2).png)
 
 
 Scénario alternatif : 
 1. le système ne valide pas le futur déplacement du joueur (retour étape 1 scénario nominal).
 
-![image](img/droite(1).png) <!-- Fun fact : droite(1) et droite(3) sont les memes images ducoup pas besoin de les inclure deux fois -->
+![Etape 1A](img/droite(1).png) <!-- Fun fact : droite(1) et droite(3) sont les memes images ducoup pas besoin de les inclure deux fois -->
 
 ### Diagramme de classes
 
-![image](img/uml.png)
+![Diagramme de classe](img/uml.png)
 <!-- 
 Inclure un diagramme de classes qui permet d’implémenter toutes les fonctionnalités pour le Jalon 1. Le diagramme sera construit suivant la méthode vue en analyse. L’image du diagramme doit être de résolution suffisante permettant de zoomer et lire le texte qui y figure.
 
