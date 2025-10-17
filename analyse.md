@@ -26,14 +26,14 @@ Acteur Principal : Joueuse
 Acteur Secondaire : Système
 
 Pré-conditions :
-* Avoir un profil déjà sauvegarder
+* Avoir un profil déjà sauvegardé
 * La joueuse à déjà lancé le mode progression
 
 Garantie en cas de succès :
-* Un profil est chargé
+* Un profil est chargé.
 
 Garantie minimale :
-* Si le scénario n’aboutit pas, l’état du système reste inchangé
+* Si le scénario n’aboutit pas, l’état du système reste inchangé.
 
 Scénario nominal : 
 1. La joueuse sélectionne “Charger un profile”
@@ -42,7 +42,7 @@ Scénario nominal :
 4. Le système charge le profile
    
 Scénario alternatif :
-A: Dans l'étape 4, il y a une erreur durant le chargement du profile
+A : Dans l'étape 4, il y a une erreur durant le chargement du profile
 * 4(A) : Le système affiche une notification et reviens à l'étape 2 du scénario nominal
 
 
