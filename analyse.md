@@ -1,11 +1,11 @@
-# Labyrinthes <!-- Titre à changer -->
+# Le Jeu des Labyrinthes
 
 ## Équipe et orgnisation du travail
 
 Équipe I5:
 - Fernandes Bastien : A contribué à la fiche descriptive de lancer mode progression
 - Dewaele Enzo : A contribué à la fiche descriptive de 
-- Hamiti Edi : A contribué à la fiche descriptive de 
+- Hamiti Edi : A contribué la fiche descriptive de charger profil
 - Vanhoutte Amaury : A contribué à la fiche descriptive de déplacer le joueur
 
 ## Cas d’utilisation
