@@ -12,7 +12,7 @@
 
 Inclure le diagramme de cas d’utilisation, par exemple sous forme de capture d’écran.
 
-Inclure des fiches descriptives et des prototypes d’interface pour ces fonctionnalités:
+Inclure des fiches descriptives et des prototypes d’interface pour ces fonctionnalités :
 
 ## Fiche descriptive
 
@@ -27,7 +27,7 @@ Acteur Secondaire : Système
 
 Pré-conditions :
 * Avoir un profil déjà sauvegardé
-* La joueuse à déjà lancé le mode progression
+* La joueuse a déjà lancé le mode progression
 
 Garantie en cas de succès :
 * Un profil est chargé.
@@ -36,13 +36,13 @@ Garantie minimale :
 * Si le scénario n’aboutit pas, l’état du système reste inchangé.
 
 Scénario nominal : 
-1. La joueuse sélectionne “Charger un profile”
-2. Le système affiche la liste des profiles à charger
+1. La joueuse sélectionne “Charger un profil”
+2. Le système affiche la liste des profils à charger
 3. La joueuse sélectionne le profile à charger
 4. Le système charge le profile
    
 Scénario alternatif :
-A : Dans l'étape 4, il y a une erreur durant le chargement du profile
+A : Dans l'étape 4, il y a une erreur durant le chargement du profil
 * 4(A) : Le système affiche une notification et revient à l'étape 2 du scénario nominal
 
 
@@ -96,7 +96,7 @@ Scénario nominal :
 4. Le système affiche le labyrinthe
 
 Scénario alternatif : 
-1. L’utilisateur choisi de charger une partie (retour étape 2 scénario nominal)
+1. L’utilisateur choisit de charger une partie (retour étape 2 scénario nominal).
 
 
 
@@ -128,11 +128,11 @@ Scénario nominal :
 2. le système vérifie le futur déplacement du joueur et le déplace le joueur sur la case souhaité
 
 Scénario alternatif : 
-1. le système ne valide pas le futur déplacement du joueur (retour étape 1 scénario nominal)
+1. le système ne valide pas le futur déplacement du joueur (retour étape 1 scénario nominal).
 
 ### Diagramme de classes
 <!-- 
-Inclure un diagramme de classes qui permet d’implémenter toutes les fonctionnalités pour le Jalon 1. Le diagramme sera construit suivant la méthode vue on analyse. L’image du diagramme doit être de résolution suffisante permettant de zoomer et lire le texte qui y figure.
+Inclure un diagramme de classes qui permet d’implémenter toutes les fonctionnalités pour le Jalon 1. Le diagramme sera construit suivant la méthode vue en analyse. L’image du diagramme doit être de résolution suffisante permettant de zoomer et lire le texte qui y figure.
 
 Chaque prototype d’interface est constitué d’une suite d’écrans, ou d’une arborescence d’écrans si plusieurs chemins d’interaction sont possibles. Les prototypes peuvent être en faible fidélité. Ils peuvent être dessinés à la main ou générés en utilisant un logiciel.
 Des images des prototypes seront inclus dans le rapport (pas de lien externe). Les images doivent être lisibles et avec une résolution suffisante pour qu’on puisse zoomer et lire le texte qui s’y trouve. -->
