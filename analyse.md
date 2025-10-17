@@ -104,7 +104,7 @@ Scénario alternatif :
 ### Déplacer joueur
 
 Système : Labyrinthes
-                                                                                                                                                                                 
+                
 CU : Déplacer le joueur
 
 Acteur Principal : Joueur
@@ -118,7 +118,7 @@ Pré-condition :
 Garantie en cas de succès : 
 
 * Le joueur se déplace dans le labyrinthe
-                                                                                
+
 Garantie Minimal : 
 
 * Rien ne se passe, le joueur ne se déplace pas
@@ -127,10 +127,19 @@ Scénario nominal :
 1. le joueur utilise les flèches du clavier pour se déplacer
 2. le système vérifie le futur déplacement du joueur et le déplace le joueur sur la case souhaité
 
+![image](img/droite.png)
+![image](img/droite(1).png)
+![image](img/droite(2).png)
+
+
 Scénario alternatif : 
 1. le système ne valide pas le futur déplacement du joueur (retour étape 1 scénario nominal).
 
+![image](img/droite(3).png)
+
 ### Diagramme de classes
+
+![image](img/UML.png)
 <!-- 
 Inclure un diagramme de classes qui permet d’implémenter toutes les fonctionnalités pour le Jalon 1. Le diagramme sera construit suivant la méthode vue en analyse. L’image du diagramme doit être de résolution suffisante permettant de zoomer et lire le texte qui y figure.
 
