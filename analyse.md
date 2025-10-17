@@ -3,6 +3,7 @@
 ## Équipe et organisation du travail
 
 Équipe I5:
+
 - Fernandes Bastien : A contribué à la fiche descriptive de lancer mode progression
 - Dewaele Enzo : A contribué à la fiche descriptive d'afficher la progression
 - Hamiti Edi : A contribué à la fiche descriptive de charger un profil
@@ -24,16 +25,20 @@ Acteur Principal : Joueuse
 Acteur Secondaire : Système
 
 Pré-conditions :
+
 * Avoir un profil déjà sauvegardé
 * La joueuse a déjà lancé le mode progression
 
 Garantie en cas de succès :
+
 * Un profil est chargé.
 
 Garantie minimale :
+
 * Si le scénario n’aboutit pas, l’état du système reste inchangé.
 
 Scénario nominal : 
+
 1. La joueuse sélectionne “Charger un profil”
 2. Le système affiche la liste des profils à charger
 3. La joueuse sélectionne le profile à charger
@@ -44,7 +49,9 @@ Scénario nominal :
 ![image](img/progression.png)
    
 Scénario alternatif :
+
 A : Dans l'étape 4, il y a une erreur durant le chargement du profil
+
 * 4(A) : Le système affiche une notification et revient à l'étape 2 du scénario nominal
 * 5(A) : La joueuse sélectionne "OK"
 * *Retour à l'étape 2 du scénario nominal*
@@ -63,15 +70,19 @@ Acteur Principal : Système
 Acteur Secondaire : Joueur
 
 Pré-condition : 
+
  * Lancer le mode progression
 
 Garantie en cas de succès : 
+
  * Afficher la progression du joueur
 
 Garantie minimale :
+
  * Rien ne se passe
 
 Scénario nominal : 
+
 1. L’utilisateur lance le mode progression
 2. Le système charge la progression du joueur et affiche les niveaux 
 
@@ -89,15 +100,19 @@ Acteur Principal : Joueur
 Acteur Secondaire : Système
 
 Pré-condition :
+
 * Le joueur est sur l'interface de choix de mode de jeu
 
 Garantie en cas de succès :
+
 * Le labyrinthe s’affiche et l’utilisateur peut jouer
 
 Garantie minimale :
+
 * Rien ne se passe
 
-Scénario nominal : 
+Scénario nominal :
+
 1. Le joueur choisit le mode progression
 2. Le système affiche la progression du joueur
 3. Le joueur choisit un niveau parmi ceux débloqués 
@@ -108,6 +123,7 @@ Scénario nominal :
 ![image](img/droite.png)
 
 Scénario alternatif : 
+
 1. L’utilisateur choisit de charger une partie (retour étape 2 scénario nominal).
 
 ![image](img/charger_1.png)
@@ -137,6 +153,7 @@ Garantie Minimal :
 * Rien ne se passe, le joueur ne se déplace pas
 
 Scénario nominal : 
+
 1. le joueur utilise les flèches du clavier pour se déplacer
 2. le système vérifie le futur déplacement du joueur et le déplace le joueur sur la case souhaité
 
@@ -146,6 +163,7 @@ Scénario nominal :
 
 
 Scénario alternatif : 
+
 1. le système ne valide pas le futur déplacement du joueur (retour étape 1 scénario nominal).
 
 ![image](img/droite(1).png) <!-- Fun fact : droite(1) et droite(3) sont les memes images ducoup pas besoin de les inclure deux fois -->
