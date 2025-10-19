@@ -17,6 +17,7 @@ public class Navbar extends VBox {
 
     private Node gameLogo() {
         VBox logo = new VBox();
+        logo.setSpacing(-18);
 
         Text firstLine = new Text("Le jeu des");
         firstLine.getStyleClass().add("logo");
