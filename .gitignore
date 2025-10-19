@@ -34,3 +34,5 @@ bin/
 *.iml
 
 /target/
+
+/saves
