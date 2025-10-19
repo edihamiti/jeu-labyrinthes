@@ -11,9 +11,14 @@ public class Jeu {
     private ArrayList<LabyrinthesObservateur> observateur;
 
     public Jeu(ModeJeu modeJeu, Joueur joueur, Labyrinthe labyrinthe) {
+        this();
         this.modeJeu = modeJeu;
         this.joueur = joueur;
         this.labyrinthe = labyrinthe;
+    }
+
+    public Jeu() {
+        this.observateur = new ArrayList<>();
     }
 
     public ModeJeu getModeJeu() {return modeJeu;}
