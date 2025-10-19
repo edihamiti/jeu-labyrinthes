@@ -40,7 +40,7 @@ public class Labyrinthe {
 
         for (int i = 1; i < largeur; i++) {
             for (int j = 1; j < hauteur; j++) {
-                if ((!(cellules[i][j] instanceof Entree) && !(cellules[i][j] instanceof Sortie)) && (Math.random() < (1-pourcentageMurs))) {
+                if ((!(cellules[i][j] instanceof Entree) && !(cellules[i][j] instanceof Sortie)) && (Math.random() < (1-(pourcentageMurs/100)))) {
                     cellules[i][j] = new Chemin(x,y);
                 }
             }
