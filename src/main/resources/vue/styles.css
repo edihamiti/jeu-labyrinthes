@@ -89,13 +89,6 @@
     /*-fx-background-radius: 18px;*/
 }
 
-.home-tab.buttons-container {
-    -fx-spacing: 10px;
-    -fx-border-color: -color-6;
-    -fx-border-width: 1px;
-    -fx-border-radius: 10px;
-}
-
 .title {
     -fx-font-size: 48px;
     -fx-font-weight: 900;
@@ -106,4 +99,24 @@
     -fx-font-size: 24px;
     -fx-font-weight: 400;
     -fx-fill: -color-6;
+}
+
+.button.filled {
+    -fx-background-color: -color-6;
+    -fx-text-fill: -color-1;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 70px;
+}
+
+.button.filled:hover {
+    -fx-opacity: 0.9;
+}
+
+.button.filled.text {
+    -fx-background-color: transparent;
+    -fx-fill: -color-1;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
 }

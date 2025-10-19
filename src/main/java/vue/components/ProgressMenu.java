@@ -1,6 +1,7 @@
 package vue.components;
 
 import javafx.geometry.Orientation;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -9,6 +10,7 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import vue.components.BetterButtons.FilledButton;
 
 public class ProgressMenu extends VBox {
 
@@ -42,8 +44,16 @@ public class ProgressMenu extends VBox {
 
         HBox buttonsContainer = new HBox();
         buttonsContainer.setSpacing(10);
-        buttonsContainer.getStyleClass().add("home-tab");
-        buttonsContainer.getStyleClass().add("buttons-container");
+
+        Button startButton = new FilledButton(new Text("Nouvelle Partie"), () -> {
+                                System.out.println("Nouvelle Partie clicked");
+                            });
+
+        startButton.setMaxWidth(Double.MAX_VALUE);
+
+        buttonsContainer.getChildren().addAll(
+                startButton
+        );
 
         this.getChildren().addAll(
                 header,
