@@ -17,3 +17,8 @@
     -fx-text-fill: -color-6;
 }
 
+.contenu {
+    -fx-pref-width: 100%;
+    -fx-background-color: transparent;
+    -fx-border-radius: 18px;
+}

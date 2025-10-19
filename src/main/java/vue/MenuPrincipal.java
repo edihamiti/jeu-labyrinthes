@@ -1,7 +1,10 @@
 package vue;
 
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import modele.Jeu;
 import vue.components.Navbar;
@@ -9,6 +12,8 @@ import vue.components.Navbar;
 public class MenuPrincipal extends Stage implements LabyrinthesObservateur {
     Jeu jeu;
     HBox root;
+    Navbar navbar;
+    ScrollPane contenu;
 
     public MenuPrincipal(Jeu jeu) {
         this.jeu = jeu;
@@ -26,7 +31,19 @@ public class MenuPrincipal extends Stage implements LabyrinthesObservateur {
             root.getStylesheets().add(cssPath);
         }
         root.getStyleClass().add("menu-principal");
-        root.getChildren().add(new Navbar());
+        this.navbar = new Navbar();
+        root.getChildren().add(this.navbar);
+
+        this.contenu = new ScrollPane();
+        this.contenu.getStyleClass().add("contenu");
+        root.getChildren().add(this.contenu);
+
+        HBox test = new HBox();
+        test.getChildren().add(new Text("Test"));
+        this.contenu.setContent(test);
+        this.contenu.setFitToWidth(true);
+        this.contenu.setFitToHeight(true);
+        HBox.setHgrow(this.contenu, Priority.ALWAYS);
 
         this.show();
     }
