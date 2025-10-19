@@ -39,3 +39,38 @@
     -fx-font-size: 36px;
     -fx-font-weight: 900;
 }
+
+.tab {
+    -fx-background-color: transparent;
+    -fx-border: none;
+    -fx-padding: 8px;
+    -fx-text-fill: -color-6;
+    -fx-background-radius: 10px;
+}
+
+.tab:hover {
+    -fx-background-color: -color-2;
+}
+
+.tabs-rectangle.selected {
+    -fx-fill: -color-6;
+}
+
+
+.tabs-rectangle {
+    -fx-pref-width: 5px;
+    -fx-pref-height: 34px;
+    -fx-fill: transparent;
+    -fx-background-radius: 2px;
+    -fx-border-radius: 2px;
+}
+
+.tabs-text {
+    -fx-font-size: 20px;
+    -fx-font-weight: 500;
+    -fx-fill: -color-5;
+}
+
+.tabs-text.selected {
+    -fx-fill: -color-6;
+}

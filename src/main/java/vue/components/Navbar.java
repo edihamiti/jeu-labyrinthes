@@ -1,18 +1,45 @@
 package vue.components;
 
 import javafx.scene.Node;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import vue.utils.Colors;
 
 public class Navbar extends VBox {
+
     public Navbar() {
         super();
         this.getStyleClass().add("navbar");
-        this.getChildren().add(
-                gameLogo()
+        this.getChildren().addAll(
+                gameLogo(),
+                tabs()
         );
+    }
+
+    private Node tabs() {
+        VBox container = new VBox();
+        container.getStyleClass().add("tabs-container");
+        container.setSpacing(10);
+        TabsGroup tg = new TabsGroup();
+
+        Tab progressTab = new Tab("Mode Progression", () -> {
+            System.out.println("Mode Progression clicked");
+        });
+
+        Tab libreTab = new Tab("Mode Libre", () -> {
+            System.out.println("Mode Libre clicked");
+        });
+
+        tg.addTab(progressTab);
+        tg.addTab(libreTab);
+
+        container.getChildren().addAll(
+                tg
+        );
+
+        return container;
     }
 
     private Node gameLogo() {
