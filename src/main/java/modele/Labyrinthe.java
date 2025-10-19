@@ -156,7 +156,7 @@ public class Labyrinthe {
             }
         }
 
-        List<int[]> queue = new ArrayList<>();
+        LinkedList<int[]> queue = new LinkedList<>();
         queue.add(new int[]{startX, startY});
         visited[startX][startY] = true;
         dist[startX][startY] = 0;

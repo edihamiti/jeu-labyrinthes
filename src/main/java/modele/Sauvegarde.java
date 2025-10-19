@@ -3,42 +3,61 @@ package modele;
 import org.json.JSONArray;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class Sauvegarde {
 
-    private final File FICHIER = new File("saves/sauvegardesJoueurs.json");
-    private final ArrayList<Joueur> joueurs;
+    private final File FICHIER;
+    private final HashMap<String, Joueur> joueurs;
 
-    public Sauvegarde() {
-        joueurs = new ArrayList<>();
+    public Sauvegarde(String filePath) {
+        this.FICHIER = new File(filePath);
+        joueurs = new HashMap<>();
+        assurerFichierSauvegarde();
     }
 
-    // Pour tester la class
-    public static void main(String[] args) throws PseudoException {
+    public Sauvegarde() {
+        this("saves/sauvegardesJoueurs.json");
+    }
 
-        Joueur j1 = new Joueur("Enzo");
-        Joueur j2 = new Joueur("Test");
-
-        Sauvegarde sauvegarde = new Sauvegarde();
-        sauvegarde.addJoueur(j1);
-        sauvegarde.addJoueur(j2);
-        System.out.println(sauvegarde);
-        sauvegarde.sauvegardeJoueurs();
-
-        sauvegarde.removeJoueur(j1);
-        sauvegarde.removeJoueur(j2);
-        System.out.println("Taille tableau : 0="+sauvegarde.joueurs.size());
-        sauvegarde.chargerJoueurs();
-        System.out.println(sauvegarde);
-
+    public int getSize() {
+        return this.joueurs.size();
     }
 
     public void addJoueur(Joueur j) {
-        this.joueurs.add(j);
+        if (joueurs.containsKey(j.getPseudo())) return;
+        this.joueurs.put(j.getPseudo(), j);
     }
-    public void removeJoueur(Joueur j){
-        this.joueurs.remove(j);
+
+    public void removeJoueur(Joueur joueur) {
+        if (joueurs.containsKey(joueur.getPseudo()))
+            this.joueurs.remove(joueur.getPseudo());
+    }
+
+    public void removeJoueur(String pseudo) {
+        if (joueurs.containsKey(pseudo))
+            this.joueurs.remove(pseudo);
+    }
+
+    public Joueur getJoueurParPseudo(String pseudo) {
+        return this.joueurs.get(pseudo);
+    }
+
+    private void assurerFichierSauvegarde() {
+        File parent = FICHIER.getParentFile();
+        if (parent != null && !parent.exists()) {
+            if (!parent.mkdirs() && !parent.exists()) {
+                throw new RuntimeException("Impossible de créer le dossier de sauvegarde: " + parent);
+            }
+        }
+        if (!FICHIER.exists()) {
+            try (FileWriter fw = new FileWriter(FICHIER)) {
+                fw.write("[]");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public void sauvegardeJoueurs() {
@@ -46,7 +65,7 @@ public class Sauvegarde {
 
             JSONArray jsonJoueurs = new JSONArray();
 
-            for (Joueur jouer : this.joueurs) {
+            for (Joueur jouer : this.joueurs.values()) {
                 jsonJoueurs.put(jouer.toJson());
             }
 
@@ -66,7 +85,7 @@ public class Sauvegarde {
             while ((ligne = bf.readLine()) != null) contenu.append(ligne);
 
             JSONArray jsonJoueurs = new JSONArray(contenu.toString());
-            for (int i = 0; i < jsonJoueurs.length(); i++) this.joueurs.add(new Joueur(jsonJoueurs.getJSONObject(i)));
+            for (int i = 0; i < jsonJoueurs.length(); i++) this.addJoueur(new Joueur(jsonJoueurs.getJSONObject(i)));
 
             System.out.println("Joueurs chargé");
 
@@ -80,5 +99,17 @@ public class Sauvegarde {
         return "Sauvegarde{" +
                 "joueurs=" + joueurs +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Sauvegarde that = (Sauvegarde) o;
+        return Objects.equals(joueurs, that.joueurs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(joueurs);
     }
 }
