@@ -11,6 +11,7 @@ import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import vue.components.BetterButtons.FilledButton;
+import vue.components.BetterButtons.OutlinedButton;
 
 public class ProgressMenu extends VBox {
 
@@ -50,8 +51,17 @@ public class ProgressMenu extends VBox {
                             });
 
         startButton.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(startButton, Priority.ALWAYS);
+
+        Button loadButton = new OutlinedButton(new Text("Charger Profil"), () -> {
+            System.out.println("Charger Profil clicked");
+        });
+
+        loadButton.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(loadButton, Priority.ALWAYS);
 
         buttonsContainer.getChildren().addAll(
+                loadButton,
                 startButton
         );
 
