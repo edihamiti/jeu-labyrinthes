@@ -35,6 +35,14 @@ public class Labyrinthe {
         int y = 1;
         cellules[0][1]= new Entree(x,y);
         faireChemin(cellules,x,y);
+
+        for (int i = 1; i < largeur; i++) {
+            for (int j = 1; j < hauteur; j++) {
+                if ((!(cellules[i][j] instanceof Entree) && !(cellules[i][j] instanceof Sortie)) && (Math.random() < (1-pourcentageMurs))) {
+                    cellules[i][j] = new Chemin(x,y);
+                }
+            }
+        }
     }
 
 
