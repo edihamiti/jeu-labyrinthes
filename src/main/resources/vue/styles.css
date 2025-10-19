@@ -74,3 +74,26 @@
 .tabs-text.selected {
     -fx-fill: -color-6;
 }
+
+.home-tab {
+    -fx-padding: 30px;
+}
+
+.home-tab.buttons-container {
+    -fx-spacing: 10px;
+    -fx-border-color: -color-6;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+}
+
+.title {
+    -fx-font-size: 48px;
+    -fx-font-weight: 900;
+    -fx-fill: -color-6;
+}
+
+.subtitle {
+    -fx-font-size: 24px;
+    -fx-font-weight: 400;
+    -fx-fill: -color-6;
+}

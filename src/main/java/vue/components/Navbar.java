@@ -1,16 +1,20 @@
 package vue.components;
 
+import controleur.MenuPrincipalControleur;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
+import vue.MenuPrincipal;
 import vue.utils.Colors;
 
 public class Navbar extends VBox {
+    MenuPrincipal menuPrincipal;
 
-    public Navbar() {
+    public Navbar(MenuPrincipal menuPrincipal) {
         super();
+        this.menuPrincipal = menuPrincipal;
         this.getStyleClass().add("navbar");
         this.getChildren().addAll(
                 gameLogo(),
@@ -26,6 +30,7 @@ public class Navbar extends VBox {
 
         Tab progressTab = new Tab("Mode Progression", () -> {
             System.out.println("Mode Progression clicked");
+            this.menuPrincipal.setProgressTab();
         });
 
         Tab libreTab = new Tab("Mode Libre", () -> {

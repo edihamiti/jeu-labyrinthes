@@ -1,3 +1,4 @@
+import controleur.MenuPrincipalControleur;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import modele.Jeu;
@@ -12,6 +13,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Jeu jeu = new Jeu();
+        MenuPrincipalControleur menuControleur = new MenuPrincipalControleur(jeu);
         MenuPrincipal menu = new MenuPrincipal(jeu);
     }
 }
