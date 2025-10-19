@@ -1,4 +1,4 @@
-package Cellules;
+package modele.Cellules;
 
 public class Chemin extends Cellule {
 

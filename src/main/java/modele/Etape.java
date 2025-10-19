@@ -1,3 +1,5 @@
+package modele;
+
 public class Etape {
     private Defi defi;
     private int numero;
