@@ -1,5 +1,6 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
+import modele.Jeu;
 import vue.MenuPrincipal;
 
 public class App extends Application {
@@ -10,7 +11,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
-        MenuPrincipal menu = new MenuPrincipal();
+        Jeu jeu = new Jeu();
+        MenuPrincipal menu = new MenuPrincipal(jeu);
     }
 }

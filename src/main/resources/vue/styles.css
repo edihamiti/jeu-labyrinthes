@@ -1,0 +1,19 @@
+* {
+    -color-1: #344E41;
+    -color-2: #3A5A40;
+    -color-3: #588157;
+    -color-4: #A3B18A;
+    -color-5: #DAD7CD;
+    -color-6: #E1FFDB;
+}
+
+.menu-principal {
+    -fx-background-color: -color-3;
+    -fx-padding: 15px;
+}
+
+.navbar {
+    -fx-pref-width: 320px;
+    -fx-text-fill: -color-6;
+}
+
