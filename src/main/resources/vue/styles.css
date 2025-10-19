@@ -86,7 +86,7 @@
 
 .home-tab {
     -fx-padding: 30px;
-    -fx-background-radius: 18px;
+    /*-fx-background-radius: 18px;*/
 }
 
 .home-tab.buttons-container {
