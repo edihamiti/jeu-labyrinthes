@@ -1,6 +1,5 @@
-package Cellules;
+package modele.Cellules;
 
-import modele.Cellules.Mur;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
