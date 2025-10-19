@@ -1,8 +1,8 @@
 package modele;
 
-import modele.Cellules.Cellule;
-import modele.Cellules.Entree;
-import modele.Cellules.Mur;
+import modele.Cellules.*;
+
+import java.util.Random;
 
 public class Labyrinthe {
 
@@ -39,7 +39,73 @@ public class Labyrinthe {
 
 
     public void faireChemin(Cellule[][] cellules, int x, int y) {
+        int cheminx = x;
+        int cheminy = y;
+        if(x == 0){
+            cheminx += 1;
+        } else if (y == 0){
+            cheminy += 1;
+        }
 
+        cellules[cheminx][cheminy] = new Chemin(cheminx,cheminy);
+
+        boolean nouveauchemin;
+        for (int i = 1; i <= distanceMin; i++) {
+        nouveauchemin = false;
+            Random random = new Random();
+            int sens = random.nextInt(4);
+
+            while(!nouveauchemin){
+                switch (sens){
+                    case 0: //Pour aller vers le haut
+                    if(cheminy-1 != 0){
+                        cheminy--;
+                        nouveauchemin = true;
+                    } else {
+                        nouveauchemin = false;
+                        sens += random.nextInt(3)+1;
+                    }
+                    break;
+                    case 1: //Pour aller vers la droite
+                    if(cheminx+1 != largeurMax){
+                        cheminx++;
+                        nouveauchemin = true;
+                    } else {
+                        nouveauchemin = false;
+                        int choix = random.nextInt(2);
+                        if(choix == 0)sens = 0;
+                        else sens += random.nextInt(2)+2;
+                    }
+                    break;
+                    case 2: //Pour aller vers le bas
+                    if(cheminy+1 != hauteurMax){
+                        cheminy++;
+                        nouveauchemin = true;
+                    } else {
+                        nouveauchemin = false;
+                        int choix = random.nextInt(2);
+                        if(choix == 0)sens -=  random.nextInt(2)+1;
+                        else sens = 3;
+                    }
+                    break;
+                    case 3: //Pour aller vers la gauche
+                    if(cheminx-1 != 0){
+                        cheminx--;
+                        nouveauchemin = true;
+                    } else {
+                        nouveauchemin = false;
+                        sens -= random.nextInt(3)+1;
+                    }
+                    break;
+                }
+            }
+
+            if(i == distanceMin){
+                cellules[cheminx][cheminy] = new Sortie(x,y);
+            } else {
+                cellules[cheminx][cheminy] = new Chemin(cheminx, cheminy);
+            }
+        }
     }
 
     public void calculePlusCourtChemin() {
