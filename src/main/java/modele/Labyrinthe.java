@@ -12,26 +12,33 @@ public class Labyrinthe {
     private final int distanceMin;
     private Cellule[][] cellules;
 
+    private final int largeurMax;
+    private final int hauteurMax;
+
     public Labyrinthe(int largeur, int hauteur, double pourcentageMurs, int distanceMin) {
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.pourcentageMurs = pourcentageMurs;
         this.distanceMin = distanceMin;
+        this.largeurMax = largeur+2;
+        this.hauteurMax = hauteur+2;
     }
 
     public void generer() {
-        cellules = new Cellule[largeur+2][hauteur+2];
-        for (int i = 0; i < largeur+2; i++) {
-            for (int j = 0; j < hauteur+2; j++) {
+        cellules = new Cellule[largeurMax][hauteurMax];
+        for (int i = 0; i < largeurMax; i++) {
+            for (int j = 0; j < hauteurMax; j++) {
                 cellules[i][j] = new Mur(i,j);
             }
         }
-        cellules[0][1]= new Entree(0,1);
-        faireChemin(cellules);
+        int x = 0;
+        int y = 1;
+        cellules[0][1]= new Entree(x,y);
+        faireChemin(cellules,x,y);
     }
 
 
-    public void faireChemin(Cellule[][] cellules) {
+    public void faireChemin(Cellule[][] cellules, int x, int y) {
 
     }
 
