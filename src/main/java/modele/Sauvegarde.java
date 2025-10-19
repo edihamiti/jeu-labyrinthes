@@ -1,3 +1,5 @@
+package modele;
+
 import org.json.JSONArray;
 
 import java.io.*;
@@ -49,7 +51,7 @@ public class Sauvegarde {
             }
 
             fileWriter.write(jsonJoueurs.toString(4));
-            System.out.println("Sauvegarde réussie");
+            System.out.println("modele.Sauvegarde réussie");
 
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -1,4 +1,6 @@
-import Cellules.Cellule;
+package modele;
+
+import modele.Cellules.Cellule;
 
 public class Labyrinthe {
 

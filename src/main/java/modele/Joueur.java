@@ -1,3 +1,5 @@
+package modele;
+
 import org.json.JSONObject;
 
 public class Joueur {

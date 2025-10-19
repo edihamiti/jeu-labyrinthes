@@ -1,3 +1,5 @@
+package modele;
+
 public enum Defi {
     FACILE1(10, 10, 25.0),
     FACILE2(10, 10, 25.0),

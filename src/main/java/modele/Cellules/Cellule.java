@@ -1,4 +1,4 @@
-package Cellules;
+package modele.Cellules;
 
 public abstract class Cellule {
 
