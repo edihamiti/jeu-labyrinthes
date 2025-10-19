@@ -22,3 +22,17 @@
     -fx-background-color: transparent;
     -fx-border-radius: 18px;
 }
+
+.logo {
+    -fx-text-fill: -color-6;
+}
+
+.logo.first-line {
+    -fx-font-size: 24px;
+    -fx-font-weight: 400;
+}
+
+.logo.second-line {
+    -fx-font-size: 36px;
+    -fx-font-weight: 900;
+}
