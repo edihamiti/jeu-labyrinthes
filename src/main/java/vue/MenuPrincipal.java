@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import modele.Jeu;
 import modele.ModeJeu;
+import vue.components.FreeMenu;
 import vue.components.Navbar;
 import vue.components.ProgressMenu;
 import vue.components.Spacer;
@@ -22,6 +23,7 @@ public class MenuPrincipal extends Stage implements LabyrinthesObservateur {
     Navbar navbar;
     ScrollPane contenu;
     ProgressMenu progressMenu;
+    FreeMenu freeMenu;
 
     public MenuPrincipal(Jeu jeu) {
         this.jeu = jeu;
@@ -51,6 +53,7 @@ public class MenuPrincipal extends Stage implements LabyrinthesObservateur {
         HBox.setHgrow(this.contenu, Priority.ALWAYS);
 
         this.progressMenu = new ProgressMenu();
+        this.freeMenu = new FreeMenu();
 
         this.contenu.setContent(this.progressMenu);
 
@@ -67,5 +70,8 @@ public class MenuPrincipal extends Stage implements LabyrinthesObservateur {
     public void setContenu(Node node){this.contenu.setContent(node);}
     public void setProgressTab() {
         this.contenu.setContent(this.progressMenu);
+    }
+    public void setFreeTab() {
+        this.contenu.setContent(this.freeMenu);
     }
 }

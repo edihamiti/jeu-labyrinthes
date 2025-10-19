@@ -35,6 +35,7 @@ public class Navbar extends VBox {
 
         Tab libreTab = new Tab("Mode Libre", () -> {
             System.out.println("Mode Libre clicked");
+            this.menuPrincipal.setFreeTab();
         });
 
         tg.addTab(progressTab);
