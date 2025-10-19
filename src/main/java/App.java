@@ -11,6 +11,6 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        MenuPrincipal menu = new MenuPrincipal(j);
+        MenuPrincipal menu = new MenuPrincipal();
     }
 }

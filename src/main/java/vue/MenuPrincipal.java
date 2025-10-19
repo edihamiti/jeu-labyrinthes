@@ -4,7 +4,7 @@ import javafx.stage.Stage;
 import modele.Jeu;
 
 public class MenuPrincipal extends Stage implements LabyrinthesObservateur {
-    public MenuPrincipal(Jeu j) {
+    public MenuPrincipal() {
         this.setTitle("Le Jeu des Labyrinthes");
         this.show();
     }
