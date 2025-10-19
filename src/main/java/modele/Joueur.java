@@ -26,9 +26,14 @@ public class Joueur {
         }
     }
 
-    public Joueur(JSONObject joueur){
+    public Joueur(JSONObject joueur) {
         this.id = joueur.getInt("id");
         this.pseudo = joueur.getString("pseudo");
+        this.progression = new HashMap<>();
+
+        JSONObject progressionJson = joueur.getJSONObject("progression");
+        for (Defi defi : Defi.values())
+            progression.put(defi, (Boolean) progressionJson.get(defi.name()));
     }
 
     public int getId() {
@@ -51,10 +56,11 @@ public class Joueur {
         this.progression = progression;
     }
 
-    public JSONObject toJson(){
+    public JSONObject toJson() {
         JSONObject joueur = new JSONObject();
         joueur.put("id", this.id);
         joueur.put("pseudo", this.pseudo);
+        joueur.put("progression", this.progression);
         return joueur;
     }
 

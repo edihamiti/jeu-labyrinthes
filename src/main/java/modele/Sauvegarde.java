@@ -15,7 +15,7 @@ public class Sauvegarde {
     }
 
     // Pour tester la class
-    static void main() throws PseudoException {
+    public static void main(String[] args) throws PseudoException {
 
         Joueur j1 = new Joueur("Enzo");
         Joueur j2 = new Joueur("Test");
@@ -23,14 +23,14 @@ public class Sauvegarde {
         Sauvegarde sauvegarde = new Sauvegarde();
         sauvegarde.addJoueur(j1);
         sauvegarde.addJoueur(j2);
+        System.out.println(sauvegarde);
         sauvegarde.sauvegardeJoueurs();
 
         sauvegarde.removeJoueur(j1);
         sauvegarde.removeJoueur(j2);
-        System.out.println(sauvegarde.joueurs.size());
+        System.out.println("Taille tableau : 0="+sauvegarde.joueurs.size());
         sauvegarde.chargerJoueurs();
-
-        System.out.println(sauvegarde.joueurs);
+        System.out.println(sauvegarde);
 
     }
 
@@ -51,7 +51,7 @@ public class Sauvegarde {
             }
 
             fileWriter.write(jsonJoueurs.toString(4));
-            System.out.println("modele.Sauvegarde réussie");
+            System.out.println("Sauvegarde réussie");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -75,4 +75,10 @@ public class Sauvegarde {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Sauvegarde{" +
+                "joueurs=" + joueurs +
+                '}';
+    }
 }
