@@ -14,6 +14,7 @@ public class Labyrinthe {
 
     private final int largeurMax;
     private final int hauteurMax;
+    private final double nbCaseChemin;
 
     public Labyrinthe(int largeur, int hauteur, double pourcentageMurs, int distanceMin) {
         this.largeur = largeur;
@@ -22,6 +23,7 @@ public class Labyrinthe {
         this.distanceMin = distanceMin;
         this.largeurMax = largeur+2;
         this.hauteurMax = hauteur+2;
+        this.nbCaseChemin =(int) ((largeur*hauteur)*((100-pourcentageMurs)/100));
     }
 
     public void generer() {
@@ -58,7 +60,7 @@ public class Labyrinthe {
         cellules[cheminx][cheminy] = new Chemin(cheminx,cheminy);
 
         boolean nouveauchemin;
-        for (int i = 1; i <= distanceMin; i++) {
+        for (int i = 1; i <= nbCaseChemin; i++) {
         nouveauchemin = false;
             Random random = new Random();
             int sens = random.nextInt(4);
@@ -108,7 +110,7 @@ public class Labyrinthe {
                 }
             }
 
-            if(i == distanceMin){
+            if(i == nbCaseChemin){
                 cellules[cheminx][cheminy] = new Sortie(x,y);
             } else {
                 cellules[cheminx][cheminy] = new Chemin(cheminx, cheminy);
