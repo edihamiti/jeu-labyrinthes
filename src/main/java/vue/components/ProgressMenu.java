@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class ProgressMenu extends StackPane {
@@ -26,7 +27,15 @@ public class ProgressMenu extends StackPane {
         );
         imageLayer.setBackground(new Background(bgImage));
 
-        // Couche 2 : Region avec le gradietn
+        // Clip pour l'image layer
+        Rectangle imageClip = new Rectangle();
+        imageClip.widthProperty().bind(imageLayer.widthProperty());
+        imageClip.heightProperty().bind(imageLayer.heightProperty());
+        imageClip.setArcWidth(36);
+        imageClip.setArcHeight(36);
+        imageLayer.setClip(imageClip);
+
+        // Couche 2 : Region avec le gradient
         Region gradientLayer = new Region();
         LinearGradient gradient = new LinearGradient(
             0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
@@ -35,6 +44,14 @@ public class ProgressMenu extends StackPane {
             new Stop(1, Color.rgb(36, 74, 35, 0.50))
         );
         gradientLayer.setBackground(new Background(new BackgroundFill(gradient, null, null)));
+
+        // Clip pour le gradient layer
+        Rectangle gradientClip = new Rectangle();
+        gradientClip.widthProperty().bind(gradientLayer.widthProperty());
+        gradientClip.heightProperty().bind(gradientLayer.heightProperty());
+        gradientClip.setArcWidth(36);
+        gradientClip.setArcHeight(36);
+        gradientLayer.setClip(gradientClip);
 
         // Couche : VBox avec le contenu
         VBox contentBox = new VBox();
@@ -62,11 +79,20 @@ public class ProgressMenu extends StackPane {
         contentBox.getChildren().addAll(
                 header,
                 new Spacer(Orientation.VERTICAL),
-                buttonsContainer 
+                buttonsContainer
         );
 
-
-        // Empilement des couches : image, dégradé, contenu
+        // Empilement des couches : image, gradient, contenu
         this.getChildren().addAll(imageLayer, gradientLayer, contentBox);
+
+        Rectangle clip = new Rectangle();
+        clip.widthProperty().bind(this.widthProperty());
+        clip.heightProperty().bind(this.heightProperty());
+        clip.setArcWidth(36); // 2 * rayon
+        clip.setArcHeight(36); // 2 * rayon
+        this.setClip(clip);
+
+        this.setBackground(Background.EMPTY);
+        this.setStyle("-fx-background-color: transparent;");
     }
 }
