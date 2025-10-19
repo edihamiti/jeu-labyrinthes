@@ -47,7 +47,7 @@ public class MenuPrincipal extends Stage implements LabyrinthesObservateur {
 
         HBox test = new HBox();
         test.getChildren().add(new Text("Test"));
-        this.contenu.setContent(test);
+        this.contenu.setContent(new ProgressMenu());
         this.contenu.setFitToWidth(true);
         this.contenu.setFitToHeight(true);
         HBox.setHgrow(this.contenu, Priority.ALWAYS);
