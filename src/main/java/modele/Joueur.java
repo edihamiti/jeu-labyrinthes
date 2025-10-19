@@ -3,6 +3,7 @@ package modele;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Joueur {
 
@@ -71,5 +72,17 @@ public class Joueur {
                 ", pseudo='" + pseudo + '\'' +
                 ", progression=" + progression +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Joueur joueur = (Joueur) o;
+        return Objects.equals(pseudo, joueur.pseudo) && Objects.equals(progression, joueur.progression);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pseudo, progression);
     }
 }
