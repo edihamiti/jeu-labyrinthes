@@ -120,3 +120,26 @@
     -fx-font-weight: 600;
     -fx-font-size: 14px;
 }
+
+.button.outlined {
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-6;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 70px;
+    -fx-border-color: -color-6;
+    -fx-border-width: 2px;
+    -fx-border-radius: 70px;
+}
+
+.button.outlined:hover {
+    -fx-opacity: 0.9;
+}
+
+.button.outlined.text {
+    -fx-background-color: transparent;
+    -fx-fill: -color-6;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+}
