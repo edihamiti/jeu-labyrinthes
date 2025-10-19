@@ -21,6 +21,7 @@ public class MenuPrincipal extends Stage implements LabyrinthesObservateur {
     HBox root;
     Navbar navbar;
     ScrollPane contenu;
+    ProgressMenu progressMenu;
 
     public MenuPrincipal(Jeu jeu) {
         this.jeu = jeu;
@@ -45,12 +46,13 @@ public class MenuPrincipal extends Stage implements LabyrinthesObservateur {
         this.contenu.getStyleClass().add("contenu");
         root.getChildren().add(this.contenu);
 
-        HBox test = new HBox();
-        test.getChildren().add(new Text("Test"));
-        this.contenu.setContent(new ProgressMenu());
         this.contenu.setFitToWidth(true);
         this.contenu.setFitToHeight(true);
         HBox.setHgrow(this.contenu, Priority.ALWAYS);
+
+        this.progressMenu = new ProgressMenu();
+
+        this.contenu.setContent(this.progressMenu);
 
         this.show();
     }
@@ -64,6 +66,6 @@ public class MenuPrincipal extends Stage implements LabyrinthesObservateur {
     public ScrollPane getContenu(){return this.contenu;}
     public void setContenu(Node node){this.contenu.setContent(node);}
     public void setProgressTab() {
-        this.contenu.setContent(new ProgressMenu());
+        this.contenu.setContent(this.progressMenu);
     }
 }
