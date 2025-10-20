@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+        fx:controller="controleur.MainController"
+        fx:id="content"
+        stylesheets="vue/styles.css"
+        style="-fx-background-color: #588157;"
+>
+
+</ScrollPane>

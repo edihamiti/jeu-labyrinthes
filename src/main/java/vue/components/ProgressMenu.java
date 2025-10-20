@@ -4,10 +4,6 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import vue.components.BetterButtons.FilledButton;
@@ -19,7 +15,7 @@ public class ProgressMenu extends VBox {
         super();
 
         // Couche 1 : Region avec le background
-        Image backgroundImage = new Image(getClass().getResourceAsStream("/vue/img/progress-background.png"));
+        Image backgroundImage = new Image(getClass().getResourceAsStream("/vue/img/background.png"));
         BackgroundImage bgImage = new BackgroundImage(
             backgroundImage,
             BackgroundRepeat.NO_REPEAT,
