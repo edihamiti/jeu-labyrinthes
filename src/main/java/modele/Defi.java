@@ -33,5 +33,9 @@ public enum Defi {
         return pourcentageMurs;
     }
 
+    public double getTauxMurs(){
+        return pourcentageMurs/100;
+    }
+
 
 }
