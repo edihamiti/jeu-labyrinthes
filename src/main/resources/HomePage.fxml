@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
 <HBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="controleur.HomePageControleur"
       stylesheets="vue/HPstyles.css, vue/styles.css"
@@ -12,7 +14,7 @@
     </padding>
 
     <!-- Navbar -->
-    <VBox alignment="CENTER">
+    <VBox alignment="CENTER_LEFT" minWidth="320">
 
         <!-- Logo -->
         <VBox spacing="-15">
@@ -25,18 +27,32 @@
 
         <!-- Boutons -->
         <VBox spacing="15">
-            <Button text="Mode Libre" styleClass="nav-bouton" onAction="#modeLibre"/>
-            <Button text="Mode Progression" styleClass="nav-bouton" onAction="#modeProgression"/>
+            <Button onAction="#modeProgression" styleClass="tab, selected">
+                <graphic>
+                    <StackPane>
+                        <Rectangle width="4" styleClass="tabs-rectangle, selected" />
+                        <Text text="Mode Progression" styleClass="tabs-text, selected" />
+                    </StackPane>
+                </graphic>
+            </Button>
+            <Button onAction="#modeLibre" styleClass="tab">
+                <graphic>
+                    <StackPane>
+                        <Rectangle styleClass="tabs-rectangle" />
+                        <Text text="Mode Libre" styleClass="tabs-text" />
+                    </StackPane>
+                </graphic>
+            </Button>
         </VBox>
 
         <!-- Spacer -->
         <VBox VBox.vgrow="ALWAYS"/>
 
-        <Button text="Connexion" styleClass="nav-bouton-CTA"/>
+        <Button text="Quitter" styleClass="button-ghost"/>
     </VBox>
 
     <!-- Contenu de la page -->
-    <VBox spacing="20.0" HBox.hgrow="ALWAYS" styleClass="page">
+    <VBox fx:id="contentPage" spacing="20.0" HBox.hgrow="ALWAYS" styleClass="page">
         <padding>
             <Insets top="40" right="40" bottom="40" left="40"/>
         </padding>
@@ -51,9 +67,9 @@
         <VBox VBox.vgrow="ALWAYS"/>
 
         <!--Zone de Boutons-->
-        <HBox HBox.hgrow="ALWAYS">
-            <Button text="Charger Profil" styleClass="button-outlined"/>
-            <Button text="Nouvelle Partie" styleClass="button-filled"/>
+        <HBox HBox.hgrow="ALWAYS" spacing="10">
+            <Button fx:id="chargerProfilButton" text="Charger Profil" styleClass="button-outlined" HBox.hgrow="ALWAYS"/>
+            <Button fx:id="nouvellePartieButton" text="Nouvelle Partie" styleClass="button-filled" HBox.hgrow="ALWAYS"/>
         </HBox>
     </VBox>
 

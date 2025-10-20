@@ -64,8 +64,6 @@
     -fx-background-color: rgba(255, 255, 255, 0.3);
 }
 
-/*
-
 .menu-principal {
     -fx-background-color: -color-3;
     -fx-padding: 15px;
@@ -81,6 +79,21 @@
     -fx-background-color: transparent;
     -fx-border-radius: 18px;
     -fx-background-radius: 18px;
+}
+
+.button-ghost {
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-6;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 70px;
+}
+
+.button-ghost:hover {
+    -fx-cursor: hand;
+    -fx-background-color: -color-2;
+    -fx-opacity: 0.9;
 }
 
 .contenu > .viewport {
@@ -142,7 +155,7 @@
 
 .home-tab {
     -fx-padding: 30px;
-    !*-fx-background-radius: 18px;*!
+    /*-fx-background-radius: 18px;*/
 }
 
 .button.filled.text {
@@ -159,4 +172,4 @@
     -fx-fill: -color-6;
     -fx-font-weight: 600;
     -fx-font-size: 14px;
-}*/
+}
