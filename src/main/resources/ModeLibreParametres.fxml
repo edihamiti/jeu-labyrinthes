@@ -40,11 +40,6 @@
             <Button text="Valider" fx:id="validerButton" onAction="#lancerModeLibre" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2" />
         </VBox>
 
-        <!-- Spacer -->
-        <Region VBox.vgrow="ALWAYS"/>
-
-
-
     </VBox>
 
 
