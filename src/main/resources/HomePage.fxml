@@ -48,7 +48,7 @@
         <!-- Spacer -->
         <VBox VBox.vgrow="ALWAYS"/>
 
-        <Button text="Quitter" styleClass="button-ghost"/>
+        <Button text="Quitter" onAction="#quit" styleClass="button-ghost"/>
     </VBox>
 
     <!-- Contenu de la page -->

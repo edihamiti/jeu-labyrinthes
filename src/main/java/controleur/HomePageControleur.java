@@ -54,4 +54,8 @@ public class HomePageControleur {
         chargerProfilButton.maxWidth(0);
         modeProgression = false;
     }
+
+    public void quit() {
+        System.exit(0);
+    }
 }
