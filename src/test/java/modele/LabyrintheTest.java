@@ -9,8 +9,9 @@ class LabyrintheTest {
     @Test
     void calculePlusCourtChemin() {
         // Crée un labyrinthe de test
-        Labyrinthe labyrinthe = new Labyrinthe(10, 10, 20.0, 2);
+        Labyrinthe labyrinthe = new Labyrinthe(10, 10, 20.0);
         labyrinthe.generer();
+        labyrinthe.afficher();
 
         // Calcule le plus court chemin
         int longueurChemin = labyrinthe.calculePlusCourtChemin();
@@ -19,4 +20,6 @@ class LabyrintheTest {
         // Vérifie que la longueur du chemin est supérieure à zéro
         assertTrue(longueurChemin > 0, "La longueur du plus court chemin doit être supérieure à zéro.");
     }
+
+
 }

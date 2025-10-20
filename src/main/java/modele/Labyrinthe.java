@@ -2,10 +2,7 @@ package modele;
 
 import modele.Cellules.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.LinkedList;
+import java.util.*;
 
 public class Labyrinthe {
 
@@ -15,17 +12,26 @@ public class Labyrinthe {
     private final int distanceMin;
     private final int largeurMax;
     private final int hauteurMax;
-    private final double nbCaseChemin;
     private Cellule[][] cellules;
 
-    public Labyrinthe(int largeur, int hauteur, double pourcentageMurs, int distanceMin) {
+    public Labyrinthe(int largeur, int hauteur, double pourcentageMurs) {
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.pourcentageMurs = pourcentageMurs;
-        this.distanceMin = distanceMin;
+        this.distanceMin = calculePlusCourtChemin();
         this.largeurMax = largeur + 2;
         this.hauteurMax = hauteur + 2;
-        this.nbCaseChemin = (int) ((largeur * hauteur) * ((100 - pourcentageMurs) / 100));
+        //generer();
+    }
+
+    public Labyrinthe(Defi defi){
+        this.largeur = defi.getX();
+        this.hauteur = defi.getY();
+        this.pourcentageMurs = defi.getPourcentageMurs();
+        this.distanceMin = calculePlusCourtChemin();
+        this.largeurMax = largeur + 2;
+        this.hauteurMax = hauteur + 2;
+        generer();
     }
 
     public void generer() {
@@ -51,6 +57,8 @@ public class Labyrinthe {
 
 
     public void faireChemin(Cellule[][] cellules, int x, int y) {
+        int nbCaseChemin = (int) ((largeur * hauteur) * ((100 - pourcentageMurs) / 100));
+
         int cheminx = x;
         int cheminy = y;
         if (x == 0) {
@@ -194,5 +202,19 @@ public class Labyrinthe {
             return 0;
         }
         return dist[endX][endY];
+    }
+
+    public void afficher() {
+        for (int i = 0; i < largeurMax; i++) {
+            for (int j = 0; j < hauteurMax; j++) {
+                if (cellules[i][j] instanceof Mur ){
+                    System.out.print("#");
+
+                } else {
+                    System.out.print(".");
+                }
+            }
+            System.out.println();
+        }
     }
 }
