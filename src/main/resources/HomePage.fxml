@@ -5,17 +5,20 @@
 <?import javafx.scene.layout.*?>
 <HBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="controleur.HomePageControleur"
-      stylesheets="vue/HPstyles.css"
+      stylesheets="vue/HPstyles.css, vue/styles.css"
       spacing="20">
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
     <!-- Navbar -->
-    <VBox styleClass="navbar" alignment="CENTER">
+    <VBox alignment="CENTER">
 
         <!-- Logo -->
-        <Label text="Labyrinthe" styleClass="nav-logo"/>
+        <VBox spacing="-15">
+            <Label text="Le jeu des" styleClass="nav-logo-first-line"/>
+            <Label text="Labyrinthe" styleClass="nav-logo-second-line"/>
+        </VBox>
 
         <!-- Spacer -->
         <VBox VBox.vgrow="ALWAYS"/>
@@ -37,7 +40,16 @@
         <padding>
             <Insets top="40" right="40" bottom="40" left="40"/>
         </padding>
-        <Label text=""/>
+        <VBox>
+            <Label text="Mode progression" styleClass="title"/>
+            <Label text="Complète des labyrinthes pour débloquer de nouveaux niveaux" styleClass="subtitle"/>
+        </VBox>
+        <!-- Spacer -->
+        <VBox VBox.vgrow="ALWAYS"/>
+        <HBox HBox.hgrow="ALWAYS">
+            <Button text="Nouvelle Partie" styleClass="nav-bouton-CTA"/>
+            <Button text="Nouvelle Partie" styleClass="nav-bouton-CTA"/>
+        </HBox>
     </VBox>
 
 </HBox>

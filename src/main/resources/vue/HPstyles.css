@@ -1,13 +1,13 @@
-.root {
-    -fx-font-family: "Segoe UI", "Helvetica", sans-serif;
-    -fx-background-color: #588157;
+.nav-logo-first-line {
+    -fx-font-size: 24px;
+    -fx-font-weight: 400;
+    -fx-text-fill: -color-6;
 }
 
-.nav-logo {
-    -fx-font-size: 40px;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
-    /*-fx-cursor: hand;*/
+.nav-logo-second-line {
+    -fx-font-size: 36px;
+    -fx-font-weight: 900;
+    -fx-text-fill: -color-6;
 }
 
 .nav-bouton {
@@ -56,10 +56,10 @@
 
 .page {
     -fx-background-color: white;
-    /*-fx-background-image: url('images/progress-background.png');
+    -fx-background-image: url('img/progress-background.png');
     -fx-background-size: cover;
     -fx-background-position: center;
-    -fx-background-repeat: no-repeat;*/
+    -fx-background-repeat: no-repeat;
     -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 1, 1);
     -fx-background-radius: 20;
     -fx-border-radius: 20;
