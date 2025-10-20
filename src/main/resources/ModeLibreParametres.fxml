@@ -39,6 +39,17 @@
             <Label styleClass="form-label" text="Hauteur du labyrinthe :"/>
             <TextField fx:id="hauteurField" promptText="Entrez la hauteur" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
+            <Slider
+                fx:id="pourcentageMursSlider"
+                value="50"
+                majorTickUnit="10"
+                minorTickCount="1"
+                blockIncrement="1"
+                showTickLabels="true"
+                showTickMarks="true"
+                snapToTicks="true"
+
+            />
             <Label styleClass="form-label" text="Densité des obstacles (%) :"/>
             <TextField fx:id="pourcentageMursField" promptText="Entrez la densité" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 

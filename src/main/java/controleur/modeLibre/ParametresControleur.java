@@ -7,10 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,6 +18,7 @@ public class ParametresControleur {
     public TextField hauteurField;
     public TextField pourcentageMursField;
     public Button validerButton;
+    public Slider pourcentageMursSlider;
     public int largeur = 5;
     public int hauteur = 5;
     public double pourcentageMurs = 50.0;
@@ -42,7 +41,8 @@ public class ParametresControleur {
 
         largeurField.setOnAction(this::onLargeurChange);
         hauteurField.setOnAction(this::onHauteurChange);
-        pourcentageMursField.textProperty().addListener(this::onPourcentageChange);
+        pourcentageMursField.setOnAction(event -> onPourcentageChange((ActionEvent) event));
+        pourcentageMursSlider.valueProperty().addListener(this::onPourcentageChangeFromSlider);;
     }
 
     public void onLargeurChange(ActionEvent event) {
@@ -63,16 +63,16 @@ public class ParametresControleur {
         }
     }
 
-    public void onPourcentageChange(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+    public void onPourcentageChangeFromSlider(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+        updatePourcentageMurs(newValue.doubleValue());
+    }
+
+    public void onPourcentageChange(ActionEvent event) {
         try {
-            pourcentageMurs = Integer.parseInt(newValue);
-            if (pourcentageMurs < POURCENTAGE_MIN) {
-                pourcentageMursField.setText("" + HAUTEUR_MIN);
-            } else if (pourcentageMurs > POURCENTAGE_MAX) {
-                pourcentageMursField.setText("" + HAUTEUR_MAX);
-            }
+            pourcentageMurs = Integer.parseInt(this.pourcentageMursField.getText());
+            updatePourcentageMurs(pourcentageMurs);
         } catch (NumberFormatException e) {
-            pourcentageMursField.setText(oldValue);
+            pourcentageMursField.setText(this.pourcentageMurs + "");
         }
     }
 
@@ -86,6 +86,13 @@ public class ParametresControleur {
         this.hauteur = Math.max(hauteur, HAUTEUR_MIN);
         this.hauteur = Math.min(this.hauteur, HAUTEUR_MAX);
         hauteurField.setText("" + this.hauteur);
+    }
+
+    private void updatePourcentageMurs(double pourcentageMurs) {
+        this.pourcentageMurs = Math.max(pourcentageMurs, POURCENTAGE_MIN);
+        this.pourcentageMurs = Math.min(this.pourcentageMurs, POURCENTAGE_MAX);
+        pourcentageMursField.setText("" + this.pourcentageMurs);
+        pourcentageMursSlider.setValue(this.pourcentageMurs);
     }
 
     public void lancerModeLibre() {
