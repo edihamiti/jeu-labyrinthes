@@ -23,6 +23,47 @@
     -fx-text-fill: -color-6;
 }
 
+.button-filled {
+    -fx-background-color: -color-6;
+    -fx-text-fill: -color-1;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 70px;
+}
+
+.button-filled:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.9;
+}
+
+.button-filled:pressed {
+/*    A revoir */
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+}
+
+.button-outlined {
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-6;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 70px;
+    -fx-border-color: -color-6;
+    -fx-border-width: 2px;
+    -fx-border-radius: 70px;
+}
+
+.button-outlined:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.9;
+}
+
+.button-outlined:pressed {
+    /*    A revoir */
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+}
+
 /*
 
 .menu-principal {
@@ -104,19 +145,6 @@
     !*-fx-background-radius: 18px;*!
 }
 
-.button.filled {
-    -fx-background-color: -color-6;
-    -fx-text-fill: -color-1;
-    -fx-font-weight: 600;
-    -fx-font-size: 14px;
-    -fx-padding: 10px 20px;
-    -fx-background-radius: 70px;
-}
-
-.button.filled:hover {
-    -fx-opacity: 0.9;
-}
-
 .button.filled.text {
     -fx-background-color: transparent;
     -fx-fill: -color-1;
@@ -124,21 +152,7 @@
     -fx-font-size: 14px;
 }
 
-.button.outlined {
-    -fx-background-color: transparent;
-    -fx-text-fill: -color-6;
-    -fx-font-weight: 600;
-    -fx-font-size: 14px;
-    -fx-padding: 10px 20px;
-    -fx-background-radius: 70px;
-    -fx-border-color: -color-6;
-    -fx-border-width: 2px;
-    -fx-border-radius: 70px;
-}
 
-.button.outlined:hover {
-    -fx-opacity: 0.9;
-}
 
 .button.outlined.text {
     -fx-background-color: transparent;

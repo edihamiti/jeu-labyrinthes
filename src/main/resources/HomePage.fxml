@@ -40,15 +40,20 @@
         <padding>
             <Insets top="40" right="40" bottom="40" left="40"/>
         </padding>
+
+        <!--Zone de titre-->
         <VBox>
             <Label text="Mode progression" styleClass="title"/>
             <Label text="Complète des labyrinthes pour débloquer de nouveaux niveaux" styleClass="subtitle"/>
         </VBox>
+
         <!-- Spacer -->
         <VBox VBox.vgrow="ALWAYS"/>
+
+        <!--Zone de Boutons-->
         <HBox HBox.hgrow="ALWAYS">
-            <Button text="Nouvelle Partie" styleClass="nav-bouton-CTA"/>
-            <Button text="Nouvelle Partie" styleClass="nav-bouton-CTA"/>
+            <Button text="Charger Profil" styleClass="button-outlined"/>
+            <Button text="Nouvelle Partie" styleClass="button-filled"/>
         </HBox>
     </VBox>
 
