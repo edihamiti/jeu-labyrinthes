@@ -18,20 +18,15 @@ public class Labyrinthe {
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.pourcentageMurs = pourcentageMurs;
-        this.distanceMin = calculePlusCourtChemin();
+        //this.distanceMin = calculePlusCourtChemin();
+        this.distanceMin = 1;
         this.largeurMax = largeur + 2;
         this.hauteurMax = hauteur + 2;
-        //generer();
+        //this.generer();
     }
 
     public Labyrinthe(Defi defi){
-        this.largeur = defi.getX();
-        this.hauteur = defi.getY();
-        this.pourcentageMurs = defi.getPourcentageMurs();
-        this.distanceMin = calculePlusCourtChemin();
-        this.largeurMax = largeur + 2;
-        this.hauteurMax = hauteur + 2;
-        generer();
+        this(defi.getLargeur(), defi.getHauteur(), defi.getPourcentageMurs());
     }
 
     public void generer() {

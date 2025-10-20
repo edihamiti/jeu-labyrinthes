@@ -11,22 +11,22 @@ public enum Defi {
     DIFFICILE2(20, 20, 75.0),
     DIFFICILE3(20, 20, 75.0);
 
-    private final int x;
-    private final int y;
+    private final int largeur;
+    private final int hauteur;
     private final double pourcentageMurs;
 
-    private Defi(int x, int y, double pourcentageMurs) {
-        this.x = x;
-        this.y = y;
+    private Defi(int largeur, int hauteur, double pourcentageMurs) {
+        this.largeur = largeur;
+        this.hauteur = hauteur;
         this.pourcentageMurs = pourcentageMurs;
     }
 
-    public int getX() {
-        return x;
+    public int getLargeur() {
+        return largeur;
     }
 
-    public int getY() {
-        return y;
+    public int getHauteur() {
+        return hauteur;
     }
 
     public double getPourcentageMurs() {
