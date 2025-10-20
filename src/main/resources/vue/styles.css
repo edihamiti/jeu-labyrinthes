@@ -11,6 +11,10 @@
     -fx-background-color: -color-3;
 }
 
+.content-pane-root {
+    -fx-background-color: -color-3;
+}
+
 .title {
     -fx-font-size: 48px;
     -fx-font-weight: 900;
