@@ -2,6 +2,7 @@ package modele;
 
 import modele.Cellules.*;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -14,16 +15,20 @@ public class Labyrinthe {
     private final int largeurMax;
     private final int hauteurMax;
     private Cellule[][] cellules;
+    private int joueurX;
+    private int joueurY;
+    private boolean jeuEnCours;
 
     public Labyrinthe(int largeur, int hauteur, double pourcentageMurs) {
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.pourcentageMurs = pourcentageMurs;
-        //this.distanceMin = calculePlusCourtChemin();
         this.distanceMin = 1;
         this.largeurMax = largeur + 2;
         this.hauteurMax = hauteur + 2;
-        //this.generer();
+        this.joueurX = 0;
+        this.joueurY = 1;
+        this.jeuEnCours = true;
     }
 
     public Labyrinthe(Defi defi) {
@@ -200,21 +205,101 @@ public class Labyrinthe {
         return dist[endX][endY];
     }
 
-    public void afficher() {
-        for (int i = 0; i < largeurMax; i++) {
-            for (int j = 0; j < hauteurMax; j++) {
-                if (cellules[i][j] instanceof Mur) {
-                    System.out.print("#");
-                } else if (cellules[i][j] instanceof Entree) {
-                    System.out.print("E");
-                } else if (cellules[i][j] instanceof Sortie) {
-                    System.out.print("S");
+    public void jouer() {
+        generer();
+        System.out.println("Génération d'un labyrinthe " + getLargeurMax() + "x" + getHauteurMax() + " avec " + pourcentageMurs + "% de murs...");
 
+        while (jeuEnCours) {
+            // Efface l'écran (ANSI escape code)
+            System.out.flush();
+
+            afficherAvecJoueur();
+
+            try {
+                char touche = lireTouche();
+                switch (touche) {
+                    case 'q': // Gauche
+                        if (peutDeplacer(joueurX - 1, joueurY)) joueurX--;
+                        System.out.println("Impossible");
+                        break;
+                    case 'd': // Droite
+                        if (peutDeplacer(joueurX + 1, joueurY)) joueurX++;
+                        System.out.println("Impossible");
+                        break;
+                    case 'z': // Haut
+                        if (peutDeplacer(joueurX, joueurY - 1)) joueurY--;
+                        System.out.println("Impossible");
+                        break;
+                    case 's': // Bas
+                        if (peutDeplacer(joueurX, joueurY + 1)) joueurY++;
+                        System.out.println("Impossible");
+                        break;
+                    case 'x': // Quitter
+                        jeuEnCours = false;
+                        break;
+                }
+
+                if (estSurSortie(joueurX, joueurY)) {
+                    System.out.println("\nBravo ! Vous avez atteint la sortie !");
+                    jeuEnCours = false;
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void afficherAvecJoueur() {
+        for (int j = 0; j < hauteurMax; j++) {
+            for (int i = 0; i < largeurMax; i++) {
+                if (i == joueurX && j == joueurY) {
+                    System.out.print("P"); // joueur
+                } else if (cellules[i][j].estMur()) {
+                    System.out.print("#");
+                } else if (cellules[i][j].estEntree()) {
+                    System.out.print("E");
+                } else if (cellules[i][j].estSortie()) {
+                    System.out.print("S");
                 } else {
                     System.out.print(".");
                 }
             }
             System.out.println();
         }
+        System.out.println("\nUtilisez Z (haut), S (bas), Q (gauche), D (droite) pour vous déplacer, X pour quitter");
+    }
+
+    private boolean peutDeplacer(int x, int y) {
+        if (x < 0 || x >= largeurMax || y < 0 || y >= hauteurMax) {
+            return false;
+        } else if (cellules[x][y] == null || cellules[x][y].estMur()) {
+            return false;
+        }
+        return !cellules[x][y].estMur();
+    }
+
+    private boolean estSurSortie(int x, int y) {
+        return cellules[x][y].estSortie();
+    }
+
+    private char lireTouche() throws IOException {
+        char c = (char) System.in.read();
+        while (System.in.available() > 0) {
+            System.in.read();
+        }
+        return Character.toLowerCase(c);
+    }
+
+    public int getLargeurMax() {
+        return largeurMax;
+    }
+
+    public int getHauteurMax() {
+        return hauteurMax;
+    }
+
+    public Cellule[][] getCellules() {
+        return cellules;
     }
 }

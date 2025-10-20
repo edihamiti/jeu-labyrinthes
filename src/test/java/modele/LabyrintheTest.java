@@ -11,7 +11,7 @@ class LabyrintheTest {
         // Crée un labyrinthe de test
         Labyrinthe labyrinthe = new Labyrinthe(10, 10, 20.0);
         labyrinthe.generer();
-        labyrinthe.afficher();
+        labyrinthe.afficherAvecJoueur();
 
         // Calcule le plus court chemin
         int longueurChemin = labyrinthe.calculePlusCourtChemin();
