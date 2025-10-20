@@ -205,50 +205,51 @@ public class Labyrinthe {
         return dist[endX][endY];
     }
 
-    public void jouer() {
-        generer();
-        System.out.println("Génération d'un labyrinthe " + getLargeurMax() + "x" + getHauteurMax() + " avec " + pourcentageMurs + "% de murs...");
-
-        while (jeuEnCours) {
-            // Efface l'écran (ANSI escape code)
-            System.out.flush();
-
-            afficherAvecJoueur();
-
-            try {
-                char touche = lireTouche();
-                switch (touche) {
-                    case 'q': // Gauche
-                        if (peutDeplacer(joueurX - 1, joueurY)) joueurX--;
-                        System.out.println("Impossible");
-                        break;
-                    case 'd': // Droite
-                        if (peutDeplacer(joueurX + 1, joueurY)) joueurX++;
-                        System.out.println("Impossible");
-                        break;
-                    case 'z': // Haut
-                        if (peutDeplacer(joueurX, joueurY - 1)) joueurY--;
-                        System.out.println("Impossible");
-                        break;
-                    case 's': // Bas
-                        if (peutDeplacer(joueurX, joueurY + 1)) joueurY++;
-                        System.out.println("Impossible");
-                        break;
-                    case 'x': // Quitter
-                        jeuEnCours = false;
-                        break;
-                }
-
-                if (estSurSortie(joueurX, joueurY)) {
-                    System.out.println("\nBravo ! Vous avez atteint la sortie !");
-                    jeuEnCours = false;
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public double getPourcentageMurs() {
+        return pourcentageMurs;
     }
+
+    public boolean isJeuEnCours() {
+        return jeuEnCours;
+    }
+
+    public int getJoueurY() {
+        return joueurY;
+    }
+
+    public int getJoueurX() {
+        return joueurX;
+    }
+
+    public int getDistanceMin() {
+        return distanceMin;
+    }
+
+    public int getHauteur() {
+        return hauteur;
+    }
+
+    public int getLargeur() {
+        return largeur;
+    }
+
+    public void setJeuEnCours(boolean jeuEnCours) {
+        this.jeuEnCours = jeuEnCours;
+    }
+
+    public void setJoueurY(int joueurY) {
+        this.joueurY = joueurY;
+    }
+
+    public void setJoueurX(int joueurX) {
+        this.joueurX = joueurX;
+    }
+
+    public void setCellules(Cellule[][] cellules) {
+        this.cellules = cellules;
+    }
+
+
 
     public void afficherAvecJoueur() {
         for (int j = 0; j < hauteurMax; j++) {
@@ -270,7 +271,7 @@ public class Labyrinthe {
         System.out.println("\nUtilisez Z (haut), S (bas), Q (gauche), D (droite) pour vous déplacer, X pour quitter");
     }
 
-    private boolean peutDeplacer(int x, int y) {
+    public boolean peutDeplacer(int x, int y) {
         if (x < 0 || x >= largeurMax || y < 0 || y >= hauteurMax) {
             return false;
         } else if (cellules[x][y] == null || cellules[x][y].estMur()) {
@@ -279,11 +280,11 @@ public class Labyrinthe {
         return !cellules[x][y].estMur();
     }
 
-    private boolean estSurSortie(int x, int y) {
+    public boolean estSurSortie(int x, int y) {
         return cellules[x][y].estSortie();
     }
 
-    private char lireTouche() throws IOException {
+    public char lireTouche() throws IOException {
         char c = (char) System.in.read();
         while (System.in.available() > 0) {
             System.in.read();
