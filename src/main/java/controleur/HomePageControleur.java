@@ -29,18 +29,15 @@ public class HomePageControleur {
     public void initialize() {
         modeProgression = true;
 
-        // Créer un clip dynamique pour arrondir les coins du contenu
-        if (contentPage != null) {
-            Rectangle clip = new Rectangle();
-            clip.setArcWidth(40);
-            clip.setArcHeight(40);
+        Rectangle clip = new Rectangle();
+        clip.setArcWidth(40);
+        clip.setArcHeight(40);
 
-            // Lier la largeur et la hauteur du clip aux dimensions du VBox
-            clip.widthProperty().bind(contentPage.widthProperty());
-            clip.heightProperty().bind(contentPage.heightProperty());
+        // Lier le width et la hauteur du clip aux dimensions du VBox
+        clip.widthProperty().bind(contentPage.widthProperty());
+        clip.heightProperty().bind(contentPage.heightProperty());
 
-            contentPage.setClip(clip);
-        }
+        contentPage.setClip(clip);
     }
 
     public void modeProgression(){

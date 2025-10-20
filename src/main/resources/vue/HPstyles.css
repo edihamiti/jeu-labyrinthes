@@ -56,7 +56,7 @@
 
 .page {
     -fx-background-color: white;
-    -fx-background-image: url('img/progress-background.png');
+    -fx-background-image: url('img/background.png');
     -fx-background-size: cover;
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
