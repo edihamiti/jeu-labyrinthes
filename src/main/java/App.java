@@ -1,19 +1,23 @@
-import controleur.MenuPrincipalControleur;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
-import modele.Jeu;
-import vue.MenuPrincipal;
+
+import java.io.IOException;
 
 public class App extends Application {
-    public static void main(String[] args) {
-        launch(args);
+    @Override
+    public void start(Stage stage) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/HomePage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1400, 900);
+        stage.setTitle("HomePage");
+        stage.setScene(scene);
+        stage.setMaximized(true);
+        stage.show();
     }
 
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        Jeu jeu = new Jeu();
-        MenuPrincipalControleur menuControleur = new MenuPrincipalControleur(jeu);
-        MenuPrincipal menu = new MenuPrincipal(jeu);
+    public static void main(String[] args) {
+        launch(args);
     }
 }

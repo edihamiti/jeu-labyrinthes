@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<HBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controleur.HomePageControleur"
+      stylesheets="vue/HPstyles.css"
+      spacing="20">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Navbar -->
+    <VBox styleClass="navbar" alignment="CENTER">
+
+        <!-- Logo -->
+        <Label text="Labyrinthe" styleClass="nav-logo"/>
+
+        <!-- Spacer -->
+        <VBox VBox.vgrow="ALWAYS"/>
+
+        <!-- Boutons -->
+        <VBox spacing="15">
+            <Button text="Mode Libre" styleClass="nav-bouton"/>
+            <Button text="Mode Progression" styleClass="nav-bouton"/>
+        </VBox>
+
+        <!-- Spacer -->
+        <VBox VBox.vgrow="ALWAYS"/>
+
+        <Button text="Connexion" styleClass="nav-bouton-CTA"/>
+    </VBox>
+
+    <!-- Contenu de la page -->
+    <VBox spacing="20.0" HBox.hgrow="ALWAYS" styleClass="page">
+        <padding>
+            <Insets top="40" right="40" bottom="40" left="40"/>
+        </padding>
+        <Label text=""/>
+    </VBox>
+
+</HBox>
