@@ -78,7 +78,12 @@ public class HomePageControleur {
 
     public void lancerJeu() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
+            FXMLLoader loader;
+            if (modeProgression) {
+                loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
+            } else {
+                loader = new FXMLLoader(getClass().getResource("/ModeLibreParametres.fxml"));
+            }
             Parent jeuView = loader.load();
 
             Stage stage = (Stage) nouvellePartieButton.getScene().getWindow();
