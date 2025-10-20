@@ -8,7 +8,7 @@
 <ScrollPane xmlns:fx="http://javafx.com/fxml"
         fx:controller="controleur.MainController"
         fx:id="content"
-        stylesheets="vue/styles.css"
+        stylesheets="styles.css"
         style="-fx-background-color: #588157;"
 >
 
