@@ -53,7 +53,7 @@ public class HomePageControleur {
         contentPage.setClip(clip);
     }
 
-    public void modeProgression(){
+    public void modeProgression() {
         nomMode.setText("Mode progression");
         descriptionMode.setText("Complète des labyrinthes pour débloquer de nouveaux niveaux !");
         chargerProfilButton.setVisible(true);
@@ -91,12 +91,12 @@ public class HomePageControleur {
             Scene jeuScene = new Scene(jeuView, 1400, 900);
 
             stage.setScene(jeuScene);
+            stage.setMaximized(true);
             stage.setTitle("Jeu des Labyrinthes");
 
             System.out.println("Jeu lancé !");
 
         } catch (IOException e) {
-            e.printStackTrace();
             System.err.println(e.getMessage());
         }
     }
