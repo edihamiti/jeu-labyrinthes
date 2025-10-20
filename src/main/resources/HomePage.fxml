@@ -69,7 +69,7 @@
         <!--Zone de Boutons-->
         <HBox HBox.hgrow="ALWAYS" spacing="10">
             <Button fx:id="chargerProfilButton" text="Charger Profil" styleClass="button-outlined" HBox.hgrow="ALWAYS"/>
-            <Button fx:id="nouvellePartieButton" text="Nouvelle Partie" styleClass="button-filled" HBox.hgrow="ALWAYS"/>
+            <Button fx:id="nouvellePartieButton" onAction="#lancerJeu" text="Nouvelle Partie" styleClass="button-filled" HBox.hgrow="ALWAYS"/>
         </HBox>
     </VBox>
 

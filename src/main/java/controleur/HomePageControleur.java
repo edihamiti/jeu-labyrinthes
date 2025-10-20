@@ -1,6 +1,9 @@
 package controleur;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -8,6 +11,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 
 public class HomePageControleur {
@@ -68,5 +74,25 @@ public class HomePageControleur {
 
     public void quit() {
         System.exit(0);
+    }
+
+    public void lancerJeu() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
+            Parent jeuView = loader.load();
+
+            Stage stage = (Stage) nouvellePartieButton.getScene().getWindow();
+
+            Scene jeuScene = new Scene(jeuView, 1400, 900);
+
+            stage.setScene(jeuScene);
+            stage.setTitle("Jeu des Labyrinthes");
+
+            System.out.println("Jeu lancé !");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println(e.getMessage());
+        }
     }
 }
