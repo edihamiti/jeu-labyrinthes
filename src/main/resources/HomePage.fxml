@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Text?>
 <HBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="controleur.HomePageControleur"
-      stylesheets="styles.css"
+      stylesheets="styles/styles.css"
       spacing="20">
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
