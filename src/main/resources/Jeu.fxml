@@ -17,4 +17,18 @@
     <HBox spacing="10" alignment="CENTER">
         <Button fx:id="retourMenu" text="Retour au menu" onAction="#retourMenu" styleClass="button-ghost"/>
     </HBox>
+    <VBox spacing="10">
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Largeur" styleClass="title"/>
+            <TextField fx:id="largeurField"/>
+        </HBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Hauteur" styleClass="title"/>
+            <TextField fx:id="hauteurField"/>
+        </HBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Pourcentage de Murs" styleClass="title"/>
+            <TextField fx:id="murPourcentageField"/>
+        </HBox>
+    </VBox>
 </VBox>
