@@ -2,7 +2,8 @@ package modele;
 
 import modele.Cellules.*;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Random;
 
 public class Labyrinthe {
 
@@ -25,7 +26,7 @@ public class Labyrinthe {
         //this.generer();
     }
 
-    public Labyrinthe(Defi defi){
+    public Labyrinthe(Defi defi) {
         this(defi.getLargeur(), defi.getHauteur(), defi.getPourcentageMurs());
     }
 
@@ -44,7 +45,7 @@ public class Labyrinthe {
         for (int i = 1; i < largeur; i++) {
             for (int j = 1; j < hauteur; j++) {
                 if ((!(cellules[i][j] instanceof Entree) && !(cellules[i][j] instanceof Sortie)) && (Math.random() < (1 - (pourcentageMurs / 100)))) {
-                    cellules[i][j] = new Chemin(x, y);
+                    cellules[i][j] = new Chemin(i, j);
                 }
             }
         }
@@ -202,8 +203,12 @@ public class Labyrinthe {
     public void afficher() {
         for (int i = 0; i < largeurMax; i++) {
             for (int j = 0; j < hauteurMax; j++) {
-                if (cellules[i][j] instanceof Mur ){
+                if (cellules[i][j] instanceof Mur) {
                     System.out.print("#");
+                } else if (cellules[i][j] instanceof Entree) {
+                    System.out.print("E");
+                } else if (cellules[i][j] instanceof Sortie) {
+                    System.out.print("S");
 
                 } else {
                     System.out.print(".");
