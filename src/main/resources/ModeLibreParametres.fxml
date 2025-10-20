@@ -27,7 +27,12 @@
         </padding>
         <Label text="Configurer votre labyrinthe" styleClass="title"/>
 
-        <VBox>
+        <VBox
+            styleClass="form-container"
+            alignment="CENTER"
+            spacing="15"
+            prefWidth="200"
+        >
             <Label styleClass="form-label" text="Largeur du labyrinthe :"/>
             <TextField fx:id="largeurField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
@@ -37,7 +42,7 @@
             <Label styleClass="form-label" text="Densité des obstacles (%) :"/>
             <TextField fx:id="pourcentageMursField" promptText="Entrez la densité" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-            <Button text="Valider" fx:id="validerButton" onAction="#lancerModeLibre" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2" />
+            <Button text="Valider" fx:id="validerButton" styleClass="button-filled" prefWidth="Infinity" onAction="#lancerModeLibre" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2" />
         </VBox>
 
     </VBox>
