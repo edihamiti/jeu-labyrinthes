@@ -132,6 +132,7 @@
 
 .tab:hover {
     -fx-background-color: -color-2;
+    -fx-cursor: hand;
 }
 
 .tabs-rectangle.selected {
