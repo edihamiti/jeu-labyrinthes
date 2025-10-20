@@ -25,8 +25,8 @@
 
         <!-- Boutons -->
         <VBox spacing="15">
-            <Button text="Mode Libre" styleClass="nav-bouton"/>
-            <Button text="Mode Progression" styleClass="nav-bouton"/>
+            <Button text="Mode Libre" styleClass="nav-bouton" onAction="#modeLibre"/>
+            <Button text="Mode Progression" styleClass="nav-bouton" onAction="#modeProgression"/>
         </VBox>
 
         <!-- Spacer -->
@@ -43,8 +43,8 @@
 
         <!--Zone de titre-->
         <VBox>
-            <Label text="Mode progression" styleClass="title"/>
-            <Label text="Complète des labyrinthes pour débloquer de nouveaux niveaux" styleClass="subtitle"/>
+            <Label fx:id="nomMode" text="Mode progression" styleClass="title"/>
+            <Label fx:id="descriptionMode" text="Complète des labyrinthes pour débloquer de nouveaux niveaux" styleClass="subtitle"/>
         </VBox>
 
         <!-- Spacer -->
