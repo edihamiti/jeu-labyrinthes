@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.chart.NumberAxis?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controleur.modeLibre.ParametresControleur"
+      spacing="20"
+      alignment="TOP_CENTER"
+      stylesheets="styles/styles.css, styles/modeLibre.css"
+>
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <VBox
+        styleClass="contenu"
+        alignment="TOP_CENTER"
+        spacing="20"
+        HBox.hgrow="ALWAYS"
+        VBox.vgrow="ALWAYS"
+    >
+        <padding>
+            <Insets top="90" right="90" bottom="90" left="90"/>
+        </padding>
+        <Label text="Configurer votre labyrinthe" styleClass="title"/>
+
+        <VBox>
+            <Label styleClass="form-label" text="Largeur du labyrinthe :"/>
+            <TextField fx:id="largeurField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label styleClass="form-label" text="Hauteur du labyrinthe :"/>
+            <TextField fx:id="hauteurField" promptText="Entrez la hauteur" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label styleClass="form-label" text="Densité des obstacles (%) :"/>
+            <TextField fx:id="pourcentageMursField" promptText="Entrez la densité" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Button text="Valider" fx:id="validerButton" onAction="#lancerModeLibre" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2" />
+        </VBox>
+
+        <!-- Spacer -->
+        <Region VBox.vgrow="ALWAYS"/>
+
+
+
+    </VBox>
+
+
+</VBox>

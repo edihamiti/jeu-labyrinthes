@@ -80,9 +80,11 @@
 
 .contenu {
     -fx-pref-width: 100%;
-    -fx-background-color: transparent;
+    -fx-background-color: -color-1;
     -fx-border-radius: 18px;
     -fx-background-radius: 18px;
+    -fx-min-height: 100%;
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 1, 1);
 }
 
 .button-ghost {
@@ -181,4 +183,10 @@
     -fx-fill: -color-6;
     -fx-font-weight: 600;
     -fx-font-size: 14px;
+}
+
+.form-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 400;
+    -fx-text-fill: #FFF;
 }
