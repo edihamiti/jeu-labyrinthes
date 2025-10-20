@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Text?>
 <HBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="controleur.HomePageControleur"
-      stylesheets="vue/HPstyles.css, vue/styles.css"
+      stylesheets="vue/styles.css"
       spacing="20">
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
@@ -18,8 +18,8 @@
 
         <!-- Logo -->
         <VBox spacing="-15">
-            <Label text="Le jeu des" styleClass="nav-logo-first-line"/>
-            <Label text="Labyrinthe" styleClass="nav-logo-second-line"/>
+            <Label text="Le jeu des" styleClass="logo, first-line"/>
+            <Label text="Labyrinthe" styleClass="logo, second-line"/>
         </VBox>
 
         <!-- Spacer -->
@@ -31,7 +31,7 @@
                 <graphic>
                     <StackPane>
                         <Rectangle width="4" styleClass="tabs-rectangle, selected" />
-                        <Text text="Mode Progression" styleClass="tabs-text, selected" />
+                        <Text text="Mode Progression" fx:id="modeProgressionText" styleClass="tabs-text, selected" />
                     </StackPane>
                 </graphic>
             </Button>
@@ -39,7 +39,7 @@
                 <graphic>
                     <StackPane>
                         <Rectangle styleClass="tabs-rectangle" />
-                        <Text text="Mode Libre" styleClass="tabs-text" />
+                        <Text text="Mode Libre" fx:id="modeLibreText" styleClass="tabs-text" />
                     </StackPane>
                 </graphic>
             </Button>
@@ -52,7 +52,7 @@
     </VBox>
 
     <!-- Contenu de la page -->
-    <VBox fx:id="contentPage" spacing="20.0" HBox.hgrow="ALWAYS" styleClass="page">
+    <VBox fx:id="contentPage" spacing="20.0" HBox.hgrow="ALWAYS" styleClass="home-tab">
         <padding>
             <Insets top="40" right="40" bottom="40" left="40"/>
         </padding>
