@@ -12,7 +12,7 @@
       stylesheets="styles/styles.css, styles/modeLibre.css"
 >
     <padding>
-        <Insets top="40" right="40" bottom="40" left="40"/>
+        <Insets top="15" right="15" bottom="15" left="15"/>
     </padding>
 
     <VBox

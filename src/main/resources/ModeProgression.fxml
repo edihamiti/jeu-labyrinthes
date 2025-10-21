@@ -11,13 +11,13 @@
       stylesheets="styles/styles.css"
 >
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets top="15" right="15" bottom="15" left="15"/>
     </padding>
 
-    <Label text="Mode Progression" styleClass="title" />
 
-    <VBox spacing="10" alignment="CENTER" styleClass="contenu">
-        <Label text="Sélectionnez un niveau" />
+    <VBox spacing="10" alignment="TOP_CENTER" styleClass="contenu" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+        <Label text="Mode Progression" styleClass="title" />
+        <Label text="Sélectionnez une étape et une difficulté pour commencer à jouer" styleClass="subtitle" />
 
         <GridPane fx:id="grilleGrid" hgap="10" vgap="10" alignment="CENTER">
         </GridPane>
