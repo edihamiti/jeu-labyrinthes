@@ -47,13 +47,13 @@ public class Labyrinthe {
         cellules[0][1] = new Entree(x, y);
         faireChemin(cellules, x, y);
 
-        for (int i = 1; i < largeurMax-1; i++) {
+        /**for (int i = 1; i < largeurMax-1; i++) {
             for (int j = 1; j < hauteurMax-1; j++) {
                 if ((!(cellules[i][j] instanceof Entree) && !(cellules[i][j] instanceof Sortie)) && (Math.random() < (1 - (pourcentageMurs / 100)))) {
                     cellules[i][j] = new Chemin(i, j);
                 }
             }
-        }
+        }**/
     }
 
 
@@ -69,13 +69,75 @@ public class Labyrinthe {
         }
 
         cellules[cheminx][cheminy] = new Chemin(cheminx, cheminy);
-
+        int nbchemins = 0;
         boolean nouveauchemin;
         for (int i = 1; i <= nbCaseChemin; i++) {
             nouveauchemin = false;
             Random random = new Random();
             int sens = random.nextInt(4);
+            nbchemins++;
+            if (i%10 == 0) {
+                faireCheminAlternatif(cellules, cheminx, cheminy);
+            }
+            while (!nouveauchemin) {
+                switch (sens) {
+                    case 0: //Pour aller vers le haut
+                        if ((cheminy - 1 != 0) && !(cellules[cheminx][cheminy-1] instanceof Chemin)) {
+                            cheminy--;
+                            nouveauchemin = true;
+                        } else {
+                            nouveauchemin = false;
+                            sens += random.nextInt(3) + 1;
+                        }
+                        break;
+                    case 1: //Pour aller vers la droite
+                        if ((cheminx + 1 != hauteurMax) && !(cellules[cheminx+1][cheminy] instanceof Chemin)) {
+                            cheminx++;
+                            nouveauchemin = true;
+                        } else {
+                            nouveauchemin = false;
+                            int choix = random.nextInt(2);
+                            if (choix == 0) sens = 0;
+                            else sens += random.nextInt(2) + 2;
+                        }
+                        break;
+                    case 2: //Pour aller vers le bas
+                        if ((cheminy + 1 != largeurMax) && !(cellules[cheminx][cheminy+1] instanceof Chemin)) {
+                            cheminy++;
+                            nouveauchemin = true;
+                        } else {
+                            nouveauchemin = false;
+                            int choix = random.nextInt(2);
+                            if (choix == 0) sens -= random.nextInt(2) + 1;
+                            else sens = 3;
+                        }
+                        break;
+                    case 3: //Pour aller vers la gauche
+                        if ((cheminx - 1 != 0) && !(cellules[cheminx-1][cheminy] instanceof Chemin)) {
+                            cheminx--;
+                            nouveauchemin = true;
+                        } else {
+                            nouveauchemin = false;
+                            sens -= random.nextInt(3) + 1;
+                        }
+                        break;
+                }
+            }
 
+            if (i == nbCaseChemin) {
+                cellules[cheminx][cheminy] = new Sortie(x, y);
+            } else {
+                cellules[cheminx][cheminy] = new Chemin(cheminx, cheminy);
+            }
+        }
+    }
+
+    public void faireCheminAlternatif(Cellule[][] cellules, int cheminx, int cheminy) {
+        boolean nouveauchemin;
+        for (int i = 1; i <= 10; i++) {
+            nouveauchemin = false;
+            Random random = new Random();
+            int sens = random.nextInt(4);
             while (!nouveauchemin) {
                 switch (sens) {
                     case 0: //Pour aller vers le haut
@@ -88,7 +150,7 @@ public class Labyrinthe {
                         }
                         break;
                     case 1: //Pour aller vers la droite
-                        if (cheminx + 1 != largeurMax) {
+                        if (cheminx + 1 != hauteurMax) {
                             cheminx++;
                             nouveauchemin = true;
                         } else {
@@ -99,7 +161,7 @@ public class Labyrinthe {
                         }
                         break;
                     case 2: //Pour aller vers le bas
-                        if (cheminy + 1 != hauteurMax) {
+                        if (cheminy + 1 != largeurMax) {
                             cheminy++;
                             nouveauchemin = true;
                         } else {
@@ -119,12 +181,6 @@ public class Labyrinthe {
                         }
                         break;
                 }
-            }
-
-            if (i == nbCaseChemin) {
-                cellules[cheminx][cheminy] = new Sortie(x, y);
-            } else {
-                cellules[cheminx][cheminy] = new Chemin(cheminx, cheminy);
             }
         }
     }
