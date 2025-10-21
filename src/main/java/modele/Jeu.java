@@ -2,12 +2,11 @@ package modele;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Jeu {
     private ModeJeu modeJeu;
-    private  Joueur joueur;
+    private Joueur joueur;
     private Labyrinthe labyrinthe;
 
     public Jeu(ModeJeu modeJeu, Joueur joueur, Labyrinthe labyrinthe) {
@@ -21,6 +20,9 @@ public class Jeu {
         this.labyrinthe = labyrinthe;
     }
 
+    // constructeur vide
+    public Jeu() {
+    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
