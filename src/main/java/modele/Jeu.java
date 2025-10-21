@@ -66,7 +66,7 @@ public class Jeu {
 
     public void jouer() {
         labyrinthe.generer();
-        System.out.println("Génération d'un labyrinthe " + labyrinthe.getLargeurMax() + "x" + labyrinthe.getHauteurMax() + " avec " + labyrinthe.getPourcentageMurs() + "% de murs...");
+        System.out.println("Génération d'un labyrinthe " + labyrinthe.getLargeur() + "x" + labyrinthe.getHauteur() + " avec " + labyrinthe.getPourcentageMurs() + "% de murs...");
 
         while (labyrinthe.isJeuEnCours()) {
             System.out.flush();

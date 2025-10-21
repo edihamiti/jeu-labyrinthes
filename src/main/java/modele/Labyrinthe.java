@@ -47,8 +47,8 @@ public class Labyrinthe {
         cellules[0][1] = new Entree(x, y);
         faireChemin(cellules, x, y);
 
-        for (int i = 1; i < largeur; i++) {
-            for (int j = 1; j < hauteur; j++) {
+        for (int i = 1; i < largeurMax-1; i++) {
+            for (int j = 1; j < hauteurMax-1; j++) {
                 if ((!(cellules[i][j] instanceof Entree) && !(cellules[i][j] instanceof Sortie)) && (Math.random() < (1 - (pourcentageMurs / 100)))) {
                     cellules[i][j] = new Chemin(i, j);
                 }
@@ -58,7 +58,7 @@ public class Labyrinthe {
 
 
     public void faireChemin(Cellule[][] cellules, int x, int y) {
-        int nbCaseChemin = (int) ((largeur * hauteur) * ((100 - pourcentageMurs) / 100));
+        int nbCaseChemin = (int) ((largeur * hauteur) /*** ((100 - pourcentageMurs) / 100)**/);
 
         int cheminx = x;
         int cheminy = y;
