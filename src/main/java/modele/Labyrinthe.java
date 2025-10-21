@@ -1,8 +1,11 @@
 package modele;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import modele.Cellules.*;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -15,9 +18,9 @@ public class Labyrinthe {
     private final int largeurMax;
     private final int hauteurMax;
     private Cellule[][] cellules;
-    private int joueurX;
-    private int joueurY;
-    private boolean jeuEnCours;
+    private final IntegerProperty joueurX;
+    private final IntegerProperty joueurY;
+    private final BooleanProperty jeuEnCours;
 
     public Labyrinthe(int largeur, int hauteur, double pourcentageMurs) {
         this.largeur = largeur;
@@ -26,9 +29,9 @@ public class Labyrinthe {
         this.distanceMin = 1;
         this.largeurMax = largeur + 2;
         this.hauteurMax = hauteur + 2;
-        this.joueurX = 0;
-        this.joueurY = 1;
-        this.jeuEnCours = true;
+        this.joueurX = new SimpleIntegerProperty(0);
+        this.joueurY = new SimpleIntegerProperty(1);
+        this.jeuEnCours = new SimpleBooleanProperty(true);
     }
 
     public Labyrinthe(Defi defi) {
@@ -210,14 +213,26 @@ public class Labyrinthe {
     }
 
     public boolean isJeuEnCours() {
+        return jeuEnCours.get();
+    }
+
+    public BooleanProperty jeuEnCoursProperty() {
         return jeuEnCours;
     }
 
     public int getJoueurY() {
+        return joueurY.get();
+    }
+
+    public IntegerProperty joueurYProperty() {
         return joueurY;
     }
 
     public int getJoueurX() {
+        return joueurX.get();
+    }
+
+    public IntegerProperty joueurXProperty() {
         return joueurX;
     }
 
@@ -234,15 +249,15 @@ public class Labyrinthe {
     }
 
     public void setJeuEnCours(boolean jeuEnCours) {
-        this.jeuEnCours = jeuEnCours;
+        this.jeuEnCours.set(jeuEnCours);
     }
 
     public void setJoueurY(int joueurY) {
-        this.joueurY = joueurY;
+        this.joueurY.set(joueurY);
     }
 
     public void setJoueurX(int joueurX) {
-        this.joueurX = joueurX;
+        this.joueurX.set(joueurX);
     }
 
     public void setCellules(Cellule[][] cellules) {
@@ -251,25 +266,7 @@ public class Labyrinthe {
 
 
 
-    public void afficherAvecJoueur() {
-        for (int j = 0; j < hauteurMax; j++) {
-            for (int i = 0; i < largeurMax; i++) {
-                if (i == joueurX && j == joueurY) {
-                    System.out.print("P"); // joueur
-                } else if (cellules[i][j].estMur()) {
-                    System.out.print("#");
-                } else if (cellules[i][j].estEntree()) {
-                    System.out.print("E");
-                } else if (cellules[i][j].estSortie()) {
-                    System.out.print("S");
-                } else {
-                    System.out.print(".");
-                }
-            }
-            System.out.println();
-        }
-        System.out.println("\nUtilisez Z (haut), S (bas), Q (gauche), D (droite) pour vous déplacer, X pour quitter");
-    }
+
 
     public boolean peutDeplacer(int x, int y) {
         if (x < 0 || x >= largeurMax || y < 0 || y >= hauteurMax) {
@@ -284,13 +281,7 @@ public class Labyrinthe {
         return cellules[x][y].estSortie();
     }
 
-    public char lireTouche() throws IOException {
-        char c = (char) System.in.read();
-        while (System.in.available() > 0) {
-            System.in.read();
-        }
-        return Character.toLowerCase(c);
-    }
+
 
     public int getLargeurMax() {
         return largeurMax;

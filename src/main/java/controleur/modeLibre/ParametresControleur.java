@@ -95,14 +95,29 @@ public class ParametresControleur {
         pourcentageMursSlider.setValue(this.pourcentageMurs);
     }
 
+    /**
+     * Launches free mode game with user-specified parameters
+     * Properly passes parameters from View to Controller to Model
+     */
     public void lancerModeLibre() {
         try {
             System.out.println("Lancement du mode libre");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
             Parent jeuView = loader.load();
 
-            // TODO: Enregistrer les valeurs du formulaire quelque part??
-            // faire un Jeu.getInstance().setParametres(largeur, hauteur, pourcentageMurs) ?? aucune idée besoin d'aide là dessus
+            // Get controller and pass parameters (Controller -> Model communication)
+            controleur.JeuControleur jeuControleur = loader.getController();
+            
+            // Create a player for free mode
+            modele.Joueur joueur;
+            try {
+                joueur = new modele.Joueur("ModeLibre");
+            } catch (modele.PseudoException e) {
+                joueur = null;
+            }
+            
+            // Pass parameters to controller, which will update the model
+            jeuControleur.setParametres(largeur, hauteur, pourcentageMurs, joueur);
 
             Stage stage = (Stage) validerButton.getScene().getWindow();
 
@@ -111,7 +126,7 @@ public class ParametresControleur {
             stage.setScene(jeuScene);
             stage.setTitle("Jeu des Labyrinthes - Mode Libre");
 
-            System.out.println("Jeu lancé !");
+            System.out.println("Jeu lancé avec paramètres: " + largeur + "x" + hauteur + ", " + pourcentageMurs + "% murs");
         } catch (IOException e) {
             System.err.println("Erreur lors du lancement du mode libre !");
             System.err.println(e.getMessage());
