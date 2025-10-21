@@ -26,6 +26,10 @@ public class JeuControleur {
         // Pour les tests
         this.labyrinthe = new Labyrinthe(10, 10, 10);
         labyrinthe.generer();
+
+        labyrinthe.joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
+        labyrinthe.joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
+
         afficherLabyrinthe();
     }
 
@@ -87,8 +91,6 @@ public class JeuControleur {
         if (labyrinthe.peutDeplacer(nouveauX, nouveauY)) {
             labyrinthe.setJoueurX(nouveauX);
             labyrinthe.setJoueurY(nouveauY);
-
-            afficherLabyrinthe();
 
             if (labyrinthe.estSurSortie(nouveauX, nouveauY)) {
                 victoire();
