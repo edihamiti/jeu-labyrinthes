@@ -231,5 +231,17 @@
     -display-tick-labels: false;
     -fx-tick-label-fill: transparent;
     -fx-tick-length: 2;
-    -fx-minor-tick-length: 2;
+    -fx-minor-tick-length: 0;
+}
+
+.text-field {
+    -fx-background-color: -color-1;
+    -fx-text-fill: #FFF;
+    -fx-border-radius: 7px;
+    -fx-background-radius: 7px;
+}
+
+.text-field:focused {
+    -fx-border-color: -color-6;
+    -fx-border-width: 1px;
 }

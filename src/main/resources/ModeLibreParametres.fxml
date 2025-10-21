@@ -29,31 +29,41 @@
 
         <VBox
             styleClass="form-container"
-            alignment="CENTER"
+            alignment="TOP_LEFT"
             spacing="15"
-            prefWidth="200"
+            prefWidth="400"
+            maxWidth="450"
         >
-            <Label styleClass="form-label" text="Largeur du labyrinthe :"/>
-            <TextField fx:id="largeurField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <VBox>
+                <Label styleClass="form-label" text="Taille :"/>
+                <HBox alignment="CENTER_LEFT">
+                    <TextField fx:id="largeurField" prefWidth="50"/>
+                    <Label styleClass="form-label" text="ｘ"/>
+                    <TextField fx:id="hauteurField" promptText="Entrez la hauteur" prefWidth="50"/>
+                </HBox>
+            </VBox>
 
-            <Label styleClass="form-label" text="Hauteur du labyrinthe :"/>
-            <TextField fx:id="hauteurField" promptText="Entrez la hauteur" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <VBox>
+                <HBox alignment="CENTER_LEFT">
+                    <Label styleClass="form-label" text="Densité des murs (%) :"/>
+                    <!-- Spacer -->
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <TextField fx:id="pourcentageMursField" prefWidth="60" styleClass="text-field"/>
+                </HBox>
+                <Slider
+                    fx:id="pourcentageMursSlider"
+                    min="1"
+                    max="100"
+                    value="50"
+                    majorTickUnit="5"
+                    minorTickCount="1"
+                    blockIncrement="1"
+                    showTickLabels="true"
+                    showTickMarks="true"
+                    snapToTicks="true"
 
-            <Slider
-                fx:id="pourcentageMursSlider"
-                min="1"
-                max="100"
-                value="50"
-                majorTickUnit="5"
-                minorTickCount="1"
-                blockIncrement="1"
-                showTickLabels="true"
-                showTickMarks="true"
-                snapToTicks="true"
-
-            />
-            <Label styleClass="form-label" text="Densité des obstacles (%) :"/>
-            <TextField fx:id="pourcentageMursField" promptText="Entrez la densité" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                />
+            </VBox>
 
             <Button text="Valider" fx:id="validerButton" styleClass="button-filled" prefWidth="Infinity" onAction="#lancerModeLibre" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2" />
         </VBox>
