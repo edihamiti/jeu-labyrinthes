@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.control.Button?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="controleur.ModeProgressionControleur"
       spacing="20"
@@ -14,13 +15,15 @@
         <Insets top="15" right="15" bottom="15" left="15"/>
     </padding>
 
-
     <VBox spacing="10" alignment="TOP_CENTER" styleClass="contenu" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-        <Label text="Mode Progression" styleClass="title" />
-        <Label text="Sélectionnez une étape et une difficulté pour commencer à jouer" styleClass="subtitle" />
+        <Label text="Mode Progression" styleClass="title"/>
+        <Label text="Sélectionnez une étape et une difficulté pour commencer à jouer" styleClass="subtitle"/>
+        <TextField fx:id="pseudoTextField" promptText="Entrez votre pseudo"/>
 
         <VBox fx:id="etapesContainer" spacing="15" alignment="TOP_CENTER" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
             <!-- Les étapes sont ajoutées dynamiquement ici -->
         </VBox>
+
+        <Button fx:id="validerForm" onAction="#validerForm" text="Valider le formulaire"/>
     </VBox>
 </VBox>
