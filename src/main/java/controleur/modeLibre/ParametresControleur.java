@@ -107,8 +107,8 @@ public class ParametresControleur {
             Stage stage = (Stage) validerButton.getScene().getWindow();
 
             Scene jeuScene = new Scene(jeuView, 1400, 900);
-
             stage.setScene(jeuScene);
+            stage.setMaximized(true);
             stage.setTitle("Jeu des Labyrinthes - Mode Libre");
 
             System.out.println("Jeu lancé !");
