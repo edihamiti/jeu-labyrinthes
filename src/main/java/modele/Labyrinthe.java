@@ -249,28 +249,6 @@ public class Labyrinthe {
         this.cellules = cellules;
     }
 
-
-
-    public void afficherAvecJoueur() {
-        for (int j = 0; j < hauteurMax; j++) {
-            for (int i = 0; i < largeurMax; i++) {
-                if (i == joueurX && j == joueurY) {
-                    System.out.print("P"); // joueur
-                } else if (cellules[i][j].estMur()) {
-                    System.out.print("#");
-                } else if (cellules[i][j].estEntree()) {
-                    System.out.print("E");
-                } else if (cellules[i][j].estSortie()) {
-                    System.out.print("S");
-                } else {
-                    System.out.print(".");
-                }
-            }
-            System.out.println();
-        }
-        System.out.println("\nUtilisez Z (haut), S (bas), Q (gauche), D (droite) pour vous déplacer, X pour quitter");
-    }
-
     public boolean peutDeplacer(int x, int y) {
         if (x < 0 || x >= largeurMax || y < 0 || y >= hauteurMax) {
             return false;
@@ -283,15 +261,7 @@ public class Labyrinthe {
     public boolean estSurSortie(int x, int y) {
         return cellules[x][y].estSortie();
     }
-
-    public char lireTouche() throws IOException {
-        char c = (char) System.in.read();
-        while (System.in.available() > 0) {
-            System.in.read();
-        }
-        return Character.toLowerCase(c);
-    }
-
+    
     public int getLargeurMax() {
         return largeurMax;
     }
