@@ -9,7 +9,7 @@
       fx:controller="controleur.JeuControleur"
       spacing="20"
       style="-fx-background-color: -color-1"
-      stylesheets="styles/jeu.css ,styles/styles.css">
+      stylesheets="styles/styles.css">
 
     <padding>
         <Insets top="40" right="40" bottom="40" left="40"/>
