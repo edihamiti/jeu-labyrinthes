@@ -18,6 +18,7 @@ public class Labyrinthe {
     private int joueurX;
     private int joueurY;
     private boolean jeuEnCours;
+    private int nbchemin;
 
     public Labyrinthe(int largeur, int hauteur, double pourcentageMurs) {
         this.largeur = largeur;
@@ -29,6 +30,7 @@ public class Labyrinthe {
         this.joueurX = 0;
         this.joueurY = 1;
         this.jeuEnCours = true;
+        this.nbchemin = 0;
     }
 
     public Labyrinthe(Defi defi) {
@@ -46,10 +48,14 @@ public class Labyrinthe {
         int y = 1;
         cellules[0][1] = new Entree(x, y);
         faireChemin(cellules, x, y);
+        positionAleatoireMurs(cellules);
 
+    }
+
+    public void positionAleatoireMurs(Cellule[][] cellules) {
         for (int i = 1; i < largeurMax-1; i++) {
             for (int j = 1; j < hauteurMax-1; j++) {
-                if ((!(cellules[i][j] instanceof Entree) && !(cellules[i][j] instanceof Sortie)) && (Math.random() < (1 - (pourcentageMurs / 100)))) {
+                if ((!(cellules[i][j] instanceof Entree) && !(cellules[i][j] instanceof Sortie)) && (Math.random() < (1 - (pourcentageMurs / 100)))) { // (largeur * hauteur
                     cellules[i][j] = new Chemin(i, j);
                 }
             }
@@ -58,7 +64,7 @@ public class Labyrinthe {
 
 
     public void faireChemin(Cellule[][] cellules, int x, int y) {
-        int nbCaseChemin = (int) ((largeur * hauteur) /*** ((100 - pourcentageMurs) / 100)**/);
+        int nbCaseChemin = (int) ((largeur * hauteur));
 
         int cheminx = x;
         int cheminy = y;
@@ -75,11 +81,11 @@ public class Labyrinthe {
             nouveauchemin = false;
             Random random = new Random();
             int sens = random.nextInt(4);
-
+            nbchemin ++;
             while (!nouveauchemin) {
                 switch (sens) {
                     case 0: //Pour aller vers le haut
-                        if (cheminy - 1 != 0) {
+                        if (deplacementPossible(cheminx, cheminy)) {
                             cheminy--;
                             nouveauchemin = true;
                         } else {
@@ -88,7 +94,7 @@ public class Labyrinthe {
                         }
                         break;
                     case 1: //Pour aller vers la droite
-                        if (cheminx + 1 != largeurMax) {
+                        if (deplacementPossible(cheminx, cheminy)) {
                             cheminx++;
                             nouveauchemin = true;
                         } else {
@@ -99,7 +105,7 @@ public class Labyrinthe {
                         }
                         break;
                     case 2: //Pour aller vers le bas
-                        if (cheminy + 1 != hauteurMax) {
+                        if (deplacementPossible(cheminx, cheminy)) {
                             cheminy++;
                             nouveauchemin = true;
                         } else {
@@ -110,7 +116,7 @@ public class Labyrinthe {
                         }
                         break;
                     case 3: //Pour aller vers la gauche
-                        if (cheminx - 1 != 0) {
+                        if (deplacementPossible(cheminx, cheminy)) {
                             cheminx--;
                             nouveauchemin = true;
                         } else {
@@ -127,6 +133,14 @@ public class Labyrinthe {
                 cellules[cheminx][cheminy] = new Chemin(cheminx, cheminy);
             }
         }
+    }
+
+    public boolean deplacementPossible(int x, int y) {
+        if ((x - 1) == 0) return false;
+        if ((y - 1) == 0) return false;
+        if ((x + 1) == largeurMax) return false;
+        if ((y + 1) == hauteurMax) return false;
+        return true;
     }
 
     public int calculePlusCourtChemin() {
