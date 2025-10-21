@@ -1,0 +1,24 @@
+.touche-clavier {
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #f9f9f9, #e0e0e0);
+    -fx-text-fill: #333;
+    -fx-font-weight: bold;
+    -fx-font-family: "System";
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-width: 1;
+    -fx-border-color: #b0b0b0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 3, 0.0, 0, 2);
+    -fx-padding: 8 12;
+}
+
+.touche-clavier:hover {
+    -fx-cursor: hand;
+    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #ffffff, #e8e8e8);
+}
+
+.touche-clavier:pressed {
+    -fx-effect: null;
+    -fx-translate-y: 2;
+    -fx-background-color: #e0e0e0;
+    -fx-border-color: #a0a0a0;
+}

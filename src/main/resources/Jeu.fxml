@@ -9,7 +9,7 @@
       fx:controller="controleur.JeuControleur"
       spacing="20"
       style="-fx-background-color: -color-1"
-      stylesheets="styles/styles.css">
+      stylesheets="styles/toucheDeJeu.css ,styles/styles.css">
 
     <padding>
         <Insets top="40" right="40" bottom="40" left="40"/>
@@ -45,12 +45,12 @@
         <VBox fx:id="contienLabyrinthe" alignment="CENTER" style="-fx-background-color: -color-1"/>
 
         <!--touche-->
-        <VBox alignment="CENTER">
-            <Button text="Haut" styleClass="button-filled" onAction="#deplacerHaut"/>
-            <HBox alignment="CENTER">
-                <Button text="Gauche" styleClass="button-filled" onAction="#deplacerGauche"/>
-                <Button text="Bas" styleClass="button-filled" onAction="#deplacerBas"/>
-                <Button text="Droite" styleClass="button-filled" onAction="#deplacerDroite"/>
+        <VBox alignment="CENTER" spacing="5">
+            <Button text="↑" styleClass="touche-clavier" onAction="#deplacerHaut"/>
+            <HBox alignment="CENTER" spacing="5">
+                <Button text="←" styleClass="touche-clavier" onAction="#deplacerGauche"/>
+                <Button text="↓" styleClass="touche-clavier" onAction="#deplacerBas"/>
+                <Button text="→" styleClass="touche-clavier" onAction="#deplacerDroite"/>
             </HBox>
         </VBox>
     </VBox>
