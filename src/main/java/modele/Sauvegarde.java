@@ -84,6 +84,8 @@ public class Sauvegarde {
             String ligne;
             while ((ligne = bf.readLine()) != null) contenu.append(ligne);
 
+            if (contenu.isEmpty()) return;
+
             JSONArray jsonJoueurs = new JSONArray(contenu.toString());
             for (int i = 0; i < jsonJoueurs.length(); i++) this.addJoueur(new Joueur(jsonJoueurs.getJSONObject(i)));
 
