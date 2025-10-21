@@ -11,6 +11,7 @@ public class Joueur {
     private final int id;
     private String pseudo;
     private HashMap<Defi, Boolean> progression;
+    private int score;
 
     public Joueur(String pseudo) throws PseudoException {
         this.id = count++;
@@ -25,6 +26,7 @@ public class Joueur {
         for (Defi defi : Defi.values()) {
             this.progression.put(defi, false);
         }
+        this.score = 0;
     }
 
     public Joueur(JSONObject joueur) {
@@ -35,6 +37,7 @@ public class Joueur {
         JSONObject progressionJson = joueur.getJSONObject("progression");
         for (Defi defi : Defi.values())
             progression.put(defi, (Boolean) progressionJson.get(defi.name()));
+        this.score = joueur.getInt("score");
     }
 
     public int getId() {
@@ -84,5 +87,20 @@ public class Joueur {
     @Override
     public int hashCode() {
         return Objects.hash(pseudo, progression);
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void ajouterScore(Defi defi) {
+        if (defi != null) {
+            this.score += defi.getPoints();
+            this.progression.put(defi, true);
+        }
     }
 }
