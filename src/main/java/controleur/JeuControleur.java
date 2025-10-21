@@ -3,6 +3,7 @@ package controleur;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
+import modele.Joueur;
 import modele.Labyrinthe;
 import vue.LabyrintheRendu;
 
@@ -76,5 +77,17 @@ public class JeuControleur {
         alert.setContentText("Vous avez trouvé la sortie");
         alert.showAndWait();
         AppControleur.getInstance().MenuPrincipal();
+    }
+
+    public void setParametres(int largeur, int hauteur, double pourcentageMurs, Joueur joueur) {
+        this.labyrinthe = new Labyrinthe(largeur, hauteur, pourcentageMurs);
+        labyrinthe.generer();
+        this.rendu = new LabyrintheRendu(labyrinthe, contienLabyrinthe);
+
+
+        labyrinthe.joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
+        labyrinthe.joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
+
+        afficherLabyrinthe();
     }
 }
