@@ -1,12 +1,16 @@
 package modele;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import modele.Cellules.*;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 
 public class Labyrinthe {
+
 
     private final int largeur;
     private final int hauteur;
@@ -15,9 +19,9 @@ public class Labyrinthe {
     private final int largeurMax;
     private final int hauteurMax;
     private Cellule[][] cellules;
-    private int joueurX;
-    private int joueurY;
-    private boolean jeuEnCours;
+    private final IntegerProperty joueurX;
+    private final IntegerProperty joueurY;
+    private final BooleanProperty jeuEnCours;
 
     public Labyrinthe(int largeur, int hauteur, double pourcentageMurs) {
         this.largeur = largeur;
@@ -26,9 +30,9 @@ public class Labyrinthe {
         this.distanceMin = 1;
         this.largeurMax = largeur + 2;
         this.hauteurMax = hauteur + 2;
-        this.joueurX = 0;
-        this.joueurY = 1;
-        this.jeuEnCours = true;
+        this.joueurX = new SimpleIntegerProperty(0);
+        this.joueurY = new SimpleIntegerProperty(1);
+        this.jeuEnCours = new SimpleBooleanProperty(true);
     }
 
     public Labyrinthe(Defi defi) {
@@ -210,15 +214,15 @@ public class Labyrinthe {
     }
 
     public boolean isJeuEnCours() {
-        return jeuEnCours;
+        return jeuEnCours.get();
     }
 
     public int getJoueurY() {
-        return joueurY;
+        return joueurY.get();
     }
 
     public int getJoueurX() {
-        return joueurX;
+        return joueurX.get();
     }
 
     public int getDistanceMin() {
@@ -234,15 +238,15 @@ public class Labyrinthe {
     }
 
     public void setJeuEnCours(boolean jeuEnCours) {
-        this.jeuEnCours = jeuEnCours;
+        this.jeuEnCours.set(jeuEnCours);
     }
 
     public void setJoueurY(int joueurY) {
-        this.joueurY = joueurY;
+        this.joueurY.set(joueurY);
     }
 
     public void setJoueurX(int joueurX) {
-        this.joueurX = joueurX;
+        this.joueurX.set(joueurX);
     }
 
     public void setCellules(Cellule[][] cellules) {
@@ -272,5 +276,17 @@ public class Labyrinthe {
 
     public Cellule[][] getCellules() {
         return cellules;
+    }
+
+    public IntegerProperty joueurXProperty() {
+        return joueurX;
+    }
+
+    public IntegerProperty joueurYProperty() {
+        return joueurY;
+    }
+
+    public BooleanProperty jeuEnCoursProperty() {
+        return jeuEnCours;
     }
 }
