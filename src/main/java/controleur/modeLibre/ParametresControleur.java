@@ -69,7 +69,7 @@ public class ParametresControleur {
 
     public void onPourcentageChange(ActionEvent event) {
         try {
-            pourcentageMurs = Integer.parseInt(this.pourcentageMursField.getText());
+            pourcentageMurs = Double.parseDouble(this.pourcentageMursField.getText());
             updatePourcentageMurs(pourcentageMurs);
         } catch (NumberFormatException e) {
             pourcentageMursField.setText(this.pourcentageMurs + "");
