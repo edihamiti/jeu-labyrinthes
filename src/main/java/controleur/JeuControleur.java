@@ -27,6 +27,39 @@ public class JeuControleur {
         this.labyrinthe = new Labyrinthe(10, 10, 10);
         labyrinthe.generer();
         afficherLabyrinthe();
+
+        contienLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                newScene.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
+                    try {
+                        switch (event.getCode()) {
+                            case UP:
+                            case Z:
+                                deplacerHaut();
+                                event.consume();
+                                break;
+                            case RIGHT:
+                            case D:
+                                deplacerDroite();
+                                event.consume();
+                                break;
+                            case DOWN:
+                            case S:
+                                deplacerBas();
+                                event.consume();
+                                break;
+                            case LEFT:
+                            case Q:
+                                deplacerGauche();
+                                event.consume();
+                                break;
+                        }
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                });
+            }
+        });
     }
 
     public void retourMenu() throws IOException {
