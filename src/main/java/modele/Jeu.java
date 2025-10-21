@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Jeu {
     private ModeJeu modeJeu;
-    private  Joueur joueur;
+    private Joueur joueur;
     private Labyrinthe labyrinthe;
 
     public Jeu(ModeJeu modeJeu, Joueur joueur, Labyrinthe labyrinthe) {

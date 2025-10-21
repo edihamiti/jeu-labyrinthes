@@ -2,39 +2,56 @@ package controleur;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ModeProgressionControleur {
 
     @FXML
-    private GridPane grilleGrid;
+    private VBox etapesContainer;
 
     @FXML
     public void initialize() {
-        String[] colonnes = {"rien", "1", "2", "3"};
-        String[] lignes = {"facil", "moyen", "difficile"};
+        String[] etapes = {"1", "2", "3"};
 
-        double prefWidth = 140;
-        double prefHeight = 100;
+        Map<String, Image> difficultees = new HashMap<>();
 
-        for (int col = 0; col < colonnes.length; col++) {
-            Button header = new Button(colonnes[col]);
-            header.setPrefSize(prefWidth, prefHeight);
-            grilleGrid.add(header, col, 0);
+        difficultees.put("Facile", new Image(getClass().getResourceAsStream("/img/difficultees/facile.png")));
+        difficultees.put("Moyen", new Image(getClass().getResourceAsStream("/img/difficultees/moyen.png")));
+        difficultees.put("Difficile", new Image(getClass().getResourceAsStream("/img/difficultees/difficile.png")));
+
+        double prefWidth = 300;
+        double prefHeight = 90;
+
+        for (String step : etapes) {
+            HBox stepCard = createStepCard(step, difficultees);
+            stepCard.setPrefWidth(prefWidth);
+            stepCard.setPrefHeight(prefHeight);
+            etapesContainer.getChildren().add(stepCard);
         }
 
-        // Boutons OK
-        for (int row = 0; row < lignes.length; row++) {
-            Button rowHeader = new Button(lignes[row]);
-            rowHeader.setPrefSize(prefWidth, prefHeight);
-            grilleGrid.add(rowHeader, 0, row + 1);
 
-            for (int col = 1; col <= 3; col++) {
-                int niveau = col;
-                Button okButton = new Button("ok");
-                okButton.setPrefSize(prefWidth, prefHeight);
-                grilleGrid.add(okButton, col, row + 1);
-            }
-        }
+    }
+
+    private HBox createStepCard(String step, Map<String, Image> difficultees) {
+        HBox root = new HBox();
+        root.getStyleClass().add("step-card");
+
+        Text stepLabel = new Text("Étape " + step);
+        stepLabel.getStyleClass().add("step-label");
+
+        root.getChildren().add(stepLabel);
+
+        Button lancerButton = new Button("Lancer");
+        lancerButton.getStyleClass().add("button-filled");
+
+
+        return root;
     }
 }

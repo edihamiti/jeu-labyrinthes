@@ -8,7 +8,7 @@
       fx:controller="controleur.ModeProgressionControleur"
       spacing="20"
       alignment="TOP_CENTER"
-      stylesheets="styles/styles.css"
+      stylesheets="styles/styles.css, styles/modeProgression.css"
 >
     <padding>
         <Insets top="15" right="15" bottom="15" left="15"/>
@@ -19,8 +19,8 @@
         <Label text="Mode Progression" styleClass="title" />
         <Label text="Sélectionnez une étape et une difficulté pour commencer à jouer" styleClass="subtitle" />
 
-        <GridPane fx:id="grilleGrid" hgap="10" vgap="10" alignment="CENTER">
-        </GridPane>
+        <VBox fx:id="etapesContainer" spacing="15" alignment="TOP_CENTER" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+            <!-- Les étapes sont ajoutées dynamiquement ici -->
+        </VBox>
     </VBox>
-
 </VBox>

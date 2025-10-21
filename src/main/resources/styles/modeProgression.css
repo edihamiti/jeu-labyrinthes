@@ -1,0 +1,16 @@
+.step-card {
+    -fx-spacing: 10px;
+    -fx-background-color: -color-3;
+    -fx-border-color: -color-4;
+    -fx-border-width: 1px;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 20, 0, 0, 4);
+}
+
+.step-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+    -fx-fill: -color-6;
+}

@@ -7,6 +7,9 @@ public class ModeProgression extends ModeJeu {
     private List<Etape> etapes = new ArrayList<>();
 
     public ModeProgression() {
+        for (Defi defi : Defi.values()) {
+            etapes.add(new Etape(defi, 0));
+        }
         etapes.add(new Etape(Defi.FACILE1, 1));
         etapes.add(new Etape(Defi.FACILE2, 2));
         etapes.add(new Etape(Defi.FACILE3, 3));
