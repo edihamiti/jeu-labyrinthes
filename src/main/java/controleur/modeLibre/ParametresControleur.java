@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import modele.PseudoException;
 
 import java.io.IOException;
 
@@ -95,14 +96,20 @@ public class ParametresControleur {
         pourcentageMursSlider.setValue(this.pourcentageMurs);
     }
 
-    public void lancerModeLibre() {
+    public void lancerModeLibre() throws PseudoException {
         try {
             System.out.println("Lancement du mode libre");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
+
             Parent jeuView = loader.load();
+            controleur.JeuControleur jeuControleur = loader.getController();
+
+            modele.Joueur joueur = new modele.Joueur("ModeLibre");
 
             // TODO: Enregistrer les valeurs du formulaire quelque part??
             // faire un Jeu.getInstance().setParametres(largeur, hauteur, pourcentageMurs) ?? aucune idée besoin d'aide là dessus
+            jeuControleur.setParametres(largeur, hauteur, pourcentageMurs, joueur);
+            //normalement ça devrait marcher comme ça
 
             Stage stage = (Stage) validerButton.getScene().getWindow();
 
