@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controleur.ModeProgressionControleur"
+      spacing="20"
+      alignment="TOP_CENTER"
+      stylesheets="styles/styles.css"
+>
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Mode Progression" styleClass="title" />
+
+    <VBox spacing="10" alignment="CENTER" styleClass="contenu">
+        <Label text="Sélectionnez un niveau" />
+
+        <GridPane fx:id="grilleGrid" hgap="10" vgap="10" alignment="CENTER">
+        </GridPane>
+    </VBox>
+
+</VBox>
