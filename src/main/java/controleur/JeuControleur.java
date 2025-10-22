@@ -107,12 +107,12 @@ public class JeuControleur {
     }
 
     private void playSound(String sound) {
-        System.out.println(getClass().getResource("/sounds/"+sound));
         AudioClip audio = new AudioClip(getClass().getResource("/sounds/"+sound).toExternalForm());
         audio.play();
     }
 
     private void victoire() throws IOException {
+        playSound("win.mp3");
         labyrinthe.setJeuEnCours(false);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Victoire");
