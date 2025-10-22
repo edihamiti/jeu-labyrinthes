@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import modele.*;
+import vue.EtapesRendu;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -43,33 +44,7 @@ public class ModeProgressionControleur {
         difficultees.put("Moyen", new Image(getClass().getResourceAsStream("/img/difficultees/moyen.png")));
         difficultees.put("Difficile", new Image(getClass().getResourceAsStream("/img/difficultees/difficile.png")));
 
-        double prefWidth = 300;
-        double prefHeight = 90;
-
-        for (String step : etapes) {
-            HBox stepCard = createStepCard(step, difficultees);
-            stepCard.setPrefWidth(prefWidth);
-            stepCard.setPrefHeight(prefHeight);
-            etapesContainer.getChildren().add(stepCard);
-        }
-
-
-    }
-
-    private HBox createStepCard(String step, Map<String, Image> difficultees) {
-        HBox root = new HBox();
-        root.getStyleClass().add("step-card");
-
-        Text stepLabel = new Text("Étape " + step);
-        stepLabel.getStyleClass().add("step-label");
-
-        root.getChildren().add(stepLabel);
-
-        Button lancerButton = new Button("Lancer");
-        lancerButton.getStyleClass().add("button-filled");
-
-
-        return root;
+        etapesContainer.getChildren().add(EtapesRendu.render(difficultees, etapes));
     }
 
     public void initJoueur() throws PseudoException {
