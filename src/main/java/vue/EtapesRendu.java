@@ -24,17 +24,21 @@ public class EtapesRendu {
         return root;
     }
 
-    private static HBox createStepCard(String step, Map<String, Image> difficulties) {
-        HBox root = new HBox();
+    private static VBox createStepCard(String step, Map<String, Image> difficulties) {
+        VBox root = new VBox();
         root.getStyleClass().add("step-card");
 
         Text label = new Text("Étape " + step);
         label.getStyleClass().add("step-label");
         root.getChildren().add(label);
 
+        HBox difficultyContainer = new HBox(10);
+
         for (String difficulty : difficulties.keySet()) {
-            root.getChildren().add(createDifficultyIcon(difficulties.get(difficulty), difficulty));
+            difficultyContainer.getChildren().add(createDifficultyIcon(difficulties.get(difficulty), difficulty));
         }
+
+        root.getChildren().add(difficultyContainer);
 
         return root;
     }
