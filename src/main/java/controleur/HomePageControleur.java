@@ -80,7 +80,7 @@ public class HomePageControleur {
         try {
             FXMLLoader loader;
             if (modeProgression) {
-                loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/ChoisirPseudo.fxml"));
             } else {
                 loader = new FXMLLoader(getClass().getResource("/ModeLibreParametres.fxml"));
             }

@@ -191,6 +191,13 @@
     -fx-text-fill: #FFF;
 }
 
+.form-small-text {
+    -fx-font-size: 10px;
+    -fx-font-weight: 300;
+    -fx-text-fill: #FFF;
+    -fx-fill: #FFF;
+}
+
 .form-container {
     -fx-background-color: -color-2;
     -fx-pref-width: 200px;
