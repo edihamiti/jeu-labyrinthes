@@ -6,12 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import modele.*;
 import vue.EtapesRendu;
@@ -28,8 +24,7 @@ public class ModeProgressionControleur {
 
     @FXML
     public Button validerForm;
-    @FXML
-    public TextField pseudoTextField;
+
     @FXML
     private VBox etapesContainer;
 
@@ -47,14 +42,13 @@ public class ModeProgressionControleur {
         etapesContainer.getChildren().add(EtapesRendu.render(difficultees, etapes));
     }
 
-    public void initJoueur() throws PseudoException {
+    /*public void initJoueur() throws PseudoException {
         String pseudo = pseudoTextField.getText().trim();
         this.joueur = sauvegarde.getJoueurParPseudo(pseudo) != null ? sauvegarde.getJoueurParPseudo(pseudo) : new Joueur(pseudo);
         System.out.println("[DEBUG] init joueur" + this.joueur.toString());
-    }
+    }*/
 
     public void validerForm(ActionEvent actionEvent) throws PseudoException {
-        initJoueur();
         this.labyrinthe = new Labyrinthe(Defi.DIFFICILE1);
         lancerModeLibre();
     }
