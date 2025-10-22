@@ -57,78 +57,56 @@ public class Labyrinthe {
     }
 
 
-    public void faireChemin(Cellule[][] cellules, int x, int y) {
-        int nbCaseChemin = (int) ((largeur * hauteur) /*** ((100 - pourcentageMurs) / 100)**/);
+    public void faireChemin(Cellule[][] cellules, int startX, int startY) {
+        Random random = new Random();
+        LinkedList<int[]> pile = new LinkedList<>();
+        boolean[][] visite = new boolean[largeurMax][hauteurMax];
 
-        int cheminx = x;
-        int cheminy = y;
-        if (x == 0) {
-            cheminx += 1;
-        } else if (y == 0) {
-            cheminy += 1;
-        }
+        int x = startX;
+        int y = startY;
 
-        cellules[cheminx][cheminy] = new Chemin(cheminx, cheminy);
-        int nbchemins = 0;
-        boolean nouveauchemin;
-        for (int i = 1; i <= nbCaseChemin; i++) {
-            nouveauchemin = false;
-            Random random = new Random();
-            int sens = random.nextInt(4);
-            nbchemins++;
-            if (i%10 == 0) {
-                faireCheminAlternatif(cellules, cheminx, cheminy);
-            }
-            while (!nouveauchemin) {
-                switch (sens) {
-                    case 0: //Pour aller vers le haut
-                        if ((cheminy - 1 != 0) && !(cellules[cheminx][cheminy-1] instanceof Chemin)) {
-                            cheminy--;
-                            nouveauchemin = true;
-                        } else {
-                            nouveauchemin = false;
-                            sens += random.nextInt(3) + 1;
-                        }
-                        break;
-                    case 1: //Pour aller vers la droite
-                        if ((cheminx + 1 != hauteurMax) && !(cellules[cheminx+1][cheminy] instanceof Chemin)) {
-                            cheminx++;
-                            nouveauchemin = true;
-                        } else {
-                            nouveauchemin = false;
-                            int choix = random.nextInt(2);
-                            if (choix == 0) sens = 0;
-                            else sens += random.nextInt(2) + 2;
-                        }
-                        break;
-                    case 2: //Pour aller vers le bas
-                        if ((cheminy + 1 != largeurMax) && !(cellules[cheminx][cheminy+1] instanceof Chemin)) {
-                            cheminy++;
-                            nouveauchemin = true;
-                        } else {
-                            nouveauchemin = false;
-                            int choix = random.nextInt(2);
-                            if (choix == 0) sens -= random.nextInt(2) + 1;
-                            else sens = 3;
-                        }
-                        break;
-                    case 3: //Pour aller vers la gauche
-                        if ((cheminx - 1 != 0) && !(cellules[cheminx-1][cheminy] instanceof Chemin)) {
-                            cheminx--;
-                            nouveauchemin = true;
-                        } else {
-                            nouveauchemin = false;
-                            sens -= random.nextInt(3) + 1;
-                        }
-                        break;
+        cellules[x][y] = new Entree(x, y);
+        visite[x][y] = true;
+        pile.push(new int[]{x, y});
+
+        int[][] directions = {{0,-1}, {0,1}, {-1,0}, {1,0}}; // haut, bas, gauche, droite
+
+        while (!pile.isEmpty()) {
+            int[] courant = pile.peek();
+            x = courant[0];
+            y = courant[1];
+
+            // Directions possibles
+            java.util.List<int[]> voisins = new java.util.ArrayList<>();
+            for (int[] d : directions) {
+                int nx = x + d[0];
+                int ny = y + d[1];
+
+                if (nx > 0 && ny > 0 && nx < largeurMax - 1 && ny < hauteurMax - 1 && !visite[nx][ny]) {
+                    voisins.add(new int[]{nx, ny});
                 }
             }
 
-            if (i == nbCaseChemin) {
-                cellules[cheminx][cheminy] = new Sortie(x, y);
+            if (!voisins.isEmpty()) {
+                int[] suivant = voisins.get(random.nextInt(voisins.size()));
+                int nx = suivant[0];
+                int ny = suivant[1];
+
+                cellules[nx][ny] = new Chemin(nx, ny);
+                visite[nx][ny] = true;
+                pile.push(new int[]{nx, ny});
             } else {
-                cellules[cheminx][cheminy] = new Chemin(cheminx, cheminy);
+                pile.pop();
             }
+
+            if (pile.size() > (largeur + hauteur)*2) {
+                break;
+            }
+        }
+
+        if (!pile.isEmpty()) {
+            int[] derniere = pile.peek();
+            cellules[derniere[0]][derniere[1]] = new Sortie(derniere[0], derniere[1]);
         }
     }
 
