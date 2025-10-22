@@ -1,11 +1,13 @@
 package controleur.modeLibre;
 
+import controleur.AppControleur;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -96,6 +98,23 @@ public class ParametresControleur {
         this.pourcentageMurs = Math.min(this.pourcentageMurs, POURCENTAGE_MAX);
         pourcentageMursField.setText("" + this.pourcentageMurs);
         pourcentageMursSlider.setValue(this.pourcentageMurs);
+    }
+
+    public void retourClicked() {
+        try {
+            AppControleur.getInstance().MenuPrincipal();
+        } catch (IOException e) {
+            System.err.println("Erreur lors de la retour vers le menu principal !");
+            System.err.println(e.getMessage());
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur !");
+            alert.setHeaderText("Erreur lors de la retour vers le menu principal !");
+            alert.setContentText("Details : " + e.getMessage());
+            alert.showAndWait();
+
+            System.exit(1);
+        }
     }
 
     public void lancerModeLibre() throws PseudoException {
