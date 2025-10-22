@@ -1,15 +1,12 @@
 package controleur;
 
-import controleur.AppControleur;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import modele.PseudoException;
@@ -57,8 +54,8 @@ public class ChoisirPseudoControleur {
 
             Stage stage = (Stage) startButton.getScene().getWindow();
             Scene jeuScene = new Scene(progressionView, 1400, 900);
-            stage.setMaximized(true); // pourquoi ça maximize pas???? TODO: Faire en sorte que ça maximize
             stage.setScene(jeuScene);
+            stage.setMaximized(true);
 
             // TODO: Set le joueur dans le mode progression?
             // Je regarderais comment vous avez fait pour les paramètres du mode libre mais j'ai pas trop le temps pour l'instant
