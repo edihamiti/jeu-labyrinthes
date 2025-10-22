@@ -40,13 +40,15 @@ public class ParametresControleur {
         hauteurField.setText("" + hauteur);
         pourcentageMursField.setText("" + pourcentageMurs);
 
-        largeurField.setOnAction(this::onLargeurChange);
-        hauteurField.setOnAction(this::onHauteurChange);
+        largeurField.setOnAction((e) -> {onLargeurChange();});
+        largeurField.focusedProperty().addListener((obs, oldVal, newVal) -> {onLargeurChange();});
+        hauteurField.setOnAction((e) -> {onHauteurChange();});
+        hauteurField.focusedProperty().addListener((obs, oldVal, newVal) -> {onHauteurChange();});
         pourcentageMursField.setOnAction(event -> onPourcentageChange((ActionEvent) event));
         pourcentageMursSlider.valueProperty().addListener(this::onPourcentageChangeFromSlider);;
     }
 
-    public void onLargeurChange(ActionEvent event) {
+    public void onLargeurChange() {
         try {
             largeur = Integer.parseInt(this.largeurField.getText());
             updateLargeur(largeur);
@@ -55,7 +57,7 @@ public class ParametresControleur {
         }
     }
 
-    public void onHauteurChange(ActionEvent event) {
+    public void onHauteurChange() {
         try {
             hauteur = Integer.parseInt(this.hauteurField.getText());
             updateHauteur(hauteur);
@@ -98,7 +100,10 @@ public class ParametresControleur {
 
     public void lancerModeLibre() throws PseudoException {
         try {
-            System.out.println("Lancement du mode libre");
+            System.out.println("Lancement du mode libre avec les valeurs suivantes :");
+            System.out.println("\tLargeur : " + largeur);
+            System.out.println("\tHauteur : " + hauteur);
+            System.out.println("\tPourcentageMurs : " + pourcentageMurs);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
 
             Parent jeuView = loader.load();
