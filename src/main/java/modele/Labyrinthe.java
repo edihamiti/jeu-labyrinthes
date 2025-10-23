@@ -24,9 +24,6 @@ public class Labyrinthe {
     private final int largeurMax;
     private final int hauteurMax;
     private Cellule[][] cellules;
-    private int joueurX;
-    private int joueurY;
-    private boolean jeuEnCours;
     private int nbChemins;
     private final IntegerProperty joueurX;
     private final IntegerProperty joueurY;
@@ -246,7 +243,7 @@ public class Labyrinthe {
     }
 
 
-     * Calcule le plus court chemin entre l'entrée et la sortie du labyrinthe (Dijkstra).
+     /* Calcule le plus court chemin entre l'entrée et la sortie du labyrinthe (Dijkstra).
      *
      * @return la longueur du plus court chemin
      */
