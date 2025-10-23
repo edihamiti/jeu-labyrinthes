@@ -68,6 +68,13 @@
     -fx-background-color: rgba(255, 255, 255, 0.3);
 }
 
+.button-filled-text {
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-6;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+}
+
 .menu-principal {
     -fx-background-color: -color-3;
     -fx-padding: 15px;

@@ -57,6 +57,10 @@ public class Sauvegarde {
             this.joueurs.remove(joueur.getPseudo());
     }
 
+    public HashMap<String, Joueur> getJoueurs() {
+        return joueurs;
+    }
+
     /**
      * Supprime un joueur de la sauvegarde par son pseudo.
      *

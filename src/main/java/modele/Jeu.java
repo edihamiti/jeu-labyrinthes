@@ -52,6 +52,10 @@ public class Jeu {
         this.modeJeu = modeJeu;
     }
 
+    public Sauvegarde getSauvegarde() {
+        return sauvegarde;
+    }
+
     public Joueur getJoueur() {
         return joueur;
     }

@@ -2,6 +2,7 @@ package controleur;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,8 +13,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import modele.Jeu;
+import modele.Joueur;
+import modele.Sauvegarde;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * Contrôleur pour la page d'accueil de l'application.
@@ -23,12 +28,15 @@ public class HomePageControleur {
     @FXML
     public Label nomMode;
     public Label descriptionMode;
-    public Button chargerProfilButton;
+    public VBox chargerProfilButton;
+    public VBox profilsContainer;
     public Button nouvellePartieButton;
     public VBox contentPage;
     public Text modeLibreText;
     public Text modeProgressionText;
     private boolean modeProgression;
+    private boolean isChargerProfilActive;
+    private Sauvegarde saves;
 
     // Constructeur par défaut (obligatoire pour JavaFX)
     public HomePageControleur() {
@@ -42,6 +50,9 @@ public class HomePageControleur {
     @FXML
     public void initialize() {
         modeProgression = true;
+        isChargerProfilActive = false;
+        saves = Jeu.getInstance().getSauvegarde();
+        saves.chargerJoueurs();
 
         HBox.setHgrow(chargerProfilButton, Priority.ALWAYS);
         HBox.setHgrow(nouvellePartieButton, Priority.ALWAYS);
@@ -94,8 +105,10 @@ public class HomePageControleur {
     public void lancerJeu() {
         try {
             FXMLLoader loader;
-            if (modeProgression) {
+            if (modeProgression && Jeu.getInstance().getJoueur() == null) {
                 loader = new FXMLLoader(getClass().getResource("/ChoisirPseudo.fxml"));
+            } else if (modeProgression) {
+                loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
             } else {
                 loader = new FXMLLoader(getClass().getResource("/ModeLibreParametres.fxml"));
             }
@@ -115,4 +128,30 @@ public class HomePageControleur {
             System.err.println(e.getMessage());
         }
     }
+
+    public void chargerProfil() {
+        isChargerProfilActive = !isChargerProfilActive;
+
+        if (isChargerProfilActive) {
+            Node label = chargerProfilButton.getChildren().get(0);
+            chargerProfilButton.getChildren().clear();
+            chargerProfilButton.getChildren().add(
+                    label
+            );
+
+            HashMap<String, Joueur> profiles = saves.getJoueurs();
+
+            for (String name : profiles.keySet()) {
+                Joueur joueur = profiles.get(name);
+                Button button = new Button(name);
+                button.setOnAction(event -> {
+                    Jeu.getInstance().setJoueur(joueur);
+                    lancerJeu();
+                });
+                chargerProfilButton.getChildren().add(button);
+            }
+        }
+
+    }
+
 }
