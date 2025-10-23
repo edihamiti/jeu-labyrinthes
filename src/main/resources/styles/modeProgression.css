@@ -14,3 +14,20 @@
     -fx-font-weight: 600;
     -fx-fill: -color-6;
 }
+
+.defi-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+    -fx-background-radius: 15px;
+}
+
+.defi-button-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+    -fx-fill: -color-6;
+    -fx-text-alignment: center;
+}
+
+.defi-button:hover {
+    -fx-background-color: -color-2;
+}

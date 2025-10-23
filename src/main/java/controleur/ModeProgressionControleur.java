@@ -38,13 +38,11 @@ public class ModeProgressionControleur {
     public void initialize() {
         String[] etapes = {"1", "2", "3"};
 
+        this.joueur = Jeu.getInstance().getJoueur();
+        var progression = joueur.getProgression();
+        progression.forEach((defi, termine) -> progression.put(defi, true));
+        etapesContainer.getChildren().add(EtapesRendu.render(joueur.getProgression()));
         Map<String, Image> difficultees = new HashMap<>();
-
-        difficultees.put("Facile", new Image(getClass().getResourceAsStream("/img/difficultees/facile.png")));
-        difficultees.put("Moyen", new Image(getClass().getResourceAsStream("/img/difficultees/moyen.png")));
-        difficultees.put("Difficile", new Image(getClass().getResourceAsStream("/img/difficultees/difficile.png")));
-
-        etapesContainer.getChildren().add(EtapesRendu.render(difficultees, etapes));
     }
 
     /*public void initJoueur() throws PseudoException {
