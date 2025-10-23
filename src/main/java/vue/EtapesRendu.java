@@ -9,7 +9,18 @@ import javafx.scene.text.Text;
 
 import java.util.Map;
 
+/**
+ * Classe responsable du rendu des étapes avec leurs difficultés.
+ */
 public class EtapesRendu {
+
+    /**
+     * Rend les étapes avec leurs difficultés sous forme de VBox.
+     *
+     * @param difficulties Map des difficultés avec leurs images associées.
+     * @param etapes       Tableau des étapes à rendre.
+     * @return VBox contenant les étapes rendues.
+     */
     public static VBox render(Map<String, Image> difficulties, String[] etapes) {
         VBox root = new VBox(15);
         root.setPrefWidth(VBox.USE_PREF_SIZE);
@@ -22,6 +33,13 @@ public class EtapesRendu {
         return root;
     }
 
+    /**
+     * Crée une carte d'étape avec ses difficultés.
+     *
+     * @param step        L'étape à rendre.
+     * @param difficulties Map des difficultés avec leurs images associées.
+     * @return VBox représentant la carte d'étape.
+     */
     private static VBox createStepCard(String step, Map<String, Image> difficulties) {
         VBox root = new VBox(10);
         root.getStyleClass().add("step-card");
@@ -41,6 +59,13 @@ public class EtapesRendu {
         return root;
     }
 
+    /**
+     * Crée une icône de difficulté avec une image et un label.
+     *
+     * @param image      L'image représentant la difficulté.
+     * @param difficulty Le label de la difficulté.
+     * @return Button représentant l'icône de difficulté.
+     */
     private static Button createDifficultyIcon(Image image, String difficulty) {
         Button root = new Button();
         VBox graphics = new VBox(3);
