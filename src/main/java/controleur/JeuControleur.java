@@ -145,6 +145,8 @@ public class JeuControleur {
             }
         } else {
             playSound("block.mp3");
+            renduLocale.setBlockedWall(nouveauX, nouveauY);
+            renduLabyrinthe.setBlockedWall(nouveauX, nouveauY);
         }
     }
 
@@ -199,5 +201,4 @@ public class JeuControleur {
         afficherMinimap();
         afficherLocale();
     }
-
 }

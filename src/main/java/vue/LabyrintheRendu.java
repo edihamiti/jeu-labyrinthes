@@ -15,8 +15,11 @@ public class LabyrintheRendu {
     private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/chemin.png"));
     private final Image imgSortie = new Image(getClass().getResourceAsStream("/img/sortie.png"));
     private final Image imgJoueur = new Image(getClass().getResourceAsStream("/img/joueur.png"));
+    private final Image imgRedWall = new Image(getClass().getResourceAsStream("/img/redWall.png"));
     private Labyrinthe labyrinthe;
     private VBox contienLabyrinthe;
+    private int lastBlockedX = -1;
+    private int lastBlockedY = -1;
 
     /**
      * Constructeur de la classe LabyrintheRendu.
@@ -38,6 +41,18 @@ public class LabyrintheRendu {
     public Canvas rendu(Labyrinthe labyrinthe) {
         this.labyrinthe = labyrinthe;
         return creerCanvasLabyrinthe(labyrinthe.getCellules());
+    }
+
+    /**
+     * Définit le mur bloqué à une position spécifique.
+     *
+     * @param x La coordonnée X de la cellule du mur bloqué.
+     * @param y La coordonnée Y de la cellule du mur bloqué.
+     */
+    public void setBlockedWall(int x, int y) {
+        this.lastBlockedX = x;
+        this.lastBlockedY = y;
+        afficherLabyrinthe();
     }
 
     /**
@@ -70,13 +85,20 @@ public class LabyrintheRendu {
                 if (i == this.labyrinthe.getJoueurX() && j == this.labyrinthe.getJoueurY())
                     graphicsContext.drawImage(imgJoueur, x, y, tailleCellule, tailleCellule);
                 else if (labyrinthe[i][j].estMur())
-                    graphicsContext.drawImage(imgMur, x, y, tailleCellule, tailleCellule);
+                    if (i == lastBlockedX && j == lastBlockedY) {
+                        graphicsContext.drawImage(imgRedWall, x, y, tailleCellule, tailleCellule);
+                    } else {
+                        graphicsContext.drawImage(imgMur, x, y, tailleCellule, tailleCellule);
+                    }
                 else if (labyrinthe[i][j].estChemin())
                     graphicsContext.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
                 else if (labyrinthe[i][j].estSortie())
                     graphicsContext.drawImage(imgSortie, x, y, tailleCellule, tailleCellule);
             }
         }
+
+        lastBlockedX = -1;
+        lastBlockedY = -1;
 
         return canvas;
     }
