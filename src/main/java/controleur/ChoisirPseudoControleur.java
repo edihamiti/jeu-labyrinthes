@@ -5,10 +5,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import modele.Jeu;
+import modele.PseudoException;
 
 import java.io.IOException;
 
@@ -65,6 +67,12 @@ public class ChoisirPseudoControleur {
             System.err.println("\tPseudo : " + pseudo);
             System.err.println("Trace :");
             e.printStackTrace();
+        } catch (PseudoException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur avec le pseudo");
+            alert.setHeaderText("Votre pseudo est invalide !");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 }

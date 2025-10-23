@@ -64,7 +64,7 @@ public class Jeu {
         this.joueur = joueur;
     }
 
-    public void setJoueur(String pseudo) {
+    public void setJoueur(String pseudo) throws PseudoException {
         sauvegarde.chargerJoueurs();
         setJoueur(sauvegarde.getJoueurParPseudo(pseudo));
     }

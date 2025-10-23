@@ -79,14 +79,10 @@ public class Sauvegarde {
      * @return le joueur correspondant au pseudo
      * @throws RuntimeException si le pseudo est invalide lors de la création d'un nouveau joueur
      */
-    public Joueur getJoueurParPseudo(String pseudo) {
-        return joueurs.computeIfAbsent(pseudo, p -> {
-            try {
-                return new Joueur(pseudo);
-            } catch (PseudoException e) {
-                throw new RuntimeException(e);
-            }
-        });
+    public Joueur getJoueurParPseudo(String pseudo) throws PseudoException {
+        Joueur existingJoueur = joueurs.get(pseudo);
+        if (existingJoueur != null) return existingJoueur;
+        return new Joueur(pseudo);
     }
 
     /**
