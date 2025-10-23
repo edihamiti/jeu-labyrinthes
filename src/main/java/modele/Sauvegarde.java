@@ -67,8 +67,22 @@ public class Sauvegarde {
             this.joueurs.remove(pseudo);
     }
 
+    /**
+     * Récupère un joueur par son pseudo.
+     * Si le joueur n'existe pas dans la sauvegarde, un nouveau joueur est créé et ajouté.
+     *
+     * @param pseudo le pseudo du joueur à récupérer
+     * @return le joueur correspondant au pseudo
+     * @throws RuntimeException si le pseudo est invalide lors de la création d'un nouveau joueur
+     */
     public Joueur getJoueurParPseudo(String pseudo) {
-        return this.joueurs.get(pseudo);
+        return joueurs.computeIfAbsent(pseudo, p -> {
+            try {
+                return new Joueur(pseudo);
+            } catch (PseudoException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     /**
