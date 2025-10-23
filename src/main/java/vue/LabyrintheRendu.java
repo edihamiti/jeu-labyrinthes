@@ -56,11 +56,14 @@ public class LabyrintheRendu {
      */
     private Canvas creerCanvasLabyrinthe(Cellule[][] labyrinthe) {
         int tailleCellule = 50;
-        Canvas canvas = new Canvas(labyrinthe[0].length * tailleCellule, labyrinthe[1].length * tailleCellule);
+        int largeurMax = this.labyrinthe.getLargeurMax();
+        int hauteurMax = this.labyrinthe.getHauteurMax();
+
+        Canvas canvas = new Canvas(hauteurMax * tailleCellule, largeurMax * tailleCellule);
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
 
-        for (int i = 0; i < labyrinthe.length; i++) {
-            for (int j = 0; j < labyrinthe[1].length; j++) {
+        for (int i = 0; i < largeurMax; i++) {
+            for (int j = 0; j < hauteurMax; j++) {
                 double x = j * tailleCellule;
                 double y = i * tailleCellule;
 

@@ -86,7 +86,11 @@ public class Labyrinthe {
         cellules = new Cellule[largeurMax][hauteurMax];
         for (int i = 0; i < largeurMax; i++) {
             for (int j = 0; j < hauteurMax; j++) {
-                cellules[i][j] = new Mur(i, j);
+                if (i == 0 || j == 0 || i == largeurMax - 1 || j == hauteurMax - 1) {
+                    cellules[i][j] = new Mur(i, j);
+                } else {
+                    cellules[i][j] = new Mur(i, j);
+                }
             }
         }
 
@@ -386,7 +390,7 @@ public class Labyrinthe {
     public boolean estSurSortie(int x, int y) {
         return cellules[x][y].estSortie();
     }
-    
+
     public int getLargeurMax() {
         return largeurMax;
     }
