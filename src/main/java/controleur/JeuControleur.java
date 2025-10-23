@@ -3,6 +3,7 @@ package controleur;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import modele.Joueur;
 import modele.Labyrinthe;
 import vue.LabyrintheRendu;
@@ -116,11 +117,19 @@ public class JeuControleur {
         if (labyrinthe.peutDeplacer(nouveauX, nouveauY)) {
             labyrinthe.setJoueurX(nouveauX);
             labyrinthe.setJoueurY(nouveauY);
+            playSound("move.mp3");
 
             if (labyrinthe.estSurSortie(nouveauX, nouveauY)) {
                 victoire();
             }
+        } else {
+            playSound("block.mp3");
         }
+    }
+
+    private void playSound(String sound) {
+        AudioClip audio = new AudioClip(getClass().getResource("/sounds/"+sound).toExternalForm());
+        audio.play();
     }
 
     /**
@@ -129,6 +138,7 @@ public class JeuControleur {
      * @throws IOException si une erreur survient lors du retour au menu principal
      */
     private void victoire() throws IOException {
+        playSound("win.mp3");
         labyrinthe.setJeuEnCours(false);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Victoire");
