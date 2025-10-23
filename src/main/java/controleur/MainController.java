@@ -13,7 +13,9 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-
+/**
+ * Contrôleur pour la page principale de l'application.
+ */
 public class MainController {
 
     @FXML
@@ -23,6 +25,9 @@ public class MainController {
     }
 
     // Méthode d'initialisation appelée automatiquement après le chargement du FXML
+    /**
+     * Initialise les composants de la page principale.
+     */
     @FXML
     public void initialize() throws IOException {
         FXMLLoader homepageLoader = new FXMLLoader(getClass().getResource("/HomePage.fxml"));

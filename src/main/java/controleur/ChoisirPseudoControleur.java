@@ -13,6 +13,9 @@ import modele.PseudoException;
 
 import java.io.IOException;
 
+/**
+ * Contrôleur pour la sélection du pseudo du joueur.
+ */
 public class ChoisirPseudoControleur {
     @FXML
     public TextField pseudoField;
@@ -20,6 +23,9 @@ public class ChoisirPseudoControleur {
     public Button startButton;
     public String pseudo = "";
 
+    /**
+     * Initialise le contrôleur et configure les observables d'événements.
+     */
     @FXML
     public void initialize() {
         pseudoField.setText(pseudo);
@@ -33,6 +39,9 @@ public class ChoisirPseudoControleur {
         });
     }
 
+    /**
+     * Lance le mode libre du jeu avec le pseudo sélectionné.
+     */
     public void lancerModeLibre() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));

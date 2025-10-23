@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Contrôleur pour le mode progression du jeu de labyrinthe.
+ */
 public class ModeProgressionControleur {
 
     private Labyrinthe labyrinthe;
@@ -28,6 +31,9 @@ public class ModeProgressionControleur {
     @FXML
     private VBox etapesContainer;
 
+    /**
+     * Initialise le contrôleur et configure les étapes du mode progression.
+     */
     @FXML
     public void initialize() {
         sauvegarde.chargerJoueurs();
@@ -48,11 +54,20 @@ public class ModeProgressionControleur {
         System.out.println("[DEBUG] init joueur" + this.joueur.toString());
     }*/
 
+    /**
+     * Valide le formulaire et lance le mode libre.
+     *
+     * @param actionEvent l'événement d'action déclenché
+     * @throws PseudoException si le pseudo est invalide
+     */
     public void validerForm(ActionEvent actionEvent) throws PseudoException {
         this.labyrinthe = new Labyrinthe(Defi.DIFFICILE1);
         lancerModeLibre();
     }
 
+    /**
+     * Lance le mode libre du jeu.
+     */
     public void lancerModeLibre() {
         try {
             System.out.println("[DEBUG] Lancement du mode progression");

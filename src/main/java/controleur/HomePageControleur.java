@@ -15,7 +15,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
+/**
+ * Contrôleur pour la page d'accueil de l'application.
+ */
 public class HomePageControleur {
 
     @FXML
@@ -32,7 +34,11 @@ public class HomePageControleur {
     public HomePageControleur() {
     }
 
+
     // Méthode d'initialisation appelée automatiquement après le chargement du FXML
+    /**
+     * Initialise les composants de la page d'accueil.
+     */
     @FXML
     public void initialize() {
         modeProgression = true;
@@ -53,6 +59,9 @@ public class HomePageControleur {
         contentPage.setClip(clip);
     }
 
+    /**
+     * Sélectionne le mode progression et met à jour l'interface en conséquence.
+     */
     public void modeProgression() {
         nomMode.setText("Mode progression");
         descriptionMode.setText("Complète des labyrinthes pour débloquer de nouveaux niveaux !");
@@ -62,6 +71,9 @@ public class HomePageControleur {
         modeProgression = true;
     }
 
+    /**
+     * Sélectionne le mode libre et met à jour l'interface en conséquence.
+     */
     public void modeLibre() {
         nomMode.setText("Mode libre");
         descriptionMode.setText("Entrainez vous à l’infini dans le mode libre !");
@@ -76,6 +88,9 @@ public class HomePageControleur {
         System.exit(0);
     }
 
+    /**
+     * Lance le jeu en fonction du mode sélectionné.
+     */
     public void lancerJeu() {
         try {
             FXMLLoader loader;

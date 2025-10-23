@@ -16,6 +16,9 @@ import modele.PseudoException;
 
 import java.io.IOException;
 
+/**
+ * Contrôleur pour les paramètres du mode libre du jeu de labyrinthe.
+ */
 public class ParametresControleur {
     public TextField largeurField;
     public TextField hauteurField;
@@ -36,6 +39,9 @@ public class ParametresControleur {
     public ParametresControleur() {
     }
 
+    /**
+     * Initialise les composants du formulaire et configure les observables d'événements.
+     */
     @FXML
     public void initialize() {
         largeurField.setText("" + largeur);
@@ -50,6 +56,9 @@ public class ParametresControleur {
         pourcentageMursSlider.valueProperty().addListener(this::onPourcentageChangeFromSlider);;
     }
 
+    /**
+     * Gère le changement de la largeur du labyrinthe.
+     */
     public void onLargeurChange() {
         try {
             largeur = Integer.parseInt(this.largeurField.getText());
@@ -59,6 +68,9 @@ public class ParametresControleur {
         }
     }
 
+    /**
+     * Gère le changement de la hauteur du labyrinthe.
+     */
     public void onHauteurChange() {
         try {
             hauteur = Integer.parseInt(this.hauteurField.getText());
@@ -68,10 +80,16 @@ public class ParametresControleur {
         }
     }
 
+    /**
+     * Gère le changement du pourcentage de murs via le slider.
+     */
     public void onPourcentageChangeFromSlider(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
         updatePourcentageMurs(newValue.doubleValue());
     }
 
+    /**
+     * Gère le changement du pourcentage de murs via le champ de texte.
+     */
     public void onPourcentageChange(ActionEvent event) {
         try {
             pourcentageMurs = Double.parseDouble(this.pourcentageMursField.getText());
@@ -100,6 +118,9 @@ public class ParametresControleur {
         pourcentageMursSlider.setValue(this.pourcentageMurs);
     }
 
+    /**
+     * Gère le clic sur le bouton de retour vers le menu principal.
+     */
     public void retourClicked() {
         try {
             AppControleur.getInstance().MenuPrincipal();
@@ -117,6 +138,11 @@ public class ParametresControleur {
         }
     }
 
+    /**
+     * Valide le formulaire et lance le mode libre.
+     *
+     * @throws PseudoException si le pseudo est invalide
+     */
     public void lancerModeLibre() throws PseudoException {
         try {
             System.out.println("Lancement du mode libre avec les valeurs suivantes :");

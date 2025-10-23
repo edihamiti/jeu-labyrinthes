@@ -9,12 +9,18 @@ import vue.LabyrintheRendu;
 
 import java.io.IOException;
 
+/**
+ * Contrôleur pour la gestion du jeu de labyrinthe.
+ */
 public class JeuControleur {
     @FXML
     private VBox contienLabyrinthe;
     private Labyrinthe labyrinthe;
     private LabyrintheRendu rendu;
 
+    /**
+     * Initialise le contrôleur et configure les événements de déplacement du joueur.
+     */
     @FXML
     public void initialize() {
         // Pour les tests
@@ -62,10 +68,18 @@ public class JeuControleur {
         });
     }
 
+    /**
+     * Retourne au menu principal de l'application.
+     *
+     * @throws IOException si le chargement de la vue échoue
+     */
     public void retourMenu() throws IOException {
         AppControleur.getInstance().MenuPrincipal();
     }
 
+    /**
+     * Affiche le labyrinthe dans l'interface utilisateur.
+     */
     public void afficherLabyrinthe() {
         contienLabyrinthe.getChildren().clear();
         contienLabyrinthe.getChildren().add(rendu.rendu(labyrinthe));
@@ -91,6 +105,13 @@ public class JeuControleur {
         deplacer(labyrinthe.getJoueurX(), labyrinthe.getJoueurY() + 1);
     }
 
+    /**
+     * Déplace le joueur vers une nouvelle position si le déplacement est valide.
+     *
+     * @param nouveauX la nouvelle position X du joueur
+     * @param nouveauY la nouvelle position Y du joueur
+     * @throws IOException si une erreur survient lors du déplacement
+     */
     private void deplacer(int nouveauX, int nouveauY) throws IOException {
         if (labyrinthe.peutDeplacer(nouveauX, nouveauY)) {
             labyrinthe.setJoueurX(nouveauX);
@@ -102,6 +123,11 @@ public class JeuControleur {
         }
     }
 
+    /**
+     * Gère la victoire du joueur lorsqu'il atteint la sortie du labyrinthe.
+     *
+     * @throws IOException si une erreur survient lors du retour au menu principal
+     */
     private void victoire() throws IOException {
         labyrinthe.setJeuEnCours(false);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -112,6 +138,14 @@ public class JeuControleur {
         AppControleur.getInstance().MenuPrincipal();
     }
 
+    /**
+     * Définit les paramètres du labyrinthe et initialise le rendu.
+     *
+     * @param largeur          la largeur du labyrinthe
+     * @param hauteur          la hauteur du labyrinthe
+     * @param pourcentageMurs  le pourcentage de murs dans le labyrinthe
+     * @param joueur           le joueur actuel
+     */
     public void setParametres(int largeur, int hauteur, double pourcentageMurs, Joueur joueur) {
         this.labyrinthe = new Labyrinthe(largeur, hauteur, pourcentageMurs);
         labyrinthe.generer();
