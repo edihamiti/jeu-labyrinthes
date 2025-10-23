@@ -34,7 +34,7 @@
         >
             <VBox>
                 <Label styleClass="form-label" text="Pseudo"/>
-                <TextField fx:id="pseudoField" prefWidth="50"/>
+                <TextField fx:id="pseudoField" prefWidth="50" onAction="#lancerModeLibre"/>
                 <Label styleClass="form-small-text" text="Max. 15 charactères"/>
             </VBox>
 
