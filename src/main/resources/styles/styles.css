@@ -259,3 +259,41 @@
     -fx-border-color: -color-6;
     -fx-border-width: 1px;
 }
+
+.charger-profile {
+    -fx-background-color: rgba(225, 255, 219, 0.75);
+    -fx-border-color: -color-6;
+    -fx-border-width: 1px;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
+    -fx-padding: 10px;
+    -fx-text-fill: -color-6;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+}
+
+.charger-profile:hover {
+    -fx-background-color: rgba(225, 255, 219, 1);
+}
+
+.charger-profile:pressed {
+    -fx-background-color: rgba(225, 255, 219, 0.80);
+}
+
+.charger-profile > text {
+    -fx-fill: -color-1;
+    -fx-font-weight: 700;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.charger-profile-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 15px;
+    -fx-padding: 5;
+    -fx-cursor: hand;
+}
+
+.charger-profile-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.25);
+}

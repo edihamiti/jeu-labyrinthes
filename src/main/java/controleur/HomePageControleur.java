@@ -144,12 +144,20 @@ public class HomePageControleur {
             for (String name : profiles.keySet()) {
                 Joueur joueur = profiles.get(name);
                 Button button = new Button(name);
+                button.setMaxWidth(Double.MAX_VALUE);
+                button.getStyleClass().add("charger-profile-button");
                 button.setOnAction(event -> {
                     Jeu.getInstance().setJoueur(joueur);
                     lancerJeu();
                 });
                 chargerProfilButton.getChildren().add(button);
             }
+        } else {
+            Node label = chargerProfilButton.getChildren().get(0);
+            chargerProfilButton.getChildren().clear();
+            chargerProfilButton.getChildren().add(
+                    label
+            );
         }
 
     }
