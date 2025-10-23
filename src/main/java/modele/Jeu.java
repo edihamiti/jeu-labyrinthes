@@ -6,9 +6,13 @@ import java.util.Scanner;
  * Classe représentant une partie de jeu.
  */
 public class Jeu {
-    private ModeJeu modeJeu;
+
+    private static Jeu instance;
+    Sauvegarde sauvegarde = new Sauvegarde();
     private Joueur joueur;
     private Labyrinthe labyrinthe;
+
+    private ModeJeu modeJeu;
     private Defi defiEnCours;
 
     /**
@@ -24,16 +28,21 @@ public class Jeu {
         this.defiEnCours = defiEnCours;
     }
 
-    /* Utilisation ???
-    public Jeu(Labyrinthe labyrinthe, Joueur joueur) {
-        this.joueur = joueur;
-        this.labyrinthe = labyrinthe;
+    public Jeu() {
+        
     }
 
-    // constructeur vide
-    public Jeu() {
+
+    public static Jeu getInstance() {
+        if (instance == null) {
+            instance = new Jeu();
+        }
+        return instance;
     }
-    */
+
+    public static void setInstance(Jeu newInstance) {
+        instance = newInstance;
+    }
 
     public ModeJeu getModeJeu() {
         return modeJeu;
