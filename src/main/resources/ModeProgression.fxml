@@ -20,13 +20,12 @@
         </padding>
         <VBox alignment="TOP_CENTER">
             <Label text="Mode Progression" styleClass="title"/>
-            <Label text="Sélectionnez une étape et une difficulté pour commencer à jouer" styleClass="subtitle"/>
+            <Label text="Sélectionnez un défi pour commencer à jouer" styleClass="subtitle"/>
+            <Label fx:id="pseudo" styleClass="form-small-text"/>
         </VBox>
 
         <VBox fx:id="etapesContainer" spacing="15" alignment="TOP_CENTER" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
             <!-- Les étapes sont ajoutées dynamiquement ici -->
         </VBox>
-
-        <Button fx:id="validerForm" onAction="#validerForm" text="Valider le formulaire" styleClass="button-filled"/>
     </VBox>
 </VBox>

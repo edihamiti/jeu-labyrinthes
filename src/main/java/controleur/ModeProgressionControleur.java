@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -29,6 +30,9 @@ public class ModeProgressionControleur {
     private VBox etapesContainer;
 
     @FXML
+    private Label pseudo;
+
+    @FXML
     public void initialize() {
         sauvegarde.chargerJoueurs();
         String[] etapes = {"1", "2", "3"};
@@ -42,15 +46,14 @@ public class ModeProgressionControleur {
         etapesContainer.getChildren().add(EtapesRendu.render(difficultees, etapes));
     }
 
-    /*public void initJoueur() throws PseudoException {
-        String pseudo = pseudoTextField.getText().trim();
-        this.joueur = sauvegarde.getJoueurParPseudo(pseudo) != null ? sauvegarde.getJoueurParPseudo(pseudo) : new Joueur(pseudo);
-        System.out.println("[DEBUG] init joueur" + this.joueur.toString());
-    }*/
-
     public void validerForm(ActionEvent actionEvent) throws PseudoException {
         this.labyrinthe = new Labyrinthe(Defi.DIFFICILE1);
         lancerModeLibre();
+    }
+
+    public void setJoueur(Joueur joueur) {
+        this.joueur = joueur;
+        this.pseudo.setText(joueur.getPseudo());
     }
 
     public void lancerModeLibre() {
@@ -58,9 +61,6 @@ public class ModeProgressionControleur {
             System.out.println("[DEBUG] Lancement du mode progression");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
             Parent jeuView = loader.load();
-
-            // TODO: Enregistrer les valeurs du formulaire quelque part??
-            // faire un Jeu.getInstance().setParametres(largeur, hauteur, pourcentageMurs) ?? aucune idée besoin d'aide là dessus
 
             Stage stage = (Stage) validerForm.getScene().getWindow();
 

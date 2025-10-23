@@ -42,6 +42,7 @@ public class ChoisirPseudoControleur {
 
             try {
                 modele.Joueur joueur = new modele.Joueur(this.pseudo);
+                jeuControleur.setJoueur(joueur); // TODO: Au lieu de stocker le joueur dans le controleur, le stocker dans le modele
                 System.out.println(joueur);
             } catch (PseudoException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -50,6 +51,12 @@ public class ChoisirPseudoControleur {
                 alert.setContentText(e.getMessage());
                 alert.showAndWait();
                 return;
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Une erreur est survenue !");
+                alert.setContentText(e.getMessage());
+                alert.showAndWait();
             }
 
             Stage stage = (Stage) startButton.getScene().getWindow();
@@ -57,15 +64,14 @@ public class ChoisirPseudoControleur {
             stage.setScene(jeuScene);
             stage.setMaximized(true);
 
-            // TODO: Set le joueur dans le mode progression?
-            // Je regarderais comment vous avez fait pour les paramètres du mode libre mais j'ai pas trop le temps pour l'instant
-
             System.out.println("Jeu lancé !");
         } catch (IOException e) {
             System.err.println("Erreur lors du lancement du mode progression !");
             System.err.println(e.getMessage());
             System.err.println("Voici les valeurs du formulaire : ");
             System.err.println("\tPseudo : " + pseudo);
+            System.err.println("Trace : ");
+            e.printStackTrace();
         }
     }
 }
