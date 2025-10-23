@@ -46,9 +46,12 @@ public class ModeProgressionControleur {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
             Parent jeuView = loader.load();
 
+            JeuControleur jeuControleur = loader.getController();
+            if (jeuControleur != null) {
+                jeuControleur.setParametresLab(defi.getLargeur(), defi.getHauteur(), defi.getPourcentageMurs());
+            }
 
             Stage stage = (Stage) etapesContainer.getScene().getWindow();
-
             Scene jeuScene = new Scene(jeuView, 1400, 900);
             stage.setScene(jeuScene);
             stage.setMaximized(true);
