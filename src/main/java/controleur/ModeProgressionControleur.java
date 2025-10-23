@@ -23,8 +23,6 @@ public class ModeProgressionControleur {
     @FXML
     public void initialize() {
         Joueur joueur = Jeu.getInstance().getJoueur();
-        var progression = joueur.getProgression();
-        progression.forEach((defi, termine) -> progression.put(defi, true));
         etapesContainer.getChildren().add(
                 EtapesRendu.render(joueur.getProgression(), defi -> {
                     System.out.println("Defi sélectionné : " + defi);

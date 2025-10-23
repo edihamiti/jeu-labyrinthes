@@ -7,6 +7,7 @@ import javafx.scene.media.AudioClip;
 import modele.Jeu;
 import modele.Labyrinthe;
 import vue.LabyrintheRendu;
+import vue.LocaleRendu;
 import vue.MiniMapRendu;
 
 import java.io.IOException;
@@ -19,8 +20,12 @@ public class JeuControleur {
     public VBox minimap;
     @FXML
     private VBox contienLabyrinthe;
+    @FXML
+    private VBox locale;
+
     private LabyrintheRendu renduLabyrinthe;
     private MiniMapRendu renduMinimap;
+    private LocaleRendu renduLocale;
 
     /**
      * Initialise le contrôleur et configure les événements de déplacement du joueur.
@@ -33,12 +38,14 @@ public class JeuControleur {
 
         this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
         this.renduMinimap = new MiniMapRendu(Jeu.getInstance().getLabyrinthe(), minimap);
+        this.renduLocale = new LocaleRendu(Jeu.getInstance().getLabyrinthe(), locale);
 
         Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
         Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
 
         afficherLabyrinthe();
         afficherMinimap();
+        afficherLocale();
 
         contienLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
@@ -90,6 +97,10 @@ public class JeuControleur {
         contienLabyrinthe.getChildren().clear();
         contienLabyrinthe.getChildren().add(renduLabyrinthe.rendu(Jeu.getInstance().getLabyrinthe()));
     }
+
+    public void afficherLocale() {
+        locale.getChildren().clear();
+        locale.getChildren().add(renduLocale.rendu(Jeu.getInstance().getLabyrinthe()));    }
 
     public void afficherMinimap() {
         minimap.getChildren().clear();
@@ -149,11 +160,11 @@ public class JeuControleur {
      */
     private void victoire() throws IOException {
         playSound("win.mp3");
-        Jeu.getInstance().getLabyrinthe().setJeuEnCours(false);
+        String text = Jeu.getInstance().terminerPartie(true);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Victoire");
         alert.setHeaderText("Félicitations");
-        alert.setContentText("Vous avez trouvé la sortie");
+        alert.setContentText(text);
         alert.showAndWait();
         AppControleur.getInstance().MenuPrincipal();
     }
@@ -168,12 +179,25 @@ public class JeuControleur {
     public void setParametresLab(int largeur, int hauteur, double pourcentageMurs) {
         Jeu.getInstance().setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs));
         Jeu.getInstance().getLabyrinthe().generer();
-        this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
 
-        Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
-        Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
+        this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
+        this.renduMinimap = new MiniMapRendu(Jeu.getInstance().getLabyrinthe(), minimap);
+        this.renduLocale = new LocaleRendu(Jeu.getInstance().getLabyrinthe(), locale);
+
+        Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> {
+            afficherLabyrinthe();
+            afficherMinimap();
+            afficherLocale();
+        });
+        Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> {
+            afficherLabyrinthe();
+            afficherMinimap();
+            afficherLocale();
+        });
 
         afficherLabyrinthe();
+        afficherMinimap();
+        afficherLocale();
     }
 
 }

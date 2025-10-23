@@ -68,6 +68,13 @@
     -fx-background-color: rgba(255, 255, 255, 0.3);
 }
 
+.button-filled-text {
+    -fx-background-color: transparent;
+    -fx-text-fill: -color-6;
+    -fx-font-weight: 600;
+    -fx-font-size: 14px;
+}
+
 .menu-principal {
     -fx-background-color: -color-3;
     -fx-padding: 15px;
@@ -251,4 +258,67 @@
 .text-field:focused {
     -fx-border-color: -color-6;
     -fx-border-width: 1px;
+}
+
+.charger-profile {
+    -fx-background-color: rgba(225, 255, 219, 0.75);
+    -fx-border-color: -color-6;
+    -fx-border-width: 1px;
+    -fx-border-radius: 25px;
+    -fx-background-radius: 25px;
+    -fx-padding: 10px;
+    -fx-text-fill: -color-6;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+}
+
+.charger-profile:hover {
+    -fx-background-color: rgba(225, 255, 219, 1);
+}
+
+.charger-profile:pressed {
+    -fx-background-color: rgba(225, 255, 219, 0.80);
+}
+
+.charger-profile > text {
+    -fx-fill: -color-1;
+    -fx-font-weight: 700;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.charger-profile-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 15px;
+    -fx-padding: 5;
+    -fx-cursor: hand;
+}
+
+.charger-profile-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.25);
+}
+
+.spinner {
+    -fx-background-color: -color-1;
+    -fx-background-radius: 5px;
+    -fx-padding: 2;
+    -fx-spacing: 5;
+}
+
+.spinner .increment-arrow-button, .spinner .decrement-arrow-button {
+    -fx-background-color: -color-2;
+}
+
+.spinner .increment-arrow-button .increment-arrow, .spinner .decrement-arrow-button .decrement-arrow {
+    -fx-background-color: -color-6;
+}
+
+.spinner .increment-arrow-button:focused, .spinner .decrement-arrow-button:focused {
+    -fx-border-color: -color-6;
+    -fx-border-width: 1px;
+}
+
+.spinner .increment-arrow-button:pressed, .spinner .decrement-arrow-button:pressed {
+    -fx-background-color: -color-3;
+    -fx-translate-y: 1;
 }

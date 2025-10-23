@@ -7,10 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import modele.PseudoException;
 
@@ -20,8 +17,8 @@ import java.io.IOException;
  * Contrôleur pour les paramètres du mode libre du jeu de labyrinthe.
  */
 public class ParametresControleur {
-    public TextField largeurField;
-    public TextField hauteurField;
+    public Spinner<Integer> largeurField;
+    public Spinner<Integer> hauteurField;
     public TextField pourcentageMursField;
     public Button validerButton;
     public Slider pourcentageMursSlider;
@@ -44,49 +41,21 @@ public class ParametresControleur {
      */
     @FXML
     public void initialize() {
-        largeurField.setText("" + largeur);
-        hauteurField.setText("" + hauteur);
+        largeurField.getValueFactory().setValue(largeur);
+        hauteurField.getValueFactory().setValue(hauteur);
         pourcentageMursField.setText("" + pourcentageMurs);
 
-        largeurField.setOnAction((e) -> {
-            onLargeurChange();
-        });
         largeurField.focusedProperty().addListener((obs, oldVal, newVal) -> {
-            onLargeurChange();
+            this.largeur = this.largeurField.getValue();
         });
-        hauteurField.setOnAction((e) -> {
-            onHauteurChange();
-        });
+
         hauteurField.focusedProperty().addListener((obs, oldVal, newVal) -> {
-            onHauteurChange();
+            this.hauteur = this.hauteurField.getValue();
         });
         pourcentageMursField.setOnAction(event -> onPourcentageChange((ActionEvent) event));
+        pourcentageMursSlider.setValue(pourcentageMurs);
         pourcentageMursSlider.valueProperty().addListener(this::onPourcentageChangeFromSlider);
         ;
-    }
-
-    /**
-     * Gère le changement de la largeur du labyrinthe.
-     */
-    public void onLargeurChange() {
-        try {
-            largeur = Integer.parseInt(this.largeurField.getText());
-            updateLargeur(largeur);
-        } catch (NumberFormatException e) {
-            largeurField.setText("" + this.largeur);
-        }
-    }
-
-    /**
-     * Gère le changement de la hauteur du labyrinthe.
-     */
-    public void onHauteurChange() {
-        try {
-            hauteur = Integer.parseInt(this.hauteurField.getText());
-            updateHauteur(hauteur);
-        } catch (NumberFormatException e) {
-            hauteurField.setText("" + this.hauteur);
-        }
     }
 
     /**
@@ -111,13 +80,13 @@ public class ParametresControleur {
     private void updateLargeur(int largeur) {
         this.largeur = Math.max(largeur, LARGEUR_MIN);
         this.largeur = Math.min(this.largeur, LARGEUR_MAX);
-        largeurField.setText("" + this.largeur);
+        largeurField.getValueFactory().setValue(this.largeur);
     }
 
     private void updateHauteur(int hauteur) {
         this.hauteur = Math.max(hauteur, HAUTEUR_MIN);
         this.hauteur = Math.min(this.hauteur, HAUTEUR_MAX);
-        hauteurField.setText("" + this.hauteur);
+        hauteurField.getValueFactory().setValue(this.hauteur);
     }
 
     private void updatePourcentageMurs(double pourcentageMurs) {
