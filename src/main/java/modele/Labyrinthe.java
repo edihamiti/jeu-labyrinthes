@@ -19,6 +19,7 @@ public class Labyrinthe {
     private int joueurX;
     private int joueurY;
     private boolean jeuEnCours;
+    private int nbChemins;
 
     public Labyrinthe(int largeur, int hauteur, double pourcentageMurs) {
         this.largeur = largeur;
@@ -30,6 +31,7 @@ public class Labyrinthe {
         this.joueurX = 0;
         this.joueurY = 1;
         this.jeuEnCours = true;
+        this.nbChemins = 0;
     }
 
     public Labyrinthe(Defi defi) {
@@ -58,6 +60,18 @@ public class Labyrinthe {
                 }
             }
         }
+        double pourcentageCheminsActuel = (double) nbChemins / ((largeurMax - 2) * (hauteurMax - 2)) * 100.0;
+        double facteur = 1.0 - (pourcentageCheminsActuel / 100.0);
+        double probaBase = 1 - (pourcentageMurs / 100.0);
+        double probaChemin = probaBase * facteur;
+        for (int i = 1; i < largeurMax-1; i++) {
+            for (int j = 1; j < hauteurMax-1; j++) {
+                if ((!(cellules[i][j] instanceof Entree) && !(cellules[i][j] instanceof Sortie)) && (Math.random() < probaChemin)) {
+                    cellules[i][j] = new Chemin(i, j);
+                }
+            }
+        }
+
     }
 
 
@@ -98,6 +112,7 @@ public class Labyrinthe {
                 int ny = suivant[1];
 
                 cellules[nx][ny] = new Chemin(nx, ny);
+                nbChemins ++;
                 visite[nx][ny] = true;
                 pile.push(new int[]{nx, ny});
             } else {
@@ -142,6 +157,7 @@ public class Labyrinthe {
             int ny = suivant[1];
 
             cellules[nx][ny] = new Chemin(nx, ny);
+            nbChemins ++;
 
             x = nx;
             y = ny;
