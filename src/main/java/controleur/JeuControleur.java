@@ -1,66 +1,89 @@
 package controleur;
 
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
-import modele.Cellules.Cellule;
+import javafx.scene.media.AudioClip;
+import modele.Joueur;
 import modele.Labyrinthe;
+import vue.LabyrintheRendu;
 
 import java.io.IOException;
 
+/**
+ * Contrôleur pour la gestion du jeu de labyrinthe.
+ */
 public class JeuControleur {
-
-    private final Image imgMur = new Image(getClass().getResourceAsStream("/img/mur.png"));
-    private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/chemin.png"));
-    private final Image imgSortie = new Image(getClass().getResourceAsStream("/img/sortie.png"));
-    private final Image imgJoueur = new Image(getClass().getResourceAsStream("/img/joueur.png"));
     @FXML
     private VBox contienLabyrinthe;
     private Labyrinthe labyrinthe;
+    private LabyrintheRendu rendu;
 
+    /**
+     * Initialise le contrôleur et configure les événements de déplacement du joueur.
+     */
     @FXML
     public void initialize() {
         // Pour les tests
         this.labyrinthe = new Labyrinthe(10, 10, 10);
         labyrinthe.generer();
+
+        this.rendu = new LabyrintheRendu(labyrinthe, contienLabyrinthe);
+
+        labyrinthe.joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
+        labyrinthe.joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
+
         afficherLabyrinthe();
+
+        contienLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                newScene.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
+                    try {
+                        switch (event.getCode()) {
+                            case UP:
+                            case Z:
+                                deplacerHaut();
+                                event.consume();
+                                break;
+                            case RIGHT:
+                            case D:
+                                deplacerDroite();
+                                event.consume();
+                                break;
+                            case DOWN:
+                            case S:
+                                deplacerBas();
+                                event.consume();
+                                break;
+                            case LEFT:
+                            case Q:
+                                deplacerGauche();
+                                event.consume();
+                                break;
+                        }
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                });
+            }
+        });
     }
 
+    /**
+     * Retourne au menu principal de l'application.
+     *
+     * @throws IOException si le chargement de la vue échoue
+     */
     public void retourMenu() throws IOException {
         AppControleur.getInstance().MenuPrincipal();
     }
 
+    /**
+     * Affiche le labyrinthe dans l'interface utilisateur.
+     */
     public void afficherLabyrinthe() {
         contienLabyrinthe.getChildren().clear();
-        contienLabyrinthe.getChildren().add(creerCanvasLabyrinthe(this.labyrinthe.getCellules()));
-    }
-
-    private Canvas creerCanvasLabyrinthe(Cellule[][] labyrinthe) {
-        int tailleCellule = 50;
-        Canvas canvas = new Canvas(labyrinthe[0].length * tailleCellule, labyrinthe[1].length * tailleCellule);
-        GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
-
-        for (int i = 0; i < labyrinthe.length; i++) {
-            for (int j = 0; j < labyrinthe[1].length; j++) {
-                double x = j * tailleCellule;
-                double y = i * tailleCellule;
-
-                if (i == this.labyrinthe.getJoueurX() && j == this.labyrinthe.getJoueurY())
-                    graphicsContext.drawImage(imgJoueur, x, y, tailleCellule, tailleCellule);
-                else if (labyrinthe[i][j].estMur())
-                    graphicsContext.drawImage(imgMur, x, y, tailleCellule, tailleCellule);
-                else if (labyrinthe[i][j].estChemin())
-                    graphicsContext.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
-                else if (labyrinthe[i][j].estSortie())
-                    graphicsContext.drawImage(imgSortie, x, y, tailleCellule, tailleCellule);
-
-            }
-        }
-
-        return canvas;
+        contienLabyrinthe.getChildren().add(rendu.rendu(labyrinthe));
     }
 
     @FXML
@@ -83,20 +106,39 @@ public class JeuControleur {
         deplacer(labyrinthe.getJoueurX(), labyrinthe.getJoueurY() + 1);
     }
 
+    /**
+     * Déplace le joueur vers une nouvelle position si le déplacement est valide.
+     *
+     * @param nouveauX la nouvelle position X du joueur
+     * @param nouveauY la nouvelle position Y du joueur
+     * @throws IOException si une erreur survient lors du déplacement
+     */
     private void deplacer(int nouveauX, int nouveauY) throws IOException {
         if (labyrinthe.peutDeplacer(nouveauX, nouveauY)) {
             labyrinthe.setJoueurX(nouveauX);
             labyrinthe.setJoueurY(nouveauY);
-
-            afficherLabyrinthe();
+            playSound("move.mp3");
 
             if (labyrinthe.estSurSortie(nouveauX, nouveauY)) {
                 victoire();
             }
+        } else {
+            playSound("block.mp3");
         }
     }
 
+    private void playSound(String sound) {
+        AudioClip audio = new AudioClip(getClass().getResource("/sounds/"+sound).toExternalForm());
+        audio.play();
+    }
+
+    /**
+     * Gère la victoire du joueur lorsqu'il atteint la sortie du labyrinthe.
+     *
+     * @throws IOException si une erreur survient lors du retour au menu principal
+     */
     private void victoire() throws IOException {
+        playSound("win.mp3");
         labyrinthe.setJeuEnCours(false);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Victoire");
@@ -106,4 +148,23 @@ public class JeuControleur {
         AppControleur.getInstance().MenuPrincipal();
     }
 
+    /**
+     * Définit les paramètres du labyrinthe et initialise le rendu.
+     *
+     * @param largeur          la largeur du labyrinthe
+     * @param hauteur          la hauteur du labyrinthe
+     * @param pourcentageMurs  le pourcentage de murs dans le labyrinthe
+     * @param joueur           le joueur actuel
+     */
+    public void setParametres(int largeur, int hauteur, double pourcentageMurs, Joueur joueur) {
+        this.labyrinthe = new Labyrinthe(largeur, hauteur, pourcentageMurs);
+        labyrinthe.generer();
+        this.rendu = new LabyrintheRendu(labyrinthe, contienLabyrinthe);
+
+
+        labyrinthe.joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
+        labyrinthe.joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
+
+        afficherLabyrinthe();
+    }
 }

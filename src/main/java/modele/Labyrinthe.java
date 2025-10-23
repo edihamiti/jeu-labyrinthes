@@ -1,5 +1,9 @@
 package modele;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import modele.Cellules.*;
 
 import java.io.IOException;
@@ -8,6 +12,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Classe représentant un labyrinthe.
+ */
 public class Labyrinthe {
 
     private final int largeur;
@@ -21,7 +28,17 @@ public class Labyrinthe {
     private int joueurY;
     private boolean jeuEnCours;
     private int nbChemins;
+    private final IntegerProperty joueurX;
+    private final IntegerProperty joueurY;
+    private final BooleanProperty jeuEnCours;
 
+    /**
+     * Constructeur pour un labyrinthe.
+     *
+     * @param largeur         largeur en cases
+     * @param hauteur         hauteur en cases
+     * @param pourcentageMurs pourcentage de murs (0-100)
+     */
     public Labyrinthe(int largeur, int hauteur, double pourcentageMurs) {
         this.largeur = largeur;
         this.hauteur = hauteur;
@@ -29,12 +46,17 @@ public class Labyrinthe {
         this.distanceMin = 1;
         this.largeurMax = largeur + 2;
         this.hauteurMax = hauteur + 2;
-        this.joueurX = 0;
-        this.joueurY = 1;
-        this.jeuEnCours = true;
         this.nbChemins = 0;
+        this.joueurX = new SimpleIntegerProperty(0);
+        this.joueurY = new SimpleIntegerProperty(1);
+        this.jeuEnCours = new SimpleBooleanProperty(true);
     }
 
+    /**
+     * Constructeur pour un labyrinthe à partir d'un défi.
+     *
+     * @param defi le défi à utiliser pour créer le labyrinthe
+     */
     public Labyrinthe(Defi defi) {
         this(defi.getLargeur(), defi.getHauteur(), defi.getPourcentageMurs());
     }
@@ -99,7 +121,6 @@ public class Labyrinthe {
         }
 
     }
-
 
     /**
     * Crée le chemin principal du labyrinthe à partir d’une position de départ.
@@ -225,6 +246,10 @@ public class Labyrinthe {
     }
 
 
+     * Calcule le plus court chemin entre l'entrée et la sortie du labyrinthe (Dijkstra).
+     *
+     * @return la longueur du plus court chemin
+     */
     public int calculePlusCourtChemin() {
         int startX = -1;
         int startY = -1;
@@ -306,15 +331,15 @@ public class Labyrinthe {
     }
 
     public boolean isJeuEnCours() {
-        return jeuEnCours;
+        return jeuEnCours.get();
     }
 
     public int getJoueurY() {
-        return joueurY;
+        return joueurY.get();
     }
 
     public int getJoueurX() {
-        return joueurX;
+        return joueurX.get();
     }
 
     public int getDistanceMin() {
@@ -330,43 +355,28 @@ public class Labyrinthe {
     }
 
     public void setJeuEnCours(boolean jeuEnCours) {
-        this.jeuEnCours = jeuEnCours;
+        this.jeuEnCours.set(jeuEnCours);
     }
 
     public void setJoueurY(int joueurY) {
-        this.joueurY = joueurY;
+        this.joueurY.set(joueurY);
     }
 
     public void setJoueurX(int joueurX) {
-        this.joueurX = joueurX;
+        this.joueurX.set(joueurX);
     }
 
     public void setCellules(Cellule[][] cellules) {
         this.cellules = cellules;
     }
 
-
-
-    public void afficherAvecJoueur() {
-        for (int j = 0; j < hauteurMax; j++) {
-            for (int i = 0; i < largeurMax; i++) {
-                if (i == joueurX && j == joueurY) {
-                    System.out.print("P"); // joueur
-                } else if (cellules[i][j].estMur()) {
-                    System.out.print("#");
-                } else if (cellules[i][j].estEntree()) {
-                    System.out.print("E");
-                } else if (cellules[i][j].estSortie()) {
-                    System.out.print("S");
-                } else {
-                    System.out.print(".");
-                }
-            }
-            System.out.println();
-        }
-        System.out.println("\nUtilisez Z (haut), S (bas), Q (gauche), D (droite) pour vous déplacer, X pour quitter");
-    }
-
+    /**
+     * Vérifie si le joueur peut se déplacer vers une cellule donnée.
+     *
+     * @param x la coordonnée x de la cellule
+     * @param y la coordonnée y de la cellule
+     * @return true si le déplacement est possible, false sinon
+     */
     public boolean peutDeplacer(int x, int y) {
         if (x < 0 || x >= largeurMax || y < 0 || y >= hauteurMax) {
             return false;
@@ -379,15 +389,7 @@ public class Labyrinthe {
     public boolean estSurSortie(int x, int y) {
         return cellules[x][y].estSortie();
     }
-
-    public char lireTouche() throws IOException {
-        char c = (char) System.in.read();
-        while (System.in.available() > 0) {
-            System.in.read();
-        }
-        return Character.toLowerCase(c);
-    }
-
+    
     public int getLargeurMax() {
         return largeurMax;
     }
@@ -398,5 +400,17 @@ public class Labyrinthe {
 
     public Cellule[][] getCellules() {
         return cellules;
+    }
+
+    public IntegerProperty joueurXProperty() {
+        return joueurX;
+    }
+
+    public IntegerProperty joueurYProperty() {
+        return joueurY;
+    }
+
+    public BooleanProperty jeuEnCoursProperty() {
+        return jeuEnCours;
     }
 }

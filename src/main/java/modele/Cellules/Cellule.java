@@ -1,5 +1,8 @@
 package modele.Cellules;
 
+/**
+ * Classe abstraite représentant une cellule dans un labyrinthe.
+ */
 public abstract class Cellule {
 
     private int x;

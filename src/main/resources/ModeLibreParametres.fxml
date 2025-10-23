@@ -25,7 +25,12 @@
         <padding>
             <Insets top="90" right="90" bottom="90" left="90"/>
         </padding>
-        <Label text="Configurer votre labyrinthe" styleClass="title"/>
+        <HBox>
+            <Button styleClass="button-outlined" text="← Retour" onAction="#retourClicked" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label text="Configurer votre labyrinthe" styleClass="title"/>
+            <Region HBox.hgrow="ALWAYS" />
+        </HBox>
 
         <VBox
             styleClass="form-container"

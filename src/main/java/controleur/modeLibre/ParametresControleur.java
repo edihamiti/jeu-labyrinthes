@@ -1,18 +1,24 @@
 package controleur.modeLibre;
 
+import controleur.AppControleur;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import modele.PseudoException;
 
 import java.io.IOException;
 
+/**
+ * Contrôleur pour les paramètres du mode libre du jeu de labyrinthe.
+ */
 public class ParametresControleur {
     public TextField largeurField;
     public TextField hauteurField;
@@ -33,19 +39,27 @@ public class ParametresControleur {
     public ParametresControleur() {
     }
 
+    /**
+     * Initialise les composants du formulaire et configure les observables d'événements.
+     */
     @FXML
     public void initialize() {
         largeurField.setText("" + largeur);
         hauteurField.setText("" + hauteur);
         pourcentageMursField.setText("" + pourcentageMurs);
 
-        largeurField.setOnAction(this::onLargeurChange);
-        hauteurField.setOnAction(this::onHauteurChange);
+        largeurField.setOnAction((e) -> {onLargeurChange();});
+        largeurField.focusedProperty().addListener((obs, oldVal, newVal) -> {onLargeurChange();});
+        hauteurField.setOnAction((e) -> {onHauteurChange();});
+        hauteurField.focusedProperty().addListener((obs, oldVal, newVal) -> {onHauteurChange();});
         pourcentageMursField.setOnAction(event -> onPourcentageChange((ActionEvent) event));
         pourcentageMursSlider.valueProperty().addListener(this::onPourcentageChangeFromSlider);;
     }
 
-    public void onLargeurChange(ActionEvent event) {
+    /**
+     * Gère le changement de la largeur du labyrinthe.
+     */
+    public void onLargeurChange() {
         try {
             largeur = Integer.parseInt(this.largeurField.getText());
             updateLargeur(largeur);
@@ -54,7 +68,10 @@ public class ParametresControleur {
         }
     }
 
-    public void onHauteurChange(ActionEvent event) {
+    /**
+     * Gère le changement de la hauteur du labyrinthe.
+     */
+    public void onHauteurChange() {
         try {
             hauteur = Integer.parseInt(this.hauteurField.getText());
             updateHauteur(hauteur);
@@ -63,10 +80,16 @@ public class ParametresControleur {
         }
     }
 
+    /**
+     * Gère le changement du pourcentage de murs via le slider.
+     */
     public void onPourcentageChangeFromSlider(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
         updatePourcentageMurs(newValue.doubleValue());
     }
 
+    /**
+     * Gère le changement du pourcentage de murs via le champ de texte.
+     */
     public void onPourcentageChange(ActionEvent event) {
         try {
             pourcentageMurs = Double.parseDouble(this.pourcentageMursField.getText());
@@ -95,20 +118,54 @@ public class ParametresControleur {
         pourcentageMursSlider.setValue(this.pourcentageMurs);
     }
 
-    public void lancerModeLibre() {
+    /**
+     * Gère le clic sur le bouton de retour vers le menu principal.
+     */
+    public void retourClicked() {
         try {
-            System.out.println("Lancement du mode libre");
+            AppControleur.getInstance().MenuPrincipal();
+        } catch (IOException e) {
+            System.err.println("Erreur lors de la retour vers le menu principal !");
+            System.err.println(e.getMessage());
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur !");
+            alert.setHeaderText("Erreur lors de la retour vers le menu principal !");
+            alert.setContentText("Details : " + e.getMessage());
+            alert.showAndWait();
+
+            System.exit(1);
+        }
+    }
+
+    /**
+     * Valide le formulaire et lance le mode libre.
+     *
+     * @throws PseudoException si le pseudo est invalide
+     */
+    public void lancerModeLibre() throws PseudoException {
+        try {
+            System.out.println("Lancement du mode libre avec les valeurs suivantes :");
+            System.out.println("\tLargeur : " + largeur);
+            System.out.println("\tHauteur : " + hauteur);
+            System.out.println("\tPourcentageMurs : " + pourcentageMurs);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
+
             Parent jeuView = loader.load();
+            controleur.JeuControleur jeuControleur = loader.getController();
+
+            modele.Joueur joueur = new modele.Joueur("ModeLibre");
 
             // TODO: Enregistrer les valeurs du formulaire quelque part??
             // faire un Jeu.getInstance().setParametres(largeur, hauteur, pourcentageMurs) ?? aucune idée besoin d'aide là dessus
+            jeuControleur.setParametres(largeur, hauteur, pourcentageMurs, joueur);
+            //normalement ça devrait marcher comme ça
 
             Stage stage = (Stage) validerButton.getScene().getWindow();
 
             Scene jeuScene = new Scene(jeuView, 1400, 900);
-
             stage.setScene(jeuScene);
+            stage.setMaximized(true);
             stage.setTitle("Jeu des Labyrinthes - Mode Libre");
 
             System.out.println("Jeu lancé !");

@@ -69,6 +69,13 @@
             <version>20250517</version>
         </dependency>
 
+        <!-- JavaFX Media for audio support -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>23.0.1</version>
+        </dependency>
+
         <!-- JUnit pour les tests -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
