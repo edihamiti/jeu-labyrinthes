@@ -26,7 +26,7 @@ public class ModeProgressionControleur {
         etapesContainer.getChildren().add(
                 EtapesRendu.render(joueur.getProgression(), defi -> {
                     System.out.println("Defi sélectionné : " + defi);
-                    lancerModeLibre(defi);
+                    lancerModeProgression(defi);
                 })
         );
     }
@@ -34,7 +34,7 @@ public class ModeProgressionControleur {
     /**
      * Lance le mode progression du jeu avec le défi sélectionné.
      */
-    public void lancerModeLibre(Defi defi) {
+    public void lancerModeProgression(Defi defi) {
         try {
             System.out.println("[DEBUG] Enregistrement du labyrinthe dans le Jeu");
             // Enregistrer le défi en cours
