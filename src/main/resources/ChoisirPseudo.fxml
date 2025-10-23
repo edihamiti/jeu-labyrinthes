@@ -38,7 +38,7 @@
                 <Label styleClass="form-small-text" text="Max. 15 charactères"/>
             </VBox>
 
-            <Button text="Commencer →" fx:id="startButton" styleClass="button-filled" prefWidth="Infinity" onAction="#lancerModeLibre" />
+            <Button text="Commencer →" fx:id="startButton" styleClass="button-filled" prefWidth="Infinity" onAction="#lancerModeProgression" />
         </VBox>
 
     </VBox>

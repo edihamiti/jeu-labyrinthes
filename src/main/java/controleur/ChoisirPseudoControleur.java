@@ -49,15 +49,12 @@ public class ChoisirPseudoControleur {
             controleur.ModeProgressionControleur jeuControleur = loader.getController();
 
             Jeu.getInstance().setJoueur(pseudo);
-            System.out.println("[\u001B[34mDEBUG\u001B[0m] Joueur initialiser dans le modèle Jeu");
+            System.out.println("[\u001B[34mDEBUG\u001B[0m] Joueur initialisé dans le modèle Jeu");
 
             Stage stage = (Stage) startButton.getScene().getWindow();
             Scene jeuScene = new Scene(progressionView, 1400, 900);
             stage.setScene(jeuScene);
             stage.setMaximized(true);
-
-            // TODO: Set le joueur dans le mode progression?
-            // Je regarderais comment vous avez fait pour les paramètres du mode libre mais j'ai pas trop le temps pour l'instant
 
             System.out.println("Jeu lancé !");
         } catch (IOException e) {
