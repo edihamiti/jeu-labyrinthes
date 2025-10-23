@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 public class JeuControleur {
     @FXML
-    private VBox containLabyrinthe;
+    private VBox contienLabyrinthe;
     private LabyrintheRendu rendu;
 
     /**
@@ -28,14 +28,14 @@ public class JeuControleur {
         Jeu.getInstance().setLabyrinthe(new Labyrinthe(10, 10, 10));
         Jeu.getInstance().getLabyrinthe().generer();
 
-        this.rendu = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), containLabyrinthe);
+        this.rendu = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
 
         Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
         Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
 
         afficherLabyrinthe();
 
-        containLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
+        contienLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 newScene.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
                     try {
@@ -82,8 +82,8 @@ public class JeuControleur {
      * Affiche le labyrinthe dans l'interface utilisateur.
      */
     public void afficherLabyrinthe() {
-        containLabyrinthe.getChildren().clear();
-        containLabyrinthe.getChildren().add(rendu.rendu(Jeu.getInstance().getLabyrinthe()));
+        contienLabyrinthe.getChildren().clear();
+        contienLabyrinthe.getChildren().add(rendu.rendu(Jeu.getInstance().getLabyrinthe()));
     }
 
     @FXML
@@ -158,7 +158,7 @@ public class JeuControleur {
     public void setParametresLab(int largeur, int hauteur, double pourcentageMurs) {
         Jeu.getInstance().setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs));
         Jeu.getInstance().getLabyrinthe().generer();
-        this.rendu = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), containLabyrinthe);
+        this.rendu = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
 
         Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
         Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
