@@ -60,7 +60,11 @@ public class Labyrinthe {
         cellules = new Cellule[largeurMax][hauteurMax];
         for (int i = 0; i < largeurMax; i++) {
             for (int j = 0; j < hauteurMax; j++) {
-                cellules[i][j] = new Mur(i, j);
+                if (i == 0 || j == 0 || i == largeurMax - 1 || j == hauteurMax - 1) {
+                    cellules[i][j] = new Mur(i, j);
+                } else {
+                    cellules[i][j] = new Mur(i, j);
+                }
             }
         }
         int x = 0;
@@ -68,9 +72,10 @@ public class Labyrinthe {
         cellules[0][1] = new Entree(x, y);
         faireChemin(cellules, x, y);
 
-        for (int i = 1; i < largeurMax-1; i++) {
-            for (int j = 1; j < hauteurMax-1; j++) {
-                if ((!(cellules[i][j] instanceof Entree) && !(cellules[i][j] instanceof Sortie)) && (Math.random() < (1 - (pourcentageMurs / 100)))) {
+        for (int i = 1; i < largeurMax - 1; i++) {
+            for (int j = 1; j < hauteurMax - 1; j++) {
+                if ((!(cellules[i][j] instanceof Entree) && !(cellules[i][j] instanceof Sortie)) &&
+                        (Math.random() < (1 - (pourcentageMurs / 100)))) {
                     cellules[i][j] = new Chemin(i, j);
                 }
             }
@@ -148,7 +153,7 @@ public class Labyrinthe {
             }
 
             if (i == nbCaseChemin) {
-                cellules[cheminx][cheminy] = new Sortie(x, y);
+                cellules[cheminx][cheminy] = new Sortie(cheminx, cheminy);
             } else {
                 cellules[cheminx][cheminy] = new Chemin(cheminx, cheminy);
             }
@@ -299,7 +304,7 @@ public class Labyrinthe {
     public boolean estSurSortie(int x, int y) {
         return cellules[x][y].estSortie();
     }
-    
+
     public int getLargeurMax() {
         return largeurMax;
     }
