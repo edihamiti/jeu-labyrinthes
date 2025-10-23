@@ -1,33 +1,19 @@
 package controleur;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.*;
 import vue.EtapesRendu;
-
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Contrôleur pour le mode progression du jeu de labyrinthe.
  */
 public class ModeProgressionControleur {
-
-    private Labyrinthe labyrinthe;
-    private final Sauvegarde sauvegarde = new Sauvegarde();
-    private Joueur joueur;
-
-    @FXML
-    public Button validerForm;
-
     @FXML
     private VBox etapesContainer;
 
@@ -36,45 +22,34 @@ public class ModeProgressionControleur {
      */
     @FXML
     public void initialize() {
-        String[] etapes = {"1", "2", "3"};
-
-        this.joueur = Jeu.getInstance().getJoueur();
+        Joueur joueur = Jeu.getInstance().getJoueur();
         var progression = joueur.getProgression();
         progression.forEach((defi, termine) -> progression.put(defi, true));
-        etapesContainer.getChildren().add(EtapesRendu.render(joueur.getProgression()));
-        Map<String, Image> difficultees = new HashMap<>();
-    }
-
-    /*public void initJoueur() throws PseudoException {
-        String pseudo = pseudoTextField.getText().trim();
-        this.joueur = sauvegarde.getJoueurParPseudo(pseudo) != null ? sauvegarde.getJoueurParPseudo(pseudo) : new Joueur(pseudo);
-        System.out.println("[DEBUG] init joueur" + this.joueur.toString());
-    }*/
-
-    /**
-     * Valide le formulaire et lance le mode libre.
-     *
-     * @param actionEvent l'événement d'action déclenché
-     * @throws PseudoException si le pseudo est invalide
-     */
-    public void validerForm(ActionEvent actionEvent) throws PseudoException {
-        this.labyrinthe = new Labyrinthe(Defi.DIFFICILE1);
-        lancerModeLibre();
+        etapesContainer.getChildren().add(
+                EtapesRendu.render(joueur.getProgression(), defi -> {
+                    System.out.println("Defi sélectionné : " + defi);
+                    lancerModeLibre(defi);
+                })
+        );
     }
 
     /**
-     * Lance le mode libre du jeu.
+     * Lance le mode progression du jeu avec le défi sélectionné.
      */
-    public void lancerModeLibre() {
+    public void lancerModeLibre(Defi defi) {
         try {
+            System.out.println("[DEBUG] Enregistrement du labyrinthe dans le Jeu");
+            // Enregistrer le défi en cours
+            Jeu jeu = Jeu.getInstance();
+            jeu.setDefiEnCours(defi);
+            jeu.setLabyrinthe(defi);
+
             System.out.println("[DEBUG] Lancement du mode progression");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
             Parent jeuView = loader.load();
 
-            // TODO: Enregistrer les valeurs du formulaire quelque part??
-            // faire un Jeu.getInstance().setParametres(largeur, hauteur, pourcentageMurs) ?? aucune idée besoin d'aide là dessus
 
-            Stage stage = (Stage) validerForm.getScene().getWindow();
+            Stage stage = (Stage) etapesContainer.getScene().getWindow();
 
             Scene jeuScene = new Scene(jeuView, 1400, 900);
             stage.setScene(jeuScene);
