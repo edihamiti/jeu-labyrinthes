@@ -5,15 +5,17 @@ package modele;
  * Chaque défi a une largeur, une hauteur, un pourcentage de murs et des points.
  */
 public enum Defi {
-    FACILE1(10, 10, 25.0, 5, 1),
-    FACILE2(10, 10, 25.0, 10, 2),
-    FACILE3(10, 10, 25.0, 15, 3),
-    MOYEN1(15, 15, 50.0, 15, 1),
-    MOYEN2(15, 15, 50.0, 20, 2),
-    MOYEN3(15, 15, 50.0, 25, 3),
-    DIFFICILE1(20, 20, 75.0, 45, 1),
-    DIFFICILE2(20, 20, 75.0, 50, 2),
-    DIFFICILE3(20, 20, 75.0, 55, 3);
+    FACILE1(6, 6, 25.0, 5, 1),
+    MOYEN1(6, 6, 50.0, 15, 1),
+    DIFFICILE1(6, 6, 75.0, 45, 1),
+
+    FACILE2(12, 12, 25.0, 10, 2),
+    MOYEN2(12, 12, 50.0, 20, 2),
+    DIFFICILE2(12, 12, 75.0, 50, 2),
+
+    FACILE3(18, 18, 25.0, 15, 3),
+    MOYEN3(18, 18, 50.0, 25, 3),
+    DIFFICILE3(18, 18, 75.0, 55, 3);
 
     private final int largeur;
     private final int hauteur;
