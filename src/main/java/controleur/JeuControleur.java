@@ -24,12 +24,8 @@ public class JeuControleur {
     @FXML
     public void initialize() {
         // Pour les tests
-        // Pour les tests
-        Jeu.getInstance().setLabyrinthe(new Labyrinthe(10, 10, 10));
         Jeu.getInstance().getLabyrinthe().generer();
-
         this.rendu = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
-
         Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
         Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
 
