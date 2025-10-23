@@ -9,8 +9,10 @@ import modele.Cellules.*;
 import java.util.LinkedList;
 import java.util.Random;
 
+/**
+ * Classe représentant un labyrinthe.
+ */
 public class Labyrinthe {
-
 
     private final int largeur;
     private final int hauteur;
@@ -23,6 +25,13 @@ public class Labyrinthe {
     private final IntegerProperty joueurY;
     private final BooleanProperty jeuEnCours;
 
+    /**
+     * Constructeur pour un labyrinthe.
+     *
+     * @param largeur         largeur en cases
+     * @param hauteur         hauteur en cases
+     * @param pourcentageMurs pourcentage de murs (0-100)
+     */
     public Labyrinthe(int largeur, int hauteur, double pourcentageMurs) {
         this.largeur = largeur;
         this.hauteur = hauteur;
@@ -35,10 +44,18 @@ public class Labyrinthe {
         this.jeuEnCours = new SimpleBooleanProperty(true);
     }
 
+    /**
+     * Constructeur pour un labyrinthe à partir d'un défi.
+     *
+     * @param defi le défi à utiliser pour créer le labyrinthe
+     */
     public Labyrinthe(Defi defi) {
         this(defi.getLargeur(), defi.getHauteur(), defi.getPourcentageMurs());
     }
 
+    /**
+     * Génère le labyrinthe.
+     */
     public void generer() {
         cellules = new Cellule[largeurMax][hauteurMax];
         for (int i = 0; i < largeurMax; i++) {
@@ -60,7 +77,12 @@ public class Labyrinthe {
         }
     }
 
-
+    /** Génère un chemin dans le labyrinthe.
+     *
+     * @param cellules la matrice de cellules du labyrinthe
+     * @param x        la coordonnée x de départ
+     * @param y        la coordonnée y de départ
+     */
     public void faireChemin(Cellule[][] cellules, int x, int y) {
         int nbCaseChemin = (int) ((largeur * hauteur) /*** ((100 - pourcentageMurs) / 100)**/);
 
@@ -133,6 +155,11 @@ public class Labyrinthe {
         }
     }
 
+    /**
+     * Calcule le plus court chemin entre l'entrée et la sortie du labyrinthe (Dijkstra).
+     *
+     * @return la longueur du plus court chemin
+     */
     public int calculePlusCourtChemin() {
         int startX = -1;
         int startY = -1;
@@ -253,6 +280,13 @@ public class Labyrinthe {
         this.cellules = cellules;
     }
 
+    /**
+     * Vérifie si le joueur peut se déplacer vers une cellule donnée.
+     *
+     * @param x la coordonnée x de la cellule
+     * @param y la coordonnée y de la cellule
+     * @return true si le déplacement est possible, false sinon
+     */
     public boolean peutDeplacer(int x, int y) {
         if (x < 0 || x >= largeurMax || y < 0 || y >= hauteurMax) {
             return false;

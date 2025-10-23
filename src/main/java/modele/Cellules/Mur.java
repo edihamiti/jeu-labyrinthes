@@ -1,5 +1,8 @@
 package modele.Cellules;
 
+/**
+ * Classe représentant une cellule de type mur dans un labyrinthe.
+ */
 public class Mur extends Cellule {
 
     public Mur(int x, int y) {

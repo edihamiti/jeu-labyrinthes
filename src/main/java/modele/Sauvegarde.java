@@ -6,17 +6,29 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * Classe gérant la sauvegarde et le chargement des joueurs.
+ */
 public class Sauvegarde {
 
     private final File FICHIER;
     private final HashMap<String, Joueur> joueurs;
 
+    /**
+     * Constructeur de la classe Sauvegarde.
+     *
+     * @param filePath le chemin du fichier de sauvegarde
+     */
     public Sauvegarde(String filePath) {
         this.FICHIER = new File(filePath);
         joueurs = new HashMap<>();
         assurerFichierSauvegarde();
     }
 
+    /**
+     * Constructeur par défaut de la classe Sauvegarde.
+     * Utilise le chemin de fichier par défaut "saves/sauvegardesJoueurs.json".
+     */
     public Sauvegarde() {
         this("saves/sauvegardesJoueurs.json");
     }
@@ -25,16 +37,31 @@ public class Sauvegarde {
         return this.joueurs.size();
     }
 
+    /**
+     * Ajoute un joueur à la sauvegarde.
+     *
+     * @param j le joueur à ajouter
+     */
     public void addJoueur(Joueur j) {
         if (joueurs.containsKey(j.getPseudo())) return;
         this.joueurs.put(j.getPseudo(), j);
     }
 
+    /**
+     * Supprime un joueur de la sauvegarde.
+     *
+     * @param joueur le joueur à supprimer
+     */
     public void removeJoueur(Joueur joueur) {
         if (joueurs.containsKey(joueur.getPseudo()))
             this.joueurs.remove(joueur.getPseudo());
     }
 
+    /**
+     * Supprime un joueur de la sauvegarde par son pseudo.
+     *
+     * @param pseudo le pseudo du joueur à supprimer
+     */
     public void removeJoueur(String pseudo) {
         if (joueurs.containsKey(pseudo))
             this.joueurs.remove(pseudo);
@@ -44,6 +71,9 @@ public class Sauvegarde {
         return this.joueurs.get(pseudo);
     }
 
+    /**
+     * Assure que le fichier de sauvegarde existe, sinon le crée.
+     */
     private void assurerFichierSauvegarde() {
         File parent = FICHIER.getParentFile();
         if (parent != null && !parent.exists()) {
@@ -60,6 +90,9 @@ public class Sauvegarde {
         }
     }
 
+    /**
+     * Sauvegarde les joueurs dans le fichier de sauvegarde.
+     */
     public void sauvegardeJoueurs() {
         try (FileWriter fileWriter = new FileWriter(FICHIER)) {
 
@@ -77,6 +110,9 @@ public class Sauvegarde {
         }
     }
 
+    /**
+     * Charge les joueurs depuis le fichier de sauvegarde.
+     */
     public void chargerJoueurs() {
         try (BufferedReader bf = new BufferedReader(new FileReader(FICHIER))) {
 

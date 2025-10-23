@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controleur.ChoisirPseudoControleur"
+      spacing="20"
+      alignment="TOP_CENTER"
+      stylesheets="styles/styles.css, styles/modeLibre.css"
+>
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <VBox
+        styleClass="contenu"
+        alignment="TOP_CENTER"
+        spacing="20"
+        HBox.hgrow="ALWAYS"
+        VBox.vgrow="ALWAYS"
+    >
+        <padding>
+            <Insets top="90" right="90" bottom="90" left="90"/>
+        </padding>
+        <Label text="Choisissez votre pseudo" styleClass="title"/>
+
+        <VBox
+            styleClass="form-container"
+            spacing="20"
+            prefWidth="400"
+            maxWidth="450"
+        >
+            <VBox>
+                <Label styleClass="form-label" text="Pseudo"/>
+                <TextField fx:id="pseudoField" prefWidth="50"/>
+                <Label styleClass="form-small-text" text="Max. 15 charactères"/>
+            </VBox>
+
+            <Button text="Commencer →" fx:id="startButton" styleClass="button-filled" prefWidth="Infinity" onAction="#lancerModeLibre" />
+        </VBox>
+
+    </VBox>
+
+
+</VBox>

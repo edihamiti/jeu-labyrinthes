@@ -7,6 +7,9 @@ import javafx.scene.layout.VBox;
 import modele.Cellules.Cellule;
 import modele.Labyrinthe;
 
+/**
+ * Classe responsable du rendu graphique du labyrinthe.
+ */
 public class LabyrintheRendu {
     private final Image imgMur = new Image(getClass().getResourceAsStream("/img/mur.png"));
     private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/chemin.png"));
@@ -15,21 +18,42 @@ public class LabyrintheRendu {
     private Labyrinthe labyrinthe;
     private VBox contienLabyrinthe;
 
+    /**
+     * Constructeur de la classe LabyrintheRendu.
+     *
+     * @param labyrinthe          Le labyrinthe à rendre.
+     * @param contienLabyrinthe   Le conteneur VBox pour afficher le labyrinthe.
+     */
     public LabyrintheRendu(Labyrinthe labyrinthe, VBox contienLabyrinthe) {
         this.labyrinthe = labyrinthe;
         this.contienLabyrinthe = contienLabyrinthe;
     }
 
+    /**
+     * Rend le labyrinthe sous forme de Canvas.
+     *
+     * @param labyrinthe Le labyrinthe à rendre.
+     * @return Le Canvas représentant le labyrinthe.
+     */
     public Canvas rendu(Labyrinthe labyrinthe) {
         this.labyrinthe = labyrinthe;
         return creerCanvasLabyrinthe(labyrinthe.getCellules());
     }
 
+    /**
+     * Affiche le labyrinthe dans le conteneur VBox.
+     */
     public void afficherLabyrinthe() {
         contienLabyrinthe.getChildren().clear();
         contienLabyrinthe.getChildren().add(creerCanvasLabyrinthe(this.labyrinthe.getCellules()));
     }
 
+    /**
+     * Crée un Canvas représentant le labyrinthe.
+     *
+     * @param labyrinthe Le labyrinthe sous forme de matrice de cellules.
+     * @return Le Canvas représentant le labyrinthe.
+     */
     private Canvas creerCanvasLabyrinthe(Cellule[][] labyrinthe) {
         int tailleCellule = 50;
         Canvas canvas = new Canvas(labyrinthe[0].length * tailleCellule, labyrinthe[1].length * tailleCellule);
