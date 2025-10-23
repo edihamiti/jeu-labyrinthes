@@ -165,23 +165,13 @@ public class Jeu {
      * @return message de fin de partie
      */
     public String terminerPartie(boolean victoire) {
-
         this.labyrinthe.setJeuEnCours(false);
 
-        int distanceOptimale = this.labyrinthe.calculePlusCourtChemin();
-
         StringBuilder resultat = new StringBuilder();
-        if (victoire) {
-            if (this.joueur != null) {
-                this.joueur.ajouterScore(this.defiEnCours);
-
-
-                if (this.defiEnCours != null) {
-                    this.joueur.ajouterScore(this.defiEnCours);
-                }
-            }
-
-            resultat.append("Félicitations ! Vous avez terminé le labyrinthe !\n");
+        if (victoire && this.joueur != null && this.defiEnCours != null) {
+            this.joueur.ajouterScore(this.defiEnCours);
+            this.sauvegarde.sauvegardeJoueurs();
+            resultat.append("Vous avez trouvé la sortie et terminé le labyrinthe !\n");
             resultat.append("Score : ").append(this.joueur.getScore());
 
         } else {

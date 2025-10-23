@@ -149,11 +149,11 @@ public class JeuControleur {
      */
     private void victoire() throws IOException {
         playSound("win.mp3");
-        Jeu.getInstance().getLabyrinthe().setJeuEnCours(false);
+        String text = Jeu.getInstance().terminerPartie(true);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Victoire");
         alert.setHeaderText("Félicitations");
-        alert.setContentText("Vous avez trouvé la sortie");
+        alert.setContentText(text);
         alert.showAndWait();
         AppControleur.getInstance().MenuPrincipal();
     }
