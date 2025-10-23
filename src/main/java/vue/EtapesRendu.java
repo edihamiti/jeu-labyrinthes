@@ -8,19 +8,19 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import modele.Defi;
-import modele.Joueur;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * Classe responsable du rendu des étapes avec leurs difficultés.
  */
 public class EtapesRendu {
     private static Map<Defi, Boolean> progression;
-    private static Image imgFacile = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/difficultees/facile.png")));
-    private static Image imgMoyen = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/difficultees/moyen.png")));
-    private static Image imgDifficile = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/difficultees/difficile.png")));
-    private static Image imgCheckmark = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/checkmark.png")));
+    private static final Image imgFacile = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/difficultees/facile.png")));
+    private static final Image imgMoyen = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/difficultees/moyen.png")));
+    private static final Image imgDifficile = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/difficultees/difficile.png")));
+    private static final Image imgCheckmark = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/checkmark.png")));
 
 
     /**
@@ -29,7 +29,7 @@ public class EtapesRendu {
      * @param progress Une Map<Defi, Boolean> représentant la progression des défis.
      * @return VBox contenant les étapes rendues.
      */
-    public static VBox render(Map<Defi, Boolean> progress) {
+    public static VBox render(Map<Defi, Boolean> progress, Consumer<Defi> action) {
         VBox root = new VBox(15);
         root.setPrefWidth(VBox.USE_PREF_SIZE);
         root.setMaxWidth(VBox.USE_PREF_SIZE);
@@ -44,7 +44,7 @@ public class EtapesRendu {
         for (int etape = 1; etape <= 3; etape++) {
             List<Defi> defis = defisByEtape.get(etape);
             if (defis != null && !defis.isEmpty()) {
-                VBox stepCard = createStepCard(String.valueOf(etape), defis);
+                VBox stepCard = createStepCard(String.valueOf(etape), defis, action);
                 root.getChildren().add(stepCard);
             }
         }
@@ -59,7 +59,7 @@ public class EtapesRendu {
      * @param defis TODO: Description de 'defis'.
      * @return VBox représentant la carte d'étape.
      */
-    private static VBox createStepCard(String step, List<Defi> defis) {
+    private static VBox createStepCard(String step, List<Defi> defis, Consumer<Defi> action) {
         VBox root = new VBox(10);
         root.getStyleClass().add("step-card");
 
@@ -73,7 +73,9 @@ public class EtapesRendu {
             Image image = getImageForDefi(defi);
             String difficulty = getDifficultyLabel(defi);
             boolean isDone = progression.getOrDefault(defi, false);
-            difficultyContainer.getChildren().add(createDifficultyIcon(image, difficulty, isDone));
+            Button bt = createDifficultyIcon(image, difficulty, isDone);
+            bt.setOnAction(e -> action.accept(defi));
+            difficultyContainer.getChildren().add(bt);
         }
 
         root.getChildren().add(difficultyContainer);

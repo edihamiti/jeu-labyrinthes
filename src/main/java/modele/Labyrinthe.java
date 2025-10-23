@@ -102,25 +102,25 @@ public class Labyrinthe {
         for (int i = 1; i < largeurMax - 1; i++) {
             for (int j = 1; j < hauteurMax - 1; j++) {
                 if (cellules[i][j] instanceof Chemin) {
-                    if (i%10==0) {
+                    if (i % 10 == 0) {
                         faireCheminAlternatif(cellules, i, j);
                     }
                 }
             }
         }
-
         // Transformation mur en chemin aléatoirement selon pourcentageMurs;
-        double pourcentageCheminsActuel = 1.0 - (((double) nbChemins / ((largeurMax - 2) * (hauteurMax - 2)) * 100.0) / 100.0);
-        double probaBase = 1 - (pourcentageMurs / 100.0);
-        double probaChemin = probaBase * pourcentageCheminsActuel;
-        for (int i = 1; i < largeurMax-1; i++) {
-            for (int j = 1; j < hauteurMax-1; j++) {
-                if ((!(cellules[i][j] instanceof Entree) && !(cellules[i][j] instanceof Sortie)) && (Math.random() < probaChemin)) {
-                    cellules[i][j] = new Chemin(i, j);
+        if(largeur > 9 && hauteur > 9) {
+            double pourcentageCheminsActuel = 1.0 - (((double) nbChemins / ((largeurMax - 2) * (hauteurMax - 2)) * 100.0) / 100.0);
+            double probaBase = 1 - (pourcentageMurs / 100.0);
+            double probaChemin = probaBase * pourcentageCheminsActuel;
+            for (int i = 1; i < largeurMax - 1; i++) {
+                for (int j = 1; j < hauteurMax - 1; j++) {
+                    if ((!(cellules[i][j] instanceof Entree) && !(cellules[i][j] instanceof Sortie)) && (Math.random() < probaChemin)) {
+                        cellules[i][j] = new Chemin(i, j);
+                    }
                 }
             }
         }
-
     }
 
     /**

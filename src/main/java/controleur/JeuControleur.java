@@ -138,7 +138,7 @@ public class JeuControleur {
     }
 
     private void playSound(String sound) {
-        AudioClip audio = new AudioClip(getClass().getResource("/sounds/" + sound).toExternalForm());
+        AudioClip audio = new AudioClip(getClass().getResource("/sounds/"+sound).toExternalForm());
         audio.play();
     }
 

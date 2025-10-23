@@ -73,6 +73,14 @@ public class Jeu {
         this.labyrinthe = labyrinthe;
     }
 
+    public void setLabyrinthe(int largeur, int hauteur, double pourcentageMurs) {
+        setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs));
+    }
+
+    public void setLabyrinthe(Defi defi) {
+        setLabyrinthe(new Labyrinthe(defi));
+    }
+
     public Defi getDefiEnCours() {
         return defiEnCours;
     }

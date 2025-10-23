@@ -26,7 +26,5 @@
         <VBox fx:id="etapesContainer" spacing="15" alignment="TOP_CENTER" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
             <!-- Les étapes sont ajoutées dynamiquement ici -->
         </VBox>
-
-        <Button fx:id="validerForm" onAction="#validerForm" text="Valider le formulaire" styleClass="button-filled"/>
     </VBox>
 </VBox>

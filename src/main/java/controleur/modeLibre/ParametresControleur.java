@@ -165,10 +165,8 @@ public class ParametresControleur {
 
             modele.Joueur joueur = new modele.Joueur("ModeLibre");
 
-            // TODO: Enregistrer les valeurs du formulaire quelque part??
-            // faire un Jeu.getInstance().setParametres(largeur, hauteur, pourcentageMurs) ?? aucune idée besoin d'aide là dessus
+            // TODO: Refactoriser pour faire passer par Jeu <3
             jeuControleur.setParametresLab(largeur, hauteur, pourcentageMurs);
-            //normalement ça devrait marcher comme ça
 
             Stage stage = (Stage) validerButton.getScene().getWindow();
 
