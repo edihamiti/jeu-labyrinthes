@@ -29,6 +29,7 @@ public class ChoisirPseudoControleur {
      */
     @FXML
     public void initialize() {
+        pseudoField.setOnAction(e -> lancerModeProgression());
         pseudoField.setText(pseudo);
         pseudoField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             if (newValue.trim().length() > 15) {

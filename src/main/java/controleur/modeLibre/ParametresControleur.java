@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import modele.PseudoException;
 
@@ -41,6 +42,17 @@ public class ParametresControleur {
      */
     @FXML
     public void initialize() {
+        validerButton.getParent().sceneProperty().addListener((observableValue, scene, t1) -> {
+            t1.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, keyEvent -> {
+                if (keyEvent.getCode() == KeyCode.ENTER) {
+                    try {
+                        lancerModeLibre();
+                    } catch (PseudoException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
+        });
         largeurField.getValueFactory().setValue(largeur);
         hauteurField.getValueFactory().setValue(hauteur);
         pourcentageMursField.setText("" + pourcentageMurs);
