@@ -141,6 +141,16 @@ public class HomePageControleur {
 
             HashMap<String, Joueur> profiles = saves.getJoueurs();
 
+            if (profiles.isEmpty()) {
+                Label pasDeProfile = new Label("Pas de profil disponible");
+                pasDeProfile.getStyleClass().add("form-small-text");
+                pasDeProfile.setStyle("-fx-text-fill: -color-1;");
+                chargerProfilButton.getChildren().add(
+                        pasDeProfile
+                );
+                return;
+            }
+
             for (String name : profiles.keySet()) {
                 Joueur joueur = profiles.get(name);
                 Button button = new Button(name);
