@@ -48,12 +48,21 @@ public class ParametresControleur {
         hauteurField.setText("" + hauteur);
         pourcentageMursField.setText("" + pourcentageMurs);
 
-        largeurField.setOnAction((e) -> {onLargeurChange();});
-        largeurField.focusedProperty().addListener((obs, oldVal, newVal) -> {onLargeurChange();});
-        hauteurField.setOnAction((e) -> {onHauteurChange();});
-        hauteurField.focusedProperty().addListener((obs, oldVal, newVal) -> {onHauteurChange();});
+        largeurField.setOnAction((e) -> {
+            onLargeurChange();
+        });
+        largeurField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            onLargeurChange();
+        });
+        hauteurField.setOnAction((e) -> {
+            onHauteurChange();
+        });
+        hauteurField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            onHauteurChange();
+        });
         pourcentageMursField.setOnAction(event -> onPourcentageChange((ActionEvent) event));
-        pourcentageMursSlider.valueProperty().addListener(this::onPourcentageChangeFromSlider);;
+        pourcentageMursSlider.valueProperty().addListener(this::onPourcentageChangeFromSlider);
+        ;
     }
 
     /**
@@ -158,7 +167,7 @@ public class ParametresControleur {
 
             // TODO: Enregistrer les valeurs du formulaire quelque part??
             // faire un Jeu.getInstance().setParametres(largeur, hauteur, pourcentageMurs) ?? aucune idée besoin d'aide là dessus
-            jeuControleur.setParametres(largeur, hauteur, pourcentageMurs, joueur);
+            jeuControleur.setParametresLab(largeur, hauteur, pourcentageMurs);
             //normalement ça devrait marcher comme ça
 
             Stage stage = (Stage) validerButton.getScene().getWindow();

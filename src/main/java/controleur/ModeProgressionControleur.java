@@ -36,7 +36,6 @@ public class ModeProgressionControleur {
      */
     @FXML
     public void initialize() {
-        sauvegarde.chargerJoueurs();
         String[] etapes = {"1", "2", "3"};
 
         Map<String, Image> difficultees = new HashMap<>();

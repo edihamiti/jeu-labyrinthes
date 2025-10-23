@@ -5,11 +5,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import modele.PseudoException;
+import modele.Jeu;
 
 import java.io.IOException;
 
@@ -40,26 +39,17 @@ public class ChoisirPseudoControleur {
     }
 
     /**
-     * Lance le mode libre du jeu avec le pseudo sélectionné.
+     * Lance le mode progression du jeu avec le pseudo sélectionné.
      */
-    public void lancerModeLibre() {
+    public void lancerModeProgression() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
 
             Parent progressionView = loader.load();
             controleur.ModeProgressionControleur jeuControleur = loader.getController();
 
-            try {
-                modele.Joueur joueur = new modele.Joueur(this.pseudo);
-                System.out.println(joueur);
-            } catch (PseudoException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erreur de pseudo");
-                alert.setHeaderText("Le pseudo est invalide !");
-                alert.setContentText(e.getMessage());
-                alert.showAndWait();
-                return;
-            }
+            Jeu.getInstance().setJoueur(pseudo);
+            System.out.println("[\u001B[34mDEBUG\u001B[0m] Joueur initialiser dans le modèle Jeu");
 
             Stage stage = (Stage) startButton.getScene().getWindow();
             Scene jeuScene = new Scene(progressionView, 1400, 900);

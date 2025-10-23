@@ -60,6 +60,11 @@ public class Jeu {
         this.joueur = joueur;
     }
 
+    public void setJoueur(String pseudo) {
+        sauvegarde.chargerJoueurs();
+        setJoueur(sauvegarde.getJoueurParPseudo(pseudo));
+    }
+
     public Labyrinthe getLabyrinthe() {
         return labyrinthe;
     }

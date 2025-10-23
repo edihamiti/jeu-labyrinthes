@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
-import modele.Joueur;
+import modele.Jeu;
 import modele.Labyrinthe;
 import vue.LabyrintheRendu;
 
@@ -16,7 +16,6 @@ import java.io.IOException;
 public class JeuControleur {
     @FXML
     private VBox contienLabyrinthe;
-    private Labyrinthe labyrinthe;
     private LabyrintheRendu rendu;
 
     /**
@@ -25,13 +24,14 @@ public class JeuControleur {
     @FXML
     public void initialize() {
         // Pour les tests
-        this.labyrinthe = new Labyrinthe(10, 10, 10);
-        labyrinthe.generer();
+        // Pour les tests
+        Jeu.getInstance().setLabyrinthe(new Labyrinthe(10, 10, 10));
+        Jeu.getInstance().getLabyrinthe().generer();
 
-        this.rendu = new LabyrintheRendu(labyrinthe, contienLabyrinthe);
+        this.rendu = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
 
-        labyrinthe.joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
-        labyrinthe.joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
+        Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
+        Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
 
         afficherLabyrinthe();
 
@@ -83,27 +83,27 @@ public class JeuControleur {
      */
     public void afficherLabyrinthe() {
         contienLabyrinthe.getChildren().clear();
-        contienLabyrinthe.getChildren().add(rendu.rendu(labyrinthe));
+        contienLabyrinthe.getChildren().add(rendu.rendu(Jeu.getInstance().getLabyrinthe()));
     }
 
     @FXML
     public void deplacerHaut() throws IOException {
-        deplacer(labyrinthe.getJoueurX() - 1, labyrinthe.getJoueurY());
+        deplacer(Jeu.getInstance().getLabyrinthe().getJoueurX() - 1, Jeu.getInstance().getLabyrinthe().getJoueurY());
     }
 
     @FXML
     public void deplacerBas() throws IOException {
-        deplacer(labyrinthe.getJoueurX() + 1, labyrinthe.getJoueurY());
+        deplacer(Jeu.getInstance().getLabyrinthe().getJoueurX() + 1, Jeu.getInstance().getLabyrinthe().getJoueurY());
     }
 
     @FXML
     public void deplacerGauche() throws IOException {
-        deplacer(labyrinthe.getJoueurX(), labyrinthe.getJoueurY() - 1);
+        deplacer(Jeu.getInstance().getLabyrinthe().getJoueurX(), Jeu.getInstance().getLabyrinthe().getJoueurY() - 1);
     }
 
     @FXML
     public void deplacerDroite() throws IOException {
-        deplacer(labyrinthe.getJoueurX(), labyrinthe.getJoueurY() + 1);
+        deplacer(Jeu.getInstance().getLabyrinthe().getJoueurX(), Jeu.getInstance().getLabyrinthe().getJoueurY() + 1);
     }
 
     /**
@@ -114,12 +114,12 @@ public class JeuControleur {
      * @throws IOException si une erreur survient lors du déplacement
      */
     private void deplacer(int nouveauX, int nouveauY) throws IOException {
-        if (labyrinthe.peutDeplacer(nouveauX, nouveauY)) {
-            labyrinthe.setJoueurX(nouveauX);
-            labyrinthe.setJoueurY(nouveauY);
+        if (Jeu.getInstance().getLabyrinthe().peutDeplacer(nouveauX, nouveauY)) {
+            Jeu.getInstance().getLabyrinthe().setJoueurX(nouveauX);
+            Jeu.getInstance().getLabyrinthe().setJoueurY(nouveauY);
             playSound("move.mp3");
 
-            if (labyrinthe.estSurSortie(nouveauX, nouveauY)) {
+            if (Jeu.getInstance().getLabyrinthe().estSurSortie(nouveauX, nouveauY)) {
                 victoire();
             }
         } else {
@@ -139,7 +139,7 @@ public class JeuControleur {
      */
     private void victoire() throws IOException {
         playSound("win.mp3");
-        labyrinthe.setJeuEnCours(false);
+        Jeu.getInstance().getLabyrinthe().setJeuEnCours(false);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Victoire");
         alert.setHeaderText("Félicitations");
@@ -151,20 +151,19 @@ public class JeuControleur {
     /**
      * Définit les paramètres du labyrinthe et initialise le rendu.
      *
-     * @param largeur          la largeur du labyrinthe
-     * @param hauteur          la hauteur du labyrinthe
-     * @param pourcentageMurs  le pourcentage de murs dans le labyrinthe
-     * @param joueur           le joueur actuel
+     * @param largeur         la largeur du labyrinthe
+     * @param hauteur         la hauteur du labyrinthe
+     * @param pourcentageMurs le pourcentage de murs dans le labyrinthe
      */
-    public void setParametres(int largeur, int hauteur, double pourcentageMurs, Joueur joueur) {
-        this.labyrinthe = new Labyrinthe(largeur, hauteur, pourcentageMurs);
-        labyrinthe.generer();
-        this.rendu = new LabyrintheRendu(labyrinthe, contienLabyrinthe);
+    public void setParametresLab(int largeur, int hauteur, double pourcentageMurs) {
+        Jeu.getInstance().setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs));
+        Jeu.getInstance().getLabyrinthe().generer();
+        this.rendu = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
 
-
-        labyrinthe.joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
-        labyrinthe.joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
+        Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
+        Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
 
         afficherLabyrinthe();
     }
+
 }
