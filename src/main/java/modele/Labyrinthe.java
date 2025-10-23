@@ -4,6 +4,7 @@ import modele.Cellules.*;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class Labyrinthe {
@@ -42,19 +43,23 @@ public class Labyrinthe {
                 cellules[i][j] = new Mur(i, j);
             }
         }
-        int x = 0;
-        int y = 1;
-        cellules[0][1] = new Entree(x, y);
-        faireChemin(cellules, x, y);
 
-        /**for (int i = 1; i < largeurMax-1; i++) {
-            for (int j = 1; j < hauteurMax-1; j++) {
-                if ((!(cellules[i][j] instanceof Entree) && !(cellules[i][j] instanceof Sortie)) && (Math.random() < (1 - (pourcentageMurs / 100)))) {
-                    cellules[i][j] = new Chemin(i, j);
+        int entreeX = 0;
+        int entreeY = 1;
+        cellules[entreeX][entreeY] = new Entree(entreeX, entreeY);
+        faireChemin(cellules, entreeX, entreeY);
+
+        for (int i = 1; i < largeurMax - 1; i++) {
+            for (int j = 1; j < hauteurMax - 1; j++) {
+                if (cellules[i][j] instanceof Chemin) {
+                    if (i%10==0) {
+                        faireCheminAlternatif(cellules, i, j);
+                    }
                 }
             }
-        }**/
+        }
     }
+
 
 
     public void faireChemin(Cellule[][] cellules, int startX, int startY) {
@@ -110,58 +115,39 @@ public class Labyrinthe {
         }
     }
 
-    public void faireCheminAlternatif(Cellule[][] cellules, int cheminx, int cheminy) {
-        boolean nouveauchemin;
-        for (int i = 1; i <= 10; i++) {
-            nouveauchemin = false;
-            Random random = new Random();
-            int sens = random.nextInt(4);
-            while (!nouveauchemin) {
-                switch (sens) {
-                    case 0: //Pour aller vers le haut
-                        if (cheminy - 1 != 0) {
-                            cheminy--;
-                            nouveauchemin = true;
-                        } else {
-                            nouveauchemin = false;
-                            sens += random.nextInt(3) + 1;
-                        }
-                        break;
-                    case 1: //Pour aller vers la droite
-                        if (cheminx + 1 != hauteurMax) {
-                            cheminx++;
-                            nouveauchemin = true;
-                        } else {
-                            nouveauchemin = false;
-                            int choix = random.nextInt(2);
-                            if (choix == 0) sens = 0;
-                            else sens += random.nextInt(2) + 2;
-                        }
-                        break;
-                    case 2: //Pour aller vers le bas
-                        if (cheminy + 1 != largeurMax) {
-                            cheminy++;
-                            nouveauchemin = true;
-                        } else {
-                            nouveauchemin = false;
-                            int choix = random.nextInt(2);
-                            if (choix == 0) sens -= random.nextInt(2) + 1;
-                            else sens = 3;
-                        }
-                        break;
-                    case 3: //Pour aller vers la gauche
-                        if (cheminx - 1 != 0) {
-                            cheminx--;
-                            nouveauchemin = true;
-                        } else {
-                            nouveauchemin = false;
-                            sens -= random.nextInt(3) + 1;
-                        }
-                        break;
+    public void faireCheminAlternatif(Cellule[][] cellules, int startX, int startY) {
+        Random random = new Random();
+        int[][] directions = {{0,-1}, {0,1}, {-1,0}, {1,0}};
+
+        int x = startX;
+        int y = startY;
+        int longueur = (largeur+hauteur)/2;
+
+        for (int i = 0; i < longueur; i++) {
+            List<int[]> possibles = new java.util.ArrayList<>();
+            for (int[] d : directions) {
+                int nx = x + d[0];
+                int ny = y + d[1];
+                if (nx > 0 && ny > 0 && nx < largeurMax - 1 && ny < hauteurMax - 1) {
+                    if (cellules[nx][ny] instanceof Mur) {
+                        possibles.add(new int[]{nx, ny});
+                    }
                 }
             }
+
+            if (possibles.isEmpty()) break;
+
+            int[] suivant = possibles.get(random.nextInt(possibles.size()));
+            int nx = suivant[0];
+            int ny = suivant[1];
+
+            cellules[nx][ny] = new Chemin(nx, ny);
+
+            x = nx;
+            y = ny;
         }
     }
+
 
     public int calculePlusCourtChemin() {
         int startX = -1;
