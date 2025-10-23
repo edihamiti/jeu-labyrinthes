@@ -42,7 +42,7 @@
 
     <VBox alignment="CENTER" spacing="40">
     <!--Canvas avec le labyrinthe-->
-        <VBox fx:id="contienLabyrinthe" alignment="CENTER" style="-fx-background-color: -color-1"/>
+        <VBox fx:id="containLabyrinthe" alignment="CENTER" style="-fx-background-color: -color-1"/>
 
         <!--touche-->
         <VBox alignment="CENTER" spacing="5">
