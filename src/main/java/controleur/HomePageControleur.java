@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import modele.Jeu;
 import modele.Joueur;
 import modele.Sauvegarde;
+import vue.ChargerProfileRendu;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -132,42 +133,19 @@ public class HomePageControleur {
     public void chargerProfil() {
         isChargerProfilActive = !isChargerProfilActive;
 
-        if (isChargerProfilActive) {
-            Node label = chargerProfilButton.getChildren().get(0);
-            chargerProfilButton.getChildren().clear();
-            chargerProfilButton.getChildren().add(
-                    label
-            );
+        Node label = chargerProfilButton.getChildren().get(0);
+        chargerProfilButton.getChildren().clear();
+        chargerProfilButton.getChildren().add(
+                label
+        );
 
+        if (isChargerProfilActive) {
             HashMap<String, Joueur> profiles = saves.getJoueurs();
 
-            if (profiles.isEmpty()) {
-                Label pasDeProfile = new Label("Pas de profil disponible");
-                pasDeProfile.getStyleClass().add("form-small-text");
-                pasDeProfile.setStyle("-fx-text-fill: -color-1;");
-                chargerProfilButton.getChildren().add(
-                        pasDeProfile
-                );
-                return;
-            }
-
-            for (String name : profiles.keySet()) {
-                Joueur joueur = profiles.get(name);
-                Button button = new Button(name);
-                button.setMaxWidth(Double.MAX_VALUE);
-                button.getStyleClass().add("charger-profile-button");
-                button.setOnAction(event -> {
-                    Jeu.getInstance().setJoueur(joueur);
-                    lancerJeu();
-                });
-                chargerProfilButton.getChildren().add(button);
-            }
-        } else {
-            Node label = chargerProfilButton.getChildren().get(0);
-            chargerProfilButton.getChildren().clear();
-            chargerProfilButton.getChildren().add(
-                    label
-            );
+            chargerProfilButton.getChildren().add(ChargerProfileRendu.render(profiles, joueur -> {
+                Jeu.getInstance().setJoueur(joueur);
+                lancerJeu();
+            }));
         }
 
     }
