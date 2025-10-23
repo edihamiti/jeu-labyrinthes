@@ -5,8 +5,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import modele.Cellules.Cellule;
 import modele.Labyrinthe;
 
@@ -15,6 +13,7 @@ import modele.Labyrinthe;
  */
 public class LocaleRendu {
     private final Image imgMur = new Image(getClass().getResourceAsStream("/img/mur.png"));
+    private final Image imgRedWall = new Image(getClass().getResourceAsStream("/img/redWall.png"));
     private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/chemin.png"));
     private final Image imgSortie = new Image(getClass().getResourceAsStream("/img/sortie.png"));
     private final Image imgJoueur = new Image(getClass().getResourceAsStream("/img/joueur.png"));
@@ -22,6 +21,8 @@ public class LocaleRendu {
     private final int porteeVueLocale = 1; // Portée de la vue locale (1 case autour du joueur)
     private Labyrinthe labyrinthe;
     private VBox contienLabyrinthe;
+    private int lastBlockedX = -1;
+    private int lastBlockedY = -1;
 
     /**
      * Constructeur de la classe LocaleRendu.
@@ -64,6 +65,18 @@ public class LocaleRendu {
     }
 
     /**
+     * Définit le mur bloqué à une position spécifique.
+     *
+     * @param x La coordonnée X de la cellule du mur bloqué.
+     * @param y La coordonnée Y de la cellule du mur bloqué.
+     */
+    public void setBlockedWall(int x, int y) {
+        this.lastBlockedX = x;
+        this.lastBlockedY = y;
+        afficherVueLocale();
+    }
+
+    /**
      * Crée un Canvas représentant la vue locale autour du joueur.
      *
      * @return Le Canvas représentant la vue locale.
@@ -90,10 +103,13 @@ public class LocaleRendu {
 
                 if (cellX >= 0 && cellX < largeurMax && cellY >= 0 && cellY < hauteurMax) {
                     if (dx == 0 && dy == 0) {
-                        // Position du joueur
                         gc.drawImage(imgJoueur, x, y, tailleCellule, tailleCellule);
                     } else if (cellules[cellX][cellY].estMur()) {
-                        gc.drawImage(imgMur, x, y, tailleCellule, tailleCellule);
+                        if (cellX == lastBlockedX && cellY == lastBlockedY) {
+                            gc.drawImage(imgRedWall, x, y, tailleCellule, tailleCellule);
+                        } else {
+                            gc.drawImage(imgMur, x, y, tailleCellule, tailleCellule);
+                        }
                     } else if (cellules[cellX][cellY].estChemin()) {
                         gc.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
                     } else if (cellules[cellX][cellY].estSortie()) {
@@ -102,6 +118,9 @@ public class LocaleRendu {
                 }
             }
         }
+
+        lastBlockedX = -1;
+        lastBlockedY = -1;
 
         return canvas;
     }
