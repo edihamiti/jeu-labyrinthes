@@ -3,9 +3,16 @@ package modele;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe représentant le mode de jeu "Progression".
+ */
 public class ModeProgression extends ModeJeu {
     private List<Etape> etapes = new ArrayList<>();
 
+    /**
+     * Constructeur pour le mode de jeu "Progression".
+     * Initialise les étapes avec les défis correspondants.
+     */
     public ModeProgression() {
         for (Defi defi : Defi.values()) {
             etapes.add(new Etape(defi, 0));

@@ -1,5 +1,9 @@
 package modele;
 
+/**
+ * Enumération représentant les différents défis disponibles.
+ * Chaque défi a une largeur, une hauteur, un pourcentage de murs et des points.
+ */
 public enum Defi {
     FACILE1(10, 10, 25.0, 5),
     FACILE2(10, 10, 25.0, 10),
@@ -16,6 +20,14 @@ public enum Defi {
     private final double pourcentageMurs;
     private final int points;
 
+    /**
+     * Constructeur pour un défi.
+     *
+     * @param largeur         largeur en cases
+     * @param hauteur         hauteur en cases
+     * @param pourcentageMurs pourcentage de murs (0-100)
+     * @param points          points attribués
+     */
     private Defi(int largeur, int hauteur, double pourcentageMurs, int points) {
         this.largeur = largeur;
         this.hauteur = hauteur;
@@ -35,13 +47,19 @@ public enum Defi {
         return hauteur;
     }
 
+    /**
+     * Retourne le pourcentage de murs pour ce défi.
+     *
+     * @return pourcentage de murs (0-100)
+     */
     public double getPourcentageMurs() {
         return pourcentageMurs;
     }
 
+    /* Utilisation ???
     public double getTauxMurs() {
         return pourcentageMurs / 100;
     }
-
+    */
 
 }

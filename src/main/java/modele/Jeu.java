@@ -2,12 +2,21 @@ package modele;
 
 import java.util.Scanner;
 
+/**
+ * Classe représentant une partie de jeu.
+ */
 public class Jeu {
     private ModeJeu modeJeu;
     private Joueur joueur;
     private Labyrinthe labyrinthe;
     private Defi defiEnCours;
 
+    /**
+     * @param modeJeu     un mode de jeu
+     * @param joueur      un joueur
+     * @param labyrinthe  un labyrinthe
+     * @param defiEnCours un défi en cours
+     */
     public Jeu(ModeJeu modeJeu, Joueur joueur, Labyrinthe labyrinthe, Defi defiEnCours) {
         this.modeJeu = modeJeu;
         this.joueur = joueur;
@@ -15,6 +24,7 @@ public class Jeu {
         this.defiEnCours = defiEnCours;
     }
 
+    /* Utilisation ???
     public Jeu(Labyrinthe labyrinthe, Joueur joueur) {
         this.joueur = joueur;
         this.labyrinthe = labyrinthe;
@@ -23,21 +33,7 @@ public class Jeu {
     // constructeur vide
     public Jeu() {
     }
-
-    private static int getIntegerInput(Scanner scanner, int min, int max) {
-        int value;
-        while (true) {
-            try {
-                value = Integer.parseInt(scanner.nextLine());
-                if (value >= min && value <= max) {
-                    return value;
-                }
-                System.out.print("Veuillez entrer une valeur entre " + min + " et " + max + " : ");
-            } catch (NumberFormatException e) {
-                System.out.print("Veuillez entrer un nombre valide : ");
-            }
-        }
-    }
+    */
 
     public ModeJeu getModeJeu() {
         return modeJeu;
@@ -71,6 +67,14 @@ public class Jeu {
         this.defiEnCours = defiEnCours;
     }
 
+    /**
+     * Initialise une nouvelle partie.
+     *
+     * @param largeur         largeur du labyrinthe
+     * @param hauteur         hauteur du labyrinthe
+     * @param pourcentageMurs pourcentage de murs dans le labyrinthe
+     * @throws PseudoException si le pseudo du joueur est invalide
+     */
     public void initialiser(int largeur, int hauteur, double pourcentageMurs) throws PseudoException {
         Scanner scanner = new Scanner(System.in);
         this.labyrinthe = new Labyrinthe(largeur, hauteur, pourcentageMurs);
@@ -84,6 +88,13 @@ public class Jeu {
         this.labyrinthe.setJeuEnCours(true);
     }
 
+    /**
+     * Déplace le joueur dans le labyrinthe.
+     *
+     * @param dx déplacement gauche, droite
+     * @param dy déplacement haut, bas
+     * @return true si le déplacement est réussi, false sinon
+     */
     public boolean deplacerJoueur(int dx, int dy) {
         if (this.labyrinthe == null || !this.labyrinthe.isJeuEnCours()) {
             return false;
@@ -106,6 +117,11 @@ public class Jeu {
         return false;
     }
 
+    /**
+     * Vérifie si le joueur a atteint la sortie du labyrinthe.
+     *
+     * @return true si le joueur a gagné, false sinon
+     */
     public boolean estVictoire() {
         if (this.labyrinthe == null) {
             return false;
@@ -120,6 +136,12 @@ public class Jeu {
         return false;
     }
 
+    /**
+     * Termine la partie en cours.
+     *
+     * @param victoire true si le joueur a gagné, false sinon
+     * @return message de fin de partie
+     */
     public String terminerPartie(boolean victoire) {
 
         this.labyrinthe.setJeuEnCours(false);
@@ -129,7 +151,6 @@ public class Jeu {
         StringBuilder resultat = new StringBuilder();
         if (victoire) {
             if (this.joueur != null) {
-                // Ajout score
                 this.joueur.ajouterScore(this.defiEnCours);
 
 
