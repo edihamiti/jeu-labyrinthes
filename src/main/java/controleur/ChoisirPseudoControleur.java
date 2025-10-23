@@ -63,6 +63,8 @@ public class ChoisirPseudoControleur {
             System.err.println(e.getMessage());
             System.err.println("Voici les valeurs du formulaire : ");
             System.err.println("\tPseudo : " + pseudo);
+            System.err.println("Trace :");
+            e.printStackTrace();
         }
     }
 }

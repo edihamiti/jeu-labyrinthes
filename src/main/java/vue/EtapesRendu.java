@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import modele.Defi;
@@ -19,6 +20,7 @@ public class EtapesRendu {
     private static Image imgFacile = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/difficultees/facile.png")));
     private static Image imgMoyen = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/difficultees/moyen.png")));
     private static Image imgDifficile = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/difficultees/difficile.png")));
+    private static Image imgCheckmark = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/checkmark.png")));
 
 
     /**
@@ -104,13 +106,25 @@ public class EtapesRendu {
     private static Button createDifficultyIcon(Image image, String difficulty, boolean isDone) {
         Button root = new Button();
         VBox graphics = new VBox(3);
+
+        StackPane sp = new StackPane();
+        sp.setAlignment(javafx.geometry.Pos.CENTER);
+
         ImageView icon = new ImageView(image);
         icon.setFitHeight(50);
         icon.setFitWidth(50);
-        Text label = isDone ? new Text("✓ " + difficulty) : new Text(difficulty);
+
+        ImageView doneIcon = new ImageView(imgCheckmark);
+        doneIcon.setFitHeight(30);
+        doneIcon.setFitWidth(30);
+
+        sp.getChildren().add(icon);
+        if (isDone) sp.getChildren().add(doneIcon);
+
+        Text label = new Text(difficulty);
         label.getStyleClass().add("defi-button-label");
         graphics.getChildren().addAll(
-                icon,
+                sp,
                 label
         );
         graphics.setAlignment(javafx.geometry.Pos.TOP_CENTER);
