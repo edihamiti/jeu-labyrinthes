@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <HBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="controleur.JeuControleur"
       spacing="20"
@@ -25,24 +23,11 @@
     <!-- Spacer -->
     <HBox HBox.hgrow="ALWAYS"/>
 
-    <!--<VBox spacing="10">
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="Largeur" styleClass="title"/>
-            <TextField fx:id="largeurField"/>
-        </HBox>
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="Hauteur" styleClass="title"/>
-            <TextField fx:id="hauteurField"/>
-        </HBox>
-        <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="Pourcentage de Murs" styleClass="title"/>
-            <TextField fx:id="murPourcentageField"/>
-        </HBox>
-    </VBox>-->
-
     <VBox alignment="CENTER" spacing="40">
-    <!--Canvas avec le labyrinthe-->
-        <VBox fx:id="containLabyrinthe" alignment="CENTER" style="-fx-background-color: -color-1"/>
+        <!--Canvas avec le labyrinthe-->
+        <HBox alignment="TOP_CENTER">
+            <VBox fx:id="contienLabyrinthe" alignment="CENTER" style="-fx-background-color: -color-1"/>
+        </HBox>
 
         <!--touche-->
         <VBox alignment="CENTER" spacing="5">
@@ -57,5 +42,13 @@
 
     <!-- Spacer -->
     <HBox HBox.hgrow="ALWAYS"/>
+
+    <!--MiniMap-->
+    <VBox alignment="TOP_CENTER">
+        <VBox fx:id="minimap"
+              style="-fx-background-color: -color-1; -fx-border-color: #cccccc; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-padding: 5 5 5 5"/>
+
+        <Label text="Minimap" styleClass="subtitle"/>
+    </VBox>
 
 </HBox>
