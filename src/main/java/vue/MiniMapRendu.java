@@ -54,7 +54,7 @@ public class MiniMapRendu {
      * @return Le Canvas représentant le labyrinthe.
      */
     private Canvas creerCanvasLabyrinthe(Cellule[][] labyrinthe) {
-        int tailleCellule = 10;
+        int tailleCellule = 20;
         int largeurMax = this.labyrinthe.getLargeurMax();
         int hauteurMax = this.labyrinthe.getHauteurMax();
 
