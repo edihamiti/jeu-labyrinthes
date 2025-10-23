@@ -7,7 +7,6 @@ import javafx.scene.media.AudioClip;
 import modele.Jeu;
 import modele.Labyrinthe;
 import vue.LabyrintheRendu;
-import vue.MiniMapRendu;
 
 import java.io.IOException;
 
@@ -16,13 +15,8 @@ import java.io.IOException;
  */
 public class JeuControleur {
     @FXML
-    public VBox minimap;
-    @FXML
-    private VBox contienLabyrinthe;
-    @FXML
-    private LabyrintheRendu renduLabyrinthe;
-    @FXML
-    private MiniMapRendu renduMinimap;
+    private VBox containLabyrinthe;
+    private LabyrintheRendu rendu;
 
     /**
      * Initialise le contrôleur et configure les événements de déplacement du joueur.
@@ -30,19 +24,18 @@ public class JeuControleur {
     @FXML
     public void initialize() {
         // Pour les tests
+        // Pour les tests
         Jeu.getInstance().setLabyrinthe(new Labyrinthe(10, 10, 10));
         Jeu.getInstance().getLabyrinthe().generer();
 
-        this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
-        this.renduMinimap = new MiniMapRendu(Jeu.getInstance().getLabyrinthe(), minimap);
+        this.rendu = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), containLabyrinthe);
 
         Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
         Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
 
         afficherLabyrinthe();
-        afficherMinimap();
 
-        contienLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
+        containLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 newScene.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
                     try {
@@ -89,13 +82,8 @@ public class JeuControleur {
      * Affiche le labyrinthe dans l'interface utilisateur.
      */
     public void afficherLabyrinthe() {
-        contienLabyrinthe.getChildren().clear();
-        contienLabyrinthe.getChildren().add(renduLabyrinthe.rendu(Jeu.getInstance().getLabyrinthe()));
-    }
-
-    public void afficherMinimap() {
-        minimap.getChildren().clear();
-        minimap.getChildren().add(renduMinimap.rendu(Jeu.getInstance().getLabyrinthe()));
+        containLabyrinthe.getChildren().clear();
+        containLabyrinthe.getChildren().add(rendu.rendu(Jeu.getInstance().getLabyrinthe()));
     }
 
     @FXML
@@ -140,7 +128,7 @@ public class JeuControleur {
     }
 
     private void playSound(String sound) {
-        AudioClip audio = new AudioClip(getClass().getResource("/sounds/" + sound).toExternalForm());
+        AudioClip audio = new AudioClip(getClass().getResource("/sounds/"+sound).toExternalForm());
         audio.play();
     }
 
@@ -170,7 +158,7 @@ public class JeuControleur {
     public void setParametresLab(int largeur, int hauteur, double pourcentageMurs) {
         Jeu.getInstance().setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs));
         Jeu.getInstance().getLabyrinthe().generer();
-        this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
+        this.rendu = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), containLabyrinthe);
 
         Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
         Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
