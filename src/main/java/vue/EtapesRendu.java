@@ -130,7 +130,6 @@ public class EtapesRendu {
         return "Difficile";
     }
 
-
     /**
      * Crée une icône de difficulté avec une image et un label.
      *

@@ -82,18 +82,19 @@ public class LabyrintheRendu {
                 double x = j * tailleCellule;
                 double y = i * tailleCellule;
 
-                if (i == this.labyrinthe.getJoueurX() && j == this.labyrinthe.getJoueurY())
+                if (i == this.labyrinthe.getJoueurX() && j == this.labyrinthe.getJoueurY()) {
                     graphicsContext.drawImage(imgJoueur, x, y, tailleCellule, tailleCellule);
-                else if (labyrinthe[i][j].estMur())
+                } else if (labyrinthe[i][j].estMur()) {
                     if (i == lastBlockedX && j == lastBlockedY) {
                         graphicsContext.drawImage(imgRedWall, x, y, tailleCellule, tailleCellule);
                     } else {
                         graphicsContext.drawImage(imgMur, x, y, tailleCellule, tailleCellule);
                     }
-                else if (labyrinthe[i][j].estChemin())
+                } else if (labyrinthe[i][j].estChemin()) {
                     graphicsContext.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
-                else if (labyrinthe[i][j].estSortie())
+                } else if (labyrinthe[i][j].estSortie()) {
                     graphicsContext.drawImage(imgSortie, x, y, tailleCellule, tailleCellule);
+                }
             }
         }
 
