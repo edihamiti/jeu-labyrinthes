@@ -11,11 +11,12 @@ public class AppControleur {
     private static AppControleur instance;
     private Stage primaryStage;
     private final Scene menu;
+    private final Scene jeu;
 
 
     private AppControleur() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(AppControleur.class.getResource("/HomePage.fxml"));
-        this.menu = new Scene(fxmlLoader.load(), 1400, 900);
+        this.menu = new Scene(new FXMLLoader(AppControleur.class.getResource("/HomePage.fxml")).load(), 1400, 900);
+        this.jeu = new Scene(new FXMLLoader(AppControleur.class.getResource("/Jeu.fxml")).load(), 1400, 900);
     }
 
     public static AppControleur getInstance() throws IOException {
@@ -36,6 +37,13 @@ public class AppControleur {
     public void MenuPrincipal() {
         primaryStage.setTitle("HomePage");
         primaryStage.setScene(this.menu);
+        primaryStage.setMaximized(true);
+        primaryStage.show();
+    }
+
+    public void Jeu() {
+        primaryStage.setTitle("Jeu");
+        primaryStage.setScene(this.jeu);
         primaryStage.setMaximized(true);
         primaryStage.show();
     }
