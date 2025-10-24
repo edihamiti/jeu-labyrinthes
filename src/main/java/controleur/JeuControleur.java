@@ -186,7 +186,7 @@ public class JeuControleur {
         alert.setHeaderText("Félicitations");
         alert.setContentText(text);
         alert.showAndWait();
-        AppControleur.getInstance().MenuPrincipal();
+        retourMenu();
     }
 
     public void setRenduLabyrinthe() {
