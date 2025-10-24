@@ -1,7 +1,8 @@
 package vue;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.effect.ColorAdjust;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -22,6 +23,7 @@ public class EtapesRendu {
     private static final Image imgMoyen = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/difficultees/moyen.png")));
     private static final Image imgDifficile = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/difficultees/difficile.png")));
     private static final Image imgCheckmark = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/checkmark.png")));
+    private static final Image imgPoints = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/points.png")));
 
 
     /**
@@ -52,6 +54,24 @@ public class EtapesRendu {
         }
 
         return root;
+    }
+
+    public static HBox renderPoints(int nbPoints, HBox container) {
+        container.getChildren().clear();
+        container.setSpacing(10);
+        container.setAlignment(Pos.CENTER_LEFT);
+        container.getStyleClass().add("points-container");
+
+        ImageView icon = new ImageView(imgPoints);
+        icon.setFitHeight(18);
+        icon.setFitWidth(16);
+
+        Label label = new Label(nbPoints + " points");
+        label.getStyleClass().add("points-text");
+
+        container.getChildren().addAll(icon, label);
+
+        return container;
     }
 
     /**
