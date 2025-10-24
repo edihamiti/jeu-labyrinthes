@@ -89,7 +89,12 @@ public class JeuControleur {
      * @throws IOException si le chargement de la vue échoue
      */
     public void retourMenu() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
+        FXMLLoader loader;
+        if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
+            loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
+        } else {
+            loader = new FXMLLoader(getClass().getResource("/ModeLibreParametres.fxml"));
+        }
         Parent jeuView = loader.load();
         Stage stage = (Stage) minimap.getScene().getWindow();
         Scene jeuScene = new Scene(jeuView, 1400, 900);
