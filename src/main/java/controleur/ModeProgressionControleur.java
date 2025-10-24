@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.*;
@@ -16,6 +18,8 @@ import java.io.IOException;
 public class ModeProgressionControleur {
     @FXML
     private VBox etapesContainer;
+    @FXML
+    private HBox pointsContainer;
 
     /**
      * Initialise le contrôleur et configure les étapes du mode progression.
@@ -29,6 +33,7 @@ public class ModeProgressionControleur {
                     lancerModeProgression(defi);
                 })
         );
+        EtapesRendu.renderPoints(Jeu.getInstance().getJoueur().getScore(), this.pointsContainer);
     }
 
     /**
@@ -61,5 +66,9 @@ public class ModeProgressionControleur {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void retour() {
+        System.out.println("Retour");
     }
 }
