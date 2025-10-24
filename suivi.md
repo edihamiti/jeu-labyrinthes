@@ -30,20 +30,22 @@ Durant cette semaine, nous avons réalisé la plupart de notre jeu **"Le jeu des
 
 Liste des travaux de la semaine :
 
-- Mis à jour le pom.xml pour nous permettre de lancer notre application.
-- Mise en place des modèles.
-- Création de tests unitaires pour nos modèles.
-- Implémentation de notre algorithme de génération de labyrinthe ainsi que le calcul du plus court chemin (Dijkstra).
-- Création d'un système de sauvegarde.
-- Création de notre première vue HomePage, contenu et style.
-- Refactor de notre partie JavaFX en fxml.
+- Mis à jour le pom.xml pour nous permettre de lancer notre application. (Edi)
+- Mise en place des modèles. (Amaury, Bastien, Edi, Enzo)
+- Création de test unitaire pour nos modèles. (Amaury, Bastien, Edi, Enzo)
+- Implémentation de notre algorithme de génération de labyrinthe ainsi que le calcule du plus court chemin (Dijkstra). (
+  Amaury)
+- Création d'un système de sauvegarde. (Enzo)
+- Création de notre première vue HomePage, contenu plus style. (Amaury, Bastien, Edi, Enzo)
+- Refactor de notre partie JavaFX en fxml. (Enzo, Edi)
 - Création de la vue Jeu et de son contrôleur, qui nous permet de voir pour la première fois notre labyrinthe dans
-  JavaFX.
-- Implémentation des déplacements du joueur grâce à des boutons et les touches du clavier.
-- Séparation des vues et contrôleurs, car nous avons mélangé les deux au début.
-- Ajout progressif de formulaires et de boutons qui permettent l'initialisation du jeu avec un labyrinthe et un joueur.
-- Transformation de notre modèle Jeu en singleton, pour nous permettre de stocker et récupérer toutes les données utiles
-  au jeu.
-- Création de la vue locale ainsi que le minimap.
-- Amélioration de notre algorithme de génération.
-- Amélioration de l'expérience utilisateur.
+  JavaFX. (Amaury, Bastien, Edi, Enzo)
+- Implémentation des déplacements du joueur grâce à des boutons et les touches du clavier. (Enzo)
+- Séparation des vues et contrôleurs, car nous avions mélangé les deux au début. (Amaury, Bastien, Edi, Enzo)
+- Page de choix de l'étape et defi. (Bastien)
+- Ajout progressif de formulaires et de bouton qui permet l'initialisation du jeu avec un labyrinthe et un joueur. (Edi)
+- Transformation de notre modèle Jeu en singleton, pour nous permettre de stocker et récupéré toutes les données utiles
+  au jeu. (Enzo)
+- Création de la vue locale ainsi que le minimap. (Enzo)
+- Amélioration de notre algorithm de génération. (Bastien, Amaury)
+- Amélioration de l'expérience utilisateur. (Amaury, Bastien, Edi, Enzo)
