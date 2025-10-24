@@ -69,7 +69,7 @@ public class Labyrinthe {
         Random rand = new Random();
         nbChemins = 0;
 
-        int entreeX = 0;
+        int entreeX = rand.nextInt(largeurMax - 2);
         int entreeY = 1 + rand.nextInt(hauteurMax - 2);
         if (entreeY >= hauteurMax) entreeY = hauteurMax - 2;
         cellules[entreeX][entreeY] = new Entree(entreeX, entreeY);
