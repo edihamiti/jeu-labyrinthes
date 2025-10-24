@@ -110,7 +110,7 @@ public class LocaleRendu implements Rendu {
                         } else {
                             gc.drawImage(imgMur, x, y, tailleCellule, tailleCellule);
                         }
-                    } else if (cellules[cellX][cellY].estChemin()) {
+                    } else if (cellules[cellX][cellY].estChemin() || cellules[cellX][cellY].estEntree()) {
                         gc.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
                     } else if (cellules[cellX][cellY].estSortie()) {
                         gc.drawImage(imgSortie, x, y, tailleCellule, tailleCellule);
