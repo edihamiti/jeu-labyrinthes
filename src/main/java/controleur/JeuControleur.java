@@ -6,9 +6,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import modele.Jeu;
 import modele.Labyrinthe;
+import modele.ModeJeu;
+import modele.Vision;
 import vue.LabyrintheRendu;
 import vue.LocaleRendu;
 import vue.MiniMapRendu;
+import vue.Rendu;
 
 import java.io.IOException;
 
@@ -18,14 +21,13 @@ import java.io.IOException;
 public class JeuControleur {
     @FXML
     public VBox minimap;
+    public VBox overlayMinimap;
     @FXML
     private VBox contienLabyrinthe;
-    @FXML
-    private VBox locale;
 
-    private LabyrintheRendu renduLabyrinthe;
+    private Rendu renduLabyrinthe;
     private MiniMapRendu renduMinimap;
-    private LocaleRendu renduLocale;
+    //private LocaleRendu renduLocale;
 
     /**
      * Initialise le contrôleur et configure les événements de déplacement du joueur.
@@ -36,16 +38,12 @@ public class JeuControleur {
         Jeu.getInstance().setLabyrinthe(new Labyrinthe(10, 10, 10));
         Jeu.getInstance().getLabyrinthe().generer();
 
-        this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
-        this.renduMinimap = new MiniMapRendu(Jeu.getInstance().getLabyrinthe(), minimap);
-        this.renduLocale = new LocaleRendu(Jeu.getInstance().getLabyrinthe(), locale);
+        setRenduLabyrinthe();
 
-        Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
-        Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherLabyrinthe());
+        Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
+        Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
 
-        afficherLabyrinthe();
-        afficherMinimap();
-        afficherLocale();
+        afficherJeu();
 
         contienLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
@@ -90,6 +88,15 @@ public class JeuControleur {
         AppControleur.getInstance().MenuPrincipal();
     }
 
+    public void afficherJeu() {
+        if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
+            if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LOCAL)) {
+                afficherMinimap();
+            }
+        }
+        afficherLabyrinthe();
+    }
+
     /**
      * Affiche le labyrinthe dans l'interface utilisateur.
      */
@@ -99,8 +106,9 @@ public class JeuControleur {
     }
 
     public void afficherLocale() {
-        locale.getChildren().clear();
-        locale.getChildren().add(renduLocale.rendu(Jeu.getInstance().getLabyrinthe()));    }
+        contienLabyrinthe.getChildren().clear();
+        contienLabyrinthe.getChildren().add(renduLabyrinthe.rendu(Jeu.getInstance().getLabyrinthe()));
+    }
 
     public void afficherMinimap() {
         minimap.getChildren().clear();
@@ -145,13 +153,13 @@ public class JeuControleur {
             }
         } else {
             playSound("block.mp3");
-            renduLocale.setBlockedWall(nouveauX, nouveauY);
+            renduLabyrinthe.setBlockedWall(nouveauX, nouveauY);
             renduLabyrinthe.setBlockedWall(nouveauX, nouveauY);
         }
     }
 
     private void playSound(String sound) {
-        AudioClip audio = new AudioClip(getClass().getResource("/sounds/"+sound).toExternalForm());
+        AudioClip audio = new AudioClip(getClass().getResource("/sounds/" + sound).toExternalForm());
         audio.play();
     }
 
@@ -171,6 +179,23 @@ public class JeuControleur {
         AppControleur.getInstance().MenuPrincipal();
     }
 
+    public void setRenduLabyrinthe() {
+        if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
+            if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LOCAL)) {
+                overlayMinimap.setVisible(true);
+                this.renduMinimap = new MiniMapRendu(Jeu.getInstance().getLabyrinthe(), minimap);
+                this.renduLabyrinthe = new LocaleRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
+            } else {
+                overlayMinimap.setVisible(false);
+                this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
+            }
+        } else {
+            overlayMinimap.setVisible(false);
+            this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
+        }
+
+    }
+
     /**
      * Définit les paramètres du labyrinthe et initialise le renduLabyrinthe.
      *
@@ -182,23 +207,15 @@ public class JeuControleur {
         Jeu.getInstance().setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs));
         Jeu.getInstance().getLabyrinthe().generer();
 
-        this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
-        this.renduMinimap = new MiniMapRendu(Jeu.getInstance().getLabyrinthe(), minimap);
-        this.renduLocale = new LocaleRendu(Jeu.getInstance().getLabyrinthe(), locale);
+        setRenduLabyrinthe();
 
         Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> {
-            afficherLabyrinthe();
-            afficherMinimap();
-            afficherLocale();
+            afficherJeu();
         });
         Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> {
-            afficherLabyrinthe();
-            afficherMinimap();
-            afficherLocale();
+            afficherJeu();
         });
 
-        afficherLabyrinthe();
-        afficherMinimap();
-        afficherLocale();
+        afficherJeu();
     }
 }

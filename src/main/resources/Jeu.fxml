@@ -44,15 +44,8 @@
     <HBox HBox.hgrow="ALWAYS"/>
 
     <VBox alignment="TOP_CENTER" spacing="20">
-        <!-- Vue locale -->
-        <VBox spacing="5">
-            <VBox fx:id="locale" alignment="CENTER"
-                  style="-fx-background-color: -color-1; -fx-border-color: #cccccc; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-padding: 5 5 5 5"/>
-            <Label text="Vue locale" styleClass="subtitle"/>
-        </VBox>
-
         <!-- Minimap -->
-        <VBox spacing="5">
+        <VBox fx:id="overlayMinimap" spacing="5">
             <VBox fx:id="minimap" alignment="CENTER"
                   style="-fx-background-color: -color-1; -fx-border-color: #cccccc; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-padding: 5 5 5 5"/>
             <Label text="Minimap" styleClass="subtitle"/>
