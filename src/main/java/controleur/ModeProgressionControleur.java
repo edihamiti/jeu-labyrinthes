@@ -8,8 +8,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import modele.*;
+import modele.Defi;
+import modele.Jeu;
+import modele.Joueur;
+import modele.ModeJeu;
 import vue.EtapesRendu;
+
 import java.io.IOException;
 
 /**
@@ -26,6 +30,7 @@ public class ModeProgressionControleur {
      */
     @FXML
     public void initialize() {
+        Jeu.getInstance().setModeJeu(ModeJeu.MODE_PROGRESSION);
         Joueur joueur = Jeu.getInstance().getJoueur();
         etapesContainer.getChildren().add(
                 EtapesRendu.render(joueur.getProgression(), defi -> {

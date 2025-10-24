@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Classe représentant le mode de jeu "Progression".
  */
-public class ModeProgression extends ModeJeu {
+public class ModeProgression {
     private List<Etape> etapes = new ArrayList<>();
 
     /**
@@ -40,7 +40,7 @@ public class ModeProgression extends ModeJeu {
         }
         return null;
     }
-    
+
     public void jouer() {
 //TODO
     }
