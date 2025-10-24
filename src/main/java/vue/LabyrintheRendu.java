@@ -12,7 +12,7 @@ import modele.Labyrinthe;
  */
 public class LabyrintheRendu implements Rendu {
     private final Image imgMur = new Image(getClass().getResourceAsStream("/img/mur.png"));
-    private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/chemin.png"));
+    private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/Chemin.png"));
     private final Image imgSortie = new Image(getClass().getResourceAsStream("/img/sortie.png"));
     private final Image imgJoueur = new Image(getClass().getResourceAsStream("/img/joueur.png"));
     private final Image imgRedWall = new Image(getClass().getResourceAsStream("/img/redWall.png"));
