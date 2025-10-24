@@ -82,7 +82,9 @@ public class Sauvegarde {
     public Joueur getJoueurParPseudo(String pseudo) throws PseudoException {
         Joueur existingJoueur = joueurs.get(pseudo);
         if (existingJoueur != null) return existingJoueur;
-        return new Joueur(pseudo);
+        Joueur newJoueur = new Joueur(pseudo);
+        joueurs.put(pseudo, newJoueur);
+        return newJoueur;
     }
 
     /**
