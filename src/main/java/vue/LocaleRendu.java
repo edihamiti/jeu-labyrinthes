@@ -14,7 +14,7 @@ import modele.Labyrinthe;
 public class LocaleRendu implements Rendu {
     private final Image imgMur = new Image(getClass().getResourceAsStream("/img/mur.png"));
     private final Image imgRedWall = new Image(getClass().getResourceAsStream("/img/redWall.png"));
-    private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/Chemin.png"));
+    private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/chemin.png"));
     private final Image imgSortie = new Image(getClass().getResourceAsStream("/img/sortie.png"));
     private final Image imgJoueur = new Image(getClass().getResourceAsStream("/img/joueur.png"));
     private final int tailleCellule = 175; // Taille des cellules pour la vue locale

@@ -12,7 +12,7 @@ import modele.Labyrinthe;
  */
 public class MiniMapRendu {
     private final Image imgMur = new Image(getClass().getResourceAsStream("/img/mur.png"));
-    private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/Chemin.png"));
+    private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/chemin.png"));
     private final Image imgSortie = new Image(getClass().getResourceAsStream("/img/sortie.png"));
     private Labyrinthe labyrinthe;
     private VBox contienLabyrinthe;
