@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
@@ -18,6 +17,7 @@ import vue.MiniMapRendu;
 import vue.Rendu;
 
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.Random;
 
 /**
@@ -123,17 +123,15 @@ public class JeuControleur {
      * @throws IOException si le chargement de la vue échoue
      */
     public void retourMenu() throws IOException {
-        FXMLLoader loader;
-        if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
-            loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
-        } else {
-            loader = new FXMLLoader(getClass().getResource("/ModeLibreParametres.fxml"));
-        }
-        Parent jeuView = loader.load();
-        Stage stage = (Stage) minimap.getScene().getWindow();
-        Scene jeuScene = new Scene(jeuView, 1400, 900);
-        stage.setScene(jeuScene);
-        stage.show();
+        AppControleur.getInstance().MenuPrincipal();
+    }
+
+    private void retourModeProgression() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
+        Parent modeProgressionView = loader.load();
+        Stage stage = (Stage) contienLabyrinthe.getScene().getWindow();
+        Scene scene = new Scene(modeProgressionView, 1400, 900);
+        stage.setScene(scene);
         stage.setMaximized(true);
     }
 
@@ -226,14 +224,67 @@ public class JeuControleur {
      */
     private void victoire() throws IOException {
         playSound("win.mp3");
-        String text = Jeu.getInstance().terminerPartie(true, Jeu.getInstance().getStart());
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Victoire");
-        alert.setHeaderText("Félicitations");
-        System.out.println(text);
-        alert.setContentText(text);
-        alert.showAndWait();
-        retourMenu();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/PopupVictoire.fxml"));
+            Parent popupView = loader.load();
+            PopupVictoireControleur controleur = loader.getController();
+
+            LocalTime debut = Jeu.getInstance().getStart();
+            LocalTime fin = Jeu.getInstance().getEnd() != null ? Jeu.getInstance().getEnd() : LocalTime.now();
+            java.time.Duration duree = java.time.Duration.between(debut, fin);
+            long minutes = duree.toMinutes();
+            long secondes = duree.toSeconds() % 60;
+
+            controleur.setTemps(minutes + " min " + secondes + " sec");
+
+            if (Jeu.getInstance().getJoueur() != null && Jeu.getInstance().getDefiEnCours() != null) {
+                Jeu.getInstance().getJoueur().ajouterScore(Jeu.getInstance().getDefiEnCours());
+                Jeu.getInstance().getSauvegarde().sauvegardeJoueurs();
+                controleur.setScore(String.valueOf(Jeu.getInstance().getJoueur().getScore()));
+            }
+
+            controleur.setRejouer(() -> {
+                try {
+                    if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
+                        retourModeProgression();
+                    } else {
+                        rejouer();
+                    }
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            });
+
+            controleur.setRetourMenu(() -> {
+                try {
+                    retourMenu();
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            });
+
+            Stage popupStage = new Stage();
+            popupStage.initOwner(contienLabyrinthe.getScene().getWindow());
+            popupStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
+            popupStage.setTitle("Victoire");
+            popupStage.setResizable(false);
+
+            Scene scene = new Scene(popupView);
+            popupStage.setScene(scene);
+            popupStage.showAndWait();
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            retourMenu();
+        }
+    }
+
+    private void rejouer() throws IOException {
+        Jeu.getInstance().resetTimer();
+        Jeu.getInstance().getLabyrinthe().generer();
+        setRenduLabyrinthe();
+        afficherJeu();
     }
 
     public void setRenduLabyrinthe() {
