@@ -168,7 +168,7 @@
 }
 
 .home-tab  {
-    -fx-background-color: white;
+    -fx-background-color: -color-1;
     -fx-background-image: url('../img/background.png');
     -fx-background-size: cover;
     -fx-background-position: center;

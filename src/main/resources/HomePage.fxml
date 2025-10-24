@@ -52,7 +52,7 @@
     </VBox>
 
     <!-- Contenu de la page -->
-    <VBox fx:id="contentPage" spacing="20.0" HBox.hgrow="ALWAYS" styleClass="home-tab">
+    <VBox fx:id="contentPage" spacing="20" HBox.hgrow="ALWAYS" styleClass="home-tab">
         <padding>
             <Insets top="40" right="40" bottom="40" left="40"/>
         </padding>

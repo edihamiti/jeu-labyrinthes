@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import modele.Cellules.*;
 
-import java.util.LinkedList;
+import java.util.*;
 
 
 /**
@@ -66,21 +66,24 @@ public class Labyrinthe {
             }
         }
 
-        java.util.Random rand = new java.util.Random();
+        Random rand = new Random();
         nbChemins = 0;
 
-        int entreeX = 0;
-        int entreeY = 1;
-        if (entreeY >= hauteurMax) entreeY = 1;
+        int entreeX = rand.nextInt(largeurMax - 2);
+        int entreeY = 1 + rand.nextInt(hauteurMax - 2);
+        if (entreeY >= hauteurMax) entreeY = hauteurMax - 2;
         cellules[entreeX][entreeY] = new Entree(entreeX, entreeY);
         nbChemins++;
+
+        setJoueurX(entreeX);
+        setJoueurY(entreeY);
 
         if (entreeX + 1 < largeurMax) {
             cellules[entreeX + 1][entreeY] = new Chemin(entreeX + 1, entreeY);
             nbChemins++;
         }
 
-        java.util.Stack<int[]> pile = new java.util.Stack<>();
+        Stack<int[]> pile = new Stack<>();
         boolean[][] visite = new boolean[largeurMax][hauteurMax];
         pile.push(new int[]{entreeX + 1, entreeY});
         visite[entreeX + 1][entreeY] = true;
@@ -91,7 +94,7 @@ public class Labyrinthe {
             int[] pos = pile.peek();
             int x = pos[0], y = pos[1];
 
-            java.util.List<Integer> dirs = new java.util.ArrayList<>();
+            List<Integer> dirs = new ArrayList<>();
             for (int i = 0; i < directions.length; i++) {
                 int nx = x + 2 * directions[i][0];
                 int ny = y + 2 * directions[i][1];
@@ -124,7 +127,7 @@ public class Labyrinthe {
             }
         }
 
-        java.util.Queue<int[]> queue = new java.util.LinkedList<>();
+        Queue<int[]> queue = new LinkedList<>();
         queue.add(new int[]{entreeX + 1, entreeY});
         dist[entreeX + 1][entreeY] = 0;
         visite = new boolean[largeurMax][hauteurMax];
@@ -153,7 +156,7 @@ public class Labyrinthe {
         }
 
         if (maxX != -1 && maxY != -1) {
-            cellules[maxX][maxY] = new Sortie(maxX, maxY);
+                        cellules[maxX][maxY] = new Sortie(maxX, maxY);
         } else {
             int sx = largeurMax - 2, sy = hauteurMax - 2;
             while (cellules[sx][sy] instanceof Mur) {
@@ -219,7 +222,6 @@ public class Labyrinthe {
         }
 
         if (startX == -1 || endX == -1) {
-            // Pas d'entrée ou sortie
             return 0;
         }
 
@@ -269,7 +271,6 @@ public class Labyrinthe {
         }
 
         if (dist[endX][endY] == -1) {
-            // Pas de chemin trouvé
             return 0;
         }
         return dist[endX][endY];

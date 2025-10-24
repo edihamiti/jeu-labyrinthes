@@ -32,7 +32,6 @@ public class JeuControleur {
 
     private Rendu renduLabyrinthe;
     private MiniMapRendu renduMinimap;
-    //private LocaleRendu renduLocale;
 
     /**
      * Initialise le contrôleur et configure les événements de déplacement du joueur.

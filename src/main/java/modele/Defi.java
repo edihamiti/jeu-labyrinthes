@@ -9,13 +9,13 @@ public enum Defi {
     MOYEN1(6, 6, 50.0, 15, 1, Vision.VUE_LIBRE),
     DIFFICILE1(6, 6, 75.0, 45, 1, Vision.VUE_LIBRE),
 
-    FACILE2(12, 12, 25.0, 10, 2, Vision.VUE_LIBRE),
-    MOYEN2(12, 12, 50.0, 20, 2, Vision.VUE_LIBRE),
-    DIFFICILE2(12, 12, 75.0, 50, 2, Vision.VUE_LIBRE),
+    FACILE2(15, 15, 25.0, 10, 2, Vision.VUE_LIBRE),
+    MOYEN2(15, 15, 50.0, 20, 2, Vision.VUE_LIBRE),
+    DIFFICILE2(15, 15, 75.0, 50, 2, Vision.VUE_LIBRE),
 
-    FACILE3(18, 18, 25.0, 15, 3, Vision.VUE_LOCAL),
-    MOYEN3(18, 18, 50.0, 25, 3, Vision.VUE_LOCAL),
-    DIFFICILE3(18, 18, 75.0, 55, 3, Vision.VUE_LOCAL);
+    FACILE3(30, 30, 75.0, 15, 3, Vision.VUE_LOCAL),
+    MOYEN3(30, 30, 50.0, 25, 3, Vision.VUE_LOCAL),
+    DIFFICILE3(30, 30, 25.0, 55, 3, Vision.VUE_LOCAL);
 
     private final int largeur;
     private final int hauteur;
