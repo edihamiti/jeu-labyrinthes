@@ -19,7 +19,7 @@
         <!-- Logo -->
         <VBox spacing="-15">
             <Label text="Le jeu des" styleClass="logo, first-line"/>
-            <Label text="Labyrinthe" styleClass="logo, second-line"/>
+            <Label text="Labyrinthes" styleClass="logo, second-line"/>
         </VBox>
 
         <!-- Spacer -->
@@ -30,16 +30,16 @@
             <Button onAction="#modeProgression" styleClass="tab, selected">
                 <graphic>
                     <StackPane>
-                        <Rectangle width="4" styleClass="tabs-rectangle, selected" />
-                        <Text text="Mode Progression" fx:id="modeProgressionText" styleClass="tabs-text, selected" />
+                        <Rectangle width="4" styleClass="tabs-rectangle, selected"/>
+                        <Text text="Mode Progression" fx:id="modeProgressionText" styleClass="tabs-text, selected"/>
                     </StackPane>
                 </graphic>
             </Button>
             <Button onAction="#modeLibre" styleClass="tab">
                 <graphic>
                     <StackPane>
-                        <Rectangle styleClass="tabs-rectangle" />
-                        <Text text="Mode Libre" fx:id="modeLibreText" styleClass="tabs-text" />
+                        <Rectangle styleClass="tabs-rectangle"/>
+                        <Text text="Mode Libre" fx:id="modeLibreText" styleClass="tabs-text"/>
                     </StackPane>
                 </graphic>
             </Button>
@@ -60,7 +60,8 @@
         <!--Zone de titre-->
         <VBox>
             <Label fx:id="nomMode" text="Mode progression" styleClass="title"/>
-            <Label fx:id="descriptionMode" text="Complète des labyrinthes pour débloquer de nouveaux niveaux" styleClass="subtitle"/>
+            <Label fx:id="descriptionMode" text="Complète des labyrinthes pour débloquer de nouveaux niveaux"
+                   styleClass="subtitle"/>
         </VBox>
 
         <!-- Spacer -->
@@ -68,10 +69,12 @@
 
         <!--Zone de Boutons-->
         <HBox HBox.hgrow="ALWAYS" spacing="10" alignment="BOTTOM_CENTER">
-            <VBox fx:id="chargerProfilButton" spacing="10" styleClass="charger-profile" HBox.hgrow="ALWAYS" alignment="TOP_CENTER">
+            <VBox fx:id="chargerProfilButton" spacing="10" styleClass="charger-profile" HBox.hgrow="ALWAYS"
+                  alignment="TOP_CENTER">
                 <Label text="Charger Profil" HBox.hgrow="ALWAYS" onMouseClicked="#chargerProfil"/>
             </VBox>
-            <Button fx:id="nouvellePartieButton" onAction="#lancerJeu" text="Nouvelle Partie" styleClass="button-filled" HBox.hgrow="ALWAYS"/>
+            <Button fx:id="nouvellePartieButton" onAction="#lancerJeu" text="Nouvelle Partie" styleClass="button-filled"
+                    HBox.hgrow="ALWAYS"/>
         </HBox>
     </VBox>
 
