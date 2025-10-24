@@ -3,6 +3,8 @@ package controleur;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import modele.Jeu;
+import modele.Joueur;
 
 import java.io.IOException;
 
@@ -50,6 +52,13 @@ public class AppControleur {
         primaryStage.setScene(this.menu);
         primaryStage.setMaximized(true);
         primaryStage.show();
+    }
+
+    public void resetGame() {
+        Jeu.getInstance().setModeJeu(null);
+        Jeu.getInstance().setDefiEnCours(null);
+        Jeu.getInstance().setJoueur((Joueur) null);
+        System.out.println("[DEBUG] Jeu reset");
     }
 
 }

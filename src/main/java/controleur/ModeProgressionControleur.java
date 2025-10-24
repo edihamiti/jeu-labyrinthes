@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -74,6 +75,15 @@ public class ModeProgressionControleur {
     }
 
     public void retour() {
-        System.out.println("Retour");
+        try {
+            AppControleur.getInstance().resetGame();
+            AppControleur.getInstance().MenuPrincipal();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Erreur lors du retour vers le menu principal");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 }
