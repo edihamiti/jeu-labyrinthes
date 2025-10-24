@@ -51,6 +51,7 @@ public class JeuControleur {
 
         contienLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
+                // Écouter les événements clavier
                 newScene.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
                     try {
                         switch (event.getCode()) {
@@ -79,6 +80,9 @@ public class JeuControleur {
                         System.out.println(e.getMessage());
                     }
                 });
+
+                newScene.widthProperty().addListener((obsWidth, oldWidth, newWidth) -> afficherJeu());
+                newScene.heightProperty().addListener((obsHeight, oldHeight, newHeight) -> afficherJeu());
             }
         });
     }

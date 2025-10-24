@@ -70,13 +70,29 @@ public class LabyrintheRendu implements Rendu {
      * @return Le Canvas représentant le labyrinthe.
      */
     private Canvas creerCanvasLabyrinthe(Cellule[][] labyrinthe) {
-        int tailleCellule;
-        if (labyrinthe.length > 15)
-            tailleCellule = 30;
-        else
-            tailleCellule = 50;
+        double heightVBox = contienLabyrinthe.getHeight();
+        double widthVBox = contienLabyrinthe.getWidth();
+
+        if (heightVBox == 0 && contienLabyrinthe.getScene() != null) {
+            heightVBox = contienLabyrinthe.getScene().getHeight() - 200;
+            widthVBox = contienLabyrinthe.getScene().getWidth() * 0.5;
+        }
+
+        if (heightVBox == 0) {
+            heightVBox = 600;
+            widthVBox = 600;
+        }
+
         int largeurMax = this.labyrinthe.getLargeurMax();
         int hauteurMax = this.labyrinthe.getHauteurMax();
+
+        int tailleCelluleH = (int) (heightVBox / largeurMax);
+        int tailleCelluleW = (int) (widthVBox / hauteurMax);
+        int tailleCellule = Math.min(tailleCelluleH, tailleCelluleW);
+
+        if (tailleCellule < 10) {
+            tailleCellule = 10;
+        }
 
         Canvas canvas = new Canvas(hauteurMax * tailleCellule, largeurMax * tailleCellule);
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
