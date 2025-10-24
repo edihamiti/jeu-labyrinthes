@@ -33,6 +33,8 @@ public class JeuControleur {
     private Rendu renduLabyrinthe;
     private MiniMapRendu renduMinimap;
 
+    private static boolean premierLancement = true;
+
     /**
      * Initialise le contrôleur et configure les événements de déplacement du joueur.
      */
@@ -49,6 +51,15 @@ public class JeuControleur {
         Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
 
         afficherJeu();
+
+        contienLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                if (premierLancement) {
+                    afficherPopupTouches();
+                    premierLancement = false;
+                }
+            }
+        });
 
         contienLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
@@ -85,6 +96,25 @@ public class JeuControleur {
                 newScene.heightProperty().addListener((obsHeight, oldHeight, newHeight) -> afficherJeu());
             }
         });
+    }
+
+    private void afficherPopupTouches() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/PopupCommandes.fxml"));
+            Parent popupView = loader.load();
+
+            Stage popupStage = new Stage();
+            popupStage.initOwner(contienLabyrinthe.getScene().getWindow());
+            popupStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
+            popupStage.setTitle("Commandes de jeu");
+            popupStage.setResizable(false);
+
+            Scene scene = new Scene(popupView);
+            popupStage.setScene(scene);
+            popupStage.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

@@ -308,6 +308,19 @@
     -fx-effect: dropshadow(one-pass-box, -color-1, 0, 0, 2, 2);
 }
 
+.touche-info {
+    -fx-background-color: -color-5;
+    -fx-text-fill: -color-1;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 5px;
+    -fx-border-color: -color-1;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-effect: dropshadow(one-pass-box, -color-1, 0, 0, 2, 2);
+}
+
 .charger-profile > text {
     -fx-fill: -color-1;
     -fx-font-weight: 700;

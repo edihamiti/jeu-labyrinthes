@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controleur.PopupCommandesControleur"
+      alignment="CENTER"
+      spacing="20"
+      style="-fx-background-color: -color-4; -fx-border-color: -color-1; -fx-border-width: 3px; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-effect: dropshadow(one-pass-box, -color-1, 0, 0, 6px, 6px);"
+      stylesheets="styles/styles.css"
+      prefWidth="450"
+      maxWidth="450"
+      onKeyPressed="#handleKeyPress">
+
+    <padding>
+        <Insets bottom="20"/>
+    </padding>
+
+    <!-- Header -->
+    <HBox alignment="CENTER"
+          style="-fx-background-color: -color-2; -fx-background-radius: 8px 8px 0 0; -fx-padding: 20px;">
+        <Label text="Comment jouer ?"
+               style="-fx-text-fill: -color-6; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <!-- Contenu -->
+    <VBox alignment="CENTER_LEFT" spacing="15">
+        <padding>
+            <Insets top="10" right="30" bottom="10" left="30"/>
+        </padding>
+
+        <Label text="Utilisez les touches suivantes pour vous déplacer :"
+               wrapText="true"
+               style="-fx-text-fill: -color-1; -fx-font-size: 16px; -fx-font-weight: 600;"/>
+
+        <!-- Touches Flèches -->
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label text="•" style="-fx-text-fill: -color-1; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Label text="Flèches directionnelles"
+                   style="-fx-text-fill: -color-1; -fx-font-size: 16px;"/>
+            <HBox spacing="5">
+                <Label text="↑" styleClass="touche-info"/>
+                <Label text="↓" styleClass="touche-info"/>
+                <Label text="←" styleClass="touche-info"/>
+                <Label text="→" styleClass="touche-info"/>
+            </HBox>
+        </HBox>
+
+        <!-- Touches ZQSD -->
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label text="•" style="-fx-text-fill: -color-1; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Label text="Touches ZQSD"
+                   style="-fx-text-fill: -color-1; -fx-font-size: 16px;"/>
+            <HBox spacing="5">
+                <Label text="Z" styleClass="touche-info"/>
+                <Label text="Q" styleClass="touche-info"/>
+                <Label text="S" styleClass="touche-info"/>
+                <Label text="D" styleClass="touche-info"/>
+            </HBox>
+        </HBox>
+
+        <!-- Séparateur -->
+        <Separator style="-fx-background-color: -color-2;"/>
+
+        <!-- Objectif -->
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label style="-fx-font-size: 20px;"/>
+            <Label text="Objectif : Atteignez la sortie pour gagner !"
+                   wrapText="true"
+                   style="-fx-text-fill: -color-1; -fx-font-size: 16px; -fx-font-weight: 600;"/>
+        </HBox>
+    </VBox>
+
+    <!-- Bouton OK -->
+    <HBox alignment="CENTER">
+        <padding>
+            <Insets top="10" right="30" left="30"/>
+        </padding>
+        <Button text="C'est parti !"
+                onAction="#fermerPopup"
+                styleClass="button-filled"
+                style="-fx-background-color: -color-5 !important;"
+                prefWidth="200"/>
+    </HBox>
+</VBox>
+
