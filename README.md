@@ -106,3 +106,8 @@ cd I5_SAE3.3
 # C'est la commande qui lance l'application JavaFX via Maven
 mvn javafx:run
 # Maven va télécharger les dépendances, compiler le code, puis lancer l'application automatiquement.
+```
+
+## UML
+
+![](/uml.54.26.png)
