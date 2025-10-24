@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalTime;
+
 class JeuTest {
     private Jeu jeu;
     private Joueur joueur;
@@ -67,7 +69,7 @@ class JeuTest {
     @Test
     void testTerminerPartieVictoire() {
         labyrinthe.setJeuEnCours(true);
-        String message = jeu.terminerPartie(true);
+        String message = jeu.terminerPartie(true, LocalTime.now());
         assertFalse(labyrinthe.isJeuEnCours());
         assertTrue(message.contains("Vous avez trouvé la sortie"));
     }
@@ -75,7 +77,7 @@ class JeuTest {
     @Test
     void testTerminerPartieDefaite() {
         labyrinthe.setJeuEnCours(true);
-        String message = jeu.terminerPartie(false);
+        String message = jeu.terminerPartie(false, LocalTime.now());
         assertFalse(labyrinthe.isJeuEnCours());
         assertTrue(message.contains("Partie terminée"));
     }
