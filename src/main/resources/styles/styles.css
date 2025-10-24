@@ -8,7 +8,7 @@
     -color-5: #DAD7CD;
     -color-6: #E1FFDB;
     -fx-font-family: "Prompt", sans-serif;
-    -fx-background-color: -color-3;
+    -fx-background-color: -color-2;
 }
 
 .content-pane-root {
@@ -42,7 +42,6 @@
 }
 
 .button-filled:pressed {
-/*    A revoir */
     -fx-background-color: rgba(255, 255, 255, 0.3);
 }
 
