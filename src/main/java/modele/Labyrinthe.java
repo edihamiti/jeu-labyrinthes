@@ -6,11 +6,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import modele.Cellules.*;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+
 
 /**
  * Classe représentant un labyrinthe.
@@ -59,195 +56,146 @@ public class Labyrinthe {
     }
 
     /**
-    * Génère un labyrinthe complet à partir des paramètres du constructeur.
-    * <p>
-    * Le labyrinthe est d’abord rempli de murs, puis un chemin principal est creusé
-    * à l’aide de la méthode {@link #faireChemin(Cellule[][], int, int)}.
-    * Ensuite, des chemins secondaires (impasses) sont ajoutés via {@link #faireCheminAlternatif(Cellule[][], int, int)},
-    * et enfin, un remplissage aléatoire transforme certains murs restants en chemins
-    * en fonction d’un pourcentage de murs ajusté dynamiquement.
-    * </p>
-    *
-    * <p>
-    * Le pourcentage effectif de murs diminue automatiquement lorsque le labyrinthe
-    * contient déjà beaucoup de chemins, ce qui permet de maintenir un équilibre
-    * entre zones ouvertes et zones murées.
-    * </p>
-    *
-    * Étapes :
-    * <ol>
-    *     <li>Initialise toutes les cellules en tant que murs</li>
-    *     <li>Crée l’entrée et génère un chemin principal jusqu’à une sortie</li>
-    *     <li>Ajoute aléatoirement des chemins alternatifs</li>
-    *     <li>Transforme certains murs en chemins selon une probabilité adaptative</li>
-    * </ol>
-    */
+     * Génère le labyrinthe en utilisant l'algorithme de génération de labyrinthe.
+     */
     public void generer() {
         cellules = new Cellule[largeurMax][hauteurMax];
         for (int i = 0; i < largeurMax; i++) {
             for (int j = 0; j < hauteurMax; j++) {
-                if (i == 0 || j == 0 || i == largeurMax - 1 || j == hauteurMax - 1) {
-                    cellules[i][j] = new Mur(i, j);
-                } else {
-                    cellules[i][j] = new Mur(i, j);
-                }
+                cellules[i][j] = new Mur(i, j);
             }
         }
+
+        java.util.Random rand = new java.util.Random();
+        nbChemins = 0;
 
         int entreeX = 0;
         int entreeY = 1;
+        if (entreeY >= hauteurMax) entreeY = 1;
         cellules[entreeX][entreeY] = new Entree(entreeX, entreeY);
-        faireChemin(cellules, entreeX, entreeY);
+        nbChemins++;
 
-        for (int i = 1; i < largeurMax - 1; i++) {
-            for (int j = 1; j < hauteurMax - 1; j++) {
-                if (cellules[i][j] instanceof Chemin) {
-                    if (i % 10 == 0) {
-                        faireCheminAlternatif(cellules, i, j);
-                    }
-                }
-            }
+        if (entreeX + 1 < largeurMax) {
+            cellules[entreeX + 1][entreeY] = new Chemin(entreeX + 1, entreeY);
+            nbChemins++;
         }
-        // Transformation mur en chemin aléatoirement selon pourcentageMurs;
-        if(largeur > 9 && hauteur > 9) {
-            double pourcentageCheminsActuel = 1.0 - (((double) nbChemins / ((largeurMax - 2) * (hauteurMax - 2)) * 100.0) / 100.0);
-            double probaBase = 1 - (pourcentageMurs / 100.0);
-            double probaChemin = probaBase * pourcentageCheminsActuel;
-            for (int i = 1; i < largeurMax - 1; i++) {
-                for (int j = 1; j < hauteurMax - 1; j++) {
-                    if ((!(cellules[i][j] instanceof Entree) && !(cellules[i][j] instanceof Sortie)) && (Math.random() < probaChemin)) {
-                        cellules[i][j] = new Chemin(i, j);
-                    }
-                }
-            }
-        }
-    }
 
-    /**
-    * Crée le chemin principal du labyrinthe à partir d’une position de départ.
-    * <p>
-    * Cette méthode utilise une recherche en profondeur (DFS) avec une pile
-    * pour creuser un chemin aléatoire sans repasser sur les cellules déjà visitées.
-    * Si aucune direction n’est possible, l’algorithme revient en arrière
-    * jusqu’à trouver un nouvel embranchement.
-    * </p>
-    *
-    * <p>
-    * Lorsque le chemin atteint une certaine longueur maximale ou qu’aucune
-    * direction n’est disponible, la cellule courante devient la sortie.
-    * </p>
-    *
-    * @param cellules la grille représentant le labyrinthe
-    * @param startX   la coordonnée X de départ du chemin (souvent 0)
-    * @param startY   la coordonnée Y de départ du chemin (souvent 1)
-    */
-    public void faireChemin(Cellule[][] cellules, int startX, int startY) {
-        Random random = new Random();
-        LinkedList<int[]> pile = new LinkedList<>();
+        java.util.Stack<int[]> pile = new java.util.Stack<>();
         boolean[][] visite = new boolean[largeurMax][hauteurMax];
+        pile.push(new int[]{entreeX + 1, entreeY});
+        visite[entreeX + 1][entreeY] = true;
 
-        int x = startX;
-        int y = startY;
+        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}; // droite, bas, gauche, haut
 
-        cellules[x][y] = new Entree(x, y);
-        visite[x][y] = true;
-        pile.push(new int[]{x, y});
+        while (!pile.empty()) {
+            int[] pos = pile.peek();
+            int x = pos[0], y = pos[1];
 
-        int[][] directions = {{0,-1}, {0,1}, {-1,0}, {1,0}}; // haut, bas, gauche, droite
-
-        while (!pile.isEmpty()) {
-            int[] courant = pile.peek();
-            x = courant[0];
-            y = courant[1];
-
-            // Directions possibles
-            List<int[]> voisins = new ArrayList<>();
-            for (int[] d : directions) {
-                int nx = x + d[0];
-                int ny = y + d[1];
-
-                if (nx > 0 && ny > 0 && nx < largeurMax - 1 && ny < hauteurMax - 1 && !visite[nx][ny]) {
-                    voisins.add(new int[]{nx, ny});
+            java.util.List<Integer> dirs = new java.util.ArrayList<>();
+            for (int i = 0; i < directions.length; i++) {
+                int nx = x + 2 * directions[i][0];
+                int ny = y + 2 * directions[i][1];
+                if (nx > 0 && nx < largeurMax - 1 && ny > 0 && ny < hauteurMax - 1 && !visite[nx][ny]) {
+                    dirs.add(i);
                 }
             }
 
-            if (!voisins.isEmpty()) {
-                int[] suivant = voisins.get(random.nextInt(voisins.size()));
-                int nx = suivant[0];
-                int ny = suivant[1];
+            if (!dirs.isEmpty()) {
+                int dir = dirs.get(rand.nextInt(dirs.size()));
+                int nx = x + 2 * directions[dir][0];
+                int ny = y + 2 * directions[dir][1];
 
+                cellules[x + directions[dir][0]][y + directions[dir][1]] = new Chemin(x + directions[dir][0], y + directions[dir][1]);
                 cellules[nx][ny] = new Chemin(nx, ny);
-                nbChemins ++;
+                nbChemins += 2;
+
                 visite[nx][ny] = true;
                 pile.push(new int[]{nx, ny});
             } else {
                 pile.pop();
             }
+        }
 
-            if (pile.size() > (largeur + hauteur)*2) {
-                break;
+        int maxX = -1, maxY = -1, maxDist = -1;
+        int[][] dist = new int[largeurMax][hauteurMax];
+        for (int i = 0; i < largeurMax; i++) {
+            for (int j = 0; j < hauteurMax; j++) {
+                dist[i][j] = -1;
             }
         }
 
-        if (!pile.isEmpty()) {
-            int[] derniere = pile.peek();
-            cellules[derniere[0]][derniere[1]] = new Sortie(derniere[0], derniere[1]);
+        java.util.Queue<int[]> queue = new java.util.LinkedList<>();
+        queue.add(new int[]{entreeX + 1, entreeY});
+        dist[entreeX + 1][entreeY] = 0;
+        visite = new boolean[largeurMax][hauteurMax];
+        visite[entreeX + 1][entreeY] = true;
+
+        while (!queue.isEmpty()) {
+            int[] pos = queue.poll();
+            int x = pos[0], y = pos[1];
+
+            if (dist[x][y] > maxDist) {
+                maxDist = dist[x][y];
+                maxX = x;
+                maxY = y;
+            }
+
+            for (int[] dir : directions) {
+                int nx = x + dir[0];
+                int ny = y + dir[1];
+                if (nx > 0 && nx < largeurMax - 1 && ny > 0 && ny < hauteurMax - 1
+                        && !visite[nx][ny] && !(cellules[nx][ny] instanceof Mur)) {
+                    visite[nx][ny] = true;
+                    dist[nx][ny] = dist[x][y] + 1;
+                    queue.add(new int[]{nx, ny});
+                }
+            }
         }
-    }
 
-    /**
-    * Crée un chemin secondaire aléatoire à partir d’une cellule existante.
-    * <p>
-    * Utilisé pour générer des impasses ou de petits embranchements dans le labyrinthe,
-    * cette méthode creuse un court chemin dans des directions aléatoires à partir d’un
-    * point du chemin principal.
-    * </p>
-    *
-    * <p>
-    * Les chemins alternatifs ne créent pas de nouvelle sortie et s’arrêtent
-    * dès qu’ils ne peuvent plus progresser ou qu’ils atteignent la longueur maximale définie.
-    * </p>
-    *
-    * @param cellules la grille du labyrinthe
-    * @param startX   la coordonnée X de départ du chemin alternatif
-    * @param startY   la coordonnée Y de départ du chemin alternatif
-    */
-    public void faireCheminAlternatif(Cellule[][] cellules, int startX, int startY) {
-        Random random = new Random();
-        int[][] directions = {{0,-1}, {0,1}, {-1,0}, {1,0}};
+        if (maxX != -1 && maxY != -1) {
+            cellules[maxX][maxY] = new Sortie(maxX, maxY);
+        } else {
+            int sx = largeurMax - 2, sy = hauteurMax - 2;
+            while (cellules[sx][sy] instanceof Mur) {
+                sx = 1 + rand.nextInt(largeurMax - 2);
+                sy = 1 + rand.nextInt(hauteurMax - 2);
+            }
+            cellules[sx][sy] = new Sortie(sx, sy);
+        }
 
-        int x = startX;
-        int y = startY;
-        int longueur = (largeur+hauteur)/2;
+        if (pourcentageMurs < 100.0) {
+            int totalCellules = (largeurMax - 2) * (hauteurMax - 2);
+            double pourcentageCheminsVoulu = 100.0 - pourcentageMurs;
+            int cheminsSouhaites = (int) ((pourcentageCheminsVoulu / 100.0) * totalCellules);
 
-        for (int i = 0; i < longueur; i++) {
-            List<int[]> possibles = new java.util.ArrayList<>();
-            for (int[] d : directions) {
-                int nx = x + d[0];
-                int ny = y + d[1];
-                if (nx > 0 && ny > 0 && nx < largeurMax - 1 && ny < hauteurMax - 1) {
-                    if (cellules[nx][ny] instanceof Mur) {
-                        possibles.add(new int[]{nx, ny});
+            while (nbChemins < cheminsSouhaites) {
+                int x = 1 + rand.nextInt(largeurMax - 2);
+                int y = 1 + rand.nextInt(hauteurMax - 2);
+
+                if (cellules[x][y] instanceof Mur &&
+                        !(cellules[x][y].estEntree()) &&
+                        !(cellules[x][y].estSortie())) {
+
+                    int cheminsAdjacents = 0;
+                    for (int[] dir : directions) {
+                        int nx = x + dir[0];
+                        int ny = y + dir[1];
+                        if (nx >= 0 && nx < largeurMax && ny >= 0 && ny < hauteurMax &&
+                                !(cellules[nx][ny] instanceof Mur)) {
+                            cheminsAdjacents++;
+                        }
+                    }
+
+                    if (cheminsAdjacents >= 1) {
+                        cellules[x][y] = new Chemin(x, y);
+                        nbChemins++;
                     }
                 }
             }
-
-            if (possibles.isEmpty()) break;
-
-            int[] suivant = possibles.get(random.nextInt(possibles.size()));
-            int nx = suivant[0];
-            int ny = suivant[1];
-
-            cellules[nx][ny] = new Chemin(nx, ny);
-            nbChemins ++;
-
-            x = nx;
-            y = ny;
         }
     }
 
-
-     /* Calcule le plus court chemin entre l'entrée et la sortie du labyrinthe (Dijkstra).
+    /* Calcule le plus court chemin entre l'entrée et la sortie du labyrinthe (Dijkstra).
      *
      * @return la longueur du plus court chemin
      */
