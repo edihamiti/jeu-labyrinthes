@@ -3,16 +3,12 @@ package vue;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import modele.Defi;
-import modele.Jeu;
 import modele.Joueur;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
@@ -41,7 +37,7 @@ public class ChargerProfileRendu {
         if (profiles.isEmpty()) {
             Label pasDeProfile = new Label("Pas de profil disponible");
             pasDeProfile.getStyleClass().add("form-small-text");
-            pasDeProfile.setStyle("-fx-text-fill: -color-1;");
+            pasDeProfile.setStyle("-fx-text-fill: -color-5;");
             root.getChildren().add(pasDeProfile);
             return root;
         }
@@ -51,6 +47,7 @@ public class ChargerProfileRendu {
             Button button = new Button(name);
             button.setMaxWidth(Double.MAX_VALUE);
             button.getStyleClass().add("charger-profile-button");
+            button.setStyle("-fx-text-fill: -color-5");
             button.setOnAction(event -> {
                 action.accept(joueur);
             });
