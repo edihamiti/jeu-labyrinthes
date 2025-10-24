@@ -70,7 +70,11 @@ public class LabyrintheRendu implements Rendu {
      * @return Le Canvas représentant le labyrinthe.
      */
     private Canvas creerCanvasLabyrinthe(Cellule[][] labyrinthe) {
-        int tailleCellule = 50;
+        int tailleCellule;
+        if (labyrinthe.length > 15)
+            tailleCellule = 30;
+        else
+            tailleCellule = 50;
         int largeurMax = this.labyrinthe.getLargeurMax();
         int hauteurMax = this.labyrinthe.getHauteurMax();
 
