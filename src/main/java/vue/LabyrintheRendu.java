@@ -71,9 +71,7 @@ public class LabyrintheRendu implements Rendu {
      */
     private Canvas creerCanvasLabyrinthe(Cellule[][] labyrinthe) {
         int tailleCellule;
-        if (labyrinthe[1].length > 20)
-            tailleCellule = 20;
-        else if (labyrinthe[1].length > 15)
+        if (labyrinthe.length > 15)
             tailleCellule = 30;
         else
             tailleCellule = 50;
