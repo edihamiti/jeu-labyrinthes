@@ -41,6 +41,7 @@ public class JeuControleur {
         // Pour les tests
         Jeu.getInstance().setLabyrinthe(new Labyrinthe(10, 10, 10));
         Jeu.getInstance().getLabyrinthe().generer();
+        Jeu.getInstance().resetTimer();
 
         setRenduLabyrinthe();
 
@@ -51,7 +52,6 @@ public class JeuControleur {
 
         contienLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
-                // Écouter les événements clavier
                 newScene.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
                     try {
                         switch (event.getCode()) {
@@ -162,6 +162,10 @@ public class JeuControleur {
      * @throws IOException si une erreur survient lors du déplacement
      */
     private void deplacer(int nouveauX, int nouveauY) throws IOException {
+        if (Jeu.getInstance().getStart() == null) {
+            Jeu.getInstance().setStart(java.time.LocalTime.now());
+        }
+
         Random random = new Random();
         if (Jeu.getInstance().getLabyrinthe().peutDeplacer(nouveauX, nouveauY)) {
             Jeu.getInstance().getLabyrinthe().setJoueurX(nouveauX);
@@ -170,6 +174,7 @@ public class JeuControleur {
             if (random.nextInt(100) > 95) playSound("bois.mp3");
 
             if (Jeu.getInstance().getLabyrinthe().estSurSortie(nouveauX, nouveauY)) {
+                Jeu.getInstance().setEnd(java.time.LocalTime.now());
                 victoire();
             }
         } else {
@@ -191,10 +196,11 @@ public class JeuControleur {
      */
     private void victoire() throws IOException {
         playSound("win.mp3");
-        String text = Jeu.getInstance().terminerPartie(true);
+        String text = Jeu.getInstance().terminerPartie(true, Jeu.getInstance().getStart());
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Victoire");
         alert.setHeaderText("Félicitations");
+        System.out.println(text);
         alert.setContentText(text);
         alert.showAndWait();
         retourMenu();
@@ -227,6 +233,7 @@ public class JeuControleur {
     public void setParametresLab(int largeur, int hauteur, double pourcentageMurs) {
         Jeu.getInstance().setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs));
         Jeu.getInstance().getLabyrinthe().generer();
+        Jeu.getInstance().resetTimer();
 
         setRenduLabyrinthe();
 

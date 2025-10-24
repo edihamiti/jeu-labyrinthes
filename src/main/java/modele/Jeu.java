@@ -1,5 +1,7 @@
 package modele;
 
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 /**
@@ -15,6 +17,8 @@ public class Jeu {
     private ModeJeu modeJeu;
     private Vision vision = Vision.VUE_LIBRE;
     private Defi defiEnCours;
+    private LocalTime start;
+    private LocalTime end;
 
     /**
      * @param modeJeu     un mode de jeu
@@ -83,6 +87,7 @@ public class Jeu {
 
     public void setLabyrinthe(Labyrinthe labyrinthe) {
         this.labyrinthe = labyrinthe;
+        resetTimer();
     }
 
     public void setLabyrinthe(Defi defi) {
@@ -134,6 +139,10 @@ public class Jeu {
             return false;
         }
 
+        if (start == null) {
+            start = LocalTime.now();
+        }
+
         int nouveauX = this.labyrinthe.getJoueurX() + dx;
         int nouveauY = this.labyrinthe.getJoueurY() + dy;
 
@@ -174,22 +183,58 @@ public class Jeu {
      * Termine la partie en cours.
      *
      * @param victoire true si le joueur a gagné, false sinon
+     * @param start temps de début de la partie
      * @return message de fin de partie
      */
-    public String terminerPartie(boolean victoire) {
+    public String terminerPartie(boolean victoire, LocalTime start) {
         this.labyrinthe.setJeuEnCours(false);
 
         StringBuilder resultat = new StringBuilder();
-        if (victoire && this.joueur != null && this.defiEnCours != null) {
-            this.joueur.ajouterScore(this.defiEnCours);
-            this.sauvegarde.sauvegardeJoueurs();
-            resultat.append("Vous avez trouvé la sortie et terminé le labyrinthe !\n");
-            resultat.append("Score : ").append(this.joueur.getScore());
 
+        if (victoire) {
+            resultat.append("Vous avez trouvé la sortie et terminé le labyrinthe !\n");
         } else {
             resultat.append("Partie terminée.\n");
         }
 
+        if (start != null) {
+            LocalTime finTemps = (this.end != null) ? this.end : LocalTime.now();
+            long minutes = Duration.between(start, finTemps).toMinutes();
+            long secondes = Duration.between(start, finTemps).toSeconds() % 60;
+            resultat.append("Temps écoulé : ").append(minutes).append(" min ").append(secondes).append(" sec\n");
+        }
+
+        if (victoire && this.joueur != null && this.defiEnCours != null) {
+            this.joueur.ajouterScore(this.defiEnCours);
+            this.sauvegarde.sauvegardeJoueurs();
+            resultat.append("Score : ").append(this.joueur.getScore());
+        }
+
+        System.out.println(resultat.toString());
         return resultat.toString();
+    }
+
+    public LocalTime getStart() {
+        return start;
+    }
+
+    public void setStart(LocalTime start) {
+        this.start = start;
+    }
+
+    public LocalTime getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalTime end) {
+        this.end = end;
+    }
+
+    /**
+     * Remet à zéro le timer pour une nouvelle partie
+     */
+    public void resetTimer() {
+        this.start = null;
+        this.end = null;
     }
 }
