@@ -1,9 +1,13 @@
 package controleur;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
+import javafx.stage.Stage;
 import modele.Jeu;
 import modele.Labyrinthe;
 import modele.ModeJeu;
@@ -85,7 +89,13 @@ public class JeuControleur {
      * @throws IOException si le chargement de la vue échoue
      */
     public void retourMenu() throws IOException {
-        AppControleur.getInstance().MenuPrincipal();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
+        Parent jeuView = loader.load();
+        Stage stage = (Stage) minimap.getScene().getWindow();
+        Scene jeuScene = new Scene(jeuView, 1400, 900);
+        stage.setScene(jeuScene);
+        stage.show();
+        stage.setMaximized(true);
     }
 
     public void afficherJeu() {
