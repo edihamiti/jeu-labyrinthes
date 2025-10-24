@@ -18,6 +18,7 @@ import vue.MiniMapRendu;
 import vue.Rendu;
 
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * Contrôleur pour la gestion du jeu de labyrinthe.
@@ -161,10 +162,12 @@ public class JeuControleur {
      * @throws IOException si une erreur survient lors du déplacement
      */
     private void deplacer(int nouveauX, int nouveauY) throws IOException {
+        Random random = new Random();
         if (Jeu.getInstance().getLabyrinthe().peutDeplacer(nouveauX, nouveauY)) {
             Jeu.getInstance().getLabyrinthe().setJoueurX(nouveauX);
             Jeu.getInstance().getLabyrinthe().setJoueurY(nouveauY);
             playSound("move.mp3");
+            if (random.nextInt(100) > 95) playSound("bois.mp3");
 
             if (Jeu.getInstance().getLabyrinthe().estSurSortie(nouveauX, nouveauY)) {
                 victoire();
