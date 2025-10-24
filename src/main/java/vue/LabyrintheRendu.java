@@ -10,7 +10,7 @@ import modele.Labyrinthe;
 /**
  * Classe responsable du rendu graphique du labyrinthe.
  */
-public class LabyrintheRendu {
+public class LabyrintheRendu implements Rendu {
     private final Image imgMur = new Image(getClass().getResourceAsStream("/img/mur.png"));
     private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/chemin.png"));
     private final Image imgSortie = new Image(getClass().getResourceAsStream("/img/sortie.png"));
@@ -24,8 +24,8 @@ public class LabyrintheRendu {
     /**
      * Constructeur de la classe LabyrintheRendu.
      *
-     * @param labyrinthe          Le labyrinthe à rendre.
-     * @param contienLabyrinthe   Le conteneur VBox pour afficher le labyrinthe.
+     * @param labyrinthe        Le labyrinthe à rendre.
+     * @param contienLabyrinthe Le conteneur VBox pour afficher le labyrinthe.
      */
     public LabyrintheRendu(Labyrinthe labyrinthe, VBox contienLabyrinthe) {
         this.labyrinthe = labyrinthe;
@@ -90,7 +90,7 @@ public class LabyrintheRendu {
                     } else {
                         graphicsContext.drawImage(imgMur, x, y, tailleCellule, tailleCellule);
                     }
-                } else if (labyrinthe[i][j].estChemin()) {
+                } else if (labyrinthe[i][j].estChemin() || labyrinthe[i][j].estEntree()) {
                     graphicsContext.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
                 } else if (labyrinthe[i][j].estSortie()) {
                     graphicsContext.drawImage(imgSortie, x, y, tailleCellule, tailleCellule);
