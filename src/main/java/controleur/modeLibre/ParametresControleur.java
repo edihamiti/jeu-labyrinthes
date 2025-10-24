@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import modele.Jeu;
+import modele.ModeJeu;
 import modele.PseudoException;
 
 import java.io.IOException;
@@ -42,6 +44,7 @@ public class ParametresControleur {
      */
     @FXML
     public void initialize() {
+        Jeu.getInstance().setModeJeu(ModeJeu.MODE_LIBRE);
         validerButton.getParent().sceneProperty().addListener((observableValue, scene, t1) -> {
             t1.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, keyEvent -> {
                 if (keyEvent.getCode() == KeyCode.ENTER) {

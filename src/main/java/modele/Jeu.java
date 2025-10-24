@@ -13,6 +13,7 @@ public class Jeu {
     private Labyrinthe labyrinthe;
 
     private ModeJeu modeJeu;
+    private Vision vision = Vision.VUE_LIBRE;
     private Defi defiEnCours;
 
     /**
@@ -29,9 +30,8 @@ public class Jeu {
     }
 
     public Jeu() {
-        
-    }
 
+    }
 
     public static Jeu getInstance() {
         if (instance == null) {
@@ -42,6 +42,14 @@ public class Jeu {
 
     public static void setInstance(Jeu newInstance) {
         instance = newInstance;
+    }
+
+    public Vision getVision() {
+        return vision;
+    }
+
+    public void setVision(Vision vision) {
+        this.vision = vision;
     }
 
     public ModeJeu getModeJeu() {
@@ -77,12 +85,12 @@ public class Jeu {
         this.labyrinthe = labyrinthe;
     }
 
-    public void setLabyrinthe(int largeur, int hauteur, double pourcentageMurs) {
-        setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs));
-    }
-
     public void setLabyrinthe(Defi defi) {
         setLabyrinthe(new Labyrinthe(defi));
+    }
+
+    public void setLabyrinthe(int largeur, int hauteur, double pourcentageMurs) {
+        setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs));
     }
 
     public Defi getDefiEnCours() {
