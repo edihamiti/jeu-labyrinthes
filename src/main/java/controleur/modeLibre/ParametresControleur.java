@@ -28,9 +28,9 @@ public class ParametresControleur {
     public int largeur = 5;
     public int hauteur = 5;
     public double pourcentageMurs = 50.0;
-    private final int LARGEUR_MIN = 1;
+    private final int LARGEUR_MIN = 6;
     private final int LARGEUR_MAX = 30;
-    private final int HAUTEUR_MIN = 1;
+    private final int HAUTEUR_MIN = 6;
     private final int HAUTEUR_MAX = 30;
     private final double POURCENTAGE_MIN = 0.0;
     private final double POURCENTAGE_MAX = 100.0;
