@@ -68,7 +68,7 @@ public class MiniMapRendu {
 
                 if (labyrinthe[i][j].estMur())
                     graphicsContext.drawImage(imgMur, x, y, tailleCellule, tailleCellule);
-                else if (labyrinthe[i][j].estChemin())
+                else if (labyrinthe[i][j].estChemin() || labyrinthe[i][j].estEntree())
                     graphicsContext.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
                 else if (labyrinthe[i][j].estSortie())
                     graphicsContext.drawImage(imgSortie, x, y, tailleCellule, tailleCellule);
