@@ -123,6 +123,7 @@ public class JeuControleur {
      * @throws IOException si le chargement de la vue échoue
      */
     public void retourMenu() throws IOException {
+        AppControleur.getInstance().resetGame();
         AppControleur.getInstance().MenuPrincipal();
     }
 
