@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import modele.*;
+import modele.generateurs.GenerateurLabyrinthe;
 import vue.LabyrintheRendu;
 import vue.LocaleRendu;
 import vue.MiniMapRendu;
@@ -30,6 +31,8 @@ public class JeuControleur {
 
     private Rendu renduLabyrinthe;
     private MiniMapRendu renduMinimap;
+    private TypeLabyrinthe typeLab;
+    private GenerateurLabyrinthe generateur;
 
     private static boolean premierLancement = true;
 
@@ -38,17 +41,8 @@ public class JeuControleur {
      */
     @FXML
     public void initialize() {
-        // Pour les tests
-        Jeu.getInstance().setLabyrinthe(new Labyrinthe(10, 10, 10));
-        Jeu.getInstance().getLabyrinthe().generer();
-        Jeu.getInstance().resetTimer();
-
-        setRenduLabyrinthe();
-
-        Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
-        Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
-
-        afficherJeu();
+        // Ne plus initialiser le labyrinthe ici
+        // Attendre que setParametresLab() soit appelé
 
         contienLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
@@ -56,45 +50,31 @@ public class JeuControleur {
                     afficherPopupTouches();
                     premierLancement = false;
                 }
-            }
-        });
 
-        contienLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
-            if (newScene != null) {
                 newScene.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
                     try {
                         switch (event.getCode()) {
-                            case UP:
-                            case Z:
-                                deplacerHaut();
-                                event.consume();
-                                break;
-                            case RIGHT:
-                            case D:
-                                deplacerDroite();
-                                event.consume();
-                                break;
-                            case DOWN:
-                            case S:
-                                deplacerBas();
-                                event.consume();
-                                break;
-                            case LEFT:
-                            case Q:
-                                deplacerGauche();
-                                event.consume();
-                                break;
+                            case UP, Z -> deplacerHaut();
+                            case RIGHT, D -> deplacerDroite();
+                            case DOWN, S -> deplacerBas();
+                            case LEFT, Q -> deplacerGauche();
                         }
+                        event.consume();
                     } catch (IOException e) {
-                        System.out.println(e.getMessage());
+                        System.err.println(e.getMessage());
                     }
                 });
 
-                newScene.widthProperty().addListener((obsWidth, oldWidth, newWidth) -> afficherJeu());
-                newScene.heightProperty().addListener((obsHeight, oldHeight, newHeight) -> afficherJeu());
+                newScene.widthProperty().addListener((obsWidth, oldWidth, newWidth) -> {
+                    if (Jeu.getInstance().getLabyrinthe() != null) afficherJeu();
+                });
+                newScene.heightProperty().addListener((obsHeight, oldHeight, newHeight) -> {
+                    if (Jeu.getInstance().getLabyrinthe() != null) afficherJeu();
+                });
             }
         });
     }
+
 
     private void afficherPopupTouches() {
         try {
@@ -281,7 +261,7 @@ public class JeuControleur {
 
     private void rejouer() throws IOException {
         Jeu.getInstance().resetTimer();
-        Jeu.getInstance().getLabyrinthe().generer();
+        this.generateur.generer(Jeu.getInstance().getLabyrinthe());
         setRenduLabyrinthe();
         afficherJeu();
     }
@@ -310,23 +290,28 @@ public class JeuControleur {
      * @param hauteur         la hauteur du labyrinthe
      * @param pourcentageMurs le pourcentage de murs dans le labyrinthe
      * @param distanceMin     la distance minimale entre le joueur et la sortie du labyrinthe
-     * @param generateur      Le générateur de labyrinthe à utiliser ("aleatoire" ou "parfait")
+     * @param typeLab         le générateur de labyrinthe à utiliser ("aleatoire" ou "parfait")
      */
-    public void setParametresLab(int largeur, int hauteur, double pourcentageMurs, int distanceMin, TypeLabyrinthe generateur) {
+    public void setParametresLab(int largeur, int hauteur, double pourcentageMurs, int distanceMin, TypeLabyrinthe typeLab) {
+        // Créer le labyrinthe
         Jeu.getInstance().setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs, distanceMin));
-        System.out.println("\u001B[33m[TODO]\u001B[0m Pouvoir préciser le générateur sélectionné");
-        Jeu.getInstance().getLabyrinthe().generer(); // TODO: Pouvoir préciser le générateur
+
+        // Créer et utiliser le générateur
+        this.generateur = typeLab.creerGenerateur(largeur, hauteur, pourcentageMurs, distanceMin);
+        this.generateur.generer(Jeu.getInstance().getLabyrinthe());
+
+        // Réinitialiser le timer
         Jeu.getInstance().resetTimer();
 
+        // Configurer le rendu
         setRenduLabyrinthe();
 
-        Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> {
-            afficherJeu();
-        });
-        Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> {
-            afficherJeu();
-        });
+        // Ajouter les listeners pour la position du joueur
+        Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
+        Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
 
+        // Afficher le jeu
         afficherJeu();
     }
+
 }

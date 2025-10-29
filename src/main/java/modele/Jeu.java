@@ -1,5 +1,7 @@
 package modele;
 
+import modele.generateurs.GenerateurLabyrinthe;
+
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Scanner;
@@ -16,6 +18,8 @@ public class Jeu {
 
     private ModeJeu modeJeu;
     private Vision vision = Vision.VUE_LIBRE;
+    private TypeLabyrinthe typeLabyrinthe;
+    private GenerateurLabyrinthe generateur;
     private Defi defiEnCours;
     private LocalTime start;
     private LocalTime end;
@@ -112,12 +116,14 @@ public class Jeu {
      * @param largeur         largeur du labyrinthe
      * @param hauteur         hauteur du labyrinthe
      * @param pourcentageMurs pourcentage de murs dans le labyrinthe
+     * @param distanceMin     distance minimale entre le joueur et la sortie du labyrinthe
+     * @param typeLab         type de labyrinthe
      * @throws PseudoException si le pseudo du joueur est invalide
      */
-    public void initialiser(int largeur, int hauteur, double pourcentageMurs) throws PseudoException {
+    public void initialiser(int largeur, int hauteur, double pourcentageMurs, int distanceMin, TypeLabyrinthe typeLab) throws PseudoException {
         Scanner scanner = new Scanner(System.in);
         this.labyrinthe = new Labyrinthe(largeur, hauteur, pourcentageMurs);
-        this.labyrinthe.generer();
+        this.generateur = typeLab.creerGenerateur(largeur, hauteur, pourcentageMurs, distanceMin);
 
         System.out.print("Entrez le pseudo du joueur : ");
         this.joueur = new Joueur(scanner.nextLine());

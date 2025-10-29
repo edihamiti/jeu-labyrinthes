@@ -183,20 +183,18 @@ public class ParametresControleur {
             System.out.println("\tTypeLabyrinthe : " + typeLabyrinthe);
             System.out.println("\tDistanceMin : " + distanceMin);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
-
             Parent jeuView = loader.load();
+
             controleur.JeuControleur jeuControleur = loader.getController();
 
+            // Appeler setParametresLab APRÈS le chargement du FXML
             jeuControleur.setParametresLab(largeur, hauteur, pourcentageMurs, distanceMin, typeLabyrinthe);
 
             Stage stage = (Stage) validerButton.getScene().getWindow();
-
             Scene jeuScene = new Scene(jeuView, 1400, 900);
             stage.setScene(jeuScene);
             stage.setMaximized(true);
             stage.setTitle("Jeu des Labyrinthes - Mode Libre");
-
-            System.out.println("Jeu lancé !");
         } catch (IOException e) {
             System.err.println("Erreur lors du lancement du mode libre !");
             System.err.println(e.getMessage());
