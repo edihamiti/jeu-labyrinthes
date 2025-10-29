@@ -32,18 +32,30 @@ public class Labyrinthe {
      * @param largeur         largeur en cases
      * @param hauteur         hauteur en cases
      * @param pourcentageMurs pourcentage de murs (0-100)
+     * @param distanceMin     distance minimale entre l'entrée et la sortie
      */
-    public Labyrinthe(int largeur, int hauteur, double pourcentageMurs) {
+    public Labyrinthe(int largeur, int hauteur, double pourcentageMurs, int distanceMin) {
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.pourcentageMurs = pourcentageMurs;
-        this.distanceMin = 1;
+        this.distanceMin = distanceMin;
         this.largeurMax = largeur + 2;
         this.hauteurMax = hauteur + 2;
         this.nbChemins = 0;
         this.joueurX = new SimpleIntegerProperty(0);
         this.joueurY = new SimpleIntegerProperty(1);
         this.jeuEnCours = new SimpleBooleanProperty(true);
+    }
+
+    /**
+     * Constructeur pour un labyrinthe.
+     *
+     * @param largeur         largeur en cases
+     * @param hauteur         hauteur en cases
+     * @param pourcentageMurs pourcentage de murs (0-100)
+     */
+    public Labyrinthe(int largeur, int hauteur, double pourcentageMurs) {
+        this(largeur, hauteur, pourcentageMurs, 1);
     }
 
     /**

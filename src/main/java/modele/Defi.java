@@ -5,23 +5,25 @@ package modele;
  * Chaque défi a une largeur, une hauteur, un pourcentage de murs et des points.
  */
 public enum Defi {
-    FACILE1(6, 6, 25.0, 5, 1, Vision.VUE_LIBRE),
-    MOYEN1(6, 6, 50.0, 15, 1, Vision.VUE_LIBRE),
-    DIFFICILE1(6, 6, 75.0, 45, 1, Vision.VUE_LIBRE),
+    FACILE1(6, 6, 25.0, 5, 1, Vision.VUE_LIBRE, 1, TypeLabyrinthe.ALEATOIRE),
+    MOYEN1(6, 6, 50.0, 15, 1, Vision.VUE_LIBRE, 1, TypeLabyrinthe.ALEATOIRE),
+    DIFFICILE1(6, 6, 75.0, 45, 1, Vision.VUE_LIBRE, 1, TypeLabyrinthe.ALEATOIRE),
 
-    FACILE2(15, 15, 25.0, 10, 2, Vision.VUE_LIBRE),
-    MOYEN2(15, 15, 50.0, 20, 2, Vision.VUE_LIBRE),
-    DIFFICILE2(15, 15, 75.0, 50, 2, Vision.VUE_LIBRE),
+    FACILE2(15, 15, 25.0, 10, 2, Vision.VUE_LIBRE, 1, TypeLabyrinthe.ALEATOIRE),
+    MOYEN2(15, 15, 50.0, 20, 2, Vision.VUE_LIBRE, 1, TypeLabyrinthe.ALEATOIRE),
+    DIFFICILE2(15, 15, 75.0, 50, 2, Vision.VUE_LIBRE, 1, TypeLabyrinthe.ALEATOIRE),
 
-    FACILE3(30, 30, 75.0, 15, 3, Vision.VUE_LOCAL),
-    MOYEN3(30, 30, 50.0, 25, 3, Vision.VUE_LOCAL),
-    DIFFICILE3(30, 30, 25.0, 55, 3, Vision.VUE_LOCAL);
+    FACILE3(30, 30, 75.0, 15, 3, Vision.VUE_LOCAL, 1, TypeLabyrinthe.ALEATOIRE),
+    MOYEN3(30, 30, 50.0, 25, 3, Vision.VUE_LOCAL, 1, TypeLabyrinthe.ALEATOIRE),
+    DIFFICILE3(30, 30, 25.0, 55, 3, Vision.VUE_LOCAL, 1, TypeLabyrinthe.ALEATOIRE);
 
     private final int largeur;
     private final int hauteur;
     private final double pourcentageMurs;
     private final int points;
     private final Vision vision;
+    private final int distanceMin;
+    private TypeLabyrinthe typeLabyrinthe;
     /*
     L'étape associée au défi (Pour rappel : chaque étape a 3 défis).
      */
@@ -35,14 +37,17 @@ public enum Defi {
      * @param pourcentageMurs pourcentage de murs (0-100)
      * @param points          points attribués
      * @param vision          mode de vision lors du jeu
+     * @param distanceMin     distance minimale entre le joueur et la sortie du labyrinthe
+     * @param typeLabyrinthe  type de labyrinthe
      */
-    private Defi(int largeur, int hauteur, double pourcentageMurs, int points, int etape, Vision vision) {
+    private Defi(int largeur, int hauteur, double pourcentageMurs, int points, int etape, Vision vision, int distanceMin, TypeLabyrinthe typeLabyrinthe) {
         this.largeur = largeur;
         this.hauteur = hauteur;
         this.pourcentageMurs = pourcentageMurs;
         this.points = points;
         this.vision = vision;
         this.etape = etape;
+        this.distanceMin = distanceMin;
     }
 
     public int getPoints() {
@@ -78,6 +83,14 @@ public enum Defi {
 
     public int getEtape() {
         return etape;
+    }
+
+    public int getDistanceMin() {
+        return distanceMin;
+    }
+
+    public TypeLabyrinthe getTypeLabyrinthe() {
+        return typeLabyrinthe;
     }
 
 }

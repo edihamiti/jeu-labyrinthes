@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import modele.Jeu;
 import modele.ModeJeu;
 import modele.PseudoException;
+import modele.TypeLabyrinthe;
 
 import java.io.IOException;
 
@@ -26,20 +27,18 @@ public class ParametresControleur {
     public Button validerButton;
     public Slider pourcentageMursSlider;
     public ComboBox<String> typeLabyrintheField;
+    public Spinner<Integer> distanceMinSpinner;
     public int largeur = 5;
     public int hauteur = 5;
     public double pourcentageMurs = 50.0;
-    public String typeLabyrinthe = "Parfait";
+    public int distanceMin = 4;
+    public TypeLabyrinthe typeLabyrinthe = TypeLabyrinthe.ALEATOIRE;
     private final int LARGEUR_MIN = 6;
     private final int LARGEUR_MAX = 30;
     private final int HAUTEUR_MIN = 6;
     private final int HAUTEUR_MAX = 30;
     private final double POURCENTAGE_MIN = 0.0;
     private final double POURCENTAGE_MAX = 100.0;
-
-    // Constructeur par défaut
-    public ParametresControleur() {
-    }
 
     /**
      * Initialise les composants du formulaire et configure les observables d'événements.
@@ -72,7 +71,12 @@ public class ParametresControleur {
         pourcentageMursField.setOnAction(event -> onPourcentageChange((ActionEvent) event));
         pourcentageMursSlider.setValue(pourcentageMurs);
         pourcentageMursSlider.valueProperty().addListener(this::onPourcentageChangeFromSlider);
-        ;
+
+        distanceMinSpinner.getValueFactory().setValue(distanceMin);
+        distanceMinSpinner.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            this.distanceMin = this.distanceMinSpinner.getValue();
+        });
+        updateAvailableFields();
     }
 
     /**
@@ -94,18 +98,6 @@ public class ParametresControleur {
         }
     }
 
-    private void updateLargeur(int largeur) {
-        this.largeur = Math.max(largeur, LARGEUR_MIN);
-        this.largeur = Math.min(this.largeur, LARGEUR_MAX);
-        largeurField.getValueFactory().setValue(this.largeur);
-    }
-
-    private void updateHauteur(int hauteur) {
-        this.hauteur = Math.max(hauteur, HAUTEUR_MIN);
-        this.hauteur = Math.min(this.hauteur, HAUTEUR_MAX);
-        hauteurField.getValueFactory().setValue(this.hauteur);
-    }
-
     private void updatePourcentageMurs(double pourcentageMurs) {
         this.pourcentageMurs = Math.max(pourcentageMurs, POURCENTAGE_MIN);
         this.pourcentageMurs = Math.min(this.pourcentageMurs, POURCENTAGE_MAX);
@@ -116,8 +108,46 @@ public class ParametresControleur {
     public void onTypeLabyrintheChange() {
         String typeLabyrinthe = typeLabyrintheField.getValue();
         System.out.println("Type de labyrinthe sélectionné : " + typeLabyrinthe);
-        this.typeLabyrinthe = typeLabyrinthe;
+        switch (typeLabyrinthe) {
+            case ("Aléatoire") :
+                this.typeLabyrinthe = TypeLabyrinthe.ALEATOIRE;
+                break;
+            case ("Parfait") :
+                this.typeLabyrinthe = TypeLabyrinthe.PARFAIT;
+                break;
+            default :
+                throw new IllegalArgumentException("Type de labyrinthe inconnu !");
+        }
+        this.updateAvailableFields();
     }
+
+    /**
+     * Gère la mise à jour des fields lors de la modification du type de labyrinthe.
+     */
+    private void updateAvailableFields() {
+        switch (this.typeLabyrinthe) {
+            case PARFAIT -> {
+                // Désactiver le pourcentage de murs.
+                pourcentageMursField.setDisable(true);
+                pourcentageMursSlider.setDisable(true);
+                pourcentageMurs = 100.0;
+
+                // Activer la distance minimum.
+                distanceMinSpinner.setDisable(false);
+            }
+            case ALEATOIRE -> {
+                // Activer les fields de largeur et hauteur.
+                pourcentageMursField.setDisable(false);
+                pourcentageMursSlider.setDisable(false);
+                pourcentageMurs = pourcentageMursSlider.getValue();
+
+                // Désactiver la distance minimum.
+                distanceMinSpinner.setDisable(true);
+                distanceMin = 1;
+            }
+        }
+    }
+
 
     /**
      * Gère le clic sur le bouton de retour vers le menu principal.
@@ -151,15 +181,13 @@ public class ParametresControleur {
             System.out.println("\tHauteur : " + hauteur);
             System.out.println("\tPourcentageMurs : " + pourcentageMurs);
             System.out.println("\tTypeLabyrinthe : " + typeLabyrinthe);
+            System.out.println("\tDistanceMin : " + distanceMin);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
 
             Parent jeuView = loader.load();
             controleur.JeuControleur jeuControleur = loader.getController();
 
-            modele.Joueur joueur = new modele.Joueur("ModeLibre");
-
-            // TODO: Refactoriser pour faire passer par Jeu <3
-            jeuControleur.setParametresLab(largeur, hauteur, pourcentageMurs);
+            jeuControleur.setParametresLab(largeur, hauteur, pourcentageMurs, distanceMin, typeLabyrinthe);
 
             Stage stage = (Stage) validerButton.getScene().getWindow();
 
@@ -173,7 +201,7 @@ public class ParametresControleur {
             System.err.println("Erreur lors du lancement du mode libre !");
             System.err.println(e.getMessage());
             System.err.println("Voici les valeurs du formulaire : ");
-            System.err.println("\tLargeur : " + largeur + "\n\tHauteur : " + hauteur + "\n\tPourcentageMurs : " + pourcentageMurs + "\n\tTypeLabyrinthe : " + typeLabyrinthe);
+            System.err.println("\tLargeur : " + largeur + "\n\tHauteur : " + hauteur + "\n\tPourcentageMurs : " + pourcentageMurs + "\n\tTypeLabyrinthe : " + typeLabyrinthe + "\n\tDistanceMin : " + distanceMin);
             System.err.println("Trace :");
             e.printStackTrace();
         }

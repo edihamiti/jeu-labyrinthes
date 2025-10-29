@@ -7,10 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
-import modele.Jeu;
-import modele.Labyrinthe;
-import modele.ModeJeu;
-import modele.Vision;
+import modele.*;
 import vue.LabyrintheRendu;
 import vue.LocaleRendu;
 import vue.MiniMapRendu;
@@ -26,6 +23,7 @@ import java.util.Random;
 public class JeuControleur {
     @FXML
     public VBox minimap;
+    @FXML
     public VBox overlayMinimap;
     @FXML
     private VBox contienLabyrinthe;
@@ -311,10 +309,13 @@ public class JeuControleur {
      * @param largeur         la largeur du labyrinthe
      * @param hauteur         la hauteur du labyrinthe
      * @param pourcentageMurs le pourcentage de murs dans le labyrinthe
+     * @param distanceMin     la distance minimale entre le joueur et la sortie du labyrinthe
+     * @param generateur      Le générateur de labyrinthe à utiliser ("aleatoire" ou "parfait")
      */
-    public void setParametresLab(int largeur, int hauteur, double pourcentageMurs) {
-        Jeu.getInstance().setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs));
-        Jeu.getInstance().getLabyrinthe().generer();
+    public void setParametresLab(int largeur, int hauteur, double pourcentageMurs, int distanceMin, TypeLabyrinthe generateur) {
+        Jeu.getInstance().setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs, distanceMin));
+        System.out.println("\u001B[33m[TODO]\u001B[0m Pouvoir préciser le générateur sélectionné");
+        Jeu.getInstance().getLabyrinthe().generer(); // TODO: Pouvoir préciser le générateur
         Jeu.getInstance().resetTimer();
 
         setRenduLabyrinthe();

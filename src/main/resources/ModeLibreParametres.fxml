@@ -4,7 +4,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
 <VBox xmlns:fx="http://javafx.com/fxml"
@@ -36,7 +35,6 @@
 
         <VBox
             styleClass="form-container"
-            alignment="TOP_LEFT"
             spacing="15"
             prefWidth="400"
             maxWidth="450"
@@ -73,7 +71,6 @@
                 <Slider
                     fx:id="pourcentageMursSlider"
                     min="1"
-                    max="100"
                     value="49"
                     majorTickUnit="5"
                     minorTickCount="1"
@@ -83,6 +80,14 @@
                     snapToTicks="true"
 
                 />
+            </VBox>
+
+            <VBox>
+                <Label styleClass="form-label" text="Distance Minimale :"/>
+                <HBox alignment="CENTER_LEFT">
+                    <Spinner fx:id="distanceMinSpinner" min="4" max="15" prefWidth="75"/>
+                    <Label styleClass="form-label" text="cases"/>
+                </HBox>
             </VBox>
 
             <Button text="Valider" fx:id="validerButton" styleClass="button-filled" prefWidth="Infinity" onAction="#lancerModeLibre" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2" />

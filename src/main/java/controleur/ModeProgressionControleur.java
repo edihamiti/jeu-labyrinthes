@@ -59,7 +59,7 @@ public class ModeProgressionControleur {
 
             JeuControleur jeuControleur = loader.getController();
             if (jeuControleur != null) {
-                jeuControleur.setParametresLab(defi.getLargeur(), defi.getHauteur(), defi.getPourcentageMurs());
+                jeuControleur.setParametresLab(defi.getLargeur(), defi.getHauteur(), defi.getPourcentageMurs(), defi.getDistanceMin(), defi.getTypeLabyrinthe());
             }
 
             Stage stage = (Stage) etapesContainer.getScene().getWindow();
