@@ -5,6 +5,8 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="controleur.modeLibre.ParametresControleur"
       spacing="20"
@@ -46,6 +48,19 @@
                     <Label styleClass="form-label" text="ｘ"/>
                     <Spinner fx:id="hauteurField" min="6" max="30" promptText="Entrez la hauteur" prefWidth="75"/>
                 </HBox>
+            </VBox>
+
+            <VBox>
+                <Label styleClass="form-label" text="Type de labyrinthe :"/>
+
+                <ComboBox fx:id="typeLabyrintheField" prefWidth="150" value="Aléatoire" onAction="#onTypeLabyrintheChange" styleClass="combo-box">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Aléatoire"/>
+                            <String fx:value="Parfait"/>
+                        </FXCollections>
+                    </items>
+                </ComboBox>
             </VBox>
 
             <VBox>

@@ -363,3 +363,44 @@
     -fx-background-color: -color-3;
     -fx-translate-y: 1;
 }
+
+.combo-box .list-cell {
+    -fx-background-color: -color-1;
+    -fx-text-fill: -color-6;
+    -fx-font-weight: 500;
+    -fx-font-size: 14px;
+    -fx-padding: 5px 10px;
+    -fx-background-radius: 5px;
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: -color-2;
+}
+
+.combo-box .list-cell:selected {
+    -fx-border-color: -color-6;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-start-margin: 20px;
+    -fx-border: -color-6;
+
+}
+
+.combo-box-base {
+    -fx-padding: 2px;
+    -fx-border-radius: 7px;
+    -fx-border-insets: 2px;
+    -fx-background-radius: 7px;
+    -fx-background-color: -color-3;
+}
+
+.combo-box .combo-box-popup .list-view {
+    -fx-padding: 2px;
+    -fx-background-radius: 7px;
+    -fx-background-color: -color-3;
+    -fx-spacing: 5px;
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-background-color: -color-6;
+}

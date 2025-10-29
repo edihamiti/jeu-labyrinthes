@@ -25,9 +25,11 @@ public class ParametresControleur {
     public TextField pourcentageMursField;
     public Button validerButton;
     public Slider pourcentageMursSlider;
+    public ComboBox<String> typeLabyrintheField;
     public int largeur = 5;
     public int hauteur = 5;
     public double pourcentageMurs = 50.0;
+    public String typeLabyrinthe = "Parfait";
     private final int LARGEUR_MIN = 6;
     private final int LARGEUR_MAX = 30;
     private final int HAUTEUR_MIN = 6;
@@ -111,6 +113,12 @@ public class ParametresControleur {
         pourcentageMursSlider.setValue(this.pourcentageMurs);
     }
 
+    public void onTypeLabyrintheChange() {
+        String typeLabyrinthe = typeLabyrintheField.getValue();
+        System.out.println("Type de labyrinthe sélectionné : " + typeLabyrinthe);
+        this.typeLabyrinthe = typeLabyrinthe;
+    }
+
     /**
      * Gère le clic sur le bouton de retour vers le menu principal.
      */
@@ -142,6 +150,7 @@ public class ParametresControleur {
             System.out.println("\tLargeur : " + largeur);
             System.out.println("\tHauteur : " + hauteur);
             System.out.println("\tPourcentageMurs : " + pourcentageMurs);
+            System.out.println("\tTypeLabyrinthe : " + typeLabyrinthe);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
 
             Parent jeuView = loader.load();
@@ -164,7 +173,7 @@ public class ParametresControleur {
             System.err.println("Erreur lors du lancement du mode libre !");
             System.err.println(e.getMessage());
             System.err.println("Voici les valeurs du formulaire : ");
-            System.err.println("\tLargeur : " + largeur + "\n\tHauteur : " + hauteur + "\n\tPourcentageMurs : " + pourcentageMurs);
+            System.err.println("\tLargeur : " + largeur + "\n\tHauteur : " + hauteur + "\n\tPourcentageMurs : " + pourcentageMurs + "\n\tTypeLabyrinthe : " + typeLabyrinthe);
             System.err.println("Trace :");
             e.printStackTrace();
         }
