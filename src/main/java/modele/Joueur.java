@@ -128,4 +128,17 @@ public class Joueur {
             this.progression.put(defi, true);
         }
     }
+
+    /**
+     * Ajoute un score calculé au score total du joueur et met à jour la progression du défi en cours.
+     *
+     * @param points le score calculé à ajouter
+     * @param defi le défi complété
+     */
+    public void ajouterScore(int points, Defi defi) {
+        if (defi != null) {
+            this.score += points;
+            this.progression.put(defi, true);
+        }
+    }
 }

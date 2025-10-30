@@ -15,6 +15,7 @@ import vue.MiniMapRendu;
 import vue.Rendu;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Random;
 
@@ -22,19 +23,17 @@ import java.util.Random;
  * Contrôleur pour la gestion du jeu de labyrinthe.
  */
 public class JeuControleur {
+    private static boolean premierLancement = true;
     @FXML
     public VBox minimap;
     @FXML
     public VBox overlayMinimap;
     @FXML
     private VBox contienLabyrinthe;
-
     private Rendu renduLabyrinthe;
     private MiniMapRendu renduMinimap;
     private TypeLabyrinthe typeLab;
     private GenerateurLabyrinthe generateur;
-
-    private static boolean premierLancement = true;
 
     /**
      * Initialise le contrôleur et configure les événements de déplacement du joueur.
@@ -89,6 +88,7 @@ public class JeuControleur {
 
             Scene scene = new Scene(popupView);
             popupStage.setScene(scene);
+            popupStage.setAlwaysOnTop(true);
             popupStage.show();
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -196,6 +196,21 @@ public class JeuControleur {
         audio.play();
     }
 
+    private int calculerScore(long minutes, long secondes) {
+        if (Jeu.getInstance().getJoueur() != null && Jeu.getInstance().getDefiEnCours() != null) {
+            int pointsBase = Jeu.getInstance().getDefiEnCours().getPoints();
+            long tempsTotal = minutes * 60 + secondes;
+
+            if (tempsTotal > 10) {
+                long tempsSupplementaire = tempsTotal - 10;
+                int penalite = (int) (tempsSupplementaire / 10);
+                return Math.max(0, pointsBase - penalite);
+            }
+            return pointsBase;
+        }
+        return 0;
+    }
+
     /**
      * Gère la victoire du joueur lorsqu'il atteint la sortie du labyrinthe.
      *
@@ -211,14 +226,16 @@ public class JeuControleur {
 
             LocalTime debut = Jeu.getInstance().getStart();
             LocalTime fin = Jeu.getInstance().getEnd() != null ? Jeu.getInstance().getEnd() : LocalTime.now();
-            java.time.Duration duree = java.time.Duration.between(debut, fin);
+            Duration duree = Duration.between(debut, fin);
             long minutes = duree.toMinutes();
             long secondes = duree.toSeconds() % 60;
 
             controleur.setTemps(minutes + " min " + secondes + " sec");
 
             if (Jeu.getInstance().getJoueur() != null && Jeu.getInstance().getDefiEnCours() != null) {
-                Jeu.getInstance().getJoueur().ajouterScore(Jeu.getInstance().getDefiEnCours());
+                int scoreObtenu = calculerScore(minutes, secondes);
+
+                Jeu.getInstance().getJoueur().ajouterScore(scoreObtenu, Jeu.getInstance().getDefiEnCours());
                 Jeu.getInstance().getSauvegarde().sauvegardeJoueurs();
                 controleur.setScore(String.valueOf(Jeu.getInstance().getJoueur().getScore()));
             }

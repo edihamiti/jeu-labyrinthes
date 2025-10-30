@@ -48,6 +48,7 @@ public enum Defi {
         this.vision = vision;
         this.etape = etape;
         this.distanceMin = distanceMin;
+        this.typeLabyrinthe = typeLabyrinthe;
     }
 
     public int getPoints() {
