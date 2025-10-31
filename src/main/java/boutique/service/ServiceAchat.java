@@ -28,8 +28,8 @@ public class ServiceAchat implements IServiceAchat {
     }
 
     @Override
-    public ResultatAchat acheterCosmetique(String idJoueur, String idCosmetique) {
-        InventaireJoueur inventaire = depotInventaire.charger(idJoueur);
+    public ResultatAchat acheterCosmetique(String pseudoJoueur, String idCosmetique) {
+        InventaireJoueur inventaire = depotInventaire.charger(pseudoJoueur);
 
         Optional<Cosmetique> cosmetiqueOpt = depotCosmetique.obtenirParId(idCosmetique);
         if (cosmetiqueOpt.isEmpty()) {
@@ -52,7 +52,7 @@ public class ServiceAchat implements IServiceAchat {
         inventaire.setScore(inventaire.getScore() - cosmetique.prix());
         inventaire.ajouterCosmetique(idCosmetique);
 
-        depotInventaire.sauvegarder(idJoueur, inventaire);
+        depotInventaire.sauvegarder(pseudoJoueur, inventaire);
 
         return ResultatAchat.reussi(inventaire.getScore());
     }

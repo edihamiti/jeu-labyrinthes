@@ -10,10 +10,10 @@ public interface IServiceAchat {
      * Tente d'acheter un cosmétique pour un joueur.
      * Vérifie que le joueur a suffisamment de points et ne possède pas déjà le cosmétique.
      *
-     * @param idJoueur l'identifiant du joueur
+     * @param pseudoJoueur l'identifiant du joueur
      * @param idCosmetique l'identifiant du cosmétique à acheter
      * @return le résultat de la tentative d'achat
      */
-    ResultatAchat acheterCosmetique(String idJoueur, String idCosmetique);
+    ResultatAchat acheterCosmetique(String pseudoJoueur, String idCosmetique);
 
 }
