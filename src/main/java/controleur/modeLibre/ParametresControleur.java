@@ -61,6 +61,13 @@ public class ParametresControleur {
         hauteurField.getValueFactory().setValue(hauteur);
         pourcentageMursField.setText("" + pourcentageMurs);
 
+        for (TypeLabyrinthe typeLabyrinthe : TypeLabyrinthe.values()) {
+            typeLabyrintheField.getItems().add(typeLabyrinthe.getNom());
+            if (typeLabyrinthe == this.typeLabyrinthe) {
+                typeLabyrintheField.getSelectionModel().select(typeLabyrinthe.getNom());
+            }
+        }
+
         largeurField.focusedProperty().addListener((obs, oldVal, newVal) -> {
             this.largeur = this.largeurField.getValue();
         });

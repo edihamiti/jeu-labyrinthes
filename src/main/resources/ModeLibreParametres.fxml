@@ -52,12 +52,6 @@
                 <Label styleClass="form-label" text="Type de labyrinthe :"/>
 
                 <ComboBox fx:id="typeLabyrintheField" prefWidth="150" value="Aléatoire" onAction="#onTypeLabyrintheChange" styleClass="combo-box">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="Aléatoire"/>
-                            <String fx:value="Parfait"/>
-                        </FXCollections>
-                    </items>
                 </ComboBox>
             </VBox>
 

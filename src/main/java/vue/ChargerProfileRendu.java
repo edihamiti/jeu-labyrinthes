@@ -35,7 +35,7 @@ public class ChargerProfileRendu {
         root.setAlignment(javafx.geometry.Pos.TOP_CENTER);
 
         if (profiles.isEmpty()) {
-            Label pasDeProfile = new Label("Pas de profil disponible");
+            Label pasDeProfile = new Label("Pas de profils disponible");
             pasDeProfile.getStyleClass().add("form-small-text");
             pasDeProfile.setStyle("-fx-text-fill: -color-5;");
             root.getChildren().add(pasDeProfile);
