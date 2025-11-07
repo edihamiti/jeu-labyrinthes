@@ -15,7 +15,11 @@ public enum Defi {
 
     FACILE3(30, 30, 75.0, 15, 3, Vision.VUE_LOCAL, 1, TypeLabyrinthe.ALEATOIRE),
     MOYEN3(30, 30, 50.0, 25, 3, Vision.VUE_LOCAL, 1, TypeLabyrinthe.ALEATOIRE),
-    DIFFICILE3(30, 30, 25.0, 55, 3, Vision.VUE_LOCAL, 1, TypeLabyrinthe.ALEATOIRE);
+    DIFFICILE3(30, 30, 25.0, 55, 3, Vision.VUE_LOCAL, 1, TypeLabyrinthe.ALEATOIRE),
+
+    FACILE4(7, 10, 100, 15, 4, Vision.VUE_LIBRE, 4, TypeLabyrinthe.PARFAIT),
+    MOYEN4(10, 13, 100, 25, 4, Vision.VUE_LIBRE, 6, TypeLabyrinthe.PARFAIT),
+    DIFFICILE4(13, 16, 100, 55, 4, Vision.VUE_LIBRE, 9, TypeLabyrinthe.PARFAIT);
 
     private final int largeur;
     private final int hauteur;

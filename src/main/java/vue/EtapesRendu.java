@@ -24,7 +24,8 @@ public class EtapesRendu {
     private static final Image imgDifficile = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/difficultees/difficile.png")));
     private static final Image imgCheckmark = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/checkmark.png")));
     private static final Image imgPoints = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/points.png")));
-
+    private static final int DEFI_PAR_ETAPES = 3;
+    private static final int NOMBRE_ETAPES = Defi.values().length/DEFI_PAR_ETAPES;
 
     /**
      * Rend les étapes avec leurs difficultés sous forme de VBox.
@@ -44,7 +45,7 @@ public class EtapesRendu {
             defisByEtape.computeIfAbsent(defi.getEtape(), k -> new ArrayList<>()).add(defi);
         }
 
-        for (int etape = 1; etape <= 3; etape++) {
+        for (int etape = 1; etape <= NOMBRE_ETAPES; etape++) {
             List<Defi> defis = defisByEtape.get(etape);
             if (defis != null && !defis.isEmpty()) {
                 boolean isUnlocked = isStepUnlocked(etape, defisByEtape);
