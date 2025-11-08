@@ -7,7 +7,6 @@ import java.util.*;
 
 public class GenerateurParfait extends GenerateurLabyrinthe {
     double pourcentageMurs;
-    private int nbChemins;
 
     public GenerateurParfait(int largeur, int hauteur, double pourcentageMurs) {
         super(largeur, hauteur);
@@ -19,7 +18,6 @@ public class GenerateurParfait extends GenerateurLabyrinthe {
      */
     public void generer(Labyrinthe lab) {
         Cellule[][] cellules = new Cellule[largeurMax][hauteurMax];
-        lab.setCellules(cellules);
         for (int i = 0; i < largeurMax; i++) {
             for (int j = 0; j < hauteurMax; j++) {
                 cellules[i][j] = new Mur(i, j);
@@ -27,11 +25,11 @@ public class GenerateurParfait extends GenerateurLabyrinthe {
         }
 
         Random rand = new Random();
-        this.nbChemins = 0;
+        int nbChemins = 0;
 
-        int entreeX = rand.nextInt(largeurMax - 2);
-        int entreeY = 1 + rand.nextInt(hauteurMax - 2);
-        if (entreeY >= hauteurMax) entreeY = hauteurMax - 2;
+        int entreeX = rand.nextInt(largeur);
+        int entreeY = 1 + rand.nextInt(largeur);
+        if (entreeY >= hauteurMax) entreeY = hauteur;
         cellules[entreeX][entreeY] = new Entree(entreeX, entreeY);
         nbChemins++;
 
@@ -118,22 +116,22 @@ public class GenerateurParfait extends GenerateurLabyrinthe {
         if (maxX != -1 && maxY != -1) {
             cellules[maxX][maxY] = new Sortie(maxX, maxY);
         } else {
-            int sx = largeurMax - 2, sy = hauteurMax - 2;
+            int sx = largeur, sy = hauteur;
             while (cellules[sx][sy] instanceof Mur) {
-                sx = 1 + rand.nextInt(largeurMax - 2);
-                sy = 1 + rand.nextInt(hauteurMax - 2);
+                sx = 1 + rand.nextInt(largeur);
+                sy = 1 + rand.nextInt(hauteur);
             }
             cellules[sx][sy] = new Sortie(sx, sy);
         }
 
         if (pourcentageMurs < 100.0) {
-            int totalCellules = (largeurMax - 2) * (hauteurMax - 2);
+            int totalCellules = (largeur) * (hauteur);
             double pourcentageCheminsVoulu = 100.0 - pourcentageMurs;
             int cheminsSouhaites = (int) ((pourcentageCheminsVoulu / 100.0) * totalCellules);
 
             while (nbChemins < cheminsSouhaites) {
-                int x = 1 + rand.nextInt(largeurMax - 2);
-                int y = 1 + rand.nextInt(hauteurMax - 2);
+                int x = 1 + rand.nextInt(largeur);
+                int y = 1 + rand.nextInt(hauteur);
 
                 if (cellules[x][y] instanceof Mur &&
                         !(cellules[x][y].estEntree()) &&
@@ -156,5 +154,7 @@ public class GenerateurParfait extends GenerateurLabyrinthe {
                 }
             }
         }
+
+        lab.setCellules(cellules);
     }
 }
