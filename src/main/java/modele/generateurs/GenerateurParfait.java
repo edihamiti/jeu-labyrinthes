@@ -6,11 +6,11 @@ import modele.Labyrinthe;
 import java.util.*;
 
 public class GenerateurParfait extends GenerateurLabyrinthe {
-    double pourcentageMurs;
+    int distanceMin;
 
-    public GenerateurParfait(int largeur, int hauteur, double pourcentageMurs) {
+    public GenerateurParfait(int largeur, int hauteur, int distanceMin) {
         super(largeur, hauteur);
-        this.pourcentageMurs = pourcentageMurs;
+        this.distanceMin = distanceMin;
     }
 
     /**
@@ -122,37 +122,6 @@ public class GenerateurParfait extends GenerateurLabyrinthe {
                 sy = 1 + rand.nextInt(hauteur);
             }
             cellules[sx][sy] = new Sortie(sx, sy);
-        }
-
-        if (pourcentageMurs < 100.0) {
-            int totalCellules = (largeur) * (hauteur);
-            double pourcentageCheminsVoulu = 100.0 - pourcentageMurs;
-            int cheminsSouhaites = (int) ((pourcentageCheminsVoulu / 100.0) * totalCellules);
-
-            while (nbChemins < cheminsSouhaites) {
-                int x = 1 + rand.nextInt(largeur);
-                int y = 1 + rand.nextInt(hauteur);
-
-                if (cellules[x][y] instanceof Mur &&
-                        !(cellules[x][y].estEntree()) &&
-                        !(cellules[x][y].estSortie())) {
-
-                    int cheminsAdjacents = 0;
-                    for (int[] dir : directions) {
-                        int nx = x + dir[0];
-                        int ny = y + dir[1];
-                        if (nx >= 0 && nx < largeurMax && ny >= 0 && ny < hauteurMax &&
-                                !(cellules[nx][ny] instanceof Mur)) {
-                            cheminsAdjacents++;
-                        }
-                    }
-
-                    if (cheminsAdjacents >= 1) {
-                        cellules[x][y] = new Chemin(x, y);
-                        nbChemins++;
-                    }
-                }
-            }
         }
 
         lab.setCellules(cellules);
