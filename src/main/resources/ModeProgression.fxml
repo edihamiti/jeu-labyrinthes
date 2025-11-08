@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ScrollPane?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="controleur.ModeProgressionControleur"
       spacing="20"
@@ -14,23 +15,25 @@
         <Insets top="15" right="15" bottom="15" left="15"/>
     </padding>
 
-    <VBox spacing="50" alignment="TOP_CENTER" styleClass="contenu" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-        <padding>
-            <Insets top="50" right="50" bottom="50" left="50"/>
-        </padding>
-        <HBox alignment="CENTER_LEFT" maxWidth="Infinity">
-            <Button styleClass="button-outlined" onAction="#retour" text="← Retour" />
-            <Region HBox.hgrow="ALWAYS" />
-            <VBox alignment="TOP_CENTER">
-                <Label text="Mode Progression" styleClass="title"/>
-                <Label text="Sélectionnez une étape et une difficulté pour commencer à jouer" styleClass="subtitle"/>
-            </VBox>
-            <Region HBox.hgrow="ALWAYS" />
-            <HBox fx:id="pointsContainer" maxHeight="40" />
-        </HBox>
+    <ScrollPane styleClass="contenu" HBox.hgrow="ALWAYS" fitToWidth="true">
+        <VBox spacing="50" alignment="TOP_CENTER" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+            <padding>
+                <Insets top="50" right="50" bottom="50" left="50"/>
+            </padding>
+            <HBox alignment="CENTER_LEFT" maxWidth="Infinity">
+                <Button styleClass="button-outlined" onAction="#retour" text="← Retour" />
+                <Region HBox.hgrow="ALWAYS" />
+                <VBox alignment="TOP_CENTER">
+                    <Label text="Mode Progression" styleClass="title"/>
+                    <Label text="Sélectionnez une étape et une difficulté pour commencer à jouer" styleClass="subtitle"/>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <HBox fx:id="pointsContainer" maxHeight="40" />
+            </HBox>
 
-        <VBox fx:id="etapesContainer" spacing="15" alignment="TOP_CENTER" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-            <!-- Les étapes sont ajoutées dynamiquement ici -->
+            <VBox fx:id="etapesContainer" spacing="15" alignment="TOP_CENTER" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+                <!-- Les étapes sont ajoutées dynamiquement ici -->
+            </VBox>
         </VBox>
-    </VBox>
+    </ScrollPane>
 </VBox>

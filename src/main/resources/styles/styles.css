@@ -404,3 +404,26 @@
 .combo-box .arrow-button .arrow {
     -fx-background-color: -color-6;
 }
+
+.scroll-bar {
+    -fx-background-color: -color-1;
+    -fx-background-insets: 5;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: -color-6;
+    -fx-opacity: 0.5;
+    -fx-background-radius: 100px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-opacity: 0.7;
+}
+
+.scroll-bar .thumb:pressed {
+    -fx-opacity: 0.6;
+}
+
+.scroll-bar > .increment-button > .increment-arrow, .scroll-bar > .decrement-button > .decrement-arrow {
+    -fx-background-color: transparent;
+}
