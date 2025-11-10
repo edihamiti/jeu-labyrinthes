@@ -2,7 +2,6 @@ package vue;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import modele.Cellules.Cellule;
 import modele.Labyrinthe;
@@ -11,11 +10,6 @@ import modele.Labyrinthe;
  * Classe responsable du rendu graphique du labyrinthe.
  */
 public class LabyrintheRendu implements Rendu {
-    private final Image imgMur = new Image(getClass().getResourceAsStream("/img/mur.png"));
-    private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/chemin.png"));
-    private final Image imgSortie = new Image(getClass().getResourceAsStream("/img/sortie.png"));
-    private final Image imgJoueur = new Image(getClass().getResourceAsStream("/img/joueur.png"));
-    private final Image imgRedWall = new Image(getClass().getResourceAsStream("/img/redWall.png"));
     private Labyrinthe labyrinthe;
     private VBox contienLabyrinthe;
     private int lastBlockedX = -1;

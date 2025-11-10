@@ -3,7 +3,6 @@ package vue;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import modele.Cellules.Cellule;
 import modele.Labyrinthe;
@@ -12,11 +11,6 @@ import modele.Labyrinthe;
  * Classe responsable du rendu graphique de la vue locale du joueur.
  */
 public class LocaleRendu implements Rendu {
-    private final Image imgMur = new Image(getClass().getResourceAsStream("/img/mur.png"));
-    private final Image imgRedWall = new Image(getClass().getResourceAsStream("/img/redWall.png"));
-    private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/chemin.png"));
-    private final Image imgSortie = new Image(getClass().getResourceAsStream("/img/sortie.png"));
-    private final Image imgJoueur = new Image(getClass().getResourceAsStream("/img/joueur.png"));
     private final int tailleCellule = 175; // Taille des cellules pour la vue locale
     private final int porteeVueLocale = 1; // Portée de la vue locale (1 case autour du joueur)
     private Labyrinthe labyrinthe;

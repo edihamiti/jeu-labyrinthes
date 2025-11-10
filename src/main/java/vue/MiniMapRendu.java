@@ -2,7 +2,6 @@ package vue;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import modele.Cellules.Cellule;
 import modele.Labyrinthe;
@@ -10,10 +9,7 @@ import modele.Labyrinthe;
 /**
  * Classe responsable du rendu graphique du labyrinthe.
  */
-public class MiniMapRendu {
-    private final Image imgMur = new Image(getClass().getResourceAsStream("/img/mur.png"));
-    private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/chemin.png"));
-    private final Image imgSortie = new Image(getClass().getResourceAsStream("/img/sortie.png"));
+public class MiniMapRendu implements Rendu {
     private Labyrinthe labyrinthe;
     private VBox contienLabyrinthe;
 
@@ -37,6 +33,11 @@ public class MiniMapRendu {
     public Canvas rendu(Labyrinthe labyrinthe) {
         this.labyrinthe = labyrinthe;
         return creerCanvasLabyrinthe(labyrinthe.getCellules());
+    }
+
+    @Override
+    public void setBlockedWall(int x, int y) {
+
     }
 
     /**
