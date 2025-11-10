@@ -105,7 +105,7 @@ public class GenerateurParfait extends GenerateurLabyrinthe {
                 int nx = x + dir[0];
                 int ny = y + dir[1];
                 if (nx > 0 && nx < largeurMax - 1 && ny > 0 && ny < hauteurMax - 1
-                        && !visite[nx][ny] && !(cellules[nx][ny] instanceof Mur)) {
+                        && !visite[nx][ny] && !(cellules[nx][ny].estMur())) {
                     visite[nx][ny] = true;
                     dist[nx][ny] = dist[x][y] + 1;
                     queue.add(new int[]{nx, ny});
@@ -117,7 +117,7 @@ public class GenerateurParfait extends GenerateurLabyrinthe {
             cellules[maxX][maxY] = new Sortie(maxX, maxY);
         } else {
             int sx = largeur, sy = hauteur;
-            while (cellules[sx][sy] instanceof Mur) {
+            while (cellules[sx][sy].estMur()) {
                 sx = 1 + rand.nextInt(largeur);
                 sy = 1 + rand.nextInt(hauteur);
             }
