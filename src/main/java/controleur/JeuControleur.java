@@ -29,7 +29,7 @@ public class JeuControleur {
     @FXML
     public VBox overlayMinimap;
     @FXML
-    private VBox contienLabyrinthe;
+    private VBox conteneurLabyrinthe;
     private Rendu renduLabyrinthe;
     private MiniMapRendu renduMinimap;
     private TypeLabyrinthe typeLab;
@@ -43,7 +43,7 @@ public class JeuControleur {
         // Ne plus initialiser le labyrinthe ici
         // Attendre que setParametresLab() soit appelé
 
-        contienLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
+        conteneurLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 if (premierLancement) {
                     afficherPopupTouches();
@@ -81,7 +81,7 @@ public class JeuControleur {
             Parent popupView = loader.load();
 
             Stage popupStage = new Stage();
-            popupStage.initOwner(contienLabyrinthe.getScene().getWindow());
+            popupStage.initOwner(conteneurLabyrinthe.getScene().getWindow());
             popupStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
             popupStage.setTitle("Commandes de jeu");
             popupStage.setResizable(false);
@@ -108,7 +108,7 @@ public class JeuControleur {
     private void retourModeProgression() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
         Parent modeProgressionView = loader.load();
-        Stage stage = (Stage) contienLabyrinthe.getScene().getWindow();
+        Stage stage = (Stage) conteneurLabyrinthe.getScene().getWindow();
         Scene scene = new Scene(modeProgressionView, 1400, 900);
         stage.setScene(scene);
         stage.setMaximized(true);
@@ -118,6 +118,8 @@ public class JeuControleur {
         if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
             if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LOCAL)) {
                 afficherMinimap();
+            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITEE)) {
+                System.out.println("TODO : Afficher la vue limitée");
             }
         }
         afficherLabyrinthe();
@@ -127,13 +129,13 @@ public class JeuControleur {
      * Affiche le labyrinthe dans l'interface utilisateur.
      */
     public void afficherLabyrinthe() {
-        contienLabyrinthe.getChildren().clear();
-        contienLabyrinthe.getChildren().add(renduLabyrinthe.rendu(Jeu.getInstance().getLabyrinthe()));
+        conteneurLabyrinthe.getChildren().clear();
+        conteneurLabyrinthe.getChildren().add(renduLabyrinthe.rendu(Jeu.getInstance().getLabyrinthe()));
     }
 
     public void afficherLocale() {
-        contienLabyrinthe.getChildren().clear();
-        contienLabyrinthe.getChildren().add(renduLabyrinthe.rendu(Jeu.getInstance().getLabyrinthe()));
+        conteneurLabyrinthe.getChildren().clear();
+        conteneurLabyrinthe.getChildren().add(renduLabyrinthe.rendu(Jeu.getInstance().getLabyrinthe()));
     }
 
     public void afficherMinimap() {
@@ -261,7 +263,7 @@ public class JeuControleur {
             });
 
             Stage popupStage = new Stage();
-            popupStage.initOwner(contienLabyrinthe.getScene().getWindow());
+            popupStage.initOwner(conteneurLabyrinthe.getScene().getWindow());
             popupStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
             popupStage.setTitle("Victoire");
             popupStage.setResizable(false);
@@ -288,14 +290,14 @@ public class JeuControleur {
             if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LOCAL)) {
                 overlayMinimap.setVisible(true);
                 this.renduMinimap = new MiniMapRendu(Jeu.getInstance().getLabyrinthe(), minimap);
-                this.renduLabyrinthe = new LocaleRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
+                this.renduLabyrinthe = new LocaleRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
             } else {
                 overlayMinimap.setVisible(false);
-                this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
+                this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
             }
         } else {
             overlayMinimap.setVisible(false);
-            this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), contienLabyrinthe);
+            this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
         }
 
     }

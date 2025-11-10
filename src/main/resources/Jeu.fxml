@@ -41,7 +41,7 @@
         <HBox HBox.hgrow="ALWAYS"/>
         <!--Canvas avec le labyrinthe-->
         <HBox alignment="TOP_CENTER">
-            <VBox fx:id="contienLabyrinthe" alignment="CENTER" style="-fx-background-color: -color-1"/>
+            <VBox fx:id="conteneurLabyrinthe" alignment="CENTER" style="-fx-background-color: -color-1"/>
         </HBox>
         <!-- Spacer -->
         <HBox HBox.hgrow="ALWAYS"/>
