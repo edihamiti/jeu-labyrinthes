@@ -50,8 +50,15 @@ public class Joueur {
         this.progression = new HashMap<>();
 
         JSONObject progressionJson = joueur.getJSONObject("progression");
-        for (Defi defi : Defi.values())
-            progression.put(defi, (Boolean) progressionJson.get(defi.name()));
+        for (Defi defi : Defi.values()) {
+            try {
+                progression.put(defi, (Boolean) progressionJson.get(defi.name()));
+            } catch (JSONException e) {
+                System.err.println("Pas de sauvegarde pour " + defi.name() + " dans la sauvegarde de " + this.pseudo + ".\n[ERREUR] : " + e.getMessage());
+                progression.put(defi, false);
+                System.out.println("Ajout de " + defi.name() + " dans la sauvegarde du joueur");
+            }
+        }
     }
 
     public int getId() {
