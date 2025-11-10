@@ -34,7 +34,7 @@ public class GenerateurAleatoire extends GenerateurLabyrinthe {
 
         for (int i = 1; i < largeurMax - 1; i++) {
             for (int j = 1; j < hauteurMax - 1; j++) {
-                if (cellules[i][j] instanceof Chemin) {
+                if (cellules[i][j].estChemin()) {
                     if (i % 10 == 0) {
                         faireCheminAlternatif(cellules, i, j);
                     }
@@ -52,7 +52,7 @@ public class GenerateurAleatoire extends GenerateurLabyrinthe {
             int i = random.nextInt(largeurMax - 2) + 1;
             int j = random.nextInt(hauteurMax - 2) + 1;
 
-            if (cellules[i][j] instanceof Mur) {
+            if (cellules[i][j].estMur()) {
                 cellules[i][j] = new Chemin(i, j);
                 nbChemins++;
             }
@@ -146,7 +146,7 @@ public class GenerateurAleatoire extends GenerateurLabyrinthe {
                 int nx = x + d[0];
                 int ny = y + d[1];
                 if (nx > 0 && ny > 0 && nx < largeurMax - 1 && ny < hauteurMax - 1) {
-                    if (cellules[nx][ny] instanceof Mur) {
+                    if (cellules[nx][ny].estMur()) {
                         possibles.add(new int[]{nx, ny});
                     }
                 }
