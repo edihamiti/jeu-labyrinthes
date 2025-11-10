@@ -1,5 +1,9 @@
 package modele.Cellules;
 
+import javafx.scene.image.Image;
+
+import java.util.Objects;
+
 /**
  * Classe représentant une cellule de type entrée dans un labyrinthe.
  */
@@ -13,5 +17,10 @@ public class Entree extends Cellule {
     @Override
     public boolean estEntree() {
         return true;
+    }
+
+    @Override
+    public Image getTexture() {
+        return new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/chemin.png")));
     }
 }

@@ -98,17 +98,10 @@ public class LabyrintheRendu implements Rendu {
 
                 if (i == this.labyrinthe.getJoueurX() && j == this.labyrinthe.getJoueurY()) {
                     graphicsContext.drawImage(imgJoueur, x, y, tailleCellule, tailleCellule);
-                } else if (labyrinthe[i][j].estMur()) {
-                    if (i == lastBlockedX && j == lastBlockedY) {
-                        graphicsContext.drawImage(imgRedWall, x, y, tailleCellule, tailleCellule);
-                    } else {
-                        graphicsContext.drawImage(imgMur, x, y, tailleCellule, tailleCellule);
-                    }
-                } else if (labyrinthe[i][j].estChemin() || labyrinthe[i][j].estEntree()) {
-                    graphicsContext.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
-                } else if (labyrinthe[i][j].estSortie()) {
-                    graphicsContext.drawImage(imgSortie, x, y, tailleCellule, tailleCellule);
-                }
+                } else if (i == lastBlockedX && j == lastBlockedY)
+                    graphicsContext.drawImage(imgRedWall, x, y, tailleCellule, tailleCellule);
+                else
+                    graphicsContext.drawImage(labyrinthe[i][j].getTexture(), x, y, tailleCellule, tailleCellule);
             }
         }
 

@@ -1,5 +1,7 @@
 package modele.Cellules;
 
+import javafx.scene.image.Image;
+
 /**
  * Classe abstraite représentant une cellule dans un labyrinthe.
  */
@@ -7,6 +9,9 @@ public abstract class Cellule {
 
     private int x;
     private int y;
+    private Image textureMur;
+
+    public abstract Image getTexture();
 
     public boolean estChemin() {
         return false;

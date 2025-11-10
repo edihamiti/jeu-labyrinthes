@@ -67,12 +67,7 @@ public class MiniMapRendu implements Rendu {
                 double x = j * tailleCellule;
                 double y = i * tailleCellule;
 
-                if (labyrinthe[i][j].estMur())
-                    graphicsContext.drawImage(imgMur, x, y, tailleCellule, tailleCellule);
-                else if (labyrinthe[i][j].estChemin() || labyrinthe[i][j].estEntree())
-                    graphicsContext.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
-                else if (labyrinthe[i][j].estSortie())
-                    graphicsContext.drawImage(imgSortie, x, y, tailleCellule, tailleCellule);
+                graphicsContext.drawImage(labyrinthe[i][j].getTexture(), x, y, tailleCellule, tailleCellule);
             }
         }
 

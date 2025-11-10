@@ -96,19 +96,12 @@ public class LocaleRendu implements Rendu {
                 double y = (dx + porteeVueLocale) * tailleCellule;
 
                 if (cellX >= 0 && cellX < largeurMax && cellY >= 0 && cellY < hauteurMax) {
-                    if (dx == 0 && dy == 0) {
+                    if (dx == 0 && dy == 0)
                         gc.drawImage(imgJoueur, x, y, tailleCellule, tailleCellule);
-                    } else if (cellules[cellX][cellY].estMur()) {
-                        if (cellX == lastBlockedX && cellY == lastBlockedY) {
-                            gc.drawImage(imgRedWall, x, y, tailleCellule, tailleCellule);
-                        } else {
-                            gc.drawImage(imgMur, x, y, tailleCellule, tailleCellule);
-                        }
-                    } else if (cellules[cellX][cellY].estChemin() || cellules[cellX][cellY].estEntree()) {
-                        gc.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
-                    } else if (cellules[cellX][cellY].estSortie()) {
-                        gc.drawImage(imgSortie, x, y, tailleCellule, tailleCellule);
-                    }
+                    else if (cellX == lastBlockedX && cellY == lastBlockedY)
+                        gc.drawImage(imgRedWall, x, y, tailleCellule, tailleCellule);
+                    else
+                        gc.drawImage(cellules[cellX][cellY].getTexture(), x, y, tailleCellule, tailleCellule);
                 }
             }
         }
@@ -117,13 +110,5 @@ public class LocaleRendu implements Rendu {
         lastBlockedY = -1;
 
         return canvas;
-    }
-
-    public void setLabyrinthe(Labyrinthe labyrinthe) {
-        this.labyrinthe = labyrinthe;
-    }
-
-    public void setContienLabyrinthe(VBox contienLabyrinthe) {
-        this.contienLabyrinthe = contienLabyrinthe;
     }
 }
