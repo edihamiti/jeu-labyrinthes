@@ -1,7 +1,10 @@
 package modele;
 
+import modele.items.Item;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -15,6 +18,7 @@ public class Joueur {
     private String pseudo;
     private HashMap<Defi, Boolean> progression;
     private int score;
+    private ArrayList<Item> inventaire;
 
     /**
      * Constructeur pour un joueur.
@@ -36,6 +40,7 @@ public class Joueur {
             this.progression.put(defi, false);
         }
         this.score = 0;
+        this.inventaire = new ArrayList<>();
     }
 
     /**
