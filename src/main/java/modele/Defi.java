@@ -21,9 +21,9 @@ public enum Defi {
     MOYEN4(10, 13, 100, 25, 4, Vision.VUE_LIBRE, 6, TypeLabyrinthe.PARFAIT),
     DIFFICILE4(13, 16, 100, 55, 4, Vision.VUE_LIBRE, 9, TypeLabyrinthe.PARFAIT),
 
-    FACILE5(17, 20, 100, 15, 5, Vision.VUE_LIMITEE, 4, TypeLabyrinthe.PARFAIT),
-    MOYEN5(20, 23, 100, 25, 5, Vision.VUE_LIMITEE, 6, TypeLabyrinthe.PARFAIT),
-    DIFFICILE5(23, 26, 100, 55, 5, Vision.VUE_LIMITEE, 9, TypeLabyrinthe.PARFAIT),
+    FACILE5(17, 20, 100, 15, 5, Vision.VUE_LIMITED, 4, TypeLabyrinthe.PARFAIT),
+    MOYEN5(20, 23, 100, 25, 5, Vision.VUE_LIMITED, 6, TypeLabyrinthe.PARFAIT),
+    DIFFICILE5(23, 26, 100, 55, 5, Vision.VUE_LIMITED, 9, TypeLabyrinthe.PARFAIT),
 
     FACILE6(17, 20, 100, 15, 6, Vision.VUE_CARTE, 4, TypeLabyrinthe.PARFAIT),
     MOYEN6(20, 23, 100, 25, 6, Vision.VUE_CARTE, 6, TypeLabyrinthe.PARFAIT),

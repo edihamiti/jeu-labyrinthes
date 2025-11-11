@@ -9,10 +9,7 @@ import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import modele.*;
 import modele.generateurs.GenerateurLabyrinthe;
-import vue.LabyrintheRendu;
-import vue.LocaleRendu;
-import vue.MiniMapRendu;
-import vue.Rendu;
+import vue.*;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -34,6 +31,7 @@ public class JeuControleur {
     private MiniMapRendu renduMinimap;
     private TypeLabyrinthe typeLab;
     private GenerateurLabyrinthe generateur;
+    private LimitedRendu renduLimitee;
 
     /**
      * Initialise le contrôleur et configure les événements de déplacement du joueur.
@@ -118,8 +116,9 @@ public class JeuControleur {
         if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
             if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LOCAL)) {
                 afficherMinimap();
-            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITEE)) {
-                System.out.println("TODO : Afficher la vue limitée");
+                afficherLabyrinthe();
+            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITED)) {
+                afficherLimitee();
             }
         }
         afficherLabyrinthe();
@@ -136,6 +135,11 @@ public class JeuControleur {
     public void afficherLocale() {
         conteneurLabyrinthe.getChildren().clear();
         conteneurLabyrinthe.getChildren().add(renduLabyrinthe.rendu(Jeu.getInstance().getLabyrinthe()));
+    }
+
+    public void afficherLimitee(){
+        conteneurLabyrinthe.getChildren().clear();
+        conteneurLabyrinthe.getChildren().add(renduLimitee.rendu(Jeu.getInstance().getLabyrinthe()));
     }
 
     public void afficherMinimap() {
@@ -291,6 +295,10 @@ public class JeuControleur {
                 overlayMinimap.setVisible(true);
                 this.renduMinimap = new MiniMapRendu(Jeu.getInstance().getLabyrinthe(), minimap);
                 this.renduLabyrinthe = new LocaleRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
+            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITED)) {
+                overlayMinimap.setVisible(false);
+                this.renduLimitee = new LimitedRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
+                this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
             } else {
                 overlayMinimap.setVisible(false);
                 this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
@@ -298,6 +306,7 @@ public class JeuControleur {
         } else {
             overlayMinimap.setVisible(false);
             this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
+
         }
 
     }
