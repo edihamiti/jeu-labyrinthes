@@ -31,7 +31,7 @@ public class JeuControleur {
     private MiniMapRendu renduMinimap;
     private TypeLabyrinthe typeLab;
     private GenerateurLabyrinthe generateur;
-    private LimitedRendu renduLimitee;
+    private LimiteeRendu renduLimitee;
 
     /**
      * Initialise le contrôleur et configure les événements de déplacement du joueur.
@@ -117,7 +117,7 @@ public class JeuControleur {
             if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LOCAL)) {
                 afficherMinimap();
                 afficherLabyrinthe();
-            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITED)) {
+            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITEE)) {
                 afficherLimitee();
             }
         }
@@ -295,9 +295,9 @@ public class JeuControleur {
                 overlayMinimap.setVisible(true);
                 this.renduMinimap = new MiniMapRendu(Jeu.getInstance().getLabyrinthe(), minimap);
                 this.renduLabyrinthe = new LocaleRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
-            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITED)) {
+            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITEE)) {
                 overlayMinimap.setVisible(false);
-                this.renduLimitee = new LimitedRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
+                this.renduLimitee = new LimiteeRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
                 this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
             } else {
                 overlayMinimap.setVisible(false);
