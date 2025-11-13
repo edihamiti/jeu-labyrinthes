@@ -1,5 +1,6 @@
 package controleur;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -150,4 +151,11 @@ public class HomePageControleur {
 
     }
 
+    public void leaderboard() {
+        nomMode.setText("Leaderboard");
+        descriptionMode.setText("Visualisez les meilleurs scores !");
+        chargerProfilButton.setVisible(false);
+        chargerProfilButton.maxWidth(0);
+        modeProgression = false;
+    }
 }

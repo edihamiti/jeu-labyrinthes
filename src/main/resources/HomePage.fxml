@@ -43,6 +43,14 @@
                     </StackPane>
                 </graphic>
             </Button>
+            <Button onAction="#leaderboard" styleClass="tab, selected">
+                <graphic>
+                    <StackPane>
+                        <Rectangle width="4" styleClass="tabs-rectangle, selected"/>
+                        <Text text="leaderboard" fx:id="leaderboard" styleClass="tabs-text, selected"/>
+                    </StackPane>
+                </graphic>
+            </Button>
         </VBox>
 
         <!-- Spacer -->
