@@ -43,6 +43,22 @@
                     </StackPane>
                 </graphic>
             </Button>
+            <Button fx:id="boutiqueButton" onAction="#boutique" styleClass="tab">
+                <graphic>
+                    <StackPane>
+                        <Rectangle styleClass="tabs-rectangle"/>
+                        <Text text="Boutique" fx:id="boutiqueText" styleClass="tabs-text"/>
+                    </StackPane>
+                </graphic>
+            </Button>
+            <Button fx:id="inventaireButton" onAction="#inventaire" styleClass="tab">
+                <graphic>
+                    <StackPane>
+                        <Rectangle styleClass="tabs-rectangle"/>
+                        <Text text="Inventaire" fx:id="inventaireText" styleClass="tabs-text"/>
+                    </StackPane>
+                </graphic>
+            </Button>
         </VBox>
 
         <!-- Spacer -->

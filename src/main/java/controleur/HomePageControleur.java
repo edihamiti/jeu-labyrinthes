@@ -1,5 +1,6 @@
 package controleur;
 
+import boutique.GestionnaireBoutique;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -35,6 +36,10 @@ public class HomePageControleur {
     public VBox contentPage;
     public Text modeLibreText;
     public Text modeProgressionText;
+    public Button boutiqueButton;
+    public Button inventaireButton;
+    public Text boutiqueText;
+    public Text inventaireText;
     private boolean modeProgression;
     private boolean isChargerProfilActive;
     private Sauvegarde saves;
@@ -45,6 +50,7 @@ public class HomePageControleur {
 
 
     // Méthode d'initialisation appelée automatiquement après le chargement du FXML
+
     /**
      * Initialise les composants de la page d'accueil.
      */
@@ -150,4 +156,39 @@ public class HomePageControleur {
 
     }
 
+    /**
+     * Ouvre la boutique.
+     */
+    public void boutique() {
+        try {
+            String id = "guest";
+            Joueur j = Jeu.getInstance().getJoueur();
+            if (j != null) {
+                id = String.valueOf(j.getId());
+            }
+            Stage stage = (Stage) boutiqueButton.getScene().getWindow();
+            GestionnaireBoutique.getInstance().ouvrirBoutique(stage, id);
+        } catch (Exception e) {
+            System.err.println("Erreur lors de l'ouverture de la boutique : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Ouvre l'inventaire des cosmétiques.
+     */
+    public void inventaire() {
+        try {
+            String id = "guest";
+            Joueur j = Jeu.getInstance().getJoueur();
+            if (j != null) {
+                id = String.valueOf(j.getId());
+            }
+            Stage stage = (Stage) inventaireButton.getScene().getWindow();
+            GestionnaireBoutique.getInstance().ouvrirInventaire(stage, id);
+        } catch (Exception e) {
+            System.err.println("Erreur lors de l'ouverture de l'inventaire : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
