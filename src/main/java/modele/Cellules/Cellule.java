@@ -11,7 +11,9 @@ public abstract class Cellule {
     private int y;
     private Image textureMur;
 
-    public abstract boolean estPiege();
+    public boolean estPiege() {
+        return false;
+    }
 
     public abstract Image getTexture();
 
