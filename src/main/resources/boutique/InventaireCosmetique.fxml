@@ -38,15 +38,26 @@
 
             <Separator/>
 
-            <!-- Content -->
-            <VBox fx:id="possedeContaineur" spacing="15" alignment="TOP_CENTER" VBox.vgrow="ALWAYS">
-                <!-- Massage si pas de cosmétique -->
-                <Label fx:id="labelVide"
-                       text="Vous ne possédez aucun cosmétique pour le moment.&#10;Rendez-vous dans la boutique !"
-                       styleClass="empty-message" wrapText="true"
-                       textAlignment="CENTER"/>
-                <!-- Tous les cosmétiques ajoutés dynamiquement -->
-            </VBox>
+            <HBox fx:id="categoriesContainer" spacing="15" alignment="CENTER">
+                <padding>
+                    <Insets bottom="20"/>
+                </padding>
+            </HBox>
+
+            <ScrollPane fx:id="scrollPaneInventaire" fitToHeight="true" styleClass="scroll-pane" hbarPolicy="ALWAYS"
+                        vbarPolicy="NEVER"
+                        VBox.vgrow="ALWAYS">
+                <HBox fx:id="possedeContaineur" spacing="20" alignment="CENTER_LEFT" styleClass="cosmetics-container">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+                </HBox>
+            </ScrollPane>
+
+            <Label fx:id="labelVide"
+                   text="Vous ne possédez aucun cosmétique pour le moment.&#10;Rendez-vous dans la boutique !"
+                   styleClass="empty-message" wrapText="true"
+                   textAlignment="CENTER"/>
         </VBox>
     </ScrollPane>
 </VBox>

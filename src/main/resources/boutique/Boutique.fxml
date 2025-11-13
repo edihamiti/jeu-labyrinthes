@@ -42,9 +42,15 @@
 
             <Separator/>
 
-            <!-- tous les cosmétiques ajoutés dynamiquemet -->
-            <VBox fx:id="conteneurCosmetiques" spacing="15" alignment="TOP_CENTER" VBox.vgrow="ALWAYS">
-            </VBox>
+            <ScrollPane fitToHeight="true" styleClass="scroll-pane" hbarPolicy="ALWAYS" vbarPolicy="NEVER"
+                        VBox.vgrow="ALWAYS">
+                <HBox fx:id="conteneurCosmetiques" spacing="20" alignment="CENTER_LEFT"
+                      styleClass="cosmetics-container">
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+                </HBox>
+            </ScrollPane>
         </VBox>
     </ScrollPane>
 </VBox>
