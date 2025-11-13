@@ -27,7 +27,7 @@ public class JeuControleur {
     @FXML
     private VBox conteneurLabyrinthe;
     private Rendu renduLabyrinthe;
-    private MiniMapRendu renduMinimap;
+    private Rendu renduMinimap;
     private GenerateurLabyrinthe generateur;
 
     private HandlerVictoire handlerVictoire;
@@ -245,10 +245,9 @@ public class JeuControleur {
         // Configurer la minimap si nécessaire
         if (visionStrategy.requiresMinimap()) {
             overlayMinimap.setVisible(true);
-            this.renduMinimap = new MiniMapRendu(Jeu.getInstance().getLabyrinthe(), minimap);
+            this.renduMinimap = visionStrategy.createMinimapRendu(Jeu.getInstance().getLabyrinthe(), minimap);
         } else {
             overlayMinimap.setVisible(false);
-
         }
 
     }
