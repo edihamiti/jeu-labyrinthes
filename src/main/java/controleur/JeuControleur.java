@@ -185,22 +185,17 @@ public class JeuControleur {
         if (jeu.getLabyrinthe().peutDeplacer(nouveauX, nouveauY)) {
             jeu.getLabyrinthe().setJoueurX(nouveauX);
             jeu.getLabyrinthe().setJoueurY(nouveauY);
-            playSound("move.mp3");
-            if (random.nextInt(100) > 95) playSound("bois.mp3");
+            SoundManager.playSound("move.mp3");
+            if (random.nextInt(100) > 95) SoundManager.playSound("bois.mp3");
 
             if (jeu.getLabyrinthe().estSurSortie(nouveauX, nouveauY)) {
                 victoire();
             }
         } else {
-            playSound("block.mp3");
+            SoundManager.playSound("block.mp3");
             renduLabyrinthe.setBlockedWall(nouveauX, nouveauY);
             renduLabyrinthe.setBlockedWall(nouveauX, nouveauY);
         }
-    }
-
-    private void playSound(String sound) {
-        AudioClip audio = new AudioClip(getClass().getResource("/sounds/" + sound).toExternalForm());
-        audio.play();
     }
 
     /**
@@ -210,7 +205,7 @@ public class JeuControleur {
      */
     private void victoire() throws IOException {
         Jeu jeu = Jeu.getInstance();
-        playSound("win.mp3");
+        SoundManager.playSound("win.mp3");
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/PopupVictoire.fxml"));
