@@ -16,17 +16,21 @@ public class HandlerVictoire {
         String result = "";
 
         if (jeu.getJoueur() != null && jeu.getDefiEnCours() != null) {
-            result += jeu.terminerPartie(true);
+            result = jeu.terminerPartie(true);
         }
 
-        afficherPopupVictoire(jeu, ownerStage, onRejouer, onRetourMenu);
+        afficherPopupVictoire(jeu, ownerStage, onRejouer, onRetourMenu, result);
         return result;
     }
 
-    private void afficherPopupVictoire(Jeu jeu, Stage ownerStage, Runnable onRejouer, Runnable onRetourMenu) throws IOException {
+    private void afficherPopupVictoire(Jeu jeu, Stage ownerStage, Runnable onRejouer, Runnable onRetourMenu, String message) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/PopupVictoire.fxml"));
         Parent popupView = loader.load();
         PopupVictoireControleur controleur = loader.getController();
+
+        if (message != null && !message.isEmpty()) {
+            controleur.setMessage(message);
+        }
 
         if (jeu.getJoueur() != null) {
             controleur.setScore(String.valueOf(jeu.getJoueur().getScore()));

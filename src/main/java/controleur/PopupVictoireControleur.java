@@ -18,6 +18,9 @@ public class PopupVictoireControleur {
     @FXML
     private Label scoreLabel;
 
+    @FXML
+    private Label messageLabel;
+
     private Runnable onRejouer;
     private Runnable onRetourMenu;
 
@@ -29,6 +32,14 @@ public class PopupVictoireControleur {
         scoreLabel.setText("Score : " + score);
         scoreLabel.setVisible(true);
         scoreLabel.setManaged(true);
+    }
+
+    public void setMessage(String message) {
+        if (messageLabel != null && message != null && !message.isEmpty()) {
+            messageLabel.setText(message);
+            messageLabel.setVisible(true);
+            messageLabel.setManaged(true);
+        }
     }
 
     public void setRejouer(Runnable action) {
