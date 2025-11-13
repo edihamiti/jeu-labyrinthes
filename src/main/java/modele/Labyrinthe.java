@@ -65,7 +65,7 @@ public class Labyrinthe {
         this(defi.getLargeur(), defi.getHauteur(), defi.getPourcentageMurs());
     }
 
-    /* Calcule le plus court chemin entre l'entrée et la sortie du labyrinthe (Dijkstra).
+    /** Calcule le plus court chemin entre l'entrée et la sortie du labyrinthe (Dijkstra).
      *
      * @return la longueur du plus court chemin
      */
@@ -201,6 +201,14 @@ public class Labyrinthe {
             return false;
         }
         return !cellules[x][y].estMur();
+    }
+
+    public boolean deplacer(int x, int y) {
+        if (!peutDeplacer(x, y)) return false;
+
+        joueurX.set(x);
+        joueurY.set(y);
+        return true;
     }
 
     public boolean estSurSortie(int x, int y) {

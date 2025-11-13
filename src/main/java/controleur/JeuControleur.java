@@ -33,13 +33,14 @@ public class JeuControleur {
     private GenerateurLabyrinthe generateur;
     private LimiteeRendu renduLimitee;
 
+    private HandlerVictoire handlerVictoire;
+
     /**
      * Initialise le contrôleur et configure les événements de déplacement du joueur.
      */
     @FXML
     public void initialize() {
-        // Ne plus initialiser le labyrinthe ici
-        // Attendre que setParametresLab() soit appelé
+        this.handlerVictoire = new HandlerVictoire();
 
         conteneurLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
@@ -177,14 +178,12 @@ public class JeuControleur {
     private void deplacer(int nouveauX, int nouveauY) throws IOException {
         Jeu jeu = Jeu.getInstance();
 
-        if (jeu.getDuration() == null) {
+        if (!jeu.isRunning()) {
             jeu.startTimer();
         }
 
         Random random = new Random();
-        if (jeu.getLabyrinthe().peutDeplacer(nouveauX, nouveauY)) {
-            jeu.getLabyrinthe().setJoueurX(nouveauX);
-            jeu.getLabyrinthe().setJoueurY(nouveauY);
+        if (jeu.getLabyrinthe().deplacer(nouveauX, nouveauY)) {
             SoundManager.playSound("move.mp3");
             if (random.nextInt(100) > 95) SoundManager.playSound("bois.mp3");
 
@@ -205,53 +204,33 @@ public class JeuControleur {
      */
     private void victoire() throws IOException {
         Jeu jeu = Jeu.getInstance();
-        SoundManager.playSound("win.mp3");
+        Stage ownerStage = (Stage) conteneurLabyrinthe.getScene().getWindow();
 
+        handlerVictoire.handleVictoire(
+                jeu,
+                ownerStage,
+                this::handleRejouer,
+                this::handleRetourMenu
+        );
+    }
+
+    private void handleRejouer() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/PopupVictoire.fxml"));
-            Parent popupView = loader.load();
-            PopupVictoireControleur controleur = loader.getController();
-
-            if (jeu.getJoueur() != null && jeu.getDefiEnCours() != null) {
-                jeu.terminerPartie(jeu.estVictoire());
-
-                jeu.getSauvegarde().sauvegardeJoueurs();
-                controleur.setScore(String.valueOf(jeu.getJoueur().getScore()));
+            if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
+                retourModeProgression();
+            } else {
+                rejouer();
             }
-
-            controleur.setRejouer(() -> {
-                try {
-                    if (jeu.getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
-                        retourModeProgression();
-                    } else {
-                        rejouer();
-                    }
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            });
-
-            controleur.setRetourMenu(() -> {
-                try {
-                    retourMenu();
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            });
-
-            Stage popupStage = new Stage();
-            popupStage.initOwner(conteneurLabyrinthe.getScene().getWindow());
-            popupStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
-            popupStage.setTitle("Victoire");
-            popupStage.setResizable(false);
-
-            Scene scene = new Scene(popupView);
-            popupStage.setScene(scene);
-            popupStage.showAndWait();
-
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
+        }
+    }
+
+    private void handleRetourMenu() {
+        try {
             retourMenu();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
     }
 

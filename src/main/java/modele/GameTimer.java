@@ -18,4 +18,8 @@ public class GameTimer {
     public Duration getDuration() {
         return Duration.between(start, end);
     }
+
+    public boolean isRunning() {
+        return this.start != null && this.end == null;
+    }
 }

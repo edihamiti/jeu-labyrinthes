@@ -170,6 +170,7 @@ public class Jeu {
      */
     public boolean estVictoire() {
         if (this.labyrinthe == null) {
+            System.out.println("Le labyrinthe est null");
             return false;
         }
 
@@ -178,6 +179,8 @@ public class Jeu {
             int joueurY = this.labyrinthe.getJoueurY();
             return this.labyrinthe.estSurSortie(joueurX, joueurY);
         }
+
+        System.out.println("Le jeu n'est pas en cours");
 
         return false;
     }
@@ -204,13 +207,13 @@ public class Jeu {
         resultat.append("Temps écoulé : ").append(gameTimer.getDuration().toMinutes()).append(" min ").append(gameTimer.getDuration().toSeconds()).append(" sec\n");
 
         if (victoire && this.joueur != null && this.defiEnCours != null) {
-            int scoreObtenu = calculateurScore.calculerScore(defiEnCours, gameTimer.getDuration());
+            int scoreObtenu = CalculateurScore.calculerScore(defiEnCours, gameTimer.getDuration());
             this.joueur.ajouterScore(scoreObtenu, defiEnCours);
             this.sauvegarde.sauvegardeJoueurs();
-            resultat.append("Score : ").append(this.joueur.getScore());
+            resultat.append("Points gagnés : ").append(scoreObtenu);
         }
 
-        System.out.println(resultat.toString());
+        System.out.println(resultat);
         return resultat.toString();
     }
 
@@ -224,6 +227,10 @@ public class Jeu {
 
     public Duration getDuration() {
         return this.gameTimer.getDuration();
+    }
+
+    public boolean isRunning() {
+        return this.gameTimer.isRunning();
     }
 
     /**
