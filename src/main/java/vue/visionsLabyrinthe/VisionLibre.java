@@ -2,12 +2,13 @@ package vue.visionsLabyrinthe;
 
 import javafx.scene.layout.VBox;
 import modele.Labyrinthe;
+import vue.LabyrintheRendu;
 import vue.Rendu;
 
 public class VisionLibre implements VisionLabyrinthe {
     @Override
     public Rendu createRendu(Labyrinthe lab, VBox container) {
-        return null;
+        return new LabyrintheRendu(lab, container);
     }
 
     @Override

@@ -5,15 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import modele.*;
 import modele.generateurs.GenerateurLabyrinthe;
 import vue.*;
+import vue.visionsLabyrinthe.VisionFactory;
+import vue.visionsLabyrinthe.VisionLabyrinthe;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalTime;
 import java.util.Random;
 
 /**
@@ -29,9 +28,7 @@ public class JeuControleur {
     private VBox conteneurLabyrinthe;
     private Rendu renduLabyrinthe;
     private MiniMapRendu renduMinimap;
-    private TypeLabyrinthe typeLab;
     private GenerateurLabyrinthe generateur;
-    private LimiteeRendu renduLimitee;
 
     private HandlerVictoire handlerVictoire;
 
@@ -114,15 +111,12 @@ public class JeuControleur {
     }
 
     public void afficherJeu() {
-        if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
-            if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LOCAL)) {
-                afficherMinimap();
-                afficherLabyrinthe();
-            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITEE)) {
-                afficherLimitee();
-            }
-        }
         afficherLabyrinthe();
+
+        // Afficher la minimap si elle est visible
+        if (overlayMinimap.isVisible() && renduMinimap != null) {
+            afficherMinimap();
+        }
     }
 
     /**
@@ -133,16 +127,9 @@ public class JeuControleur {
         conteneurLabyrinthe.getChildren().add(renduLabyrinthe.rendu(Jeu.getInstance().getLabyrinthe()));
     }
 
-    public void afficherLocale() {
-        conteneurLabyrinthe.getChildren().clear();
-        conteneurLabyrinthe.getChildren().add(renduLabyrinthe.rendu(Jeu.getInstance().getLabyrinthe()));
-    }
-
-    public void afficherLimitee(){
-        conteneurLabyrinthe.getChildren().clear();
-        conteneurLabyrinthe.getChildren().add(renduLimitee.rendu(Jeu.getInstance().getLabyrinthe()));
-    }
-
+    /**
+     * Affiche la minimap si nécessaire.
+     */
     public void afficherMinimap() {
         minimap.getChildren().clear();
         minimap.getChildren().add(renduMinimap.rendu(Jeu.getInstance().getLabyrinthe()));
@@ -242,22 +229,25 @@ public class JeuControleur {
     }
 
     public void setRenduLabyrinthe() {
+        // Déterminer la vision à utiliser
+        Vision vision = Vision.VUE_LIBRE; // Vision par défaut
+
         if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
-            if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LOCAL)) {
-                overlayMinimap.setVisible(true);
-                this.renduMinimap = new MiniMapRendu(Jeu.getInstance().getLabyrinthe(), minimap);
-                this.renduLabyrinthe = new LocaleRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
-            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITEE)) {
-                overlayMinimap.setVisible(false);
-                this.renduLimitee = new LimiteeRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
-                this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
-            } else {
-                overlayMinimap.setVisible(false);
-                this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
-            }
+            vision = Jeu.getInstance().getDefiEnCours().getVision();
+        }
+
+        // Obtenir la stratégie de vision appropriée
+        VisionLabyrinthe visionStrategy = VisionFactory.getStrategy(vision);
+
+        // Configurer le rendu principal
+        this.renduLabyrinthe = visionStrategy.createRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
+
+        // Configurer la minimap si nécessaire
+        if (visionStrategy.requiresMinimap()) {
+            overlayMinimap.setVisible(true);
+            this.renduMinimap = new MiniMapRendu(Jeu.getInstance().getLabyrinthe(), minimap);
         } else {
             overlayMinimap.setVisible(false);
-            this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
 
         }
 
