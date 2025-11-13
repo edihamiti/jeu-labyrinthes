@@ -21,8 +21,7 @@ public class Jeu {
     private TypeLabyrinthe typeLabyrinthe;
     private GenerateurLabyrinthe generateur;
     private Defi defiEnCours;
-    private LocalTime start;
-    private LocalTime end;
+    private GameTimer gameTimer;
 
     /**
      * @param modeJeu     un mode de jeu
@@ -145,9 +144,7 @@ public class Jeu {
             return false;
         }
 
-        if (start == null) {
-            start = LocalTime.now();
-        }
+        gameTimer.startTimer();
 
         int nouveauX = this.labyrinthe.getJoueurX() + dx;
         int nouveauY = this.labyrinthe.getJoueurY() + dy;
@@ -189,10 +186,9 @@ public class Jeu {
      * Termine la partie en cours.
      *
      * @param victoire true si le joueur a gagné, false sinon
-     * @param start temps de début de la partie
      * @return message de fin de partie
      */
-    public String terminerPartie(boolean victoire, LocalTime start) {
+    public String terminerPartie(boolean victoire) {
         this.labyrinthe.setJeuEnCours(false);
 
         StringBuilder resultat = new StringBuilder();
@@ -203,12 +199,8 @@ public class Jeu {
             resultat.append("Partie terminée.\n");
         }
 
-        if (start != null) {
-            LocalTime finTemps = (this.end != null) ? this.end : LocalTime.now();
-            long minutes = Duration.between(start, finTemps).toMinutes();
-            long secondes = Duration.between(start, finTemps).toSeconds() % 60;
-            resultat.append("Temps écoulé : ").append(minutes).append(" min ").append(secondes).append(" sec\n");
-        }
+        this.endTimer();
+        resultat.append("Temps écoulé : ").append(gameTimer.getDuration().toMinutes()).append(" min ").append(gameTimer.getDuration().toSeconds()).append(" sec\n");
 
         if (victoire && this.joueur != null && this.defiEnCours != null) {
             this.joueur.ajouterScore(this.defiEnCours);
@@ -220,27 +212,14 @@ public class Jeu {
         return resultat.toString();
     }
 
-    public LocalTime getStart() {
-        return start;
-    }
-
-    public void setStart(LocalTime start) {
-        this.start = start;
-    }
-
-    public LocalTime getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalTime end) {
-        this.end = end;
+    private void endTimer() {
+        this.gameTimer.endTimer();
     }
 
     /**
      * Remet à zéro le timer pour une nouvelle partie
      */
     public void resetTimer() {
-        this.start = null;
-        this.end = null;
+        this.gameTimer = new GameTimer();
     }
 }

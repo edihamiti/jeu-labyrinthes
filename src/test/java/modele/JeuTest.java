@@ -69,7 +69,7 @@ class JeuTest {
     @Test
     void testTerminerPartieVictoire() {
         labyrinthe.setJeuEnCours(true);
-        String message = jeu.terminerPartie(true, LocalTime.now());
+        String message = jeu.terminerPartie(true);
         assertFalse(labyrinthe.isJeuEnCours());
         assertTrue(message.contains("Vous avez trouvé la sortie"));
     }
@@ -77,7 +77,7 @@ class JeuTest {
     @Test
     void testTerminerPartieDefaite() {
         labyrinthe.setJeuEnCours(true);
-        String message = jeu.terminerPartie(false, LocalTime.now());
+        String message = jeu.terminerPartie(false);
         assertFalse(labyrinthe.isJeuEnCours());
         assertTrue(message.contains("Partie terminée"));
     }
