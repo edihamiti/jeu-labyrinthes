@@ -35,7 +35,7 @@ public enum Defi {
     private final int points;
     private final Vision vision;
     private final int distanceMin;
-    private TypeLabyrinthe typeLabyrinthe;
+    private final TypeLabyrinthe typeLabyrinthe;
     /*
     L'étape associée au défi (Pour rappel : chaque étape a 3 défis).
      */

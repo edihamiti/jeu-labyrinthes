@@ -282,5 +282,4 @@ public class JeuControleur {
         // Afficher le jeu
         afficherJeu();
     }
-
 }
