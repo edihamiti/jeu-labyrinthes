@@ -175,19 +175,20 @@ public class JeuControleur {
      * @throws IOException si une erreur survient lors du déplacement
      */
     private void deplacer(int nouveauX, int nouveauY) throws IOException {
-        if (Jeu.getInstance().getStart() == null) {
-            Jeu.getInstance().setStart(java.time.LocalTime.now());
+        Jeu jeu = Jeu.getInstance();
+
+        if (jeu.getDuration() == null) {
+            jeu.startTimer();
         }
 
         Random random = new Random();
-        if (Jeu.getInstance().getLabyrinthe().peutDeplacer(nouveauX, nouveauY)) {
-            Jeu.getInstance().getLabyrinthe().setJoueurX(nouveauX);
-            Jeu.getInstance().getLabyrinthe().setJoueurY(nouveauY);
+        if (jeu.getLabyrinthe().peutDeplacer(nouveauX, nouveauY)) {
+            jeu.getLabyrinthe().setJoueurX(nouveauX);
+            jeu.getLabyrinthe().setJoueurY(nouveauY);
             playSound("move.mp3");
             if (random.nextInt(100) > 95) playSound("bois.mp3");
 
-            if (Jeu.getInstance().getLabyrinthe().estSurSortie(nouveauX, nouveauY)) {
-                Jeu.getInstance().setEnd(java.time.LocalTime.now());
+            if (jeu.getLabyrinthe().estSurSortie(nouveauX, nouveauY)) {
                 victoire();
             }
         } else {
@@ -202,27 +203,13 @@ public class JeuControleur {
         audio.play();
     }
 
-    private int calculerScore(long minutes, long secondes) {
-        if (Jeu.getInstance().getJoueur() != null && Jeu.getInstance().getDefiEnCours() != null) {
-            int pointsBase = Jeu.getInstance().getDefiEnCours().getPoints();
-            long tempsTotal = minutes * 60 + secondes;
-
-            if (tempsTotal > 10) {
-                long tempsSupplementaire = tempsTotal - 10;
-                int penalite = (int) (tempsSupplementaire / 10);
-                return Math.max(0, pointsBase - penalite);
-            }
-            return pointsBase;
-        }
-        return 0;
-    }
-
     /**
      * Gère la victoire du joueur lorsqu'il atteint la sortie du labyrinthe.
      *
      * @throws IOException si une erreur survient lors du retour au menu principal
      */
     private void victoire() throws IOException {
+        Jeu jeu = Jeu.getInstance();
         playSound("win.mp3");
 
         try {
@@ -230,25 +217,16 @@ public class JeuControleur {
             Parent popupView = loader.load();
             PopupVictoireControleur controleur = loader.getController();
 
-            LocalTime debut = Jeu.getInstance().getStart();
-            LocalTime fin = Jeu.getInstance().getEnd() != null ? Jeu.getInstance().getEnd() : LocalTime.now();
-            Duration duree = Duration.between(debut, fin);
-            long minutes = duree.toMinutes();
-            long secondes = duree.toSeconds() % 60;
+            if (jeu.getJoueur() != null && jeu.getDefiEnCours() != null) {
+                jeu.terminerPartie(jeu.estVictoire());
 
-            controleur.setTemps(minutes + " min " + secondes + " sec");
-
-            if (Jeu.getInstance().getJoueur() != null && Jeu.getInstance().getDefiEnCours() != null) {
-                int scoreObtenu = calculerScore(minutes, secondes);
-
-                Jeu.getInstance().getJoueur().ajouterScore(scoreObtenu, Jeu.getInstance().getDefiEnCours());
-                Jeu.getInstance().getSauvegarde().sauvegardeJoueurs();
-                controleur.setScore(String.valueOf(Jeu.getInstance().getJoueur().getScore()));
+                jeu.getSauvegarde().sauvegardeJoueurs();
+                controleur.setScore(String.valueOf(jeu.getJoueur().getScore()));
             }
 
             controleur.setRejouer(() -> {
                 try {
-                    if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
+                    if (jeu.getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
                         retourModeProgression();
                     } else {
                         rejouer();

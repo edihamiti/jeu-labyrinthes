@@ -135,10 +135,7 @@ public class Joueur {
      * @param defi le défi complété
      */
     public void ajouterScore(Defi defi) {
-        if (defi != null) {
-            this.score += defi.getPoints();
-            this.progression.put(defi, true);
-        }
+        ajouterScore(defi.getPoints(), defi);
     }
 
     /**

@@ -191,6 +191,7 @@ public class Jeu {
     public String terminerPartie(boolean victoire) {
         this.labyrinthe.setJeuEnCours(false);
 
+
         StringBuilder resultat = new StringBuilder();
 
         if (victoire) {
@@ -203,7 +204,8 @@ public class Jeu {
         resultat.append("Temps écoulé : ").append(gameTimer.getDuration().toMinutes()).append(" min ").append(gameTimer.getDuration().toSeconds()).append(" sec\n");
 
         if (victoire && this.joueur != null && this.defiEnCours != null) {
-            this.joueur.ajouterScore(this.defiEnCours);
+            int scoreObtenu = calculateurScore.calculerScore(defiEnCours, gameTimer.getDuration());
+            this.joueur.ajouterScore(scoreObtenu, defiEnCours);
             this.sauvegarde.sauvegardeJoueurs();
             resultat.append("Score : ").append(this.joueur.getScore());
         }
@@ -212,8 +214,16 @@ public class Jeu {
         return resultat.toString();
     }
 
-    private void endTimer() {
+    public void endTimer() {
         this.gameTimer.endTimer();
+    }
+
+    public void startTimer() {
+        this.gameTimer.startTimer();
+    }
+
+    public Duration getDuration() {
+        return this.gameTimer.getDuration();
     }
 
     /**
