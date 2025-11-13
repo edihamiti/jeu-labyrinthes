@@ -13,11 +13,7 @@ import java.io.IOException;
 public class HandlerVictoire {
     public String handleVictoire(Jeu jeu, Stage ownerStage, Runnable onRejouer, Runnable onRetourMenu) throws IOException {
         SoundManager.playSound("win.mp3");
-        String result = "";
-
-        if (jeu.getJoueur() != null && jeu.getDefiEnCours() != null) {
-            result = jeu.terminerPartie(true);
-        }
+        String result = jeu.terminerPartie(true);
 
         afficherPopupVictoire(jeu, ownerStage, onRejouer, onRetourMenu, result);
         return result;

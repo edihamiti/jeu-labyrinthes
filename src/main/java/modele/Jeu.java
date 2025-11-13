@@ -204,7 +204,10 @@ public class Jeu {
         }
 
         this.endTimer();
-        resultat.append("Temps écoulé : ").append(gameTimer.getDuration().toMinutes()).append(" min ").append(gameTimer.getDuration().toSeconds()).append(" sec\n");
+        Duration duration = gameTimer.getDuration();
+        long minutes = duration.toMinutes();
+        long seconds = duration.toSecondsPart();
+        resultat.append("Temps écoulé : ").append(minutes).append(" min ").append(seconds).append(" sec\n");
 
         if (victoire && this.joueur != null && this.defiEnCours != null) {
             int scoreObtenu = CalculateurScore.calculerScore(defiEnCours, gameTimer.getDuration());
