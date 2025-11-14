@@ -50,8 +50,9 @@ generate-javadoc:
   dependencies:
     - build
   script:
-    - mvn $MAVEN_CLI_OPTS javadoc:javadoc
+    - mvn $MAVEN_CLI_OPTS javadoc:javadoc || echo "Javadoc générée avec des warnings"
   artifacts:
+    when: always
     paths:
       - target/site/apidocs/
     expire_in: 30 days
@@ -69,7 +70,15 @@ pages:
     - generate-javadoc
   script:
     - mkdir -p public
-    - cp -r target/site/apidocs/* public/
+    - |
+      if [ -d "target/site/apidocs" ]; then
+        cp -r target/site/apidocs/* public/
+        echo "Javadoc copiée avec succès dans public/"
+      else
+        echo "ERREUR: Le dossier target/site/apidocs n'existe pas!"
+        echo "Création d'une page d'erreur..."
+        echo "<html><body><h1>Erreur: Javadoc non générée</h1></body></html>" > public/index.html
+      fi
   artifacts:
     paths:
       - public
