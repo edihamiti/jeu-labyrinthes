@@ -15,8 +15,6 @@ public abstract class Cellule {
         return false;
     }
 
-    public abstract Image getTexture();
-
     public boolean estChemin() {
         return false;
     }

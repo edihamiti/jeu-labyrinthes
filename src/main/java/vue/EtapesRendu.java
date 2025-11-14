@@ -30,7 +30,7 @@ public class EtapesRendu {
     /**
      * Rend les étapes avec leurs difficultés sous forme de VBox.
      *
-     * @param progress Une Map<Defi, Boolean> représentant la progression des défis.
+     * @param progress Une {@code Map<Defi, Boolean>} représentant la progression des défis.
      * @return VBox contenant les étapes rendues.
      */
     public static VBox render(Map<Defi, Boolean> progress, Consumer<Defi> action) {
