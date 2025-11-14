@@ -1,0 +1,80 @@
+stages:
+  - build
+  - test
+  - documentation
+  - deploy
+
+# Variables globales
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+
+# Cache pour accélérer les builds
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+# Job de compilation
+build:
+  stage: build
+  image: maven:3.9-eclipse-temurin-17
+  script:
+    - mvn $MAVEN_CLI_OPTS clean compile
+  artifacts:
+    paths:
+      - target/
+    expire_in: 1 hour
+
+# Job de tests
+test:
+  stage: test
+  image: maven:3.9-eclipse-temurin-17
+  dependencies:
+    - build
+  script:
+    - mvn $MAVEN_CLI_OPTS test
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
+    paths:
+      - target/surefire-reports/
+    expire_in: 1 week
+
+# Job de génération de Javadoc
+generate-javadoc:
+  stage: documentation
+  image: maven:3.9-eclipse-temurin-17
+  dependencies:
+    - build
+  script:
+    - mvn $MAVEN_CLI_OPTS javadoc:javadoc
+  artifacts:
+    paths:
+      - target/site/apidocs/
+    expire_in: 30 days
+    expose_as: 'Javadoc Documentation'
+  only:
+    - main
+    - master
+    - develop
+
+# Job pour déployer la Javadoc sur GitLab Pages
+pages:
+  stage: deploy
+  image: alpine:latest
+  dependencies:
+    - generate-javadoc
+  script:
+    - mkdir -p public
+    - cp -r target/site/apidocs/* public/
+  artifacts:
+    paths:
+      - public
+    expire_in: 30 days
+  only:
+    - main
+    - master
+
