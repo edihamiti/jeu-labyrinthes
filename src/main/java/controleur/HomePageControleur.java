@@ -123,10 +123,11 @@ public class HomePageControleur extends Controleur {
             }
             Parent jeuView = loader.load();
 
-            // Injecter l'instance de Jeu dans le contrôleur
+            // Injecter les dépendances dans le contrôleur
             Object controller = loader.getController();
             if (controller instanceof Controleur) {
                 ((Controleur) controller).setJeu(this.jeu);
+                ((Controleur) controller).setAppControleur(this.appControleur);
             }
 
             Stage stage = (Stage) nouvellePartieButton.getScene().getWindow();
@@ -147,7 +148,7 @@ public class HomePageControleur extends Controleur {
     public void chargerProfil() {
         isChargerProfilActive = !isChargerProfilActive;
 
-        Node label = chargerProfilButton.getChildren().get(0);
+        Node label = chargerProfilButton.getChildren().getFirst();
         chargerProfilButton.getChildren().clear();
         chargerProfilButton.getChildren().add(
                 label

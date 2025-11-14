@@ -14,54 +14,26 @@ import java.io.IOException;
  */
 public class AppControleur extends Controleur {
 
-    private static AppControleur instance;
     private final Scene menu;
     private Stage primaryStage;
 
     /**
-     * Constructeur privé pour le singleton.
+     * Constructeur du contrôleur principal.
      *
-     * @param jeu l'instance unique de Jeu à utiliser dans toute l'application
+     * @param jeu l'instance de Jeu à utiliser dans toute l'application
      */
-    private AppControleur(Jeu jeu) throws IOException {
-        // Utiliser l'instance de Jeu passée en paramètre
+    public AppControleur(Jeu jeu) throws IOException {
         this.jeu = jeu;
 
         FXMLLoader fxmlLoader = new FXMLLoader(AppControleur.class.getResource("/HomePage.fxml"));
         this.menu = new Scene(fxmlLoader.load(), 1400, 900);
 
-        // Injecter Jeu dans le contrôleur de la page d'accueil
+        // Injecter Jeu et AppControleur dans le contrôleur de la page d'accueil
         Object controller = fxmlLoader.getController();
         if (controller instanceof Controleur) {
             ((Controleur) controller).setJeu(this.jeu);
+            ((Controleur) controller).setAppControleur(this);
         }
-    }
-
-    /**
-     * Méthode pour obtenir l'instance unique du contrôleur.
-     *
-     * @param jeu l'instance de Jeu à utiliser (utilisée uniquement lors de la première création)
-     * @return instance unique de AppControleur
-     * @throws IOException si le chargement de la vue échoue
-     */
-    public static AppControleur getInstance(Jeu jeu) throws IOException {
-        if (instance == null) {
-            instance = new AppControleur(jeu);
-        }
-        return instance;
-    }
-
-    /**
-     * Méthode pour obtenir l'instance unique du contrôleur (si déjà créée).
-     *
-     * @return instance unique de AppControleur
-     * @throws IllegalStateException si l'instance n'a pas encore été créée
-     */
-    public static AppControleur getInstance() {
-        if (instance == null) {
-            throw new IllegalStateException("AppControleur n'a pas encore été initialisé avec une instance de Jeu");
-        }
-        return instance;
     }
 
     /**
@@ -75,10 +47,23 @@ public class AppControleur extends Controleur {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
         loader.load();
         Object controller = loader.getController();
+
         if (controller instanceof Controleur) {
-            ((Controleur) controller).setJeu(this.jeu);
+            injectDependencies((Controleur) controller);
         }
+
         return loader;
+    }
+
+    /**
+     * Injecte Jeu et AppControleur dans un contrôleur.
+     * Pour standardiser l'injection de dépendances.
+     *
+     * @param controller le contrôleur dans lequel injecter les dépendances
+     */
+    private void injectDependencies(Controleur controller) {
+        controller.setJeu(this.jeu);
+        controller.setAppControleur(this);
     }
 
     public Stage getPrimaryStage() {

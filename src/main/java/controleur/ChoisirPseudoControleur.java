@@ -9,7 +9,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import modele.Jeu;
 import modele.PseudoException;
 
 import java.io.IOException;
@@ -29,9 +28,9 @@ public class ChoisirPseudoControleur extends Controleur {
      */
     @FXML
     public void initialize() {
-        pseudoField.setOnAction(e -> lancerModeProgression());
+        pseudoField.setOnAction(_ -> lancerModeProgression());
         pseudoField.setText(pseudo);
-        pseudoField.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+        pseudoField.textProperty().addListener((ObservableValue<? extends String> _, String oldValue, String newValue) -> {
             if (newValue.trim().length() > 15) {
                 pseudoField.setText(oldValue);
             } else {
@@ -54,9 +53,9 @@ public class ChoisirPseudoControleur extends Controleur {
             Parent progressionView = loader.load();
             controleur.ModeProgressionControleur jeuControleur = loader.getController();
 
-            // Injecter l'instance de Jeu dans le contrôleur
-            if (jeuControleur instanceof Controleur) {
-                ((Controleur) jeuControleur).setJeu(this.jeu);
+            if (jeuControleur != null) {
+                jeuControleur.setJeu(this.jeu);
+                jeuControleur.setAppControleur(this.appControleur);
             }
 
             Stage stage = (Stage) startButton.getScene().getWindow();

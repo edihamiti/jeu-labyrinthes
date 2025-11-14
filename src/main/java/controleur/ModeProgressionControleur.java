@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.Defi;
@@ -67,9 +66,10 @@ public class ModeProgressionControleur extends Controleur {
 
             JeuControleur jeuControleur = loader.getController();
 
-            // Injecter l'instance de Jeu dans le contrôleur
-            if (jeuControleur instanceof Controleur) {
-                ((Controleur) jeuControleur).setJeu(this.jeu);
+            // Injecter les dépendances dans le contrôleur
+            if (jeuControleur != null) {
+                jeuControleur.setJeu(this.jeu);
+                jeuControleur.setAppControleur(this.appControleur);
             }
 
             if (jeuControleur != null) {
@@ -90,8 +90,8 @@ public class ModeProgressionControleur extends Controleur {
 
     public void retour() {
         try {
-            AppControleur.getInstance().resetGame();
-            AppControleur.getInstance().MenuPrincipal();
+            appControleur.resetGame();
+            appControleur.MenuPrincipal();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");

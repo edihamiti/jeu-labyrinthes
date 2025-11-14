@@ -167,7 +167,7 @@ public class ParametresControleur extends Controleur {
      * Gère le clic sur le bouton de retour vers le menu principal.
      */
     public void retourClicked() {
-        AppControleur.getInstance().MenuPrincipal();
+        appControleur.MenuPrincipal();
     }
 
     /**
@@ -188,9 +188,10 @@ public class ParametresControleur extends Controleur {
 
             controleur.JeuControleur jeuControleur = loader.getController();
 
-            // Injecter l'instance de Jeu dans le contrôleur
-            if (jeuControleur instanceof Controleur) {
-                ((Controleur) jeuControleur).setJeu(this.jeu);
+            // Injecter les dépendances dans le contrôleur
+            if (jeuControleur != null) {
+                jeuControleur.setJeu(this.jeu);
+                jeuControleur.setAppControleur(this.appControleur);
             }
 
             // Appeler setParametresLab APRÈS le chargement du FXML

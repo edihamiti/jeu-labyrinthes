@@ -2,14 +2,10 @@ package controleur;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 
 import java.io.IOException;
 
@@ -21,11 +17,10 @@ public class MainController extends Controleur {
 
     @FXML
     public ScrollPane content;
-    // Constructeur par défaut (obligatoire pour JavaFX)
+
     public MainController() {
     }
 
-    // Méthode d'initialisation appelée automatiquement après le chargement du FXML
     /**
      * Initialise les composants de la page principale.
      */
@@ -40,10 +35,11 @@ public class MainController extends Controleur {
 
         content.setContent(homepageLoader.load());
 
-        // Injecter l'instance de Jeu dans le contrôleur
+        // Injecter les dépendances dans le contrôleur
         Object controller = homepageLoader.getController();
         if (controller instanceof Controleur) {
             ((Controleur) controller).setJeu(this.jeu);
+            ((Controleur) controller).setAppControleur(this.appControleur);
         }
     }
 }

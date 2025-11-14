@@ -76,10 +76,11 @@ public class JeuControleur extends Controleur {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/PopupCommandes.fxml"));
             Parent popupView = loader.load();
 
-            // Injecter l'instance de Jeu dans le contrôleur
+            // Injecter les dépendances dans le contrôleur
             Object controller = loader.getController();
             if (controller instanceof Controleur) {
                 ((Controleur) controller).setJeu(this.jeu);
+                ((Controleur) controller).setAppControleur(this.appControleur);
             }
 
             Stage popupStage = new Stage();
@@ -103,18 +104,19 @@ public class JeuControleur extends Controleur {
      * @throws IOException si le chargement de la vue échoue
      */
     public void retourMenu() throws IOException {
-        AppControleur.getInstance().resetGame();
-        AppControleur.getInstance().MenuPrincipal();
+        appControleur.resetGame();
+        appControleur.MenuPrincipal();
     }
 
     private void retourModeProgression() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
         Parent modeProgressionView = loader.load();
 
-        // Injecter l'instance de Jeu dans le contrôleur
+        // Injecter les dépendances dans le contrôleur
         Object controller = loader.getController();
         if (controller instanceof Controleur) {
             ((Controleur) controller).setJeu(this.jeu);
+            ((Controleur) controller).setAppControleur(this.appControleur);
         }
 
         Stage stage = (Stage) conteneurLabyrinthe.getScene().getWindow();

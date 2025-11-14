@@ -4,20 +4,21 @@ import javafx.stage.Stage;
 import modele.Jeu;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class App extends Application {
+
     @Override
     public void start(Stage stage) throws IOException {
         // Créer l'instance unique de Jeu pour toute l'application
         Jeu jeu = new Jeu();
 
         stage.setTitle("Le jeu des Labyrinthes");
-        stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("img/sortie.png")));
+        stage.getIcons().add(new javafx.scene.image.Image(Objects.requireNonNull(getClass().getResourceAsStream("img/sortie.png"))));
 
-        // Initialiser AppControleur avec l'instance de Jeu
-        AppControleur.getInstance(jeu).setPrimaryStage(stage);
-        AppControleur.getInstance().MenuPrincipal();
-
+        AppControleur appControleur = new AppControleur(jeu);
+        appControleur.setPrimaryStage(stage);
+        appControleur.MenuPrincipal();
     }
 
     public static void main(String[] args) {
