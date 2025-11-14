@@ -9,8 +9,8 @@
     <version>1.0</version>
 
     <properties>
-        <java.version>17</java.version>
-        <javafx.version>21</javafx.version>
+        <java.version>24</java.version>
+        <javafx.version>24</javafx.version>
         <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
