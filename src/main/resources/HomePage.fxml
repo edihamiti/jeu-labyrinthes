@@ -47,7 +47,7 @@
                 <graphic>
                     <StackPane>
                         <Rectangle width="4" styleClass="tabs-rectangle, selected"/>
-                        <Text text="leaderboard" fx:id="leaderboard" styleClass="tabs-text, selected"/>
+                        <Text text="Leaderboard" fx:id="leaderboard" styleClass="tabs-text, selected"/>
                     </StackPane>
                 </graphic>
             </Button>
@@ -84,6 +84,10 @@
             <Button fx:id="nouvellePartieButton" onAction="#lancerJeu" text="Nouvelle Partie" styleClass="button-filled"
                     HBox.hgrow="ALWAYS"/>
         </HBox>
+
+        <!-- Leaderboard -->
+        <VBox fx:id="profilsContainer" spacing="5" visible="false"/>
+
     </VBox>
 
 </HBox>

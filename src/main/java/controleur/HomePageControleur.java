@@ -3,6 +3,7 @@ package controleur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,11 +17,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import modele.Jeu;
 import modele.Joueur;
+import modele.Leaderboard;
 import modele.Sauvegarde;
 import vue.ChargerProfileRendu;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Contrôleur pour la page d'accueil de l'application.
@@ -154,8 +157,47 @@ public class HomePageControleur {
     public void leaderboard() {
         nomMode.setText("Leaderboard");
         descriptionMode.setText("Visualisez les meilleurs scores !");
+
+        // cacher les autres boutons
         chargerProfilButton.setVisible(false);
-        chargerProfilButton.maxWidth(0);
-        modeProgression = false;
+        nouvellePartieButton.setVisible(false);
+
+        // montrer la VBox du leaderboard
+        profilsContainer.setVisible(true);
+
+        // récupérer tous les joueurs triés
+        Leaderboard leaderboard = new Leaderboard(Jeu.getInstance().getSauvegarde());
+        List<Joueur> joueurs = leaderboard.getClassementComplet();
+
+        profilsContainer.getChildren().clear();
+
+        // entête
+        HBox header = new HBox(10);
+        header.setAlignment(Pos.CENTER_LEFT);
+        Label rankHeader = new Label("Rang"); rankHeader.setPrefWidth(60);
+        Label pseudoHeader = new Label("Pseudo"); pseudoHeader.setPrefWidth(240);
+        Label scoreHeader = new Label("Score"); scoreHeader.setPrefWidth(120);
+        header.getChildren().addAll(rankHeader, pseudoHeader, scoreHeader);
+        profilsContainer.getChildren().add(header);
+
+        // lignes du leaderboard
+        int rang = 1;
+        for (Joueur j : joueurs) {
+            HBox row = new HBox(10);
+            row.setAlignment(Pos.CENTER_LEFT);
+            row.getChildren().addAll(
+                    new Label(String.valueOf(rang)),
+                    new Label(j.getPseudo()),
+                    new Label(String.valueOf(j.getScore()))
+            );
+            profilsContainer.getChildren().add(row);
+            rang++;
+        }
+
+        if (joueurs.isEmpty()) {
+            profilsContainer.getChildren().add(new Label("Aucun joueur à afficher."));
+        }
     }
+
+
 }
