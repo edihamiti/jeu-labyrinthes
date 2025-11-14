@@ -18,7 +18,7 @@ cache:
 # Job de compilation
 build:
   stage: build
-  image: maven:3.9-eclipse-temurin-17
+  image: maven:3.9-eclipse-temurin-24
   script:
     - mvn $MAVEN_CLI_OPTS clean compile
   artifacts:
@@ -29,7 +29,7 @@ build:
 # Job de tests
 test:
   stage: test
-  image: maven:3.9-eclipse-temurin-17
+  image: maven:3.9-eclipse-temurin-24
   dependencies:
     - build
   script:
@@ -46,7 +46,7 @@ test:
 # Job de génération de Javadoc
 generate-javadoc:
   stage: documentation
-  image: maven:3.9-eclipse-temurin-17
+  image: maven:3.9-eclipse-temurin-24
   dependencies:
     - build
   script:
