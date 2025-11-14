@@ -1,9 +1,5 @@
 package modele.Cellules;
 
-import javafx.scene.image.Image;
-
-import java.util.Objects;
-
 /**
  * Classe représentant une cellule de type piege dans un labyrinthe.
  */
@@ -19,8 +15,4 @@ public class Piege extends Cellule {
         return true;
     }
 
-    @Override
-    public Image getTexture() {
-        return new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/chemin.png")));
-    }
 }
