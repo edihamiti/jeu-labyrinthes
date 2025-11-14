@@ -83,5 +83,12 @@
             <version>5.9.3</version>
             <scope>test</scope>
         </dependency>
+
+        <!--Pour les jsons-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.13.2</version>
+        </dependency>
     </dependencies>
 </project>
