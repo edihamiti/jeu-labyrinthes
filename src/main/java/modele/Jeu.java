@@ -34,6 +34,7 @@ public class Jeu {
         this.joueur = joueur;
         this.labyrinthe = labyrinthe;
         this.defiEnCours = defiEnCours;
+        this.gameTimer = new GameTimer();
     }
 
     public Jeu() {
