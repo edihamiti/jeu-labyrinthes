@@ -7,7 +7,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class PopupVictoireControleur {
+public class PopupVictoireControleur extends Controleur {
 
     @FXML
     private VBox popupRoot;

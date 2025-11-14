@@ -15,8 +15,9 @@ import java.io.IOException;
 
 /**
  * Contrôleur pour la page principale de l'application.
+ * TODO: Voir si cette classe est vraiment utile
  */
-public class MainController {
+public class MainController extends Controleur {
 
     @FXML
     public ScrollPane content;
@@ -38,5 +39,11 @@ public class MainController {
         VBox.setVgrow(content, Priority.ALWAYS);
 
         content.setContent(homepageLoader.load());
+
+        // Injecter l'instance de Jeu dans le contrôleur
+        Object controller = homepageLoader.getController();
+        if (controller instanceof Controleur) {
+            ((Controleur) controller).setJeu(this.jeu);
+        }
     }
 }

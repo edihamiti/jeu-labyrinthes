@@ -11,7 +11,6 @@ import java.util.Scanner;
  */
 public class Jeu {
 
-    private static Jeu instance;
     Sauvegarde sauvegarde = new Sauvegarde();
     private Joueur joueur;
     private Labyrinthe labyrinthe;
@@ -39,17 +38,6 @@ public class Jeu {
 
     public Jeu() {
 
-    }
-
-    public static Jeu getInstance() {
-        if (instance == null) {
-            instance = new Jeu();
-        }
-        return instance;
-    }
-
-    public static void setInstance(Jeu newInstance) {
-        instance = newInstance;
     }
 
     public Vision getVision() {

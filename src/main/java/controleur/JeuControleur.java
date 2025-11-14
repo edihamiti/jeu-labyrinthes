@@ -18,7 +18,7 @@ import java.util.Random;
 /**
  * Contrôleur pour la gestion du jeu de labyrinthe.
  */
-public class JeuControleur {
+public class JeuControleur extends Controleur {
     private static boolean premierLancement = true;
     @FXML
     public VBox minimap;
@@ -61,10 +61,10 @@ public class JeuControleur {
                 });
 
                 newScene.widthProperty().addListener((obsWidth, oldWidth, newWidth) -> {
-                    if (Jeu.getInstance().getLabyrinthe() != null) afficherJeu();
+                    if (jeu.getLabyrinthe() != null) afficherJeu();
                 });
                 newScene.heightProperty().addListener((obsHeight, oldHeight, newHeight) -> {
-                    if (Jeu.getInstance().getLabyrinthe() != null) afficherJeu();
+                    if (jeu.getLabyrinthe() != null) afficherJeu();
                 });
             }
         });
@@ -75,6 +75,12 @@ public class JeuControleur {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/PopupCommandes.fxml"));
             Parent popupView = loader.load();
+
+            // Injecter l'instance de Jeu dans le contrôleur
+            Object controller = loader.getController();
+            if (controller instanceof Controleur) {
+                ((Controleur) controller).setJeu(this.jeu);
+            }
 
             Stage popupStage = new Stage();
             popupStage.initOwner(conteneurLabyrinthe.getScene().getWindow());
@@ -104,6 +110,13 @@ public class JeuControleur {
     private void retourModeProgression() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
         Parent modeProgressionView = loader.load();
+
+        // Injecter l'instance de Jeu dans le contrôleur
+        Object controller = loader.getController();
+        if (controller instanceof Controleur) {
+            ((Controleur) controller).setJeu(this.jeu);
+        }
+
         Stage stage = (Stage) conteneurLabyrinthe.getScene().getWindow();
         Scene scene = new Scene(modeProgressionView, 1400, 900);
         stage.setScene(scene);
@@ -124,7 +137,7 @@ public class JeuControleur {
      */
     public void afficherLabyrinthe() {
         conteneurLabyrinthe.getChildren().clear();
-        conteneurLabyrinthe.getChildren().add(renduLabyrinthe.rendu(Jeu.getInstance().getLabyrinthe()));
+        conteneurLabyrinthe.getChildren().add(renduLabyrinthe.rendu(jeu.getLabyrinthe()));
     }
 
     /**
@@ -132,27 +145,27 @@ public class JeuControleur {
      */
     public void afficherMinimap() {
         minimap.getChildren().clear();
-        minimap.getChildren().add(renduMinimap.rendu(Jeu.getInstance().getLabyrinthe()));
+        minimap.getChildren().add(renduMinimap.rendu(jeu.getLabyrinthe()));
     }
 
     @FXML
     public void deplacerHaut() throws IOException {
-        deplacer(Jeu.getInstance().getLabyrinthe().getJoueurX() - 1, Jeu.getInstance().getLabyrinthe().getJoueurY());
+        deplacer(jeu.getLabyrinthe().getJoueurX() - 1, jeu.getLabyrinthe().getJoueurY());
     }
 
     @FXML
     public void deplacerBas() throws IOException {
-        deplacer(Jeu.getInstance().getLabyrinthe().getJoueurX() + 1, Jeu.getInstance().getLabyrinthe().getJoueurY());
+        deplacer(jeu.getLabyrinthe().getJoueurX() + 1, jeu.getLabyrinthe().getJoueurY());
     }
 
     @FXML
     public void deplacerGauche() throws IOException {
-        deplacer(Jeu.getInstance().getLabyrinthe().getJoueurX(), Jeu.getInstance().getLabyrinthe().getJoueurY() - 1);
+        deplacer(jeu.getLabyrinthe().getJoueurX(), jeu.getLabyrinthe().getJoueurY() - 1);
     }
 
     @FXML
     public void deplacerDroite() throws IOException {
-        deplacer(Jeu.getInstance().getLabyrinthe().getJoueurX(), Jeu.getInstance().getLabyrinthe().getJoueurY() + 1);
+        deplacer(jeu.getLabyrinthe().getJoueurX(), jeu.getLabyrinthe().getJoueurY() + 1);
     }
 
     /**
@@ -163,7 +176,6 @@ public class JeuControleur {
      * @throws IOException si une erreur survient lors du déplacement
      */
     private void deplacer(int nouveauX, int nouveauY) throws IOException {
-        Jeu jeu = Jeu.getInstance();
 
         if (!jeu.isRunning()) {
             jeu.startTimer();
@@ -190,7 +202,6 @@ public class JeuControleur {
      * @throws IOException si une erreur survient lors du retour au menu principal
      */
     private void victoire() throws IOException {
-        Jeu jeu = Jeu.getInstance();
         Stage ownerStage = (Stage) conteneurLabyrinthe.getScene().getWindow();
 
         handlerVictoire.handleVictoire(
@@ -203,7 +214,7 @@ public class JeuControleur {
 
     private void handleRejouer() {
         try {
-            if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
+            if (jeu.getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
                 retourModeProgression();
             } else {
                 rejouer();
@@ -222,8 +233,8 @@ public class JeuControleur {
     }
 
     private void rejouer() throws IOException {
-        Jeu.getInstance().resetTimer();
-        this.generateur.generer(Jeu.getInstance().getLabyrinthe());
+        jeu.resetTimer();
+        this.generateur.generer(jeu.getLabyrinthe());
         setRenduLabyrinthe();
         afficherJeu();
     }
@@ -232,20 +243,20 @@ public class JeuControleur {
         // Déterminer la vision à utiliser
         Vision vision = Vision.VUE_LIBRE; // Vision par défaut
 
-        if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
-            vision = Jeu.getInstance().getDefiEnCours().getVision();
+        if (jeu.getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
+            vision = jeu.getDefiEnCours().getVision();
         }
 
         // Obtenir la stratégie de vision appropriée
         VisionLabyrinthe visionStrategy = VisionFactory.getStrategy(vision);
 
         // Configurer le rendu principal
-        this.renduLabyrinthe = visionStrategy.createRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
+        this.renduLabyrinthe = visionStrategy.createRendu(jeu.getLabyrinthe(), conteneurLabyrinthe);
 
         // Configurer la minimap si nécessaire
         if (visionStrategy.requiresMinimap()) {
             overlayMinimap.setVisible(true);
-            this.renduMinimap = visionStrategy.createMinimapRendu(Jeu.getInstance().getLabyrinthe(), minimap);
+            this.renduMinimap = visionStrategy.createMinimapRendu(jeu.getLabyrinthe(), minimap);
         } else {
             overlayMinimap.setVisible(false);
         }
@@ -263,21 +274,21 @@ public class JeuControleur {
      */
     public void setParametresLab(int largeur, int hauteur, double pourcentageMurs, int distanceMin, TypeLabyrinthe typeLab) {
         // Créer le labyrinthe
-        Jeu.getInstance().setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs, distanceMin));
+        jeu.setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs, distanceMin));
 
         // Créer et utiliser le générateur
         this.generateur = typeLab.creerGenerateur(largeur, hauteur, pourcentageMurs, distanceMin);
-        this.generateur.generer(Jeu.getInstance().getLabyrinthe());
+        this.generateur.generer(jeu.getLabyrinthe());
 
         // Réinitialiser le timer
-        Jeu.getInstance().resetTimer();
+        jeu.resetTimer();
 
         // Configurer le rendu
         setRenduLabyrinthe();
 
         // Ajouter les listeners pour la position du joueur
-        Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
-        Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
+        jeu.getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
+        jeu.getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
 
         // Afficher le jeu
         afficherJeu();

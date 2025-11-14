@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  * Contrôleur pour la sélection du pseudo du joueur.
  */
-public class ChoisirPseudoControleur {
+public class ChoisirPseudoControleur extends Controleur {
     @FXML
     public TextField pseudoField;
     @FXML
@@ -48,12 +48,16 @@ public class ChoisirPseudoControleur {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
 
-            Jeu.getInstance().setJoueur(pseudo);
+            jeu.setJoueur(pseudo);
             System.out.println("[\u001B[34mDEBUG\u001B[0m] Joueur initialisé dans le modèle Jeu");
 
             Parent progressionView = loader.load();
             controleur.ModeProgressionControleur jeuControleur = loader.getController();
 
+            // Injecter l'instance de Jeu dans le contrôleur
+            if (jeuControleur instanceof Controleur) {
+                ((Controleur) jeuControleur).setJeu(this.jeu);
+            }
 
             Stage stage = (Stage) startButton.getScene().getWindow();
             Scene jeuScene = new Scene(progressionView, 1400, 900);

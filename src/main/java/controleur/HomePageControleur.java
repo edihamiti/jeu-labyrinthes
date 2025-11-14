@@ -24,7 +24,7 @@ import java.util.HashMap;
 /**
  * Contrôleur pour la page d'accueil de l'application.
  */
-public class HomePageControleur {
+public class HomePageControleur extends Controleur {
 
     @FXML
     public Label nomMode;
@@ -52,8 +52,6 @@ public class HomePageControleur {
     public void initialize() {
         modeProgression = true;
         isChargerProfilActive = false;
-        saves = Jeu.getInstance().getSauvegarde();
-        saves.chargerJoueurs();
 
         HBox.setHgrow(chargerProfilButton, Priority.ALWAYS);
         HBox.setHgrow(nouvellePartieButton, Priority.ALWAYS);
@@ -69,6 +67,16 @@ public class HomePageControleur {
         clip.heightProperty().bind(contentPage.heightProperty());
 
         contentPage.setClip(clip);
+    }
+
+    @Override
+    public void setJeu(Jeu jeu) {
+        super.setJeu(jeu);
+        // Initialiser les éléments qui dépendent de jeu une fois qu'il est injecté
+        if (jeu != null) {
+            saves = jeu.getSauvegarde();
+            saves.chargerJoueurs();
+        }
     }
 
     /**
@@ -106,7 +114,7 @@ public class HomePageControleur {
     public void lancerJeu() {
         try {
             FXMLLoader loader;
-            if (modeProgression && Jeu.getInstance().getJoueur() == null) {
+            if (modeProgression && jeu.getJoueur() == null) {
                 loader = new FXMLLoader(getClass().getResource("/ChoisirPseudo.fxml"));
             } else if (modeProgression) {
                 loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
@@ -114,6 +122,12 @@ public class HomePageControleur {
                 loader = new FXMLLoader(getClass().getResource("/ModeLibreParametres.fxml"));
             }
             Parent jeuView = loader.load();
+
+            // Injecter l'instance de Jeu dans le contrôleur
+            Object controller = loader.getController();
+            if (controller instanceof Controleur) {
+                ((Controleur) controller).setJeu(this.jeu);
+            }
 
             Stage stage = (Stage) nouvellePartieButton.getScene().getWindow();
 
@@ -143,7 +157,7 @@ public class HomePageControleur {
             HashMap<String, Joueur> profiles = saves.getJoueurs();
 
             chargerProfilButton.getChildren().add(ChargerProfileRendu.render(profiles, joueur -> {
-                Jeu.getInstance().setJoueur(joueur);
+                jeu.setJoueur(joueur);
                 lancerJeu();
             }));
         }

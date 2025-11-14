@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 /**
  * Contrôleur pour le pop-up d'information sur les commandes de jeu.
  */
-public class PopupCommandesControleur {
+public class PopupCommandesControleur extends Controleur {
 
     /**
      * Gère les événements clavier sur le pop-up.

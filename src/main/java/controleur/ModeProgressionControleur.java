@@ -20,26 +20,35 @@ import java.io.IOException;
 /**
  * Contrôleur pour le mode progression du jeu de labyrinthe.
  */
-public class ModeProgressionControleur {
+public class ModeProgressionControleur extends Controleur {
     @FXML
     private VBox etapesContainer;
     @FXML
     private HBox pointsContainer;
 
     /**
-     * Initialise le contrôleur et configure les étapes du mode progression.
+     * Initialise les composants de la page de progression.
      */
     @FXML
     public void initialize() {
-        Jeu.getInstance().setModeJeu(ModeJeu.MODE_PROGRESSION);
-        Joueur joueur = Jeu.getInstance().getJoueur();
-        etapesContainer.getChildren().add(
-                EtapesRendu.render(joueur.getProgression(), defi -> {
-                    System.out.println("Defi sélectionné : " + defi);
-                    lancerModeProgression(defi);
-                })
-        );
-        EtapesRendu.renderPoints(Jeu.getInstance().getJoueur().getScore(), this.pointsContainer);
+        // L'initialisation qui dépend de jeu est faite dans setJeu()
+    }
+
+    @Override
+    public void setJeu(Jeu jeu) {
+        super.setJeu(jeu);
+        // Initialiser les éléments qui dépendent de jeu une fois qu'il est injecté
+        if (jeu != null) {
+            jeu.setModeJeu(ModeJeu.MODE_PROGRESSION);
+            Joueur joueur = jeu.getJoueur();
+            etapesContainer.getChildren().add(
+                    EtapesRendu.render(joueur.getProgression(), defi -> {
+                        System.out.println("Defi sélectionné : " + defi);
+                        lancerModeProgression(defi);
+                    })
+            );
+            EtapesRendu.renderPoints(jeu.getJoueur().getScore(), this.pointsContainer);
+        }
     }
 
     /**
@@ -49,7 +58,6 @@ public class ModeProgressionControleur {
         try {
             System.out.println("[DEBUG] Enregistrement du labyrinthe dans le Jeu");
             // Enregistrer le défi en cours
-            Jeu jeu = Jeu.getInstance();
             jeu.setDefiEnCours(defi);
             jeu.setLabyrinthe(defi);
 
@@ -58,6 +66,12 @@ public class ModeProgressionControleur {
             Parent jeuView = loader.load();
 
             JeuControleur jeuControleur = loader.getController();
+
+            // Injecter l'instance de Jeu dans le contrôleur
+            if (jeuControleur instanceof Controleur) {
+                ((Controleur) jeuControleur).setJeu(this.jeu);
+            }
+
             if (jeuControleur != null) {
                 jeuControleur.setParametresLab(defi.getLargeur(), defi.getHauteur(), defi.getPourcentageMurs(), defi.getDistanceMin(), defi.getTypeLabyrinthe());
             }

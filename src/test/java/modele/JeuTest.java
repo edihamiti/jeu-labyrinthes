@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalTime;
-
 class JeuTest {
     private Jeu jeu;
     private Joueur joueur;
@@ -26,19 +24,6 @@ class JeuTest {
         assertEquals(Defi.FACILE1, jeu.getDefiEnCours());
     }
 
-    @Test
-    void testSingleton() {
-        Jeu instance1 = Jeu.getInstance();
-        Jeu instance2 = Jeu.getInstance();
-        assertSame(instance1, instance2);
-    }
-
-    @Test
-    void testSetInstance() {
-        Jeu newInstance = new Jeu();
-        Jeu.setInstance(newInstance);
-        assertSame(newInstance, Jeu.getInstance());
-    }
 
     @Test
     void testVision() {
