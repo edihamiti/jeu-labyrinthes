@@ -14,6 +14,7 @@ public class LimiteeRendu implements Rendu {
     private final Image imgSortie = new Image(getClass().getResourceAsStream("/img/sortie.png"));
     private final Image imgJoueur = new Image(getClass().getResourceAsStream("/img/joueur.png"));
     private final Image imgRedWall = new Image(getClass().getResourceAsStream("/img/redWall.png"));
+    private final Image imgBrouillard = new Image(getClass().getResourceAsStream("/img/brouillard.png"));
     private Labyrinthe labyrinthe;
     private VBox contientLabyrinthe;
     private int lastBlockedX = -1;
@@ -74,6 +75,7 @@ public class LimiteeRendu implements Rendu {
         Cellule[][] cellules = this.labyrinthe.getCellules();
         int largeurMax = this.labyrinthe.getLargeurMax();
         int hauteurMax = this.labyrinthe.getHauteurMax();
+
         double heightVBox = contientLabyrinthe.getHeight();
         double widthVBox = contientLabyrinthe.getWidth();
 
@@ -106,10 +108,10 @@ public class LimiteeRendu implements Rendu {
                 int distanceX = Math.abs(i - joueurX);
                 int distanceY = Math.abs(j - joueurY);
                 boolean dansPorteeVision = (distanceX <= porteeVueLocale && distanceY <= porteeVueLocale);
-
                 if (i == joueurX && j == joueurY) {
                     gc.drawImage(imgJoueur, x, y, tailleCellule, tailleCellule);
-                } else if (dansPorteeVision) {
+                }
+                else if (dansPorteeVision) {
                     if (cellules[i][j].estMur()) {
                         if (i == lastBlockedX && j == lastBlockedY) {
                             gc.drawImage(imgRedWall, x, y, tailleCellule, tailleCellule);
@@ -121,12 +123,9 @@ public class LimiteeRendu implements Rendu {
                     } else if (cellules[i][j].estSortie()) {
                         gc.drawImage(imgSortie, x, y, tailleCellule, tailleCellule);
                     }
-                } else {
-                    gc.setFill(javafx.scene.paint.Color.DARKGRAY);
-                    gc.fillRect(x, y, tailleCellule, tailleCellule);
-
-                    gc.setStroke(javafx.scene.paint.Color.BLACK);
-                    gc.strokeRect(x, y, tailleCellule, tailleCellule);
+                }
+                else {
+                    gc.drawImage(imgBrouillard, x, y, tailleCellule, tailleCellule);
                 }
             }
         }

@@ -25,8 +25,8 @@ public class ChargerProfileRendu {
     /**
      * Rend une VBox avec des boutons pour charger les joueurs.
      *
-     * @param profiles Une Map<String, Joueur> représentant les profils disponibles.
-     * @param action   Une action Consumer<Joueur> à exécuter lors du clic sur un bouton de profil.
+     * @param profiles Une {@code Map<String, Joueur>} représentant les profils disponibles.
+     * @param action   Une action {@code Consumer<Joueur>} à exécuter lors du clic sur un bouton de profil.
      * @return VBox contenant les boutons pour charger les joueurs.
      */
     public static VBox render(Map<String, Joueur> profiles, Consumer<Joueur> action) {
