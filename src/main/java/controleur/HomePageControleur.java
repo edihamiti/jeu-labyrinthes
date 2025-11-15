@@ -1,6 +1,5 @@
 package controleur;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -158,39 +157,56 @@ public class HomePageControleur {
         nomMode.setText("Leaderboard");
         descriptionMode.setText("Visualisez les meilleurs scores !");
 
-        // cacher les autres boutons
+        // Masquer les boutons propres au jeu
         chargerProfilButton.setVisible(false);
+        chargerProfilButton.setManaged(false);
         nouvellePartieButton.setVisible(false);
+        nouvellePartieButton.setManaged(false);
 
-        // montrer la VBox du leaderboard
+        // Rendre visible la zone du leaderboard
         profilsContainer.setVisible(true);
+        profilsContainer.setManaged(true);
 
-        // récupérer tous les joueurs triés
+        // Récupérer les scores
         Leaderboard leaderboard = new Leaderboard(Jeu.getInstance().getSauvegarde());
         List<Joueur> joueurs = leaderboard.getClassementComplet();
 
         profilsContainer.getChildren().clear();
 
-        // entête
+        // --- ENTÊTE ---
         HBox header = new HBox(10);
         header.setAlignment(Pos.CENTER_LEFT);
-        Label rankHeader = new Label("Rang"); rankHeader.setPrefWidth(60);
-        Label pseudoHeader = new Label("Pseudo"); pseudoHeader.setPrefWidth(240);
-        Label scoreHeader = new Label("Score"); scoreHeader.setPrefWidth(120);
+
+        Label rankHeader = new Label("Rang");
+        rankHeader.setPrefWidth(60);
+
+        Label pseudoHeader = new Label("Pseudo");
+        pseudoHeader.setPrefWidth(240);
+
+        Label scoreHeader = new Label("Score");
+        scoreHeader.setPrefWidth(120);
+
         header.getChildren().addAll(rankHeader, pseudoHeader, scoreHeader);
         profilsContainer.getChildren().add(header);
 
-        // lignes du leaderboard
+        // --- LIGNES ---
         int rang = 1;
         for (Joueur j : joueurs) {
             HBox row = new HBox(10);
             row.setAlignment(Pos.CENTER_LEFT);
-            row.getChildren().addAll(
-                    new Label(String.valueOf(rang)),
-                    new Label(j.getPseudo()),
-                    new Label(String.valueOf(j.getScore()))
-            );
+
+            Label rank = new Label(String.valueOf(rang));
+            rank.setPrefWidth(60);
+
+            Label pseudo = new Label(j.getPseudo());
+            pseudo.setPrefWidth(240);
+
+            Label score = new Label(String.valueOf(j.getScore()));
+            score.setPrefWidth(120);
+
+            row.getChildren().addAll(rank, pseudo, score);
             profilsContainer.getChildren().add(row);
+
             rang++;
         }
 

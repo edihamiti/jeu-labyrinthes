@@ -72,6 +72,11 @@
                    styleClass="subtitle"/>
         </VBox>
 
+        <VBox fx:id="profilsContainer"
+              spacing="8"
+              visible="false"
+              managed="false"/>
+
         <!-- Spacer -->
         <VBox VBox.vgrow="ALWAYS"/>
 
@@ -84,9 +89,6 @@
             <Button fx:id="nouvellePartieButton" onAction="#lancerJeu" text="Nouvelle Partie" styleClass="button-filled"
                     HBox.hgrow="ALWAYS"/>
         </HBox>
-
-        <!-- Leaderboard -->
-        <VBox fx:id="profilsContainer" spacing="5" visible="false"/>
 
     </VBox>
 
