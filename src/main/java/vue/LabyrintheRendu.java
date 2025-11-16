@@ -91,25 +91,49 @@ public class LabyrintheRendu implements Rendu {
         Canvas canvas = new Canvas(hauteurMax * tailleCellule, largeurMax * tailleCellule);
         GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
 
+        int overlap = Math.max(2, tailleCellule / 4);
+        double halfOverlap = overlap / 2.0;
+
         for (int i = 0; i < largeurMax; i++) {
             for (int j = 0; j < hauteurMax; j++) {
                 double x = j * tailleCellule;
                 double y = i * tailleCellule;
 
-                if (i == this.labyrinthe.getJoueurX() && j == this.labyrinthe.getJoueurY()) {
-                    graphicsContext.drawImage(imgJoueur, x, y, tailleCellule, tailleCellule);
-                } else if (labyrinthe[i][j].estMur()) {
-                    if (i == lastBlockedX && j == lastBlockedY) {
-                        graphicsContext.drawImage(imgRedWall, x, y, tailleCellule, tailleCellule);
-                    } else {
-                        graphicsContext.drawImage(imgMur, x, y, tailleCellule, tailleCellule);
-                    }
-                } else if (labyrinthe[i][j].estChemin() || labyrinthe[i][j].estEntree()) {
+                if (labyrinthe[i][j].estChemin() || labyrinthe[i][j].estEntree()) {
                     graphicsContext.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
                 } else if (labyrinthe[i][j].estSortie()) {
                     graphicsContext.drawImage(imgSortie, x, y, tailleCellule, tailleCellule);
+                } else if (labyrinthe[i][j].estMur()) {
+                    graphicsContext.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
+                } else {
+                    graphicsContext.clearRect(x, y, tailleCellule, tailleCellule);
                 }
             }
+        }
+
+        for (int i = 0; i < largeurMax; i++) {
+            for (int j = 0; j < hauteurMax; j++) {
+                if (labyrinthe[i][j].estMur()) {
+                    double x = j * tailleCellule - halfOverlap;
+                    double y = i * tailleCellule - halfOverlap;
+                    double w = tailleCellule + overlap;
+                    double h = tailleCellule + overlap;
+
+                    if (i == lastBlockedX && j == lastBlockedY) {
+                        graphicsContext.drawImage(imgRedWall, x, y, w, h);
+                    } else {
+                        graphicsContext.drawImage(imgMur, x, y, w, h);
+                    }
+                }
+            }
+        }
+
+        int px = this.labyrinthe.getJoueurX();
+        int py = this.labyrinthe.getJoueurY();
+        if (px >= 0 && py >= 0) {
+            double x = py * tailleCellule;
+            double y = px * tailleCellule;
+            graphicsContext.drawImage(imgJoueur, x, y, tailleCellule, tailleCellule);
         }
 
         lastBlockedX = -1;
