@@ -17,8 +17,6 @@ public class Jeu {
 
     private ModeJeu modeJeu;
     private Vision vision = Vision.VUE_LIBRE;
-    private TypeLabyrinthe typeLabyrinthe;
-    private GenerateurLabyrinthe generateur;
     private Defi defiEnCours;
     private GameTimer gameTimer;
 
@@ -111,7 +109,6 @@ public class Jeu {
     public void initialiser(int largeur, int hauteur, double pourcentageMurs, int distanceMin, TypeLabyrinthe typeLab) throws PseudoException {
         Scanner scanner = new Scanner(System.in);
         this.labyrinthe = new Labyrinthe(largeur, hauteur, pourcentageMurs);
-        this.generateur = typeLab.creerGenerateur(largeur, hauteur, pourcentageMurs, distanceMin);
 
         System.out.print("Entrez le pseudo du joueur : ");
         this.joueur = new Joueur(scanner.nextLine());
