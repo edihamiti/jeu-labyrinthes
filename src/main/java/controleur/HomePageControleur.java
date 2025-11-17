@@ -2,6 +2,7 @@ package controleur;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -84,6 +85,7 @@ public class HomePageControleur {
         modeProgressionText.getStyleClass().add("selected");
         modeLibreText.getStyleClass().removeAll("selected");
         modeProgression = true;
+        nouvellePartieButton.setVisible(true);
     }
 
     /**
@@ -97,6 +99,7 @@ public class HomePageControleur {
         modeLibreText.getStyleClass().add("selected");
         modeProgressionText.getStyleClass().removeAll("selected");
         modeProgression = false;
+        nouvellePartieButton.setVisible(true);
     }
 
     public void quit() {
@@ -157,33 +160,33 @@ public class HomePageControleur {
         nomMode.setText("Leaderboard");
         descriptionMode.setText("Visualisez les meilleurs scores !");
 
-        // Masquer les boutons propres au jeu
+        // cacher les autres boutons
         chargerProfilButton.setVisible(false);
-        chargerProfilButton.setManaged(false);
         nouvellePartieButton.setVisible(false);
-        nouvellePartieButton.setManaged(false);
 
-        // Rendre visible la zone du leaderboard
+        afficherLeaderboard();
+    }
+
+    private void afficherLeaderboard() {
         profilsContainer.setVisible(true);
-        profilsContainer.setManaged(true);
+        profilsContainer.getChildren().clear();
 
-        // Récupérer les scores
         Leaderboard leaderboard = new Leaderboard(Jeu.getInstance().getSauvegarde());
         List<Joueur> joueurs = leaderboard.getClassementComplet();
 
-        profilsContainer.getChildren().clear();
-
         // --- ENTÊTE ---
+
         HBox header = new HBox(10);
+        header.getStyleClass().add("leaderboard-header");
         header.setAlignment(Pos.CENTER_LEFT);
+        header.setPadding(new Insets(10));
 
         Label rankHeader = new Label("Rang");
-        rankHeader.setPrefWidth(60);
-
         Label pseudoHeader = new Label("Pseudo");
-        pseudoHeader.setPrefWidth(240);
-
         Label scoreHeader = new Label("Score");
+
+        rankHeader.setPrefWidth(60);
+        pseudoHeader.setPrefWidth(240);
         scoreHeader.setPrefWidth(120);
 
         header.getChildren().addAll(rankHeader, pseudoHeader, scoreHeader);
@@ -193,27 +196,29 @@ public class HomePageControleur {
         int rang = 1;
         for (Joueur j : joueurs) {
             HBox row = new HBox(10);
+            row.getStyleClass().add("leaderboard-row");
             row.setAlignment(Pos.CENTER_LEFT);
+            row.setPadding(new Insets(8));
 
-            Label rank = new Label(String.valueOf(rang));
-            rank.setPrefWidth(60);
+            Label rankLabel = new Label(String.valueOf(rang));
+            rankLabel.setPrefWidth(60);
 
-            Label pseudo = new Label(j.getPseudo());
-            pseudo.setPrefWidth(240);
+            Label pseudoLabel = new Label(j.getPseudo());
+            pseudoLabel.setPrefWidth(240);
 
-            Label score = new Label(String.valueOf(j.getScore()));
-            score.setPrefWidth(120);
+            Label scoreLabel = new Label(String.valueOf(j.getScore()));
+            scoreLabel.setPrefWidth(120);
 
-            row.getChildren().addAll(rank, pseudo, score);
+            row.getChildren().addAll(rankLabel, pseudoLabel, scoreLabel);
             profilsContainer.getChildren().add(row);
 
             rang++;
         }
 
         if (joueurs.isEmpty()) {
-            profilsContainer.getChildren().add(new Label("Aucun joueur à afficher."));
+            Label vide = new Label("Aucun joueur enregistré.");
+            vide.getStyleClass().add("empty-message");
+            profilsContainer.getChildren().add(vide);
         }
     }
-
-
 }

@@ -43,11 +43,11 @@
                     </StackPane>
                 </graphic>
             </Button>
-            <Button onAction="#leaderboard" styleClass="tab, selected">
+            <Button onAction="#leaderboard" styleClass="tab">
                 <graphic>
                     <StackPane>
-                        <Rectangle width="4" styleClass="tabs-rectangle, selected"/>
-                        <Text text="Leaderboard" fx:id="leaderboard" styleClass="tabs-text, selected"/>
+                        <Rectangle width="4" styleClass="tabs-rectangle"/>
+                        <Text text="Leaderboard" fx:id="leaderboard" styleClass="tabs-text"/>
                     </StackPane>
                 </graphic>
             </Button>
