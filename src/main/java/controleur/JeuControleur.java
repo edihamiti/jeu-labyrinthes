@@ -32,6 +32,7 @@ public class JeuControleur {
     private TypeLabyrinthe typeLab;
     private GenerateurLabyrinthe generateur;
     private LimiteeRendu renduLimitee;
+    private UpdateRendu renduUpdate;  // Nouveau rendu pour l'étape 6
 
     /**
      * Initialise le contrôleur et configure les événements de déplacement du joueur.
@@ -119,9 +120,18 @@ public class JeuControleur {
                 afficherLabyrinthe();
             } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITEE)) {
                 afficherLimitee();
+            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_CARTE)) {
+                // Étape 6: Vue locale avec carte progressive qui se met à jour
+                afficherCarteProgressive();
+                afficherLabyrinthe();
+            } else {
+                // Vue libre par défaut
+                afficherLabyrinthe();
             }
+        } else {
+            // Mode libre
+            afficherLabyrinthe();
         }
-        afficherLabyrinthe();
     }
 
     /**
@@ -145,6 +155,11 @@ public class JeuControleur {
     public void afficherMinimap() {
         minimap.getChildren().clear();
         minimap.getChildren().add(renduMinimap.rendu(Jeu.getInstance().getLabyrinthe()));
+    }
+
+    public void afficherCarteProgressive() {
+        minimap.getChildren().clear();
+        minimap.getChildren().add(renduUpdate.rendu(Jeu.getInstance().getLabyrinthe()));
     }
 
     @FXML
@@ -192,8 +207,16 @@ public class JeuControleur {
             }
         } else {
             playSound("block.mp3");
-            renduLabyrinthe.setBlockedWall(nouveauX, nouveauY);
-            renduLabyrinthe.setBlockedWall(nouveauX, nouveauY);
+
+            // Utiliser le bon rendu selon le mode de vision pour garder le brouillard actif
+            if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION) &&
+                Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITEE)) {
+                // Pour la vue limitée, utiliser renduLimitee pour conserver le brouillard
+                renduLimitee.setBlockedWall(nouveauX, nouveauY);
+            } else {
+                // Pour les autres modes, utiliser renduLabyrinthe
+                renduLabyrinthe.setBlockedWall(nouveauX, nouveauY);
+            }
         }
     }
 
@@ -299,6 +322,11 @@ public class JeuControleur {
                 overlayMinimap.setVisible(false);
                 this.renduLimitee = new LimiteeRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
                 this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
+            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_CARTE)) {
+                overlayMinimap.setVisible(true);
+                UpdateRendu.reinitialiserExploration();
+                this.renduUpdate = new UpdateRendu(Jeu.getInstance().getLabyrinthe(), minimap);
+                this.renduLabyrinthe = new LocaleRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
             } else {
                 overlayMinimap.setVisible(false);
                 this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);

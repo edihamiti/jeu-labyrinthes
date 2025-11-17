@@ -71,7 +71,12 @@ public class LimiteeRendu implements Rendu {
     private Canvas creerCanvasLimited(Cellule[][] labyrinthe) {
         int joueurX = this.labyrinthe.getJoueurX();
         int joueurY = this.labyrinthe.getJoueurY();
+
         int porteeVueLocale = 2;
+        if (modele.Jeu.getInstance().getDefiEnCours() != null) {
+            porteeVueLocale = modele.Jeu.getInstance().getDefiEnCours().getPortee();
+        }
+
         Cellule[][] cellules = this.labyrinthe.getCellules();
         int largeurMax = this.labyrinthe.getLargeurMax();
         int hauteurMax = this.labyrinthe.getHauteurMax();
