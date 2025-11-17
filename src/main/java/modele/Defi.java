@@ -17,17 +17,17 @@ public enum Defi {
     MOYEN3(30, 30, 50.0, 25, 3, Vision.VUE_LOCAL, 1, TypeLabyrinthe.ALEATOIRE, 0),
     DIFFICILE3(30, 30, 25.0, 55, 3, Vision.VUE_LOCAL, 1, TypeLabyrinthe.ALEATOIRE, 0),
 
-    FACILE4(7, 10, 100, 15, 4, Vision.VUE_LIBRE, 25, TypeLabyrinthe.PARFAIT, 0),
-    MOYEN4(10, 13, 100, 25, 4, Vision.VUE_LIBRE, 55, TypeLabyrinthe.PARFAIT, 0),
-    DIFFICILE4(13, 16, 100, 55, 4, Vision.VUE_LIBRE, 94, TypeLabyrinthe.PARFAIT, 0),
+    FACILE4(7, 9, 100, 15, 4, Vision.VUE_LIBRE, 25, TypeLabyrinthe.PARFAIT, 0),
+    MOYEN4(11, 13, 100, 25, 4, Vision.VUE_LIBRE, 55, TypeLabyrinthe.PARFAIT, 0),
+    DIFFICILE4(13, 15, 100, 55, 4, Vision.VUE_LIBRE, 94, TypeLabyrinthe.PARFAIT, 0),
 
-    FACILE5(17, 20, 100, 15, 5, Vision.VUE_LIMITEE, 160, TypeLabyrinthe.PARFAIT, 4),
-    MOYEN5(20, 23, 100, 25, 5, Vision.VUE_LIMITEE, 220, TypeLabyrinthe.PARFAIT, 2),
-    DIFFICILE5(23, 26, 100, 55, 5, Vision.VUE_LIMITEE, 288, TypeLabyrinthe.PARFAIT, 1),
+    FACILE5(17, 21, 100, 15, 5, Vision.VUE_LIMITEE, 160, TypeLabyrinthe.PARFAIT, 4),
+    MOYEN5(21, 23, 100, 25, 5, Vision.VUE_LIMITEE, 220, TypeLabyrinthe.PARFAIT, 2),
+    DIFFICILE5(23, 27, 100, 55, 5, Vision.VUE_LIMITEE, 288, TypeLabyrinthe.PARFAIT, 1),
 
-    FACILE6(17, 20, 100, 15, 6, Vision.VUE_CARTE, 160, TypeLabyrinthe.PARFAIT, 4),
-    MOYEN6(20, 23, 100, 25, 6, Vision.VUE_CARTE, 220, TypeLabyrinthe.PARFAIT, 2),
-    DIFFICILE6(23, 26, 100, 55, 6, Vision.VUE_CARTE, 288, TypeLabyrinthe.PARFAIT, 1);
+    FACILE6(17, 19, 100, 15, 6, Vision.VUE_CARTE, 160, TypeLabyrinthe.PARFAIT, 4),
+    MOYEN6(21, 23, 100, 25, 6, Vision.VUE_CARTE, 220, TypeLabyrinthe.PARFAIT, 2),
+    DIFFICILE6(23, 27, 100, 55, 6, Vision.VUE_CARTE, 288, TypeLabyrinthe.PARFAIT, 1);
 
     private final int largeur;
     private final int hauteur;
@@ -36,7 +36,7 @@ public enum Defi {
     private final Vision vision;
     private final int distanceMin;
     private TypeLabyrinthe typeLabyrinthe;
-    private final int portee;  // Nouveau paramètre pour la portée de vision
+    private final int portee;
     /*
     L'étape associée au défi (Pour rappel : chaque étape a 3 défis).
      */
