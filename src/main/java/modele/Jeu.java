@@ -23,6 +23,7 @@ public class Jeu {
     private Defi defiEnCours;
     private LocalTime start;
     private LocalTime end;
+    private int nombreDeplacements;
 
     /**
      * @param modeJeu     un mode de jeu
@@ -144,7 +145,6 @@ public class Jeu {
         if (this.labyrinthe == null || !this.labyrinthe.isJeuEnCours()) {
             return false;
         }
-
         if (start == null) {
             start = LocalTime.now();
         }
@@ -155,6 +155,7 @@ public class Jeu {
         if (this.labyrinthe.peutDeplacer(nouveauX, nouveauY)) {
             this.labyrinthe.setJoueurX(nouveauX);
             this.labyrinthe.setJoueurY(nouveauY);
+            nombreDeplacements++;
 
             if (this.labyrinthe.estSurSortie(nouveauX, nouveauY)) {
                 this.labyrinthe.setJeuEnCours(false);
@@ -189,10 +190,10 @@ public class Jeu {
      * Termine la partie en cours.
      *
      * @param victoire true si le joueur a gagné, false sinon
-     * @param start temps de début de la partie
+     * @param now
      * @return message de fin de partie
      */
-    public String terminerPartie(boolean victoire, LocalTime start) {
+    public String terminerPartie(boolean victoire, LocalTime now) {
         this.labyrinthe.setJeuEnCours(false);
 
         StringBuilder resultat = new StringBuilder();
@@ -209,6 +210,8 @@ public class Jeu {
             long secondes = Duration.between(start, finTemps).toSeconds() % 60;
             resultat.append("Temps écoulé : ").append(minutes).append(" min ").append(secondes).append(" sec\n");
         }
+
+        resultat.append("Nombre de déplacements : ").append(nombreDeplacements).append("\n");
 
         if (victoire && this.joueur != null && this.defiEnCours != null) {
             this.joueur.ajouterScore(this.defiEnCours);
@@ -236,11 +239,20 @@ public class Jeu {
         this.end = end;
     }
 
+    public int getNombreDeplacements() {
+        return nombreDeplacements;
+    }
+
+    public void setNombreDeplacements(int nombreDeplacements) {
+        this.nombreDeplacements = nombreDeplacements;
+    }
+
     /**
      * Remet à zéro le timer pour une nouvelle partie
      */
     public void resetTimer() {
         this.start = null;
         this.end = null;
+        this.nombreDeplacements = 0;
     }
 }

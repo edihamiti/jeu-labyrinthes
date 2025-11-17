@@ -32,7 +32,7 @@ public class JeuControleur {
     private TypeLabyrinthe typeLab;
     private GenerateurLabyrinthe generateur;
     private LimiteeRendu renduLimitee;
-    private UpdateRendu renduUpdate;  // Nouveau rendu pour l'étape 6
+    private UpdateRendu renduUpdate;
 
     /**
      * Initialise le contrôleur et configure les événements de déplacement du joueur.
@@ -198,6 +198,9 @@ public class JeuControleur {
         if (Jeu.getInstance().getLabyrinthe().peutDeplacer(nouveauX, nouveauY)) {
             Jeu.getInstance().getLabyrinthe().setJoueurX(nouveauX);
             Jeu.getInstance().getLabyrinthe().setJoueurY(nouveauY);
+
+            Jeu.getInstance().setNombreDeplacements(Jeu.getInstance().getNombreDeplacements() + 1);
+
             playSound("move.mp3");
             if (random.nextInt(100) > 95) playSound("bois.mp3");
 
@@ -208,13 +211,10 @@ public class JeuControleur {
         } else {
             playSound("block.mp3");
 
-            // Utiliser le bon rendu selon le mode de vision pour garder le brouillard actif
             if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION) &&
                 Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITEE)) {
-                // Pour la vue limitée, utiliser renduLimitee pour conserver le brouillard
                 renduLimitee.setBlockedWall(nouveauX, nouveauY);
             } else {
-                // Pour les autres modes, utiliser renduLabyrinthe
                 renduLabyrinthe.setBlockedWall(nouveauX, nouveauY);
             }
         }
@@ -225,14 +225,23 @@ public class JeuControleur {
         audio.play();
     }
 
-    private int calculerScore(long minutes, long secondes) {
+    private int calculerScore(int nombreDeplacements) {
         if (Jeu.getInstance().getJoueur() != null && Jeu.getInstance().getDefiEnCours() != null) {
-            int pointsBase = Jeu.getInstance().getDefiEnCours().getPoints();
-            long tempsTotal = minutes * 60 + secondes;
+            Defi defi = Jeu.getInstance().getDefiEnCours();
+            int pointsBase = defi.getPoints();
+            int etape = defi.getEtape();
 
-            if (tempsTotal > 10) {
-                long tempsSupplementaire = tempsTotal - 10;
-                int penalite = (int) (tempsSupplementaire / 10);
+            //étapes 1, 2 et 3
+            if (etape <= 3) {
+                return pointsBase;
+            }
+
+            //étapes 4, 5 et 6
+            int deplacementsOptimal = (int) (defi.getDistanceMin() * 1.5);
+
+            if (nombreDeplacements > deplacementsOptimal) {
+                int deplacementsSupplementaires = nombreDeplacements - deplacementsOptimal;
+                int penalite = deplacementsSupplementaires / 2; // 1 point de pénalité par 2 déplacements supplémentaires
                 return Math.max(0, pointsBase - penalite);
             }
             return pointsBase;
@@ -261,8 +270,10 @@ public class JeuControleur {
 
             controleur.setTemps(minutes + " min " + secondes + " sec");
 
+            controleur.setDeplacement(String.valueOf(Jeu.getInstance().getNombreDeplacements()));
+
             if (Jeu.getInstance().getJoueur() != null && Jeu.getInstance().getDefiEnCours() != null) {
-                int scoreObtenu = calculerScore(minutes, secondes);
+                int scoreObtenu = calculerScore(Jeu.getInstance().getNombreDeplacements());
 
                 Jeu.getInstance().getJoueur().ajouterScore(scoreObtenu, Jeu.getInstance().getDefiEnCours());
                 Jeu.getInstance().getSauvegarde().sauvegardeJoueurs();
