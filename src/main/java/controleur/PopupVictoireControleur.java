@@ -21,11 +21,16 @@ public class PopupVictoireControleur extends Controleur {
     @FXML
     private Label messageLabel;
 
+    @FXML
+    private Label deplacementLabel;
+
     private Runnable onRejouer;
     private Runnable onRetourMenu;
 
     public void setTemps(String temps) {
         tempsLabel.setText("Temps : " + temps);
+        tempsLabel.setVisible(true);
+        tempsLabel.setManaged(true);
     }
 
     public void setScore(String score) {
@@ -40,6 +45,12 @@ public class PopupVictoireControleur extends Controleur {
             messageLabel.setVisible(true);
             messageLabel.setManaged(true);
         }
+    }
+
+    public void setDeplacement(String deplacement) {
+        deplacementLabel.setText("Déplacements : " + deplacement);
+        deplacementLabel.setVisible(true);
+        deplacementLabel.setManaged(true);
     }
 
     public void setRejouer(Runnable action) {

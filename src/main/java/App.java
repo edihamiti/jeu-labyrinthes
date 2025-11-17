@@ -1,5 +1,6 @@
 import controleur.AppControleur;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import modele.Jeu;
 
@@ -14,7 +15,7 @@ public class App extends Application {
         Jeu jeu = new Jeu();
 
         stage.setTitle("Le jeu des Labyrinthes");
-        stage.getIcons().add(new javafx.scene.image.Image(Objects.requireNonNull(getClass().getResourceAsStream("img/sortie.png"))));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("img/sortie.png")));
 
         AppControleur appControleur = new AppControleur(jeu);
         appControleur.setPrimaryStage(stage);

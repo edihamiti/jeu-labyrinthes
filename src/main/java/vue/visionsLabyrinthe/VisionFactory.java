@@ -14,7 +14,7 @@ public class VisionFactory {
         strategies.put(Vision.VUE_CARTE, new VisionCarte());
     }
 
-    public static VisionLabyrinthe getStrategy(Vision vision) {
+    public static VisionLabyrinthe getStrategy(Vision vision, int porteeVision) {
         VisionLabyrinthe strategy = strategies.get(vision);
         if (strategy == null) {
             // Retour par défaut à VisionLibre si la vision n'est pas trouvée

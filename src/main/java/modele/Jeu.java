@@ -19,6 +19,7 @@ public class Jeu {
     private ModeJeu modeJeu;
     private Vision vision = Vision.VUE_LIBRE;
     private Defi defiEnCours;
+    private int nombreDeplacements;
     private GameTimer gameTimer;
 
     /**
@@ -131,7 +132,7 @@ public class Jeu {
             return false;
         }
 
-        gameTimer.startTimer();
+        gameTimer.startTimer(); // TODO: REVÉRIFIER TOUT ÇA JE SUIS PAS SÛR DE CE QUE J'AI FAIT
 
         int nouveauX = this.labyrinthe.getJoueurX() + dx;
         int nouveauY = this.labyrinthe.getJoueurY() + dy;
@@ -139,6 +140,7 @@ public class Jeu {
         if (this.labyrinthe.peutDeplacer(nouveauX, nouveauY)) {
             this.labyrinthe.setJoueurX(nouveauX);
             this.labyrinthe.setJoueurY(nouveauY);
+            nombreDeplacements++;
 
             if (this.labyrinthe.estSurSortie(nouveauX, nouveauY)) {
                 this.labyrinthe.setJeuEnCours(false);
@@ -157,7 +159,6 @@ public class Jeu {
      */
     public boolean estVictoire() {
         if (this.labyrinthe == null) {
-            System.out.println("Le labyrinthe est null");
             return false;
         }
 
@@ -166,8 +167,6 @@ public class Jeu {
             int joueurY = this.labyrinthe.getJoueurY();
             return this.labyrinthe.estSurSortie(joueurX, joueurY);
         }
-
-        System.out.println("Le jeu n'est pas en cours");
 
         return false;
     }
@@ -180,7 +179,6 @@ public class Jeu {
      */
     public String terminerPartie(boolean victoire) {
         this.labyrinthe.setJeuEnCours(false);
-
 
         StringBuilder resultat = new StringBuilder();
 
@@ -195,6 +193,8 @@ public class Jeu {
         long minutes = duration.toMinutes();
         long seconds = duration.toSecondsPart();
         resultat.append("Temps écoulé : ").append(minutes).append(" min ").append(seconds).append(" sec\n");
+
+        resultat.append("Nombre de déplacements : ").append(nombreDeplacements).append("\n");
 
         if (victoire && this.joueur != null && this.defiEnCours != null) {
             int scoreObtenu = CalculateurScore.calculerScore(defiEnCours, gameTimer.getDuration());
@@ -223,10 +223,19 @@ public class Jeu {
         return this.gameTimer.isRunning();
     }
 
+    public int getNombreDeplacements() {
+        return nombreDeplacements;
+    }
+
+    public void setNombreDeplacements(int nombreDeplacements) {
+        this.nombreDeplacements = nombreDeplacements;
+    }
+
     /**
      * Remet à zéro le timer pour une nouvelle partie
      */
     public void resetTimer() {
         this.gameTimer = new GameTimer();
+        this.nombreDeplacements = 0;
     }
 }

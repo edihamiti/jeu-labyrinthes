@@ -2,6 +2,7 @@ package vue;
 
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import modele.Jeu;
 import modele.Labyrinthe;
 
 public interface Rendu {

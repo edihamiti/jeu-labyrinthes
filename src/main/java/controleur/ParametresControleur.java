@@ -20,6 +20,8 @@ import java.io.IOException;
  * Contrôleur pour les paramètres du mode libre du jeu de labyrinthe.
  */
 public class ParametresControleur extends Controleur {
+    private final double POURCENTAGE_MIN = 0.0;
+    private final double POURCENTAGE_MAX = 100.0;
     public Spinner<Integer> largeurField;
     public Spinner<Integer> hauteurField;
     public TextField pourcentageMursField;
@@ -30,14 +32,8 @@ public class ParametresControleur extends Controleur {
     public int largeur = 5;
     public int hauteur = 5;
     public double pourcentageMurs = 50.0;
-    public int distanceMin = 4;
+    public int distanceMin = 1;
     public TypeLabyrinthe typeLabyrinthe = TypeLabyrinthe.ALEATOIRE;
-    private final int LARGEUR_MIN = 6;
-    private final int LARGEUR_MAX = 30;
-    private final int HAUTEUR_MIN = 6;
-    private final int HAUTEUR_MAX = 30;
-    private final double POURCENTAGE_MIN = 0.0;
-    private final double POURCENTAGE_MAX = 100.0;
 
     /**
      * Initialise les composants du formulaire et configure les observables d'événements.
@@ -123,13 +119,13 @@ public class ParametresControleur extends Controleur {
         String typeLabyrinthe = typeLabyrintheField.getValue();
         System.out.println("Type de labyrinthe sélectionné : " + typeLabyrinthe);
         switch (typeLabyrinthe) {
-            case ("Aléatoire") :
+            case ("Aléatoire"):
                 this.typeLabyrinthe = TypeLabyrinthe.ALEATOIRE;
                 break;
-            case ("Parfait") :
+            case ("Parfait"):
                 this.typeLabyrinthe = TypeLabyrinthe.PARFAIT;
                 break;
-            default :
+            default:
                 throw new IllegalArgumentException("Type de labyrinthe inconnu !");
         }
         this.updateAvailableFields();
@@ -141,23 +137,18 @@ public class ParametresControleur extends Controleur {
     private void updateAvailableFields() {
         switch (this.typeLabyrinthe) {
             case PARFAIT -> {
-                // Désactiver le pourcentage de murs.
                 pourcentageMursField.setDisable(true);
                 pourcentageMursSlider.setDisable(true);
                 pourcentageMurs = 100.0;
 
-                // Activer la distance minimum.
                 distanceMinSpinner.setDisable(false);
             }
             case ALEATOIRE -> {
-                // Activer les fields de largeur et hauteur.
                 pourcentageMursField.setDisable(false);
                 pourcentageMursSlider.setDisable(false);
                 pourcentageMurs = pourcentageMursSlider.getValue();
 
-                // Désactiver la distance minimum.
                 distanceMinSpinner.setDisable(true);
-                distanceMin = 1;
             }
         }
     }
@@ -182,7 +173,15 @@ public class ParametresControleur extends Controleur {
             System.out.println("\tHauteur : " + hauteur);
             System.out.println("\tPourcentageMurs : " + pourcentageMurs);
             System.out.println("\tTypeLabyrinthe : " + typeLabyrinthe);
-            System.out.println("\tDistanceMin : " + distanceMin);
+
+            int distanceMinEffective;
+            if (typeLabyrinthe == TypeLabyrinthe.PARFAIT) {
+                distanceMinEffective = distanceMin;
+            } else {
+                distanceMinEffective = 1;
+            }
+            System.out.println("\tDistanceMin : " + distanceMinEffective);
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
             Parent jeuView = loader.load();
 
@@ -195,7 +194,7 @@ public class ParametresControleur extends Controleur {
             }
 
             // Appeler setParametresLab APRÈS le chargement du FXML
-            jeuControleur.setParametresLab(largeur, hauteur, pourcentageMurs, distanceMin, typeLabyrinthe);
+            jeuControleur.setParametresLab(largeur, hauteur, pourcentageMurs, distanceMinEffective, typeLabyrinthe);
 
             Stage stage = (Stage) validerButton.getScene().getWindow();
             Scene jeuScene = new Scene(jeuView, 1400, 900);

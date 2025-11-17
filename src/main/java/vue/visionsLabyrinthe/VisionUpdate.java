@@ -2,17 +2,21 @@ package vue.visionsLabyrinthe;
 
 import javafx.scene.layout.VBox;
 import modele.Labyrinthe;
-import vue.LimiteeRendu;
 import vue.MiniMapRendu;
 import vue.Rendu;
+import vue.UpdateRendu;
 
-public class VisionLimitee implements VisionLabyrinthe {
+/**
+ * Stratégie de vision pour la carte qui se met à jour progressivement.
+ * Utilisée pour l'exploration progressive avec minimap.
+ */
+public class VisionUpdate implements VisionLabyrinthe {
     private final int porteeVision;
 
     /**
      * Constructeur avec portée de vision par défaut (2).
      */
-    public VisionLimitee() {
+    public VisionUpdate() {
         this(2);
     }
 
@@ -21,18 +25,18 @@ public class VisionLimitee implements VisionLabyrinthe {
      *
      * @param porteeVision La portée de vision du joueur.
      */
-    public VisionLimitee(int porteeVision) {
+    public VisionUpdate(int porteeVision) {
         this.porteeVision = porteeVision;
     }
 
     @Override
     public Rendu createRendu(Labyrinthe lab, VBox container) {
-        return new LimiteeRendu(lab, container, porteeVision);
+        return new UpdateRendu(lab, container, porteeVision);
     }
 
     @Override
     public boolean requiresMinimap() {
-        return false;
+        return true;
     }
 
     @Override
@@ -40,3 +44,4 @@ public class VisionLimitee implements VisionLabyrinthe {
         return new MiniMapRendu(lab, container);
     }
 }
+

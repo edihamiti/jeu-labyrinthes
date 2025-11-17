@@ -34,7 +34,6 @@ public class JeuControleur extends Controleur {
     private Rendu renduLabyrinthe;
     private Rendu renduMinimap;
     private GenerateurLabyrinthe generateur;
-
     private HandlerVictoire handlerVictoire;
 
     /**
@@ -185,7 +184,7 @@ public class JeuControleur extends Controleur {
     private void deplacer(int nouveauX, int nouveauY) throws IOException {
 
         if (!jeu.isRunning()) {
-            jeu.startTimer();
+            jeu.startTimer(); //TODO: VÉRIFIER QUE JE FAIT PAS DE LA MERDE ICI
         }
 
         Random random = new Random();
@@ -193,15 +192,43 @@ public class JeuControleur extends Controleur {
             SoundManager.playSound("move.mp3");
             if (random.nextInt(100) > 95) SoundManager.playSound("bois.mp3");
 
+            jeu.setNombreDeplacements(jeu.getNombreDeplacements() + 1);
+
             if (jeu.getLabyrinthe().estSurSortie(nouveauX, nouveauY)) {
                 victoire();
             }
         } else {
             SoundManager.playSound("block.mp3");
             renduLabyrinthe.setBlockedWall(nouveauX, nouveauY);
-            renduLabyrinthe.setBlockedWall(nouveauX, nouveauY);
+            if (overlayMinimap.isVisible() && renduMinimap != null) {
+                renduMinimap.setBlockedWall(nouveauX, nouveauY);
+            }
         }
     }
+
+//    private int calculerScore(int nombreDeplacements) { // TODO : Rebouger tout ça dans le calculateur
+//        if (Jeu.getInstance().getJoueur() != null && Jeu.getInstance().getDefiEnCours() != null) {
+//            Defi defi = Jeu.getInstance().getDefiEnCours();
+//            int pointsBase = defi.getPoints();
+//            int etape = defi.getEtape();
+//
+//            //étapes 1, 2 et 3
+//            if (etape <= 3) {
+//                return pointsBase;
+//            }
+//
+//            //étapes 4, 5 et 6
+//            int deplacementsOptimal = (int) (defi.getDistanceMin() * 1.5);
+//
+//            if (nombreDeplacements > deplacementsOptimal) {
+//                int deplacementsSupplementaires = nombreDeplacements - deplacementsOptimal;
+//                int penalite = deplacementsSupplementaires / 2; // 1 point de pénalité par 2 déplacements supplémentaires
+//                return Math.max(0, pointsBase - penalite);
+//            }
+//            return pointsBase;
+//        }
+//        return 0;
+//    }
 
     /**
      * Gère la victoire du joueur lorsqu'il atteint la sortie du labyrinthe.
@@ -247,15 +274,18 @@ public class JeuControleur extends Controleur {
     }
 
     public void setRenduLabyrinthe() {
-        // Déterminer la vision à utiliser
         Vision vision = Vision.VUE_LIBRE; // Vision par défaut
+        VisionLabyrinthe visionStrategy;
 
-        if (jeu.getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
+        if (jeu.getDefiEnCours() != null) {
             vision = jeu.getDefiEnCours().vision();
-        }
+            int porteeVision = jeu.getDefiEnCours().portee();
 
-        // Obtenir la stratégie de vision appropriée
-        VisionLabyrinthe visionStrategy = VisionFactory.getStrategy(vision);
+            // Obtenir la stratégie avec la portée personnalisée si nécessaire
+            visionStrategy = VisionFactory.getStrategy(vision, porteeVision);
+        } else {
+            visionStrategy = VisionFactory.getStrategy(vision, 0);
+        }
 
         // Configurer le rendu principal
         this.renduLabyrinthe = visionStrategy.createRendu(jeu.getLabyrinthe(), conteneurLabyrinthe);
@@ -264,10 +294,7 @@ public class JeuControleur extends Controleur {
         if (visionStrategy.requiresMinimap()) {
             overlayMinimap.setVisible(true);
             this.renduMinimap = visionStrategy.createMinimapRendu(jeu.getLabyrinthe(), minimap);
-        } else {
-            overlayMinimap.setVisible(false);
         }
-
     }
 
     /**

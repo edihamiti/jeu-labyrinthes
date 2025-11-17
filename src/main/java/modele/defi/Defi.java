@@ -12,7 +12,8 @@ public record Defi(
         int points,
         Vision vision,
         int distanceMin,
-        TypeLabyrinthe typeLabyrinthe
+        TypeLabyrinthe typeLabyrinthe,
+        int portee
 ) {
 
     public Defi {
@@ -33,6 +34,9 @@ public record Defi(
         }
         if (distanceMin < 0) {
             throw new IllegalArgumentException("Distance minimale ne peut pas être négative");
+        }
+        if (portee < 0) {
+            throw new IllegalArgumentException("La portée ne peut pas être négative");
         }
     }
 

@@ -16,19 +16,32 @@ public class LimiteeRendu implements Rendu {
     private final Image imgRedWall = new Image(getClass().getResourceAsStream("/img/redWall.png"));
     private final Image imgBrouillard = new Image(getClass().getResourceAsStream("/img/brouillard.png"));
     private Labyrinthe labyrinthe;
-    private VBox contientLabyrinthe;
+    private VBox conteneurLabyrinthe;
+    private int porteeVision;
     private int lastBlockedX = -1;
     private int lastBlockedY = -1;
 
     /**
-     * Constructeur de la classe LabyrintheRendu.
+     * Constructeur de la classe LimiteeRendu.
      *
-     * @param labyrinthe        Le labyrinthe à rendre.
-     * @param contienLabyrinthe Le conteneur VBox pour afficher le labyrinthe.
+     * @param labyrinthe          Le labyrinthe à rendre.
+     * @param conteneurLabyrinthe Le conteneur VBox pour afficher le labyrinthe.
+     * @param porteeVision        La portée de vision du joueur.
      */
-    public LimiteeRendu(Labyrinthe labyrinthe, VBox contienLabyrinthe) {
+    public LimiteeRendu(Labyrinthe labyrinthe, VBox conteneurLabyrinthe, int porteeVision) {
         this.labyrinthe = labyrinthe;
-        this.contientLabyrinthe = contienLabyrinthe;
+        this.conteneurLabyrinthe = conteneurLabyrinthe;
+        this.porteeVision = porteeVision;
+    }
+
+    /**
+     * Constructeur avec portée de vision par défaut (2).
+     *
+     * @param labyrinthe          Le labyrinthe à rendre.
+     * @param conteneurLabyrinthe Le conteneur VBox pour afficher le labyrinthe.
+     */
+    public LimiteeRendu(Labyrinthe labyrinthe, VBox conteneurLabyrinthe) {
+        this(labyrinthe, conteneurLabyrinthe, 2);
     }
 
     /**
@@ -58,8 +71,8 @@ public class LimiteeRendu implements Rendu {
      * Affiche le labyrinthe dans le conteneur VBox.
      */
     public void afficherLabyrinthe() {
-        contientLabyrinthe.getChildren().clear();
-        contientLabyrinthe.getChildren().add(creerCanvasLimited(this.labyrinthe.getCellules()));
+        conteneurLabyrinthe.getChildren().clear();
+        conteneurLabyrinthe.getChildren().add(creerCanvasLimited(this.labyrinthe.getCellules()));
     }
 
     /**
@@ -71,17 +84,19 @@ public class LimiteeRendu implements Rendu {
     private Canvas creerCanvasLimited(Cellule[][] labyrinthe) {
         int joueurX = this.labyrinthe.getJoueurX();
         int joueurY = this.labyrinthe.getJoueurY();
-        int porteeVueLocale = 2;
+
+        int porteeVueLocale = this.porteeVision;
+
         Cellule[][] cellules = this.labyrinthe.getCellules();
         int largeurMax = this.labyrinthe.getLargeurMax();
         int hauteurMax = this.labyrinthe.getHauteurMax();
 
-        double heightVBox = contientLabyrinthe.getHeight();
-        double widthVBox = contientLabyrinthe.getWidth();
+        double heightVBox = conteneurLabyrinthe.getHeight();
+        double widthVBox = conteneurLabyrinthe.getWidth();
 
-        if (heightVBox == 0 && contientLabyrinthe.getScene() != null) {
-            heightVBox = contientLabyrinthe.getScene().getHeight() - 200;
-            widthVBox = contientLabyrinthe.getScene().getWidth() * 0.5;
+        if (heightVBox == 0 && conteneurLabyrinthe.getScene() != null) {
+            heightVBox = conteneurLabyrinthe.getScene().getHeight() - 200;
+            widthVBox = conteneurLabyrinthe.getScene().getWidth() * 0.5;
         }
 
         if (heightVBox == 0) {
@@ -140,7 +155,7 @@ public class LimiteeRendu implements Rendu {
         this.labyrinthe = labyrinthe;
     }
 
-    public void setContientLabyrinthe(VBox contientLabyrinthe) {
-        this.contientLabyrinthe = contientLabyrinthe;
+    public void setConteneurLabyrinthe(VBox conteneurLabyrinthe) {
+        this.conteneurLabyrinthe = conteneurLabyrinthe;
     }
 }

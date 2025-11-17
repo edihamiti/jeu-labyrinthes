@@ -12,21 +12,33 @@ import modele.Labyrinthe;
  */
 public class LocaleRendu implements Rendu {
     private final int tailleCellule = 175; // Taille des cellules pour la vue locale
-    private final int porteeVueLocale = 1; // Portée de la vue locale (1 case autour du joueur)
+    private int porteeVueLocale; // Portée de la vue locale (nombre de cases autour du joueur)
     private Labyrinthe labyrinthe;
     private VBox contienLabyrinthe;
     private int lastBlockedX = -1;
     private int lastBlockedY = -1;
 
     /**
-     * Constructeur de la classe LocaleRendu.
+     * Constructeur de la classe LocaleRendu avec portée personnalisée.
+     *
+     * @param labyrinthe        Le labyrinthe à rendre.
+     * @param contienLabyrinthe Le conteneur VBox pour afficher la vue locale.
+     * @param porteeVueLocale   La portée de vision du joueur.
+     */
+    public LocaleRendu(Labyrinthe labyrinthe, VBox contienLabyrinthe, int porteeVueLocale) {
+        this.labyrinthe = labyrinthe;
+        this.contienLabyrinthe = contienLabyrinthe;
+        this.porteeVueLocale = porteeVueLocale;
+    }
+
+    /**
+     * Constructeur de la classe LocaleRendu avec portée par défaut (1 case).
      *
      * @param labyrinthe        Le labyrinthe à rendre.
      * @param contienLabyrinthe Le conteneur VBox pour afficher la vue locale.
      */
     public LocaleRendu(Labyrinthe labyrinthe, VBox contienLabyrinthe) {
-        this.labyrinthe = labyrinthe;
-        this.contienLabyrinthe = contienLabyrinthe;
+        this(labyrinthe, contienLabyrinthe, 1);
     }
 
     /**
