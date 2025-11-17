@@ -1,0 +1,43 @@
+/* Container général */
+#profilsContainer {
+    -fx-padding: 20;
+    -fx-spacing: 8;
+}
+
+/* Ligne d’en-tête */
+.leaderboard-header {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-background-radius: 8;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+/* Style commun aux labels */
+.leaderboard-header Label,
+.leaderboard-row Label,
+.empty-message {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-alignment: CENTER;
+}
+
+/* Ligne du leaderboard */
+.leaderboard-row {
+    -fx-background-color: rgba(255, 255, 255, 0.07);
+    -fx-background-radius: 6;
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-alignment: CENTER;
+}
+
+/* Hover pour rendre joli */
+.leaderboard-row:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Message vide */
+.empty-message {
+    -fx-opacity: 0.7;
+    -fx-font-style: italic;
+    -fx-alignment: CENTER;
+}
