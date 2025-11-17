@@ -1,5 +1,6 @@
 package vue;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -192,7 +193,7 @@ public class EtapesRendu {
         graphics.setAlignment(javafx.geometry.Pos.TOP_CENTER);
 
         root.setGraphic(graphics);
-        root.setPadding(new javafx.geometry.Insets(8, 8, 5, 8));
+        root.setPadding(new Insets(8, 8, 5, 8));
         root.getStyleClass().add("defi-button");
 
         if (!isUnlocked) {
