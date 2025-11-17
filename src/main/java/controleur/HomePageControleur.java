@@ -15,11 +15,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import modele.Jeu;
 import modele.Joueur;
-import modele.Sauvegarde;
+import modele.joueursRepositories.JoueurRepository;
 import vue.ChargerProfileRendu;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Contrôleur pour la page d'accueil de l'application.
@@ -37,7 +37,7 @@ public class HomePageControleur extends Controleur {
     public Text modeProgressionText;
     private boolean modeProgression;
     private boolean isChargerProfilActive;
-    private Sauvegarde saves;
+    private JoueurRepository saves;
 
     // Constructeur par défaut (obligatoire pour JavaFX)
     public HomePageControleur() {
@@ -155,7 +155,7 @@ public class HomePageControleur extends Controleur {
         );
 
         if (isChargerProfilActive) {
-            HashMap<String, Joueur> profiles = saves.getJoueurs();
+            Map<String, Joueur> profiles = saves.getJoueurs();
 
             chargerProfilButton.getChildren().add(ChargerProfileRendu.render(profiles, joueur -> {
                 jeu.setJoueur(joueur);

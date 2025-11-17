@@ -1,14 +1,16 @@
 package modele;
 
+import modele.joueursRepositories.JSONRepository;
+import modele.joueursRepositories.JoueurRepository;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class SauvegardeTest {
+class JSONRepositoryTest {
 
-    private Sauvegarde joueurs;
+    private JSONRepository joueurs;
     private Joueur joueur1;
     private Joueur joueur2;
     private Joueur joueur3;
@@ -16,7 +18,7 @@ class SauvegardeTest {
 
     @BeforeAll
     void init() throws PseudoException {
-        joueurs = new Sauvegarde("saves/test/sauvegardesJoueurs.json");
+        joueurs = new JSONRepository("saves/test/sauvegardesJoueurs.json");
         joueur1 = new Joueur("Enzo");
         joueur2 = new Joueur("Amaury");
         joueur3 = new Joueur("Edi");
@@ -46,8 +48,8 @@ class SauvegardeTest {
     @Test
     @Order(3)
     void sauvegardeEtChargerJoueurs() {
-        joueurs.sauvegardeJoueurs();
-        Sauvegarde joueursCharger = new Sauvegarde("saves/test/sauvegardesJoueurs.json");
+        joueurs.sauvegarder();
+        JoueurRepository joueursCharger = new JSONRepository("saves/test/sauvegardesJoueurs.json");
         joueursCharger.chargerJoueurs();
         assertEquals(joueurs, joueursCharger);
         joueurs.removeJoueur(joueur4);

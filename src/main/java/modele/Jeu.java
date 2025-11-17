@@ -1,9 +1,9 @@
 package modele;
 
-import modele.generateurs.GenerateurLabyrinthe;
+import modele.joueursRepositories.JoueurRepository;
+import modele.joueursRepositories.JSONRepository;
 
 import java.time.Duration;
-import java.time.LocalTime;
 import java.util.Scanner;
 
 /**
@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class Jeu {
 
-    Sauvegarde sauvegarde = new Sauvegarde();
+    JoueurRepository sauvegarde = new JSONRepository();
     private Joueur joueur;
     private Labyrinthe labyrinthe;
 
@@ -54,7 +54,7 @@ public class Jeu {
         this.modeJeu = modeJeu;
     }
 
-    public Sauvegarde getSauvegarde() {
+    public JoueurRepository getSauvegarde() {
         return sauvegarde;
     }
 
@@ -198,7 +198,7 @@ public class Jeu {
         if (victoire && this.joueur != null && this.defiEnCours != null) {
             int scoreObtenu = CalculateurScore.calculerScore(defiEnCours, gameTimer.getDuration());
             this.joueur.ajouterScore(scoreObtenu, defiEnCours);
-            this.sauvegarde.sauvegardeJoueurs();
+            this.sauvegarde.sauvegarder();
             resultat.append("Points gagnés : ").append(scoreObtenu);
         }
 

@@ -1,5 +1,7 @@
-package modele;
+package modele.joueursRepositories;
 
+import modele.Joueur;
+import modele.PseudoException;
 import org.json.JSONArray;
 
 import java.io.*;
@@ -9,7 +11,7 @@ import java.util.Objects;
 /**
  * Classe gérant la sauvegarde et le chargement des joueurs.
  */
-public class Sauvegarde {
+public class JSONRepository implements JoueurRepository {
 
     private final File FICHIER;
     private final HashMap<String, Joueur> joueurs;
@@ -19,7 +21,7 @@ public class Sauvegarde {
      *
      * @param filePath le chemin du fichier de sauvegarde
      */
-    public Sauvegarde(String filePath) {
+    public JSONRepository(String filePath) {
         this.FICHIER = new File(filePath);
         joueurs = new HashMap<>();
         assurerFichierSauvegarde();
@@ -29,7 +31,7 @@ public class Sauvegarde {
      * Constructeur par défaut de la classe Sauvegarde.
      * Utilise le chemin de fichier par défaut "saves/sauvegardesJoueurs.json".
      */
-    public Sauvegarde() {
+    public JSONRepository() {
         this("saves/sauvegardesJoueurs.json");
     }
 
@@ -37,21 +39,11 @@ public class Sauvegarde {
         return this.joueurs.size();
     }
 
-    /**
-     * Ajoute un joueur à la sauvegarde.
-     *
-     * @param j le joueur à ajouter
-     */
-    public void addJoueur(Joueur j) {
-        if (joueurs.containsKey(j.getPseudo())) return;
-        this.joueurs.put(j.getPseudo(), j);
+    public void addJoueur(Joueur joueur) {
+        if (joueurs.containsKey(joueur.getPseudo())) return;
+        this.joueurs.put(joueur.getPseudo(), joueur);
     }
 
-    /**
-     * Supprime un joueur de la sauvegarde.
-     *
-     * @param joueur le joueur à supprimer
-     */
     public void removeJoueur(Joueur joueur) {
         if (joueurs.containsKey(joueur.getPseudo()))
             this.joueurs.remove(joueur.getPseudo());
@@ -106,10 +98,7 @@ public class Sauvegarde {
         }
     }
 
-    /**
-     * Sauvegarde les joueurs dans le fichier de sauvegarde.
-     */
-    public void sauvegardeJoueurs() {
+    public void sauvegarder() {
         try (FileWriter fileWriter = new FileWriter(FICHIER)) {
 
             JSONArray jsonJoueurs = new JSONArray();
@@ -158,7 +147,7 @@ public class Sauvegarde {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Sauvegarde that = (Sauvegarde) o;
+        JSONRepository that = (JSONRepository) o;
         return Objects.equals(joueurs, that.joueurs);
     }
 
