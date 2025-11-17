@@ -6,9 +6,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import modele.*;
+import modele.Labyrinthe;
+import modele.ModeJeu;
+import modele.TypeLabyrinthe;
+import modele.Vision;
 import modele.generateurs.GenerateurLabyrinthe;
-import vue.*;
+import vue.HandlerVictoire;
+import vue.Rendu;
+import vue.SoundManager;
 import vue.visionsLabyrinthe.VisionFactory;
 import vue.visionsLabyrinthe.VisionLabyrinthe;
 
@@ -246,7 +251,7 @@ public class JeuControleur extends Controleur {
         Vision vision = Vision.VUE_LIBRE; // Vision par défaut
 
         if (jeu.getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
-            vision = jeu.getDefiEnCours().getVision();
+            vision = jeu.getDefiEnCours().vision();
         }
 
         // Obtenir la stratégie de vision appropriée

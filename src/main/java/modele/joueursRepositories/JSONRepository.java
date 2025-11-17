@@ -1,36 +1,31 @@
 package modele.joueursRepositories;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import modele.Joueur;
 import modele.PseudoException;
-import org.json.JSONArray;
 
 import java.io.*;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
-/**
- * Classe gérant la sauvegarde et le chargement des joueurs.
- */
 public class JSONRepository implements JoueurRepository {
 
     private final File FICHIER;
     private final HashMap<String, Joueur> joueurs;
+    private final Gson gson;
 
-    /**
-     * Constructeur de la classe Sauvegarde.
-     *
-     * @param filePath le chemin du fichier de sauvegarde
-     */
     public JSONRepository(String filePath) {
         this.FICHIER = new File(filePath);
-        joueurs = new HashMap<>();
+        this.joueurs = new HashMap<>();
+        this.gson = new GsonBuilder().setPrettyPrinting().create();
         assurerFichierSauvegarde();
     }
 
-    /**
-     * Constructeur par défaut de la classe Sauvegarde.
-     * Utilise le chemin de fichier par défaut "saves/sauvegardesJoueurs.json".
-     */
     public JSONRepository() {
         this("saves/sauvegardesJoueurs.json");
     }
@@ -53,24 +48,11 @@ public class JSONRepository implements JoueurRepository {
         return joueurs;
     }
 
-    /**
-     * Supprime un joueur de la sauvegarde par son pseudo.
-     *
-     * @param pseudo le pseudo du joueur à supprimer
-     */
     public void removeJoueur(String pseudo) {
         if (joueurs.containsKey(pseudo))
             this.joueurs.remove(pseudo);
     }
 
-    /**
-     * Récupère un joueur par son pseudo.
-     * Si le joueur n'existe pas dans la sauvegarde, un nouveau joueur est créé et ajouté.
-     *
-     * @param pseudo le pseudo du joueur à récupérer
-     * @return le joueur correspondant au pseudo
-     * @throws RuntimeException si le pseudo est invalide lors de la création d'un nouveau joueur
-     */
     public Joueur getJoueurParPseudo(String pseudo) throws PseudoException {
         Joueur existingJoueur = joueurs.get(pseudo);
         if (existingJoueur != null) return existingJoueur;
@@ -79,9 +61,6 @@ public class JSONRepository implements JoueurRepository {
         return newJoueur;
     }
 
-    /**
-     * Assure que le fichier de sauvegarde existe, sinon le crée.
-     */
     private void assurerFichierSauvegarde() {
         File parent = FICHIER.getParentFile();
         if (parent != null && !parent.exists()) {
@@ -100,14 +79,13 @@ public class JSONRepository implements JoueurRepository {
 
     public void sauvegarder() {
         try (FileWriter fileWriter = new FileWriter(FICHIER)) {
+            List<Joueur> listeJoueurs = new ArrayList<>(this.joueurs.values());
 
-            JSONArray jsonJoueurs = new JSONArray();
-
-            for (Joueur jouer : this.joueurs.values()) {
-                jsonJoueurs.put(jouer.toJson());
+            for (Joueur joueur : listeJoueurs) {
+                joueur.prepareForSerialization();
             }
 
-            fileWriter.write(jsonJoueurs.toString(4));
+            gson.toJson(listeJoueurs, fileWriter);
             System.out.println("Sauvegarde réussie");
 
         } catch (IOException e) {
@@ -115,22 +93,20 @@ public class JSONRepository implements JoueurRepository {
         }
     }
 
-    /**
-     * Charge les joueurs depuis le fichier de sauvegarde.
-     */
     public void chargerJoueurs() {
         try (BufferedReader bf = new BufferedReader(new FileReader(FICHIER))) {
+            Type listType = new TypeToken<List<Joueur>>() {
+            }.getType();
+            List<Joueur> listeJoueurs = gson.fromJson(bf, listType);
 
-            StringBuilder contenu = new StringBuilder();
-            String ligne;
-            while ((ligne = bf.readLine()) != null) contenu.append(ligne);
+            if (listeJoueurs != null) {
+                for (Joueur joueur : listeJoueurs) {
+                    joueur.restoreAfterDeserialization();
+                    this.addJoueur(joueur);
+                }
+            }
 
-            if (contenu.isEmpty()) return;
-
-            JSONArray jsonJoueurs = new JSONArray(contenu.toString());
-            for (int i = 0; i < jsonJoueurs.length(); i++) this.addJoueur(new Joueur(jsonJoueurs.getJSONObject(i)));
-
-            System.out.println("Joueurs chargé");
+            System.out.println("Joueurs chargés");
 
         } catch (IOException e) {
             throw new RuntimeException(e);

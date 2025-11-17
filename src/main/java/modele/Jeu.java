@@ -1,7 +1,8 @@
 package modele;
 
-import modele.joueursRepositories.JoueurRepository;
+import defi.modele.Defi;
 import modele.joueursRepositories.JSONRepository;
+import modele.joueursRepositories.JoueurRepository;
 
 import java.time.Duration;
 import java.util.Scanner;

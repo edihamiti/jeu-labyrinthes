@@ -1,12 +1,11 @@
 package modele;
 
+import defi.modele.Defi;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import modele.Cellules.*;
-
-import java.util.*;
+import modele.Cellules.Cellule;
 
 
 /**
@@ -62,10 +61,11 @@ public class Labyrinthe {
      * @param defi le défi à utiliser pour créer le labyrinthe
      */
     public Labyrinthe(Defi defi) {
-        this(defi.getLargeur(), defi.getHauteur(), defi.getPourcentageMurs());
+        this(defi.largeur(), defi.hauteur(), defi.pourcentageMurs());
     }
 
-    /** Calcule le plus court chemin entre l'entrée et la sortie du labyrinthe.
+    /**
+     * Calcule le plus court chemin entre l'entrée et la sortie du labyrinthe.
      * Délègue le calcul à la classe Pathfinder qui utilise l'algorithme BFS.
      *
      * @return la longueur du plus court chemin

@@ -1,38 +1,71 @@
 package modele;
 
-import static org.junit.jupiter.api.Assertions.*;
+import defi.modele.Defi;
+import defi.repository.DefiJson;
+import defi.repository.DefisRepo;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class EtapeTest {
+    private DefisRepo defisRepo;
+    private List<Defi> defis;
+    private Defi facile1;
+    private Defi moyen2;
+    private Defi difficile3;
+
+    @BeforeEach
+    void setUp() {
+        DefiJson defiJson = new DefiJson();
+        defisRepo = defiJson.charger();
+        defis = defisRepo.getDefisRepo();
+
+        facile1 = defis.stream()
+                .filter(d -> "FACILE1".equals(d.name()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("FACILE1 non trouvé"));
+
+        moyen2 = defis.stream()
+                .filter(d -> "MOYEN2".equals(d.name()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("MOYEN2 non trouvé"));
+
+        difficile3 = defis.stream()
+                .filter(d -> "DIFFICILE3".equals(d.name()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("DIFFICILE3 non trouvé"));
+    }
+
     @Test
     void testEtapeConstructeur() {
-        Defi defi = Defi.FACILE1;
         int numero = 1;
-        Etape etape = new Etape(defi, numero);
-        
-        assertEquals(defi, etape.getDefi());
+        Etape etape = new Etape(facile1, numero);
+
+        assertEquals(facile1, etape.getDefi());
         assertEquals(numero, etape.getNumero());
     }
 
     @Test
     void testEtapeGetDefi() {
-        Defi defi = Defi.MOYEN2;
-        Etape etape = new Etape(defi, 2);
-        assertEquals(defi, etape.getDefi());
+        Etape etape = new Etape(moyen2, 2);
+        assertEquals(moyen2, etape.getDefi());
     }
 
     @Test
     void testEtapeGetNumero() {
         int numero = 3;
-        Etape etape = new Etape(Defi.DIFFICILE3, numero);
+        Etape etape = new Etape(difficile3, numero);
         assertEquals(numero, etape.getNumero());
     }
 
     @Test
     void testEtapeDefiCorrespondance() {
-        for (Defi defi : Defi.values()) {
-            Etape etape = new Etape(defi, defi.getEtape());
-            assertEquals(defi.getEtape(), etape.getNumero());
+        for (Defi defi : defis) {
+            Etape etape = new Etape(defi, defi.etape());
+            assertEquals(defi.etape(), etape.getNumero());
         }
     }
 }

@@ -14,7 +14,7 @@ public class ModeProgression {
      * Initialise les étapes avec les défis correspondants.
      */
     public ModeProgression() {
-        for (Defi defi : Defi.values()) {
+        /*for (Defi defi : Defi.values()) {
             etapes.add(new Etape(defi, 0));
         }
         etapes.add(new Etape(Defi.FACILE1, 1));
@@ -25,7 +25,7 @@ public class ModeProgression {
         etapes.add(new Etape(Defi.MOYEN3, 6));
         etapes.add(new Etape(Defi.DIFFICILE1, 7));
         etapes.add(new Etape(Defi.DIFFICILE2, 8));
-        etapes.add(new Etape(Defi.DIFFICILE3, 9));
+        etapes.add(new Etape(Defi.DIFFICILE3, 9));*/
     }
 
     public List<Etape> getEtapes() {

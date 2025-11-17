@@ -1,0 +1,200 @@
+[
+  {
+    "name": "FACILE1",
+    "etape": 1,
+    "largeur": 6,
+    "hauteur": 6,
+    "pourcentageMurs": 25.0,
+    "points": 5,
+    "vision": "VUE_LIBRE",
+    "distanceMin": 1,
+    "typeLabyrinthe": "ALEATOIRE"
+  },
+  {
+    "name": "MOYEN1",
+    "etape": 1,
+    "largeur": 6,
+    "hauteur": 6,
+    "pourcentageMurs": 50.0,
+    "points": 15,
+    "vision": "VUE_LIBRE",
+    "distanceMin": 1,
+    "typeLabyrinthe": "ALEATOIRE"
+  },
+  {
+    "name": "DIFFICILE1",
+    "etape": 1,
+    "largeur": 6,
+    "hauteur": 6,
+    "pourcentageMurs": 75.0,
+    "points": 45,
+    "vision": "VUE_LIBRE",
+    "distanceMin": 1,
+    "typeLabyrinthe": "ALEATOIRE"
+  },
+  {
+    "name": "FACILE2",
+    "etape": 2,
+    "largeur": 15,
+    "hauteur": 15,
+    "pourcentageMurs": 25.0,
+    "points": 10,
+    "vision": "VUE_LIBRE",
+    "distanceMin": 1,
+    "typeLabyrinthe": "ALEATOIRE"
+  },
+  {
+    "name": "MOYEN2",
+    "etape": 2,
+    "largeur": 15,
+    "hauteur": 15,
+    "pourcentageMurs": 50.0,
+    "points": 20,
+    "vision": "VUE_LIBRE",
+    "distanceMin": 1,
+    "typeLabyrinthe": "ALEATOIRE"
+  },
+  {
+    "name": "DIFFICILE2",
+    "etape": 2,
+    "largeur": 15,
+    "hauteur": 15,
+    "pourcentageMurs": 75.0,
+    "points": 50,
+    "vision": "VUE_LIBRE",
+    "distanceMin": 1,
+    "typeLabyrinthe": "ALEATOIRE"
+  },
+  {
+    "name": "FACILE3",
+    "etape": 3,
+    "largeur": 30,
+    "hauteur": 30,
+    "pourcentageMurs": 75.0,
+    "points": 15,
+    "vision": "VUE_LOCAL",
+    "distanceMin": 1,
+    "typeLabyrinthe": "ALEATOIRE"
+  },
+  {
+    "name": "MOYEN3",
+    "etape": 3,
+    "largeur": 30,
+    "hauteur": 30,
+    "pourcentageMurs": 50.0,
+    "points": 25,
+    "vision": "VUE_LOCAL",
+    "distanceMin": 1,
+    "typeLabyrinthe": "ALEATOIRE"
+  },
+  {
+    "name": "DIFFICILE3",
+    "etape": 3,
+    "largeur": 30,
+    "hauteur": 30,
+    "pourcentageMurs": 25.0,
+    "points": 55,
+    "vision": "VUE_LOCAL",
+    "distanceMin": 1,
+    "typeLabyrinthe": "ALEATOIRE"
+  },
+  {
+    "name": "FACILE4",
+    "etape": 4,
+    "largeur": 7,
+    "hauteur": 10,
+    "pourcentageMurs": 100.0,
+    "points": 15,
+    "vision": "VUE_LIBRE",
+    "distanceMin": 4,
+    "typeLabyrinthe": "PARFAIT"
+  },
+  {
+    "name": "MOYEN4",
+    "etape": 4,
+    "largeur": 10,
+    "hauteur": 13,
+    "pourcentageMurs": 100.0,
+    "points": 25,
+    "vision": "VUE_LIBRE",
+    "distanceMin": 6,
+    "typeLabyrinthe": "PARFAIT"
+  },
+  {
+    "name": "DIFFICILE4",
+    "etape": 4,
+    "largeur": 13,
+    "hauteur": 16,
+    "pourcentageMurs": 100.0,
+    "points": 55,
+    "vision": "VUE_LIBRE",
+    "distanceMin": 9,
+    "typeLabyrinthe": "PARFAIT"
+  },
+  {
+    "name": "FACILE5",
+    "etape": 5,
+    "largeur": 17,
+    "hauteur": 20,
+    "pourcentageMurs": 100.0,
+    "points": 15,
+    "vision": "VUE_LIMITEE",
+    "distanceMin": 4,
+    "typeLabyrinthe": "PARFAIT"
+  },
+  {
+    "name": "MOYEN5",
+    "etape": 5,
+    "largeur": 20,
+    "hauteur": 23,
+    "pourcentageMurs": 100.0,
+    "points": 25,
+    "vision": "VUE_LIMITEE",
+    "distanceMin": 6,
+    "typeLabyrinthe": "PARFAIT"
+  },
+  {
+    "name": "DIFFICILE5",
+    "etape": 5,
+    "largeur": 23,
+    "hauteur": 26,
+    "pourcentageMurs": 100.0,
+    "points": 55,
+    "vision": "VUE_LIMITEE",
+    "distanceMin": 9,
+    "typeLabyrinthe": "PARFAIT"
+  },
+  {
+    "name": "FACILE6",
+    "etape": 6,
+    "largeur": 17,
+    "hauteur": 20,
+    "pourcentageMurs": 100.0,
+    "points": 15,
+    "vision": "VUE_CARTE",
+    "distanceMin": 4,
+    "typeLabyrinthe": "PARFAIT"
+  },
+  {
+    "name": "MOYEN6",
+    "etape": 6,
+    "largeur": 20,
+    "hauteur": 23,
+    "pourcentageMurs": 100.0,
+    "points": 25,
+    "vision": "VUE_CARTE",
+    "distanceMin": 6,
+    "typeLabyrinthe": "PARFAIT"
+  },
+  {
+    "name": "DIFFICILE6",
+    "etape": 6,
+    "largeur": 23,
+    "hauteur": 26,
+    "pourcentageMurs": 100.0,
+    "points": 55,
+    "vision": "VUE_CARTE",
+    "distanceMin": 9,
+    "typeLabyrinthe": "PARFAIT"
+  }
+]

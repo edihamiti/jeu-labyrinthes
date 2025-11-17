@@ -1,5 +1,6 @@
 package controleur;
 
+import defi.modele.Defi;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,7 +9,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import modele.Defi;
 import modele.Jeu;
 import modele.Joueur;
 import modele.ModeJeu;
@@ -73,7 +73,7 @@ public class ModeProgressionControleur extends Controleur {
             }
 
             if (jeuControleur != null) {
-                jeuControleur.setParametresLab(defi.getLargeur(), defi.getHauteur(), defi.getPourcentageMurs(), defi.getDistanceMin(), defi.getTypeLabyrinthe());
+                jeuControleur.setParametresLab(defi.largeur(), defi.hauteur(), defi.pourcentageMurs(), defi.distanceMin(), defi.typeLabyrinthe());
             }
 
             Stage stage = (Stage) etapesContainer.getScene().getWindow();

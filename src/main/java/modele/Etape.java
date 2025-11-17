@@ -1,5 +1,7 @@
 package modele;
 
+import defi.modele.Defi;
+
 /**
  * Classe représentant une étape d'un défi.
  */
