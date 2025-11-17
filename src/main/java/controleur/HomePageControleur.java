@@ -168,26 +168,42 @@ public class HomePageControleur {
     }
 
     private void afficherLeaderboard() {
+        // Centrer la zone entière
+        contentPage.setAlignment(Pos.CENTER);
         profilsContainer.setVisible(true);
+        profilsContainer.setManaged(true);
         profilsContainer.getChildren().clear();
+        profilsContainer.setAlignment(Pos.CENTER);
+        profilsContainer.setFillWidth(false);
 
         Leaderboard leaderboard = new Leaderboard(Jeu.getInstance().getSauvegarde());
         List<Joueur> joueurs = leaderboard.getClassementComplet();
 
         // --- ENTÊTE ---
-
         HBox header = new HBox(10);
         header.getStyleClass().add("leaderboard-header");
-        header.setAlignment(Pos.CENTER_LEFT);
+        header.setAlignment(Pos.CENTER);
         header.setPadding(new Insets(10));
 
         Label rankHeader = new Label("Rang");
         Label pseudoHeader = new Label("Pseudo");
         Label scoreHeader = new Label("Score");
 
+        // Permettre aux labels de s'étirer et centrer leur texte
         rankHeader.setPrefWidth(60);
+        rankHeader.setMaxWidth(Double.MAX_VALUE);
+        rankHeader.setAlignment(Pos.CENTER);
+        HBox.setHgrow(rankHeader, Priority.ALWAYS);
+
         pseudoHeader.setPrefWidth(240);
+        pseudoHeader.setMaxWidth(Double.MAX_VALUE);
+        pseudoHeader.setAlignment(Pos.CENTER);
+        HBox.setHgrow(pseudoHeader, Priority.ALWAYS);
+
         scoreHeader.setPrefWidth(120);
+        scoreHeader.setMaxWidth(Double.MAX_VALUE);
+        scoreHeader.setAlignment(Pos.CENTER);
+        HBox.setHgrow(scoreHeader, Priority.ALWAYS);
 
         header.getChildren().addAll(rankHeader, pseudoHeader, scoreHeader);
         profilsContainer.getChildren().add(header);
@@ -197,28 +213,40 @@ public class HomePageControleur {
         for (Joueur j : joueurs) {
             HBox row = new HBox(10);
             row.getStyleClass().add("leaderboard-row");
-            row.setAlignment(Pos.CENTER_LEFT);
+            row.setAlignment(Pos.CENTER);
             row.setPadding(new Insets(8));
+            row.setMaxWidth(800); // optionnel : limite la largeur du tableau pour un rendu centré
 
             Label rankLabel = new Label(String.valueOf(rang));
             rankLabel.setPrefWidth(60);
+            rankLabel.setMaxWidth(Double.MAX_VALUE);
+            rankLabel.setAlignment(Pos.CENTER);
+            HBox.setHgrow(rankLabel, Priority.ALWAYS);
 
             Label pseudoLabel = new Label(j.getPseudo());
             pseudoLabel.setPrefWidth(240);
+            pseudoLabel.setMaxWidth(Double.MAX_VALUE);
+            pseudoLabel.setAlignment(Pos.CENTER);
+            HBox.setHgrow(pseudoLabel, Priority.ALWAYS);
 
             Label scoreLabel = new Label(String.valueOf(j.getScore()));
             scoreLabel.setPrefWidth(120);
+            scoreLabel.setMaxWidth(Double.MAX_VALUE);
+            scoreLabel.setAlignment(Pos.CENTER);
+            HBox.setHgrow(scoreLabel, Priority.ALWAYS);
 
             row.getChildren().addAll(rankLabel, pseudoLabel, scoreLabel);
             profilsContainer.getChildren().add(row);
-
             rang++;
         }
 
         if (joueurs.isEmpty()) {
             Label vide = new Label("Aucun joueur enregistré.");
             vide.getStyleClass().add("empty-message");
-            profilsContainer.getChildren().add(vide);
+            // Centrer le message vide aussi
+            VBox wrapper = new VBox(vide);
+            wrapper.setAlignment(Pos.CENTER);
+            profilsContainer.getChildren().add(wrapper);
         }
     }
 }
