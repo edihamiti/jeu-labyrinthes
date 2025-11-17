@@ -1,8 +1,9 @@
-package defi.repository;
+package modele.defi.repository;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import defi.modele.Defi;
+import com.google.gson.JsonSyntaxException;
+import modele.defi.Defi;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -49,7 +50,7 @@ public class DefiJson {
                 }
                 return defisRepo;
             }
-        } catch (IOException | com.google.gson.JsonSyntaxException e) {
+        } catch (IOException | JsonSyntaxException e) {
             System.err.println("Erreur chargement des défis: " + e.getMessage());
         }
         return new DefisRepo();

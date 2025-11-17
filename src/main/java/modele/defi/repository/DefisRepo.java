@@ -1,6 +1,6 @@
-package defi.repository;
+package modele.defi.repository;
 
-import defi.modele.Defi;
+import modele.defi.Defi;
 
 import java.util.ArrayList;
 import java.util.HashMap;

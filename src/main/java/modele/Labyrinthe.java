@@ -1,6 +1,6 @@
 package modele;
 
-import defi.modele.Defi;
+import modele.defi.Defi;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;

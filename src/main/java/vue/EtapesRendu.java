@@ -1,7 +1,7 @@
 package vue;
 
-import defi.modele.Defi;
-import defi.repository.DefiJson;
+import modele.defi.Defi;
+import modele.defi.repository.DefiJson;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

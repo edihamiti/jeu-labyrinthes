@@ -1,6 +1,6 @@
 package modele;
 
-import defi.modele.Defi;
+import modele.defi.Defi;
 
 import java.time.Duration;
 

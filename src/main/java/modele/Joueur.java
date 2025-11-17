@@ -1,8 +1,8 @@
 package modele;
 
 import com.google.gson.annotations.SerializedName;
-import defi.modele.Defi;
-import defi.repository.DefiJson;
+import modele.defi.Defi;
+import modele.defi.repository.DefiJson;
 import modele.items.Item;
 
 import java.util.ArrayList;

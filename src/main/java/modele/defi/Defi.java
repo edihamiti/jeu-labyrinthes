@@ -1,4 +1,4 @@
-package defi.modele;
+package modele.defi;
 
 import modele.TypeLabyrinthe;
 import modele.Vision;

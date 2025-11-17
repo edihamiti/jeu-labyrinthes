@@ -1,6 +1,6 @@
 package controleur;
 
-import defi.modele.Defi;
+import modele.defi.Defi;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

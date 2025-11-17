@@ -1,8 +1,8 @@
 package modele;
 
-import defi.modele.Defi;
-import defi.repository.DefiJson;
-import defi.repository.DefisRepo;
+import modele.defi.Defi;
+import modele.defi.repository.DefiJson;
+import modele.defi.repository.DefisRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
