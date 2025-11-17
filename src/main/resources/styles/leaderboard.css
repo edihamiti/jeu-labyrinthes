@@ -1,14 +1,13 @@
 /* Container général */
 #profilsContainer {
     -fx-padding: 20;
-    -fx-spacing: 8;
+    -fx-spacing: 4;
 }
 
 /* Ligne d’en-tête */
 .leaderboard-header {
-    -fx-background-color: rgba(255, 255, 255, 0.15);
-    -fx-background-radius: 8;
-    -fx-text-fill: white;
+    -fx-background-color: rgba(255, 255, 255, 0.50);
+    -fx-background-radius: 8 8 4 4;
     -fx-font-weight: bold;
 }
 
@@ -23,8 +22,8 @@
 
 /* Ligne du leaderboard */
 .leaderboard-row {
-    -fx-background-color: rgba(255, 255, 255, 0.07);
-    -fx-background-radius: 6;
+    -fx-background-color: rgba(255, 255, 255, 0.25);
+    -fx-background-radius: 4;
     -fx-padding: 10;
     -fx-spacing: 10;
     -fx-alignment: CENTER;
@@ -32,7 +31,7 @@
 
 /* Hover pour rendre joli */
 .leaderboard-row:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-background-color: rgba(255, 255, 255, 0.35);
 }
 
 /* Message vide */
