@@ -21,7 +21,7 @@ public class DefiJson {
     }
 
     public DefiJson() {
-        this("defi/");
+        this("src/main/resources");
     }
 
     private void creerRepertoireSiNecessaire() {
@@ -37,7 +37,7 @@ public class DefiJson {
 
     public DefisRepo charger() {
         try {
-            Path fichier = Paths.get(repertoire + "defis.json");
+            Path fichier = Paths.get(repertoire, "defis.json");
             if (Files.exists(fichier)) {
                 String json = Files.readString(fichier);
                 Defi[] defisArray = gson.fromJson(json, Defi[].class);
