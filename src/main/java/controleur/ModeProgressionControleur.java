@@ -91,8 +91,20 @@ public class ModeProgressionControleur extends Controleur {
     public void retour() {
         try {
             appControleur.resetGame();
-            appControleur.MenuPrincipal();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomePage.fxml"));
+            Parent menuView = loader.load();
+            Controleur controleur = loader.getController();
+            controleur.setAppControleur(this.appControleur);
+            controleur.setJeu(this.jeu);
+            Scene scene = new Scene(menuView, 1400, 900);
+            Stage stage = (Stage) etapesContainer.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setMaximized(true);
+            stage.setTitle("Jeu des Labyrinthes");
+
         } catch (Exception e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
             alert.setHeaderText("Erreur lors du retour vers le menu principal");

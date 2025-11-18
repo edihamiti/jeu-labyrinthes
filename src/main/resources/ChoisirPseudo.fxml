@@ -8,14 +8,14 @@
       fx:controller="controleur.ChoisirPseudoControleur"
       spacing="20"
       alignment="TOP_CENTER"
-      stylesheets="styles/styles.css, styles/modeLibre.css"
+      stylesheets="styles/styles.css, styles/login.css"
 >
     <padding>
         <Insets top="15" right="15" bottom="15" left="15"/>
     </padding>
 
     <VBox
-        styleClass="contenu"
+        styleClass="home-tab"
         alignment="TOP_CENTER"
         spacing="20"
         HBox.hgrow="ALWAYS"
@@ -28,17 +28,20 @@
 
         <VBox
             styleClass="form-container"
+            style="-fx-background-color: -color-1"
             spacing="20"
             prefWidth="400"
             maxWidth="450"
         >
             <VBox>
                 <Label styleClass="form-label" text="Pseudo"/>
-                <TextField fx:id="pseudoField" prefWidth="50"/>
+                <TextField fx:id="pseudoField" onAction="#lancerJeu" prefWidth="50"/>
                 <Label styleClass="form-small-text" text="Max. 15 charactères"/>
             </VBox>
 
-            <Button text="Commencer →" fx:id="startButton" styleClass="button-filled" prefWidth="Infinity" onAction="#lancerModeProgression" />
+            <ScrollPane fx:id="conteneurProfils" style="-fx-background-color: transparent" />
+
+            <Button text="Lancer le jeu →" fx:id="startButton" styleClass="button-filled" prefWidth="Infinity" onAction="#lancerJeu" />
         </VBox>
 
     </VBox>

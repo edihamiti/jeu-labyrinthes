@@ -59,11 +59,12 @@ public class EtapesRendu {
         return root;
     }
 
-    public static HBox renderPoints(int nbPoints, HBox container) {
+    public static void renderPoints(int nbPoints, HBox container) {
         container.getChildren().clear();
         container.setSpacing(10);
         container.setAlignment(Pos.CENTER_LEFT);
         container.getStyleClass().add("points-container");
+        container.setMaxWidth(Double.MAX_VALUE);
 
         ImageView icon = new ImageView(imgPoints);
         icon.setFitHeight(18);
@@ -73,8 +74,6 @@ public class EtapesRendu {
         label.getStyleClass().add("points-text");
 
         container.getChildren().addAll(icon, label);
-
-        return container;
     }
 
     /**

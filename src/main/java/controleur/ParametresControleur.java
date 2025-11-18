@@ -158,7 +158,27 @@ public class ParametresControleur extends Controleur {
      * Gère le clic sur le bouton de retour vers le menu principal.
      */
     public void retourClicked() {
-        appControleur.MenuPrincipal();
+        try {
+            appControleur.resetGame();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomePage.fxml"));
+            Parent menuView = loader.load();
+            Controleur controleur = loader.getController();
+            controleur.setAppControleur(this.appControleur);
+            controleur.setJeu(this.jeu);
+            Scene scene = new Scene(menuView, 1400, 900);
+            Stage stage = (Stage) largeurField.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setMaximized(true);
+            stage.setTitle("Jeu des Labyrinthes");
+
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Erreur lors du retour vers le menu principal");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     /**

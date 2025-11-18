@@ -1,5 +1,8 @@
 import controleur.AppControleur;
+import controleur.ChoisirPseudoControleur;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import modele.Jeu;
@@ -17,9 +20,17 @@ public class App extends Application {
         stage.setTitle("Le jeu des Labyrinthes");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("img/sortie.png")));
 
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ChoisirPseudo.fxml")));
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
+        stage.setMaximized(true);
+        stage.show();
+
+        ChoisirPseudoControleur controleur = loader.getController();
+        controleur.setJeu(jeu);
+
         AppControleur appControleur = new AppControleur(jeu);
-        appControleur.setPrimaryStage(stage);
-        appControleur.MenuPrincipal();
+        controleur.setAppControleur(appControleur);
     }
 
     public static void main(String[] args) {

@@ -1,0 +1,11 @@
+.pseudo-text {
+    -fx-font-size: 21px;
+    -fx-text-fill: -color-6;
+    -fx-fill: -color-6;
+}
+
+.joueur-card {
+    -fx-background-color: -color-2;
+    -fx-border-radius: 18px;
+    -fx-background-radius: 18px;
+}

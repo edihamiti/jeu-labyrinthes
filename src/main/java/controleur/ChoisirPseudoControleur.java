@@ -7,9 +7,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import modele.Jeu;
+import modele.Joueur;
 import modele.PseudoException;
+import vue.ProfilsRendu;
 
 import java.io.IOException;
 
@@ -22,13 +27,16 @@ public class ChoisirPseudoControleur extends Controleur {
     @FXML
     public Button startButton;
     public String pseudo = "";
+    @FXML
+    public ScrollPane conteneurProfils;
 
     /**
      * Initialise le contrôleur et configure les observables d'événements.
      */
     @FXML
     public void initialize() {
-        pseudoField.setOnAction(_ -> lancerModeProgression());
+        conteneurProfils.setFitToWidth(true);
+        pseudoField.setOnAction(_ -> lancerJeu());
         pseudoField.setText(pseudo);
         pseudoField.textProperty().addListener((ObservableValue<? extends String> _, String oldValue, String newValue) -> {
             if (newValue.trim().length() > 15) {
@@ -40,26 +48,42 @@ public class ChoisirPseudoControleur extends Controleur {
         });
     }
 
+    @Override
+    public void setJeu(Jeu jeu) {
+        super.setJeu(jeu);
+        chargerJoueurs();
+    }
+
+    /**
+     * Cette méthode permet de charger les joueurs existants dans le jeu et ensuite affiche la liste.
+     */
+    private void chargerJoueurs() {
+        if (jeu != null) {
+            jeu.getSauvegarde().chargerJoueurs();
+            conteneurProfils.setContent(ProfilsRendu.render(jeu.getSauvegarde().getJoueurs(), (Joueur joueur) -> {
+                System.out.printf("Connexion de %s%n", joueur.getPseudo());
+                choisirJouer(joueur);
+            }));
+        }
+    }
+
     /**
      * Lance le mode progression du jeu avec le pseudo sélectionné.
      */
-    public void lancerModeProgression() {
+    public void lancerJeu() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomePage.fxml"));
 
             jeu.setJoueur(pseudo);
             System.out.println("[\u001B[34mDEBUG\u001B[0m] Joueur initialisé dans le modèle Jeu");
 
-            Parent progressionView = loader.load();
-            controleur.ModeProgressionControleur jeuControleur = loader.getController();
-
-            if (jeuControleur != null) {
-                jeuControleur.setJeu(this.jeu);
-                jeuControleur.setAppControleur(this.appControleur);
-            }
+            Parent homepageView = loader.load();
+            HomePageControleur controleur = loader.getController();
+            controleur.setJeu(this.jeu);
+            controleur.setAppControleur(this.appControleur);
 
             Stage stage = (Stage) startButton.getScene().getWindow();
-            Scene jeuScene = new Scene(progressionView, 1400, 900);
+            Scene jeuScene = new Scene(homepageView, 1400, 900);
             stage.setScene(jeuScene);
             stage.setMaximized(true);
 
@@ -78,5 +102,10 @@ public class ChoisirPseudoControleur extends Controleur {
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
+    }
+
+    public void choisirJouer(Joueur joueur) {
+        this.pseudo = joueur.getPseudo();
+        lancerJeu();
     }
 }

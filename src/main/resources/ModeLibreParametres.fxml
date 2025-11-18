@@ -10,7 +10,7 @@
       fx:controller="controleur.ParametresControleur"
       spacing="20"
       alignment="TOP_CENTER"
-      stylesheets="styles/styles.css, styles/modeLibre.css"
+      stylesheets="styles/styles.css,styles/login.css"
 >
     <padding>
         <Insets top="15" right="15" bottom="15" left="15"/>

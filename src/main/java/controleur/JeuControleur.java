@@ -108,8 +108,19 @@ public class JeuControleur extends Controleur {
      * @throws IOException si le chargement de la vue échoue
      */
     public void retourMenu() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomePage.fxml"));
+        Parent menuView = loader.load();
+        Controleur controleur = loader.getController();
+        controleur.setAppControleur(this.appControleur);
+        controleur.setJeu(this.jeu);
+        Scene scene = new Scene(menuView, 1400, 900);
+        Stage stage = (Stage) conteneurLabyrinthe.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setMaximized(true);
+        stage.setTitle("Jeu des Labyrinthes - Menu Principal");
+
+
         appControleur.resetGame();
-        appControleur.MenuPrincipal();
     }
 
     private void retourModeProgression() throws IOException {

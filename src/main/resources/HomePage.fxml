@@ -69,11 +69,7 @@
 
         <!--Zone de Boutons-->
         <HBox HBox.hgrow="ALWAYS" spacing="10" alignment="BOTTOM_CENTER">
-            <VBox fx:id="chargerProfilButton" spacing="10" styleClass="charger-profile" HBox.hgrow="ALWAYS"
-                  alignment="TOP_CENTER" onMouseClicked="#chargerProfil">
-                <Label text="Charger Profil" style="-fx-text-fill: -color-5" HBox.hgrow="ALWAYS"/>
-            </VBox>
-            <Button fx:id="nouvellePartieButton" onAction="#lancerJeu" text="Nouvelle Partie" styleClass="button-filled"
+            <Button fx:id="button" onAction="#lancerJeu" text="Lancer" styleClass="button-filled"
                     HBox.hgrow="ALWAYS"/>
         </HBox>
     </VBox>
