@@ -115,7 +115,7 @@
     "pourcentageMurs": 100.0,
     "points": 15,
     "vision": "VUE_LIBRE",
-    "distanceMin": 4,
+    "distanceMin": 25,
     "typeLabyrinthe": "PARFAIT",
     "portee": 0
   },
@@ -127,7 +127,7 @@
     "pourcentageMurs": 100.0,
     "points": 25,
     "vision": "VUE_LIBRE",
-    "distanceMin": 6,
+    "distanceMin": 55,
     "typeLabyrinthe": "PARFAIT",
     "portee": 0
   },
@@ -139,7 +139,7 @@
     "pourcentageMurs": 100.0,
     "points": 55,
     "vision": "VUE_LIBRE",
-    "distanceMin": 9,
+    "distanceMin": 94,
     "typeLabyrinthe": "PARFAIT",
     "portee": 0
   },
@@ -151,7 +151,7 @@
     "pourcentageMurs": 100.0,
     "points": 15,
     "vision": "VUE_LIMITEE",
-    "distanceMin": 4,
+    "distanceMin": 160,
     "typeLabyrinthe": "PARFAIT",
     "portee": 4
   },
@@ -163,7 +163,7 @@
     "pourcentageMurs": 100.0,
     "points": 25,
     "vision": "VUE_LIMITEE",
-    "distanceMin": 6,
+    "distanceMin": 220,
     "typeLabyrinthe": "PARFAIT",
     "portee": 2
   },
@@ -175,7 +175,7 @@
     "pourcentageMurs": 100.0,
     "points": 55,
     "vision": "VUE_LIMITEE",
-    "distanceMin": 9,
+    "distanceMin": 288,
     "typeLabyrinthe": "PARFAIT",
     "portee": 1
   },
@@ -183,23 +183,23 @@
     "name": "FACILE6",
     "etape": 6,
     "largeur": 17,
-    "hauteur": 20,
+    "hauteur": 19,
     "pourcentageMurs": 100.0,
     "points": 15,
     "vision": "VUE_CARTE",
-    "distanceMin": 4,
+    "distanceMin": 160,
     "typeLabyrinthe": "PARFAIT",
     "portee": 4
   },
   {
     "name": "MOYEN6",
     "etape": 6,
-    "largeur": 20,
+    "largeur": 21,
     "hauteur": 23,
     "pourcentageMurs": 100.0,
     "points": 25,
     "vision": "VUE_CARTE",
-    "distanceMin": 6,
+    "distanceMin": 220,
     "typeLabyrinthe": "PARFAIT",
     "portee": 2
   },
@@ -207,11 +207,11 @@
     "name": "DIFFICILE6",
     "etape": 6,
     "largeur": 23,
-    "hauteur": 26,
+    "hauteur": 27,
     "pourcentageMurs": 100.0,
     "points": 55,
     "vision": "VUE_CARTE",
-    "distanceMin": 9,
+    "distanceMin": 288,
     "typeLabyrinthe": "PARFAIT",
     "portee": 1
   }
