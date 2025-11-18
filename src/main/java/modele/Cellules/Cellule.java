@@ -10,6 +10,8 @@ public abstract class Cellule {
     private int x;
     private int y;
     private Image textureMur;
+    
+    public abstract Image getTexture();
 
     public boolean estPiege() {
         return false;

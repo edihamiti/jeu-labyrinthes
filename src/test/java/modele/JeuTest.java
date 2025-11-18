@@ -1,21 +1,43 @@
 package modele;
 
-import static org.junit.jupiter.api.Assertions.*;
+import modele.defi.Defi;
+import modele.defi.repository.DefiJson;
+import modele.defi.repository.DefisRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalTime;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class JeuTest {
     private Jeu jeu;
     private Joueur joueur;
     private Labyrinthe labyrinthe;
+    private DefisRepo defisRepo;
+    private Defi facile1;
+    private Defi moyen1;
 
     @BeforeEach
     void setUp() throws PseudoException {
         joueur = new Joueur("TestJoueur");
         labyrinthe = new Labyrinthe(5, 5, 25.0);
-        jeu = new Jeu(ModeJeu.MODE_LIBRE, joueur, labyrinthe, Defi.FACILE1);
+
+        DefiJson defiJson = new DefiJson();
+        defisRepo = defiJson.charger();
+        List<Defi> defis = defisRepo.getDefisRepo();
+
+        facile1 = defis.stream()
+                .filter(d -> "FACILE1".equals(d.name()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("FACILE1 non trouvé"));
+
+        moyen1 = defis.stream()
+                .filter(d -> "MOYEN1".equals(d.name()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("MOYEN1 non trouvé"));
+
+        jeu = new Jeu(ModeJeu.MODE_LIBRE, joueur, labyrinthe, facile1);
     }
 
     @Test
@@ -23,21 +45,7 @@ class JeuTest {
         assertEquals(ModeJeu.MODE_LIBRE, jeu.getModeJeu());
         assertEquals(joueur, jeu.getJoueur());
         assertEquals(labyrinthe, jeu.getLabyrinthe());
-        assertEquals(Defi.FACILE1, jeu.getDefiEnCours());
-    }
-
-    @Test
-    void testSingleton() {
-        Jeu instance1 = Jeu.getInstance();
-        Jeu instance2 = Jeu.getInstance();
-        assertSame(instance1, instance2);
-    }
-
-    @Test
-    void testSetInstance() {
-        Jeu newInstance = new Jeu();
-        Jeu.setInstance(newInstance);
-        assertSame(newInstance, Jeu.getInstance());
+        assertEquals(facile1, jeu.getDefiEnCours());
     }
 
     @Test
@@ -69,7 +77,8 @@ class JeuTest {
     @Test
     void testTerminerPartieVictoire() {
         labyrinthe.setJeuEnCours(true);
-        String message = jeu.terminerPartie(true, LocalTime.now());
+        jeu.startTimer();
+        String message = jeu.terminerPartie(true);
         assertFalse(labyrinthe.isJeuEnCours());
         assertTrue(message.contains("Vous avez trouvé la sortie"));
     }
@@ -77,17 +86,18 @@ class JeuTest {
     @Test
     void testTerminerPartieDefaite() {
         labyrinthe.setJeuEnCours(true);
-        String message = jeu.terminerPartie(false, LocalTime.now());
+        jeu.startTimer();
+        String message = jeu.terminerPartie(false);
         assertFalse(labyrinthe.isJeuEnCours());
         assertTrue(message.contains("Partie terminée"));
     }
 
     @Test
     void testSetLabyrintheDefi() {
-        jeu.setLabyrinthe(Defi.MOYEN1);
+        jeu.setLabyrinthe(moyen1);
         Labyrinthe nouveauLabyrinthe = jeu.getLabyrinthe();
-        assertEquals(Defi.MOYEN1.getLargeur(), nouveauLabyrinthe.getLargeur());
-        assertEquals(Defi.MOYEN1.getHauteur(), nouveauLabyrinthe.getHauteur());
+        assertEquals(moyen1.largeur(), nouveauLabyrinthe.getLargeur());
+        assertEquals(moyen1.hauteur(), nouveauLabyrinthe.getHauteur());
     }
 
     @Test

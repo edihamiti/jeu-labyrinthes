@@ -1,9 +1,10 @@
 package modele;
 
-import modele.generateurs.GenerateurLabyrinthe;
+import modele.defi.Defi;
+import modele.joueursRepositories.JSONRepository;
+import modele.joueursRepositories.JoueurRepository;
 
 import java.time.Duration;
-import java.time.LocalTime;
 import java.util.Scanner;
 
 /**
@@ -11,19 +12,15 @@ import java.util.Scanner;
  */
 public class Jeu {
 
-    private static Jeu instance;
-    Sauvegarde sauvegarde = new Sauvegarde();
+    JoueurRepository sauvegarde = new JSONRepository();
     private Joueur joueur;
     private Labyrinthe labyrinthe;
 
     private ModeJeu modeJeu;
     private Vision vision = Vision.VUE_LIBRE;
-    private TypeLabyrinthe typeLabyrinthe;
-    private GenerateurLabyrinthe generateur;
     private Defi defiEnCours;
-    private LocalTime start;
-    private LocalTime end;
     private int nombreDeplacements;
+    private GameTimer gameTimer;
 
     /**
      * @param modeJeu     un mode de jeu
@@ -36,21 +33,11 @@ public class Jeu {
         this.joueur = joueur;
         this.labyrinthe = labyrinthe;
         this.defiEnCours = defiEnCours;
+        this.gameTimer = new GameTimer();
     }
 
     public Jeu() {
 
-    }
-
-    public static Jeu getInstance() {
-        if (instance == null) {
-            instance = new Jeu();
-        }
-        return instance;
-    }
-
-    public static void setInstance(Jeu newInstance) {
-        instance = newInstance;
     }
 
     public Vision getVision() {
@@ -69,7 +56,7 @@ public class Jeu {
         this.modeJeu = modeJeu;
     }
 
-    public Sauvegarde getSauvegarde() {
+    public JoueurRepository getSauvegarde() {
         return sauvegarde;
     }
 
@@ -124,7 +111,6 @@ public class Jeu {
     public void initialiser(int largeur, int hauteur, double pourcentageMurs, int distanceMin, TypeLabyrinthe typeLab) throws PseudoException {
         Scanner scanner = new Scanner(System.in);
         this.labyrinthe = new Labyrinthe(largeur, hauteur, pourcentageMurs);
-        this.generateur = typeLab.creerGenerateur(largeur, hauteur, pourcentageMurs, distanceMin);
 
         System.out.print("Entrez le pseudo du joueur : ");
         this.joueur = new Joueur(scanner.nextLine());
@@ -145,9 +131,8 @@ public class Jeu {
         if (this.labyrinthe == null || !this.labyrinthe.isJeuEnCours()) {
             return false;
         }
-        if (start == null) {
-            start = LocalTime.now();
-        }
+
+        gameTimer.startTimer(); // TODO: REVÉRIFIER TOUT ÇA JE SUIS PAS SÛR DE CE QUE J'AI FAIT
 
         int nouveauX = this.labyrinthe.getJoueurX() + dx;
         int nouveauY = this.labyrinthe.getJoueurY() + dy;
@@ -190,10 +175,9 @@ public class Jeu {
      * Termine la partie en cours.
      *
      * @param victoire true si le joueur a gagné, false sinon
-     * @param now
      * @return message de fin de partie
      */
-    public String terminerPartie(boolean victoire, LocalTime now) {
+    public String terminerPartie(boolean victoire) {
         this.labyrinthe.setJeuEnCours(false);
 
         StringBuilder resultat = new StringBuilder();
@@ -204,39 +188,39 @@ public class Jeu {
             resultat.append("Partie terminée.\n");
         }
 
-        if (start != null) {
-            LocalTime finTemps = (this.end != null) ? this.end : LocalTime.now();
-            long minutes = Duration.between(start, finTemps).toMinutes();
-            long secondes = Duration.between(start, finTemps).toSeconds() % 60;
-            resultat.append("Temps écoulé : ").append(minutes).append(" min ").append(secondes).append(" sec\n");
-        }
+        this.endTimer();
+        Duration duration = gameTimer.getDuration();
+        long minutes = duration.toMinutes();
+        long seconds = duration.toSecondsPart();
+        resultat.append("Temps écoulé : ").append(minutes).append(" min ").append(seconds).append(" sec\n");
 
         resultat.append("Nombre de déplacements : ").append(nombreDeplacements).append("\n");
 
         if (victoire && this.joueur != null && this.defiEnCours != null) {
-            this.joueur.ajouterScore(this.defiEnCours);
-            this.sauvegarde.sauvegardeJoueurs();
-            resultat.append("Score : ").append(this.joueur.getScore());
+            int scoreObtenu = CalculateurScore.calculerScore(defiEnCours, gameTimer.getDuration());
+            this.joueur.ajouterScore(scoreObtenu, defiEnCours);
+            this.sauvegarde.sauvegarder();
+            resultat.append("Points gagnés : ").append(scoreObtenu);
         }
 
-        System.out.println(resultat.toString());
+        System.out.println(resultat);
         return resultat.toString();
     }
 
-    public LocalTime getStart() {
-        return start;
+    public void endTimer() {
+        this.gameTimer.endTimer();
     }
 
-    public void setStart(LocalTime start) {
-        this.start = start;
+    public void startTimer() {
+        this.gameTimer.startTimer();
     }
 
-    public LocalTime getEnd() {
-        return end;
+    public Duration getDuration() {
+        return this.gameTimer.getDuration();
     }
 
-    public void setEnd(LocalTime end) {
-        this.end = end;
+    public boolean isRunning() {
+        return this.gameTimer.isRunning();
     }
 
     public int getNombreDeplacements() {
@@ -251,8 +235,7 @@ public class Jeu {
      * Remet à zéro le timer pour une nouvelle partie
      */
     public void resetTimer() {
-        this.start = null;
-        this.end = null;
+        this.gameTimer = new GameTimer();
         this.nombreDeplacements = 0;
     }
 }

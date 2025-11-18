@@ -1,12 +1,11 @@
 package modele;
 
+import modele.defi.Defi;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import modele.Cellules.*;
-
-import java.util.*;
+import modele.Cellules.Cellule;
 
 
 /**
@@ -62,85 +61,18 @@ public class Labyrinthe {
      * @param defi le défi à utiliser pour créer le labyrinthe
      */
     public Labyrinthe(Defi defi) {
-        this(defi.getLargeur(), defi.getHauteur(), defi.getPourcentageMurs());
+        this(defi.largeur(), defi.hauteur(), defi.pourcentageMurs());
     }
 
-    /* Calcule le plus court chemin entre l'entrée et la sortie du labyrinthe (Dijkstra).
+    /**
+     * Calcule le plus court chemin entre l'entrée et la sortie du labyrinthe.
+     * Délègue le calcul à la classe Pathfinder qui utilise l'algorithme BFS.
      *
      * @return la longueur du plus court chemin
      */
     public int calculePlusCourtChemin() {
-        int startX = -1;
-        int startY = -1;
-        int endX = -1;
-        int endY = -1;
-
-        for (int i = 0; i < largeurMax; i++) {
-            for (int j = 0; j < hauteurMax; j++) {
-                if (cellules[i][j] != null && cellules[i][j].estEntree()) {
-                    startX = i;
-                    startY = j;
-                }
-                if (cellules[i][j] != null && cellules[i][j].estSortie()) {
-                    endX = i;
-                    endY = j;
-                }
-            }
-        }
-
-        if (startX == -1 || endX == -1) {
-            return 0;
-        }
-
-        boolean[][] visited = new boolean[largeurMax][hauteurMax];
-        int[][] prevX = new int[largeurMax][hauteurMax];
-        int[][] prevY = new int[largeurMax][hauteurMax];
-        int[][] dist = new int[largeurMax][hauteurMax];
-        for (int i = 0; i < largeurMax; i++) {
-            for (int j = 0; j < hauteurMax; j++) {
-                prevX[i][j] = -1;
-                prevY[i][j] = -1;
-                dist[i][j] = -1;
-            }
-        }
-
-        LinkedList<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{startX, startY});
-        visited[startX][startY] = true;
-        dist[startX][startY] = 0;
-
-        int[][] direction = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-
-        while (!queue.isEmpty()) {
-            int[] courant = queue.removeFirst();
-            int cx = courant[0];
-            int cy = courant[1];
-
-            if (cx == endX && cy == endY) {
-                break;
-            }
-
-            for (int[] d : direction) {
-                int nx = cx + d[0];
-                int ny = cy + d[1];
-
-                if (nx < 0 || nx >= largeurMax || ny < 0 || ny >= hauteurMax) continue;
-                if (visited[nx][ny]) continue;
-                if (cellules[nx][ny] == null) continue;
-                if (cellules[nx][ny].estMur()) continue;
-
-                visited[nx][ny] = true;
-                prevX[nx][ny] = cx;
-                prevY[nx][ny] = cy;
-                dist[nx][ny] = dist[cx][cy] + 1;
-                queue.addLast(new int[]{nx, ny});
-            }
-        }
-
-        if (dist[endX][endY] == -1) {
-            return 0;
-        }
-        return dist[endX][endY];
+        Pathfinder pathfinder = new Pathfinder();
+        return pathfinder.findShortestPath(cellules, largeurMax, hauteurMax);
     }
 
     public double getPourcentageMurs() {
@@ -201,6 +133,14 @@ public class Labyrinthe {
             return false;
         }
         return !cellules[x][y].estMur();
+    }
+
+    public boolean deplacer(int x, int y) {
+        if (!peutDeplacer(x, y)) return false;
+
+        joueurX.set(x);
+        joueurY.set(y);
+        return true;
     }
 
     public boolean estSurSortie(int x, int y) {

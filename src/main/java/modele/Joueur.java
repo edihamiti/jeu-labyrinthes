@@ -1,73 +1,60 @@
 package modele;
 
+import com.google.gson.annotations.SerializedName;
+import modele.defi.Defi;
+import modele.defi.repository.DefiJson;
 import modele.items.Item;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
-/**
- * Classe représentant un joueur.
- */
 public class Joueur {
 
-    private static int count = 1;
-    private final int id;
     private String pseudo;
-    private HashMap<Defi, Boolean> progression;
+    @SerializedName("progression")
+    private Map<String, Boolean> progressionJson;
+    private transient HashMap<Defi, Boolean> progression;
     private int score;
     private ArrayList<Item> inventaire;
 
-    /**
-     * Constructeur pour un joueur.
-     *
-     * @param pseudo le pseudo du joueur
-     * @throws PseudoException si le pseudo est invalide
-     */
     public Joueur(String pseudo) throws PseudoException {
-        this.id = count++;
         if (pseudo == null || pseudo.trim().isEmpty())
             throw new PseudoException("Le pseudo ne peut pas être vide ou composé que d'espace(s)");
         else if (pseudo.length() > 15) throw new PseudoException("Le pseudo est trop long");
         else if (!pseudo.matches("[a-zA-Z0-9]+"))
             throw new PseudoException("Le pseudo ne peut contenir que des lettres et des chiffres");
         else this.pseudo = pseudo;
-
-        this.progression = new HashMap<>();
-        for (Defi defi : Defi.values()) {
-            this.progression.put(defi, false);
-        }
+        this.progression = new DefiJson().charger().getMapsDefis();
         this.score = 0;
         this.inventaire = new ArrayList<>();
     }
 
     /**
-     * Constructeur pour un joueur à partir d'un objet JSON.
-     *
-     * @param joueur un objet JSON représentant un joueur
+     * Prépare la sérialisation en convertissant la progression
      */
-    public Joueur(JSONObject joueur) {
-        this.id = joueur.getInt("id");
-        this.pseudo = joueur.getString("pseudo");
-        this.score = joueur.getInt("score");
-        this.progression = new HashMap<>();
-
-        JSONObject progressionJson = joueur.getJSONObject("progression");
-        for (Defi defi : Defi.values()) {
-            try {
-                progression.put(defi, (Boolean) progressionJson.get(defi.name()));
-            } catch (JSONException e) {
-                System.err.println("Pas de sauvegarde pour " + defi.name() + " dans la sauvegarde de " + this.pseudo + ".\n[ERREUR] : " + e.getMessage());
-                progression.put(defi, false);
-                System.out.println("Ajout de " + defi.name() + " dans la sauvegarde du joueur");
-            }
+    public void prepareForSerialization() {
+        this.progressionJson = new HashMap<>();
+        for (Map.Entry<Defi, Boolean> entry : progression.entrySet()) {
+            progressionJson.put(entry.getKey().name(), entry.getValue());
         }
     }
 
-    public int getId() {
-        return id;
+    /**
+     * Restaure la progression après désérialisation
+     */
+    public void restoreAfterDeserialization() {
+        this.progression = new HashMap<>();
+        for (Defi defi : new DefiJson().charger().getDefisRepo()) {
+            Boolean completed = progressionJson.getOrDefault(defi.name(), false);
+            if (completed == null) {
+                System.err.println("Pas de sauvegarde pour " + defi.name() + " dans la sauvegarde de " + this.pseudo);
+                completed = false;
+                System.out.println("Ajout de " + defi.name() + " dans la sauvegarde du joueur");
+            }
+            progression.put(defi, completed);
+        }
     }
 
     public String getPseudo() {
@@ -86,41 +73,6 @@ public class Joueur {
         this.progression = progression;
     }
 
-    /**
-     * Convertit le joueur en objet JSON.
-     *
-     * @return un objet JSON représentant le joueur
-     */
-    public JSONObject toJson() {
-        JSONObject joueur = new JSONObject();
-        joueur.put("id", this.id);
-        joueur.put("pseudo", this.pseudo);
-        joueur.put("score", this.score);
-        joueur.put("progression", this.progression);
-        return joueur;
-    }
-
-    @Override
-    public String toString() {
-        return "Joueur{" +
-                "id=" + id +
-                ", pseudo='" + pseudo + '\'' +
-                ", progression=" + progression +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Joueur joueur = (Joueur) o;
-        return Objects.equals(pseudo, joueur.pseudo) && Objects.equals(progression, joueur.progression);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(pseudo, progression);
-    }
-
     public int getScore() {
         return score;
     }
@@ -129,28 +81,39 @@ public class Joueur {
         this.score = score;
     }
 
-    /**
-     * Ajoute le score d'un défi au score total du joueur et met à jour la progression.
-     *
-     * @param defi le défi complété
-     */
-    public void ajouterScore(Defi defi) {
-        if (defi != null) {
-            this.score += defi.getPoints();
-            this.progression.put(defi, true);
-        }
+    public ArrayList<Item> getInventaire() {
+        return inventaire;
     }
 
-    /**
-     * Ajoute un score calculé au score total du joueur et met à jour la progression du défi en cours.
-     *
-     * @param points le score calculé à ajouter
-     * @param defi le défi complété
-     */
+    public void ajouterScore(Defi defi) {
+        ajouterScore(defi.points(), defi);
+    }
+
     public void ajouterScore(int points, Defi defi) {
         if (defi != null) {
             this.score += points;
             this.progression.put(defi, true);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Joueur{" +
+                "pseudo='" + pseudo + '\'' +
+                ", score=" + score +
+                ", progression=" + progression +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Joueur joueur = (Joueur) o;
+        return Objects.equals(pseudo, joueur.pseudo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pseudo);
     }
 }

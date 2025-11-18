@@ -1,6 +1,5 @@
-package controleur.modeLibre;
+package controleur;
 
-import controleur.AppControleur;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,7 +19,7 @@ import java.io.IOException;
 /**
  * Contrôleur pour les paramètres du mode libre du jeu de labyrinthe.
  */
-public class ParametresControleur {
+public class ParametresControleur extends Controleur {
     private final double POURCENTAGE_MIN = 0.0;
     private final double POURCENTAGE_MAX = 100.0;
     public Spinner<Integer> largeurField;
@@ -41,7 +40,6 @@ public class ParametresControleur {
      */
     @FXML
     public void initialize() {
-        Jeu.getInstance().setModeJeu(ModeJeu.MODE_LIBRE);
         validerButton.getParent().sceneProperty().addListener((observableValue, scene, t1) -> {
             t1.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, keyEvent -> {
                 if (keyEvent.getCode() == KeyCode.ENTER) {
@@ -80,6 +78,15 @@ public class ParametresControleur {
             this.distanceMin = this.distanceMinSpinner.getValue();
         });
         updateAvailableFields();
+    }
+
+    @Override
+    public void setJeu(Jeu jeu) {
+        super.setJeu(jeu);
+        // Initialiser le mode de jeu une fois que jeu est injecté
+        if (jeu != null) {
+            jeu.setModeJeu(ModeJeu.MODE_LIBRE);
+        }
     }
 
     /**
@@ -151,20 +158,7 @@ public class ParametresControleur {
      * Gère le clic sur le bouton de retour vers le menu principal.
      */
     public void retourClicked() {
-        try {
-            AppControleur.getInstance().MenuPrincipal();
-        } catch (IOException e) {
-            System.err.println("Erreur lors de la retour vers le menu principal !");
-            System.err.println(e.getMessage());
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur !");
-            alert.setHeaderText("Erreur lors de la retour vers le menu principal !");
-            alert.setContentText("Details : " + e.getMessage());
-            alert.showAndWait();
-
-            System.exit(1);
-        }
+        appControleur.MenuPrincipal();
     }
 
     /**
@@ -193,6 +187,13 @@ public class ParametresControleur {
 
             controleur.JeuControleur jeuControleur = loader.getController();
 
+            // Injecter les dépendances dans le contrôleur
+            if (jeuControleur != null) {
+                jeuControleur.setJeu(this.jeu);
+                jeuControleur.setAppControleur(this.appControleur);
+            }
+
+            // Appeler setParametresLab APRÈS le chargement du FXML
             jeuControleur.setParametresLab(largeur, hauteur, pourcentageMurs, distanceMinEffective, typeLabyrinthe);
 
             Stage stage = (Stage) validerButton.getScene().getWindow();

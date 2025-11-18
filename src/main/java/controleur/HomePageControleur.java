@@ -15,16 +15,16 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import modele.Jeu;
 import modele.Joueur;
-import modele.Sauvegarde;
+import modele.joueursRepositories.JoueurRepository;
 import vue.ChargerProfileRendu;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Contrôleur pour la page d'accueil de l'application.
  */
-public class HomePageControleur {
+public class HomePageControleur extends Controleur {
 
     @FXML
     public Label nomMode;
@@ -37,7 +37,7 @@ public class HomePageControleur {
     public Text modeProgressionText;
     private boolean modeProgression;
     private boolean isChargerProfilActive;
-    private Sauvegarde saves;
+    private JoueurRepository saves;
 
     // Constructeur par défaut (obligatoire pour JavaFX)
     public HomePageControleur() {
@@ -52,8 +52,6 @@ public class HomePageControleur {
     public void initialize() {
         modeProgression = true;
         isChargerProfilActive = false;
-        saves = Jeu.getInstance().getSauvegarde();
-        saves.chargerJoueurs();
 
         HBox.setHgrow(chargerProfilButton, Priority.ALWAYS);
         HBox.setHgrow(nouvellePartieButton, Priority.ALWAYS);
@@ -69,6 +67,16 @@ public class HomePageControleur {
         clip.heightProperty().bind(contentPage.heightProperty());
 
         contentPage.setClip(clip);
+    }
+
+    @Override
+    public void setJeu(Jeu jeu) {
+        super.setJeu(jeu);
+        // Initialiser les éléments qui dépendent de jeu une fois qu'il est injecté
+        if (jeu != null) {
+            saves = jeu.getSauvegarde();
+            saves.chargerJoueurs();
+        }
     }
 
     /**
@@ -106,7 +114,7 @@ public class HomePageControleur {
     public void lancerJeu() {
         try {
             FXMLLoader loader;
-            if (modeProgression && Jeu.getInstance().getJoueur() == null) {
+            if (modeProgression && jeu.getJoueur() == null) {
                 loader = new FXMLLoader(getClass().getResource("/ChoisirPseudo.fxml"));
             } else if (modeProgression) {
                 loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
@@ -114,6 +122,13 @@ public class HomePageControleur {
                 loader = new FXMLLoader(getClass().getResource("/ModeLibreParametres.fxml"));
             }
             Parent jeuView = loader.load();
+
+            // Injecter les dépendances dans le contrôleur
+            Object controller = loader.getController();
+            if (controller instanceof Controleur) {
+                ((Controleur) controller).setJeu(this.jeu);
+                ((Controleur) controller).setAppControleur(this.appControleur);
+            }
 
             Stage stage = (Stage) nouvellePartieButton.getScene().getWindow();
 
@@ -133,17 +148,17 @@ public class HomePageControleur {
     public void chargerProfil() {
         isChargerProfilActive = !isChargerProfilActive;
 
-        Node label = chargerProfilButton.getChildren().get(0);
+        Node label = chargerProfilButton.getChildren().getFirst();
         chargerProfilButton.getChildren().clear();
         chargerProfilButton.getChildren().add(
                 label
         );
 
         if (isChargerProfilActive) {
-            HashMap<String, Joueur> profiles = saves.getJoueurs();
+            Map<String, Joueur> profiles = saves.getJoueurs();
 
             chargerProfilButton.getChildren().add(ChargerProfileRendu.render(profiles, joueur -> {
-                Jeu.getInstance().setJoueur(joueur);
+                jeu.setJoueur(joueur);
                 lancerJeu();
             }));
         }

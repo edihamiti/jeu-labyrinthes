@@ -5,21 +5,25 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
-import modele.*;
+import modele.Labyrinthe;
+import modele.ModeJeu;
+import modele.TypeLabyrinthe;
+import modele.Vision;
 import modele.generateurs.GenerateurLabyrinthe;
-import vue.*;
+import vue.HandlerVictoire;
+import vue.Rendu;
+import vue.SoundManager;
+import vue.visionsLabyrinthe.VisionFactory;
+import vue.visionsLabyrinthe.VisionLabyrinthe;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalTime;
 import java.util.Random;
 
 /**
  * Contrôleur pour la gestion du jeu de labyrinthe.
  */
-public class JeuControleur {
+public class JeuControleur extends Controleur {
     private static boolean premierLancement = true;
     @FXML
     public VBox minimap;
@@ -28,19 +32,16 @@ public class JeuControleur {
     @FXML
     private VBox conteneurLabyrinthe;
     private Rendu renduLabyrinthe;
-    private MiniMapRendu renduMinimap;
-    private TypeLabyrinthe typeLab;
+    private Rendu renduMinimap;
     private GenerateurLabyrinthe generateur;
-    private LimiteeRendu renduLimitee;
-    private UpdateRendu renduUpdate;
+    private HandlerVictoire handlerVictoire;
 
     /**
      * Initialise le contrôleur et configure les événements de déplacement du joueur.
      */
     @FXML
     public void initialize() {
-        // Ne plus initialiser le labyrinthe ici
-        // Attendre que setParametresLab() soit appelé
+        this.handlerVictoire = new HandlerVictoire();
 
         conteneurLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
@@ -64,10 +65,10 @@ public class JeuControleur {
                 });
 
                 newScene.widthProperty().addListener((obsWidth, oldWidth, newWidth) -> {
-                    if (Jeu.getInstance().getLabyrinthe() != null) afficherJeu();
+                    if (jeu.getLabyrinthe() != null) afficherJeu();
                 });
                 newScene.heightProperty().addListener((obsHeight, oldHeight, newHeight) -> {
-                    if (Jeu.getInstance().getLabyrinthe() != null) afficherJeu();
+                    if (jeu.getLabyrinthe() != null) afficherJeu();
                 });
             }
         });
@@ -78,6 +79,13 @@ public class JeuControleur {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/PopupCommandes.fxml"));
             Parent popupView = loader.load();
+
+            // Injecter les dépendances dans le contrôleur
+            Object controller = loader.getController();
+            if (controller instanceof Controleur) {
+                ((Controleur) controller).setJeu(this.jeu);
+                ((Controleur) controller).setAppControleur(this.appControleur);
+            }
 
             Stage popupStage = new Stage();
             popupStage.initOwner(conteneurLabyrinthe.getScene().getWindow());
@@ -100,13 +108,21 @@ public class JeuControleur {
      * @throws IOException si le chargement de la vue échoue
      */
     public void retourMenu() throws IOException {
-        AppControleur.getInstance().resetGame();
-        AppControleur.getInstance().MenuPrincipal();
+        appControleur.resetGame();
+        appControleur.MenuPrincipal();
     }
 
     private void retourModeProgression() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
         Parent modeProgressionView = loader.load();
+
+        // Injecter les dépendances dans le contrôleur
+        Object controller = loader.getController();
+        if (controller instanceof Controleur) {
+            ((Controleur) controller).setJeu(this.jeu);
+            ((Controleur) controller).setAppControleur(this.appControleur);
+        }
+
         Stage stage = (Stage) conteneurLabyrinthe.getScene().getWindow();
         Scene scene = new Scene(modeProgressionView, 1400, 900);
         stage.setScene(scene);
@@ -114,23 +130,11 @@ public class JeuControleur {
     }
 
     public void afficherJeu() {
-        if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
-            if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LOCAL)) {
-                afficherMinimap();
-                afficherLabyrinthe();
-            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITEE)) {
-                afficherLimitee();
-            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_CARTE)) {
-                // Étape 6: Vue locale avec carte progressive qui se met à jour
-                afficherCarteProgressive();
-                afficherLabyrinthe();
-            } else {
-                // Vue libre par défaut
-                afficherLabyrinthe();
-            }
-        } else {
-            // Mode libre
-            afficherLabyrinthe();
+        afficherLabyrinthe();
+
+        // Afficher la minimap si elle est visible
+        if (overlayMinimap.isVisible() && renduMinimap != null) {
+            afficherMinimap();
         }
     }
 
@@ -139,47 +143,35 @@ public class JeuControleur {
      */
     public void afficherLabyrinthe() {
         conteneurLabyrinthe.getChildren().clear();
-        conteneurLabyrinthe.getChildren().add(renduLabyrinthe.rendu(Jeu.getInstance().getLabyrinthe()));
+        conteneurLabyrinthe.getChildren().add(renduLabyrinthe.rendu(jeu.getLabyrinthe()));
     }
 
-    public void afficherLocale() {
-        conteneurLabyrinthe.getChildren().clear();
-        conteneurLabyrinthe.getChildren().add(renduLabyrinthe.rendu(Jeu.getInstance().getLabyrinthe()));
-    }
-
-    public void afficherLimitee(){
-        conteneurLabyrinthe.getChildren().clear();
-        conteneurLabyrinthe.getChildren().add(renduLimitee.rendu(Jeu.getInstance().getLabyrinthe()));
-    }
-
+    /**
+     * Affiche la minimap si nécessaire.
+     */
     public void afficherMinimap() {
         minimap.getChildren().clear();
-        minimap.getChildren().add(renduMinimap.rendu(Jeu.getInstance().getLabyrinthe()));
-    }
-
-    public void afficherCarteProgressive() {
-        minimap.getChildren().clear();
-        minimap.getChildren().add(renduUpdate.rendu(Jeu.getInstance().getLabyrinthe()));
+        minimap.getChildren().add(renduMinimap.rendu(jeu.getLabyrinthe()));
     }
 
     @FXML
     public void deplacerHaut() throws IOException {
-        deplacer(Jeu.getInstance().getLabyrinthe().getJoueurX() - 1, Jeu.getInstance().getLabyrinthe().getJoueurY());
+        deplacer(jeu.getLabyrinthe().getJoueurX() - 1, jeu.getLabyrinthe().getJoueurY());
     }
 
     @FXML
     public void deplacerBas() throws IOException {
-        deplacer(Jeu.getInstance().getLabyrinthe().getJoueurX() + 1, Jeu.getInstance().getLabyrinthe().getJoueurY());
+        deplacer(jeu.getLabyrinthe().getJoueurX() + 1, jeu.getLabyrinthe().getJoueurY());
     }
 
     @FXML
     public void deplacerGauche() throws IOException {
-        deplacer(Jeu.getInstance().getLabyrinthe().getJoueurX(), Jeu.getInstance().getLabyrinthe().getJoueurY() - 1);
+        deplacer(jeu.getLabyrinthe().getJoueurX(), jeu.getLabyrinthe().getJoueurY() - 1);
     }
 
     @FXML
     public void deplacerDroite() throws IOException {
-        deplacer(Jeu.getInstance().getLabyrinthe().getJoueurX(), Jeu.getInstance().getLabyrinthe().getJoueurY() + 1);
+        deplacer(jeu.getLabyrinthe().getJoueurX(), jeu.getLabyrinthe().getJoueurY() + 1);
     }
 
     /**
@@ -190,64 +182,53 @@ public class JeuControleur {
      * @throws IOException si une erreur survient lors du déplacement
      */
     private void deplacer(int nouveauX, int nouveauY) throws IOException {
-        if (Jeu.getInstance().getStart() == null) {
-            Jeu.getInstance().setStart(java.time.LocalTime.now());
+
+        if (!jeu.isRunning()) {
+            jeu.startTimer(); //TODO: VÉRIFIER QUE JE FAIT PAS DE LA MERDE ICI
         }
 
         Random random = new Random();
-        if (Jeu.getInstance().getLabyrinthe().peutDeplacer(nouveauX, nouveauY)) {
-            Jeu.getInstance().getLabyrinthe().setJoueurX(nouveauX);
-            Jeu.getInstance().getLabyrinthe().setJoueurY(nouveauY);
+        if (jeu.getLabyrinthe().deplacer(nouveauX, nouveauY)) {
+            SoundManager.playSound("move.mp3");
+            if (random.nextInt(100) > 95) SoundManager.playSound("bois.mp3");
 
-            Jeu.getInstance().setNombreDeplacements(Jeu.getInstance().getNombreDeplacements() + 1);
+            jeu.setNombreDeplacements(jeu.getNombreDeplacements() + 1);
 
-            playSound("move.mp3");
-            if (random.nextInt(100) > 95) playSound("bois.mp3");
-
-            if (Jeu.getInstance().getLabyrinthe().estSurSortie(nouveauX, nouveauY)) {
-                Jeu.getInstance().setEnd(java.time.LocalTime.now());
+            if (jeu.getLabyrinthe().estSurSortie(nouveauX, nouveauY)) {
                 victoire();
             }
         } else {
-            playSound("block.mp3");
-
-            if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION) &&
-                Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITEE)) {
-                renduLimitee.setBlockedWall(nouveauX, nouveauY);
-            } else {
-                renduLabyrinthe.setBlockedWall(nouveauX, nouveauY);
+            SoundManager.playSound("block.mp3");
+            renduLabyrinthe.setBlockedWall(nouveauX, nouveauY);
+            if (overlayMinimap.isVisible() && renduMinimap != null) {
+                renduMinimap.setBlockedWall(nouveauX, nouveauY);
             }
         }
     }
 
-    private void playSound(String sound) {
-        AudioClip audio = new AudioClip(getClass().getResource("/sounds/" + sound).toExternalForm());
-        audio.play();
-    }
-
-    private int calculerScore(int nombreDeplacements) {
-        if (Jeu.getInstance().getJoueur() != null && Jeu.getInstance().getDefiEnCours() != null) {
-            Defi defi = Jeu.getInstance().getDefiEnCours();
-            int pointsBase = defi.getPoints();
-            int etape = defi.getEtape();
-
-            //étapes 1, 2 et 3
-            if (etape <= 3) {
-                return pointsBase;
-            }
-
-            //étapes 4, 5 et 6
-            int deplacementsOptimal = (int) (defi.getDistanceMin() * 1.5);
-
-            if (nombreDeplacements > deplacementsOptimal) {
-                int deplacementsSupplementaires = nombreDeplacements - deplacementsOptimal;
-                int penalite = deplacementsSupplementaires / 2; // 1 point de pénalité par 2 déplacements supplémentaires
-                return Math.max(0, pointsBase - penalite);
-            }
-            return pointsBase;
-        }
-        return 0;
-    }
+//    private int calculerScore(int nombreDeplacements) { // TODO : Rebouger tout ça dans le calculateur
+//        if (Jeu.getInstance().getJoueur() != null && Jeu.getInstance().getDefiEnCours() != null) {
+//            Defi defi = Jeu.getInstance().getDefiEnCours();
+//            int pointsBase = defi.getPoints();
+//            int etape = defi.getEtape();
+//
+//            //étapes 1, 2 et 3
+//            if (etape <= 3) {
+//                return pointsBase;
+//            }
+//
+//            //étapes 4, 5 et 6
+//            int deplacementsOptimal = (int) (defi.getDistanceMin() * 1.5);
+//
+//            if (nombreDeplacements > deplacementsOptimal) {
+//                int deplacementsSupplementaires = nombreDeplacements - deplacementsOptimal;
+//                int penalite = deplacementsSupplementaires / 2; // 1 point de pénalité par 2 déplacements supplémentaires
+//                return Math.max(0, pointsBase - penalite);
+//            }
+//            return pointsBase;
+//        }
+//        return 0;
+//    }
 
     /**
      * Gère la victoire du joueur lorsqu'il atteint la sortie du labyrinthe.
@@ -255,99 +236,65 @@ public class JeuControleur {
      * @throws IOException si une erreur survient lors du retour au menu principal
      */
     private void victoire() throws IOException {
-        playSound("win.mp3");
+        Stage ownerStage = (Stage) conteneurLabyrinthe.getScene().getWindow();
 
+        handlerVictoire.handleVictoire(
+                jeu,
+                ownerStage,
+                this::handleRejouer,
+                this::handleRetourMenu
+        );
+    }
+
+    private void handleRejouer() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/PopupVictoire.fxml"));
-            Parent popupView = loader.load();
-            PopupVictoireControleur controleur = loader.getController();
-
-            LocalTime debut = Jeu.getInstance().getStart();
-            LocalTime fin = Jeu.getInstance().getEnd() != null ? Jeu.getInstance().getEnd() : LocalTime.now();
-            Duration duree = Duration.between(debut, fin);
-            long minutes = duree.toMinutes();
-            long secondes = duree.toSeconds() % 60;
-
-            controleur.setTemps(minutes + " min " + secondes + " sec");
-
-            controleur.setDeplacement(String.valueOf(Jeu.getInstance().getNombreDeplacements()));
-
-            if (Jeu.getInstance().getJoueur() != null && Jeu.getInstance().getDefiEnCours() != null) {
-                int scoreObtenu = calculerScore(Jeu.getInstance().getNombreDeplacements());
-
-                Jeu.getInstance().getJoueur().ajouterScore(scoreObtenu, Jeu.getInstance().getDefiEnCours());
-                Jeu.getInstance().getSauvegarde().sauvegardeJoueurs();
-                controleur.setScore(String.valueOf(Jeu.getInstance().getJoueur().getScore()));
+            if (jeu.getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
+                retourModeProgression();
+            } else {
+                rejouer();
             }
-
-            controleur.setRejouer(() -> {
-                try {
-                    if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
-                        retourModeProgression();
-                    } else {
-                        rejouer();
-                    }
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            });
-
-            controleur.setRetourMenu(() -> {
-                try {
-                    retourMenu();
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            });
-
-            Stage popupStage = new Stage();
-            popupStage.initOwner(conteneurLabyrinthe.getScene().getWindow());
-            popupStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
-            popupStage.setTitle("Victoire");
-            popupStage.setResizable(false);
-
-            Scene scene = new Scene(popupView);
-            popupStage.setScene(scene);
-            popupStage.showAndWait();
-
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
+        }
+    }
+
+    private void handleRetourMenu() {
+        try {
             retourMenu();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
     }
 
     private void rejouer() throws IOException {
-        Jeu.getInstance().resetTimer();
-        this.generateur.generer(Jeu.getInstance().getLabyrinthe());
+        jeu.resetTimer();
+        this.generateur.generer(jeu.getLabyrinthe());
         setRenduLabyrinthe();
         afficherJeu();
     }
 
     public void setRenduLabyrinthe() {
-        if (Jeu.getInstance().getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
-            if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LOCAL)) {
-                overlayMinimap.setVisible(true);
-                this.renduMinimap = new MiniMapRendu(Jeu.getInstance().getLabyrinthe(), minimap);
-                this.renduLabyrinthe = new LocaleRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
-            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_LIMITEE)) {
-                overlayMinimap.setVisible(false);
-                this.renduLimitee = new LimiteeRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
-                this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
-            } else if (Jeu.getInstance().getDefiEnCours().getVision().equals(Vision.VUE_CARTE)) {
-                overlayMinimap.setVisible(true);
-                UpdateRendu.reinitialiserExploration();
-                this.renduUpdate = new UpdateRendu(Jeu.getInstance().getLabyrinthe(), minimap);
-                this.renduLabyrinthe = new LocaleRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
-            } else {
-                overlayMinimap.setVisible(false);
-                this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
-            }
-        } else {
-            overlayMinimap.setVisible(false);
-            this.renduLabyrinthe = new LabyrintheRendu(Jeu.getInstance().getLabyrinthe(), conteneurLabyrinthe);
+        Vision vision = Vision.VUE_LIBRE; // Vision par défaut
+        VisionLabyrinthe visionStrategy;
 
+        if (jeu.getDefiEnCours() != null) {
+            vision = jeu.getDefiEnCours().vision();
+            int porteeVision = jeu.getDefiEnCours().portee();
+
+            // Obtenir la stratégie avec la portée personnalisée si nécessaire
+            visionStrategy = VisionFactory.getStrategy(vision, porteeVision);
+        } else {
+            visionStrategy = VisionFactory.getStrategy(vision, 0);
         }
 
+        // Configurer le rendu principal
+        this.renduLabyrinthe = visionStrategy.createRendu(jeu.getLabyrinthe(), conteneurLabyrinthe);
+
+        // Configurer la minimap si nécessaire
+        if (visionStrategy.requiresMinimap()) {
+            overlayMinimap.setVisible(true);
+            this.renduMinimap = visionStrategy.createMinimapRendu(jeu.getLabyrinthe(), minimap);
+        }
     }
 
     /**
@@ -361,24 +308,23 @@ public class JeuControleur {
      */
     public void setParametresLab(int largeur, int hauteur, double pourcentageMurs, int distanceMin, TypeLabyrinthe typeLab) {
         // Créer le labyrinthe
-        Jeu.getInstance().setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs, distanceMin));
+        jeu.setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs, distanceMin));
 
         // Créer et utiliser le générateur
         this.generateur = typeLab.creerGenerateur(largeur, hauteur, pourcentageMurs, distanceMin);
-        this.generateur.generer(Jeu.getInstance().getLabyrinthe());
+        this.generateur.generer(jeu.getLabyrinthe());
 
         // Réinitialiser le timer
-        Jeu.getInstance().resetTimer();
+        jeu.resetTimer();
 
         // Configurer le rendu
         setRenduLabyrinthe();
 
         // Ajouter les listeners pour la position du joueur
-        Jeu.getInstance().getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
-        Jeu.getInstance().getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
+        jeu.getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
+        jeu.getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
 
         // Afficher le jeu
         afficherJeu();
     }
-
 }

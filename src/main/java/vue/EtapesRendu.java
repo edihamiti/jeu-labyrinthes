@@ -1,5 +1,7 @@
 package vue;
 
+import modele.defi.Defi;
+import modele.defi.repository.DefiJson;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -10,7 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import modele.Defi;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -19,14 +20,14 @@ import java.util.function.Consumer;
  * Classe responsable du rendu des étapes avec leurs difficultés.
  */
 public class EtapesRendu {
-    private static Map<Defi, Boolean> progression;
     private static final Image imgFacile = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/difficultees/facile.png")));
     private static final Image imgMoyen = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/difficultees/moyen.png")));
     private static final Image imgDifficile = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/difficultees/difficile.png")));
     private static final Image imgCheckmark = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/checkmark.png")));
     private static final Image imgPoints = new Image(Objects.requireNonNull(EtapesRendu.class.getResourceAsStream("/img/points.png")));
     private static final int DEFI_PAR_ETAPES = 3;
-    private static final int NOMBRE_ETAPES = Defi.values().length/DEFI_PAR_ETAPES;
+    private static final int NOMBRE_ETAPES = new DefiJson().charger().getDefisRepo().size() / DEFI_PAR_ETAPES;
+    private static Map<Defi, Boolean> progression;
 
     /**
      * Rend les étapes avec leurs difficultés sous forme de VBox.
@@ -42,8 +43,8 @@ public class EtapesRendu {
         progression = progress;
 
         Map<Integer, List<Defi>> defisByEtape = new HashMap<>();
-        for (Defi defi : Defi.values()) {
-            defisByEtape.computeIfAbsent(defi.getEtape(), k -> new ArrayList<>()).add(defi);
+        for (Defi defi : new DefiJson().charger().getDefisRepo()) {
+            defisByEtape.computeIfAbsent(defi.etape(), k -> new ArrayList<>()).add(defi);
         }
 
         for (int etape = 1; etape <= NOMBRE_ETAPES; etape++) {
@@ -81,7 +82,7 @@ public class EtapesRendu {
      * L'étape 1 est toujours déverrouillée.
      * Les autres étapes nécessitent qu'au moins un défi de l'étape précédente soit complété.
      *
-     * @param etape L'étape à vérifier.
+     * @param etape        L'étape à vérifier.
      * @param defisByEtape Map des défis groupés par étape.
      * @return true si l'étape est déverrouillée, false sinon.
      */
@@ -98,9 +99,9 @@ public class EtapesRendu {
     /**
      * Crée une carte d'étape avec ses difficultés.
      *
-     * @param step        L'étape à rendre.
-     * @param defis Les défis de cette étape.
-     * @param action Le callback à exécuter lors du clic.
+     * @param step       L'étape à rendre.
+     * @param defis      Les défis de cette étape.
+     * @param action     Le callback à exécuter lors du clic.
      * @param isUnlocked Indique si l'étape est déverrouillée.
      * @return VBox représentant la carte d'étape.
      */
@@ -157,7 +158,7 @@ public class EtapesRendu {
      *
      * @param image      L'image représentant la difficulté.
      * @param difficulty Le label de la difficulté.
-     * @param isDone Indique si le défi est complété.
+     * @param isDone     Indique si le défi est complété.
      * @param isUnlocked Indique si le défi est déverrouillé.
      * @return Button représentant l'icône de difficulté.
      */

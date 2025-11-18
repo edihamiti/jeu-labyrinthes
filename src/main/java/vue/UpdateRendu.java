@@ -23,19 +23,22 @@ public class UpdateRendu implements Rendu {
 
     private Labyrinthe labyrinthe;
     private VBox conteneurLabyrinthe;
+    private int porteeVision;
 
     // Set pour mémoriser les cellules explorées (révélées sur la carte)
-    private static Set<String> cellulesExplorees = new HashSet<>();
+    private Set<String> cellulesExplorees = new HashSet<>();
 
     /**
      * Constructeur de UpdateRendu.
      *
-     * @param labyrinthe        Le labyrinthe à rendre.
+     * @param labyrinthe          Le labyrinthe à rendre.
      * @param conteneurLabyrinthe Le conteneur VBox pour afficher la carte.
+     * @param porteeVision        La portée de vision du joueur.
      */
-    public UpdateRendu(Labyrinthe labyrinthe, VBox conteneurLabyrinthe) {
+    public UpdateRendu(Labyrinthe labyrinthe, VBox conteneurLabyrinthe, int porteeVision) {
         this.labyrinthe = labyrinthe;
         this.conteneurLabyrinthe = conteneurLabyrinthe;
+        this.porteeVision = porteeVision;
 
         // Réinitialiser les cellules explorées pour un nouveau labyrinthe
         cellulesExplorees.clear();
@@ -63,11 +66,6 @@ public class UpdateRendu implements Rendu {
         int joueurX = this.labyrinthe.getJoueurX();
         int joueurY = this.labyrinthe.getJoueurY();
 
-        // Récupérer la portée de vision depuis le défi
-        int porteeVision = 2; // valeur par défaut
-        if (modele.Jeu.getInstance().getDefiEnCours() != null) {
-            porteeVision = modele.Jeu.getInstance().getDefiEnCours().getPortee();
-        }
 
         int largeurMax = this.labyrinthe.getLargeurMax();
         int hauteurMax = this.labyrinthe.getHauteurMax();
@@ -175,7 +173,7 @@ public class UpdateRendu implements Rendu {
     /**
      * Réinitialise les cellules explorées (pour un nouveau labyrinthe).
      */
-    public static void reinitialiserExploration() {
+    public void reinitialiserExploration() {
         cellulesExplorees.clear();
     }
 
@@ -185,5 +183,9 @@ public class UpdateRendu implements Rendu {
 
     public void setConteneurLabyrinthe(VBox conteneurLabyrinthe) {
         this.conteneurLabyrinthe = conteneurLabyrinthe;
+    }
+
+    public void setPorteeVision(int porteeVision) {
+        this.porteeVision = porteeVision;
     }
 }

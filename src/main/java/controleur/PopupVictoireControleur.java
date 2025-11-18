@@ -7,7 +7,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class PopupVictoireControleur {
+public class PopupVictoireControleur extends Controleur {
 
     @FXML
     private VBox popupRoot;
@@ -17,6 +17,9 @@ public class PopupVictoireControleur {
 
     @FXML
     private Label scoreLabel;
+
+    @FXML
+    private Label messageLabel;
 
     @FXML
     private Label deplacementLabel;
@@ -34,6 +37,14 @@ public class PopupVictoireControleur {
         scoreLabel.setText("Score : " + score);
         scoreLabel.setVisible(true);
         scoreLabel.setManaged(true);
+    }
+
+    public void setMessage(String message) {
+        if (messageLabel != null && message != null && !message.isEmpty()) {
+            messageLabel.setText(message);
+            messageLabel.setVisible(true);
+            messageLabel.setManaged(true);
+        }
     }
 
     public void setDeplacement(String deplacement) {

@@ -12,31 +12,58 @@ import java.io.IOException;
  * Contrôleur principal de l'application.
  * Gère la scène principale et la navigation entre les différentes vues.
  */
-public class AppControleur {
+public class AppControleur extends Controleur {
 
-    private static AppControleur instance;
     private final Scene menu;
     private Stage primaryStage;
 
     /**
-     * Constructeur privé pour le singleton.
+     * Constructeur du contrôleur principal.
+     *
+     * @param jeu l'instance de Jeu à utiliser dans toute l'application
      */
-    private AppControleur() throws IOException {
+    public AppControleur(Jeu jeu) throws IOException {
+        this.jeu = jeu;
+
         FXMLLoader fxmlLoader = new FXMLLoader(AppControleur.class.getResource("/HomePage.fxml"));
         this.menu = new Scene(fxmlLoader.load(), 1400, 900);
+
+        // Injecter Jeu et AppControleur dans le contrôleur de la page d'accueil
+        Object controller = fxmlLoader.getController();
+        if (controller instanceof Controleur) {
+            ((Controleur) controller).setJeu(this.jeu);
+            ((Controleur) controller).setAppControleur(this);
+        }
     }
 
     /**
-     * Méthode pour obtenir l'instance unique du contrôleur.
+     * Charge une vue FXML et injecte automatiquement l'instance de Jeu dans le contrôleur.
      *
-     * @return instance unique de AppControleur
+     * @param resource le chemin de la ressource FXML
+     * @return le FXMLLoader chargé avec injection de Jeu
      * @throws IOException si le chargement de la vue échoue
      */
-    public static AppControleur getInstance() throws IOException {
-        if (instance == null) {
-            instance = new AppControleur();
+    public FXMLLoader loadFXMLWithJeu(String resource) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
+        loader.load();
+        Object controller = loader.getController();
+
+        if (controller instanceof Controleur) {
+            injectDependencies((Controleur) controller);
         }
-        return instance;
+
+        return loader;
+    }
+
+    /**
+     * Injecte Jeu et AppControleur dans un contrôleur.
+     * Pour standardiser l'injection de dépendances.
+     *
+     * @param controller le contrôleur dans lequel injecter les dépendances
+     */
+    private void injectDependencies(Controleur controller) {
+        controller.setJeu(this.jeu);
+        controller.setAppControleur(this);
     }
 
     public Stage getPrimaryStage() {
@@ -55,10 +82,9 @@ public class AppControleur {
     }
 
     public void resetGame() {
-        Jeu.getInstance().setModeJeu(null);
-        Jeu.getInstance().setDefiEnCours(null);
-        Jeu.getInstance().setJoueur((Joueur) null);
-        System.out.println("[DEBUG] Jeu reset");
+        jeu.setModeJeu(null);
+        jeu.setDefiEnCours(null);
+        jeu.setJoueur((Joueur) null);
     }
 
 }
