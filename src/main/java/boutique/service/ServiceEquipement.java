@@ -65,6 +65,6 @@ public class ServiceEquipement implements IServiceEquipement {
     }
 
     private String obtenirTextureParDefaut(TypeCosmetique type) {
-        return "textures/defaut_" + type.name().toLowerCase() + ".png";
+        return "textures/default/" + type.name().toLowerCase() + ".png";
     }
 }
