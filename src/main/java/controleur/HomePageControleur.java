@@ -1,6 +1,5 @@
 package controleur;
 
-import boutique.GestionnaireBoutique;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -134,13 +133,13 @@ public class HomePageControleur extends Controleur {
      */
     public void boutique() {
         try {
-            String id = "guest";
-            Joueur j = jeu.getJoueur();
-            if (j != null) {
-                id = String.valueOf(j.getPseudo());
+            Joueur joueur = jeu.getJoueur();
+            if (joueur == null) {
+                System.err.println("Aucun joueur");
+                return;
             }
             Stage stage = (Stage) boutiqueButton.getScene().getWindow();
-            jeu.getBoutique().ouvrirBoutique(stage, id, jeu, appControleur);
+            jeu.getBoutique().ouvrirBoutique(stage, joueur, jeu, appControleur);
         } catch (Exception e) {
             System.err.println("Erreur lors de l'ouverture de la boutique : " + e.getMessage());
             e.printStackTrace();
@@ -152,13 +151,13 @@ public class HomePageControleur extends Controleur {
      */
     public void inventaire() {
         try {
-            String id = "guest";
-            Joueur j = jeu.getJoueur();
-            if (j != null) {
-                id = String.valueOf(j.getPseudo());
+            Joueur joueur = jeu.getJoueur();
+            if (joueur == null) {
+                System.err.println("Aucun joueur");
+                return;
             }
             Stage stage = (Stage) inventaireButton.getScene().getWindow();
-            jeu.getBoutique().ouvrirInventaire(stage, id, jeu, appControleur);
+            jeu.getBoutique().ouvrirInventaire(stage, joueur, jeu, appControleur);
         } catch (Exception e) {
             System.err.println("Erreur lors de l'ouverture de l'inventaire : " + e.getMessage());
             e.printStackTrace();

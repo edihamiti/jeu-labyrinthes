@@ -2,6 +2,7 @@ package boutique;
 
 import boutique.controleur.ControleurBoutique;
 import boutique.controleur.ControleurCasier;
+import boutique.modele.InventaireJoueur;
 import boutique.modele.TypeCosmetique;
 import boutique.repository.DepotCosmetiqueMemoire;
 import boutique.repository.DepotInventaireJson;
@@ -16,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import modele.Jeu;
+import modele.Joueur;
 
 /**
  * Gestionnaire central de la boutique suivant le pattern Singleton.
@@ -38,14 +40,26 @@ public class GestionnaireBoutique {
      * Ouvre la vue Boutique sur le stage principal en initialisant son contrôleur.
      *
      * @param stagePrincipal le stage de l'application
-     * @param idJoueur       identifiant du joueur (String)
+     * @param joueur         l'objet Joueur courant
+     * @param jeu            l'instance du jeu
+     * @param appControleur  le contrôleur principal de l'application
      */
-    public void ouvrirBoutique(Stage stagePrincipal, String idJoueur, Jeu jeu, AppControleur appControleur) {
+    public void ouvrirBoutique(Stage stagePrincipal, Joueur joueur, Jeu jeu, AppControleur appControleur) {
+        if (joueur == null) {
+            System.err.println("Impossible d'ouvrir la boutique : joueur null");
+            return;
+        }
+
+        String idJoueur = joueur.getPseudo();
+        InventaireJoueur inventaire = depotInventaire.charger(idJoueur);
+        inventaire.setScore(joueur.getScore());
+        depotInventaire.sauvegarder(idJoueur, inventaire);
+
         try {
             FXMLLoader chargeur = new FXMLLoader(getClass().getResource("/boutique/Boutique.fxml"));
             Scene scene = new Scene(chargeur.load());
             ControleurBoutique controleur = chargeur.getController();
-            controleur.initialiser(serviceAchat, serviceEquipement, depotCosmetique, depotInventaire, idJoueur);
+            controleur.initialiser(serviceAchat, serviceEquipement, depotCosmetique, depotInventaire, joueur);
             controleur.setJeu(jeu);
             controleur.setAppControleur(appControleur);
             stagePrincipal.setTitle("Boutique");
@@ -60,14 +74,26 @@ public class GestionnaireBoutique {
      * Ouvre la vue Inventaire (Casier) sur le stage principal en initialisant son contrôleur.
      *
      * @param stagePrincipal le stage de l'application
-     * @param idJoueur       identifiant du joueur (String)
+     * @param joueur         l'objet Joueur courant
+     * @param jeu            l'instance du jeu
+     * @param appControleur  le contrôleur principal de l'application
      */
-    public void ouvrirInventaire(Stage stagePrincipal, String idJoueur, Jeu jeu, AppControleur appControleur) {
+    public void ouvrirInventaire(Stage stagePrincipal, Joueur joueur, Jeu jeu, AppControleur appControleur) {
+        if (joueur == null) {
+            System.err.println("Impossible d'ouvrir l'inventaire : joueur null");
+            return;
+        }
+
+        String idJoueur = joueur.getPseudo();
+        InventaireJoueur inventaire = depotInventaire.charger(idJoueur);
+        inventaire.setScore(joueur.getScore());
+        depotInventaire.sauvegarder(idJoueur, inventaire);
+
         try {
             FXMLLoader chargeur = new FXMLLoader(getClass().getResource("/boutique/InventaireCosmetique.fxml"));
             Scene scene = new Scene(chargeur.load());
             ControleurCasier controleur = chargeur.getController();
-            controleur.initialiser(serviceEquipement, depotCosmetique, depotInventaire, idJoueur);
+            controleur.initialiser(serviceEquipement, depotCosmetique, depotInventaire, joueur);
             controleur.setJeu(jeu);
             controleur.setAppControleur(appControleur);
             stagePrincipal.setTitle("Mon Casier");

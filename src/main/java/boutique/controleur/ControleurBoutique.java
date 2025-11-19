@@ -7,7 +7,6 @@ import boutique.repository.IDepotInventaire;
 import boutique.service.IServiceAchat;
 import boutique.service.IServiceEquipement;
 import boutique.service.ResultatAchat;
-import controleur.AppControleur;
 import controleur.Controleur;
 import controleur.HomePageControleur;
 import javafx.fxml.FXML;
@@ -43,13 +42,15 @@ public class ControleurBoutique extends Controleur {
     private IDepotCosmetique depotCosmetique;
     private IDepotInventaire depotInventaire;
     private String idJoueur;
+    private modele.Joueur joueur;
 
-    public void initialiser(IServiceAchat serviceAchat, IServiceEquipement serviceEquipement, IDepotCosmetique depotCosmetique, IDepotInventaire depotInventaire, String idJoueur) {
+    public void initialiser(IServiceAchat serviceAchat, IServiceEquipement serviceEquipement, IDepotCosmetique depotCosmetique, IDepotInventaire depotInventaire, modele.Joueur joueur) {
         this.serviceAchat = serviceAchat;
         this.serviceEquipement = serviceEquipement;
         this.depotCosmetique = depotCosmetique;
         this.depotInventaire = depotInventaire;
-        this.idJoueur = idJoueur;
+        this.joueur = joueur;
+        this.idJoueur = joueur.getPseudo();
         rafraichirVue();
     }
 
@@ -61,7 +62,7 @@ public class ControleurBoutique extends Controleur {
         }
 
         InventaireJoueur inventaire = depotInventaire.charger(idJoueur);
-        labelScore.setText(String.valueOf(inventaire.getScore()));
+        labelScore.setText(String.valueOf(joueur != null ? joueur.getScore() : inventaire.getScore()));
         conteneurCosmetiques.getChildren().clear();
 
         List<Cosmetique> cosmetiques = depotCosmetique.obtenirTous();
@@ -136,13 +137,16 @@ public class ControleurBoutique extends Controleur {
 
     private void gererAchat(String idCosmetique) {
         if (serviceAchat == null) {
-
             afficherErreur("Achat non disponible en mode simplifié");
             return;
         }
 
         ResultatAchat resultat = serviceAchat.acheterCosmetique(idJoueur, idCosmetique);
         if (resultat.estReussi()) {
+            if (joueur != null) {
+                InventaireJoueur inventaire = depotInventaire.charger(idJoueur);
+                joueur.setScore(inventaire.getScore());
+            }
             rafraichirVue();
             /*afficherSucces("✓ Cosmétique acheté avec succès !");*/
         } else {

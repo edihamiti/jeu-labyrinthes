@@ -7,7 +7,6 @@ import boutique.repository.IDepotCosmetique;
 import boutique.repository.IDepotInventaire;
 import boutique.service.IServiceEquipement;
 import boutique.service.ResultatEquipement;
-import controleur.AppControleur;
 import controleur.Controleur;
 import controleur.HomePageControleur;
 import javafx.fxml.FXML;
@@ -43,6 +42,7 @@ public class ControleurCasier extends Controleur {
     private IDepotCosmetique depotCosmetique;
     private IDepotInventaire depotInventaire;
     private String idJoueur;
+    private modele.Joueur joueur;
     private TypeCosmetique categorieSelectionnee = null;
     private Button boutonCategorieActif = null;
 
@@ -54,11 +54,12 @@ public class ControleurCasier extends Controleur {
         }
     }
 
-    public void initialiser(IServiceEquipement serviceEquipement, IDepotCosmetique depotCosmetique, IDepotInventaire depotInventaire, String idJoueur) {
+    public void initialiser(IServiceEquipement serviceEquipement, IDepotCosmetique depotCosmetique, IDepotInventaire depotInventaire, modele.Joueur joueur) {
         this.serviceEquipement = serviceEquipement;
         this.depotCosmetique = depotCosmetique;
         this.depotInventaire = depotInventaire;
-        this.idJoueur = idJoueur;
+        this.joueur = joueur;
+        this.idJoueur = joueur.getPseudo();
         creerCategories();
         rafraichirVue();
     }
