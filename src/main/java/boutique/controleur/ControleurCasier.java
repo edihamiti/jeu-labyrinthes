@@ -193,7 +193,7 @@ public class ControleurCasier extends Controleur {
         ResultatEquipement resultat = serviceEquipement.equiperCosmetique(idJoueur, idCosmetique);
         if (resultat.estReussi()) {
             rafraichirVue();
-            afficherSucces("✓ Cosmétique équipé avec succès !");
+            /*afficherSucces("✓ Cosmétique équipé avec succès !");*/
         } else {
             afficherErreur(resultat.getMessage());
         }
@@ -216,13 +216,13 @@ public class ControleurCasier extends Controleur {
         System.out.println("Jeu lancé !");
     }
 
-    private void afficherSucces(String message) {
+    /*private void afficherSucces(String message) {
         Alert alerte = new Alert(Alert.AlertType.INFORMATION);
         alerte.setTitle("Succès");
         alerte.setHeaderText(null);
         alerte.setContentText(message);
         alerte.showAndWait();
-    }
+    }*/
 
     private void afficherErreur(String message) {
         Alert alerte = new Alert(Alert.AlertType.ERROR);

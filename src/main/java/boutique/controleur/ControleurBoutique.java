@@ -144,7 +144,7 @@ public class ControleurBoutique extends Controleur {
         ResultatAchat resultat = serviceAchat.acheterCosmetique(idJoueur, idCosmetique);
         if (resultat.estReussi()) {
             rafraichirVue();
-            afficherSucces("✓ Cosmétique acheté avec succès !");
+            /*afficherSucces("✓ Cosmétique acheté avec succès !");*/
         } else {
             afficherErreur(resultat.getMessage());
         }
@@ -167,13 +167,13 @@ public class ControleurBoutique extends Controleur {
         System.out.println("Jeu lancé !");
     }
 
-    private void afficherSucces(String message) {
+    /*private void afficherSucces(String message) {
         Alert alerte = new Alert(Alert.AlertType.INFORMATION);
         alerte.setTitle("Succès");
         alerte.setHeaderText(null);
         alerte.setContentText(message);
         alerte.showAndWait();
-    }
+    }*/
 
     private void afficherErreur(String message) {
         Alert alerte = new Alert(Alert.AlertType.ERROR);
