@@ -1,0 +1,109 @@
+@import url("../styles/styles.css");
+
+.boutique-content {
+    -fx-background-color: -color-1;
+    -fx-border-radius: 18px;
+    -fx-background-radius: 18px;
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 1, 1);
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .scroll-bar:horizontal {
+    -fx-background-color: -color-2;
+    -fx-background-radius: 5px;
+}
+
+.scroll-pane > .scroll-bar:horizontal > .thumb {
+    -fx-background-color: -color-4;
+    -fx-background-radius: 5px;
+}
+
+.scroll-pane > .scroll-bar:horizontal > .increment-button,
+.scroll-pane > .scroll-bar:horizontal > .decrement-button {
+    -fx-background-color: -color-3;
+    -fx-background-radius: 5px;
+}
+
+.cosmetics-container {
+    -fx-background-color: transparent;
+}
+
+.cosmetic-card {
+    -fx-background-color: -color-2;
+    -fx-background-radius: 12px;
+    -fx-border-color: -color-4;
+    -fx-border-width: 3px;
+    -fx-border-radius: 10px;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(one-pass-box, -color-1, 0, 0, 4, 4);
+}
+
+.cosmetic-card:hover {
+    -fx-background-color: -color-3;
+    -fx-translate-y: -2px;
+    -fx-effect: dropshadow(one-pass-box, -color-1, 0, 0, 6, 6);
+}
+
+.cosmetic-name {
+    -fx-font-size: 22px;
+    -fx-font-weight: 700;
+    -fx-text-fill: -color-6;
+}
+
+.cosmetic-type {
+    -fx-text-fill: -color-5;
+    -fx-font-size: 16px;
+    -fx-font-weight: 400;
+}
+
+.cosmetic-price {
+    -fx-text-fill: -color-4;
+    -fx-font-size: 24px;
+    -fx-font-weight: 700;
+}
+
+.badge-owned {
+    -fx-background-color: -color-4;
+    -fx-text-fill: -color-1;
+    -fx-padding: 5px 12px;
+    -fx-background-radius: 12px;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+}
+
+.badge-equipped {
+    -fx-background-color: -color-6;
+    -fx-text-fill: -color-1;
+    -fx-padding: 5px 12px;
+    -fx-background-radius: 12px;
+    -fx-font-size: 14px;
+    -fx-font-weight: 700;
+}
+
+.empty-message {
+    -fx-text-fill: -color-5;
+    -fx-font-size: 20px;
+    -fx-text-alignment: center;
+    -fx-padding: 50;
+    -fx-font-weight: 400;
+}
+
+.score-label {
+    -fx-text-fill: -color-5;
+    -fx-font-size: 16px;
+    -fx-font-weight: 400;
+}
+
+.score-value {
+    -fx-text-fill: -color-6;
+    -fx-font-size: 32px;
+    -fx-font-weight: 700;
+}

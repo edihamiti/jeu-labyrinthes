@@ -181,10 +181,6 @@ public class UpdateRendu implements Rendu {
         this.labyrinthe = labyrinthe;
     }
 
-    public void setConteneurLabyrinthe(VBox conteneurLabyrinthe) {
-        this.conteneurLabyrinthe = conteneurLabyrinthe;
-    }
-
     public void setPorteeVision(int porteeVision) {
         this.porteeVision = porteeVision;
     }

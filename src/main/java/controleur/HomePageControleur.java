@@ -1,5 +1,6 @@
 package controleur;
 
+import boutique.GestionnaireBoutique;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import modele.Joueur;
 
 import java.io.IOException;
 
@@ -32,6 +34,14 @@ public class HomePageControleur extends Controleur {
     public Text modeLibreText;
     @FXML
     public Text modeProgressionText;
+    @FXML
+    public Button boutiqueButton;
+    @FXML
+    public Button inventaireButton;
+    @FXML
+    public Text boutiqueText;
+    @FXML
+    public Text inventaireText;
 
     private boolean modeProgression;
 
@@ -116,6 +126,42 @@ public class HomePageControleur extends Controleur {
 
         } catch (IOException e) {
             System.err.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Ouvre la boutique.
+     */
+    public void boutique() {
+        try {
+            String id = "guest";
+            Joueur j = jeu.getJoueur();
+            if (j != null) {
+                id = String.valueOf(j.getPseudo());
+            }
+            Stage stage = (Stage) boutiqueButton.getScene().getWindow();
+            GestionnaireBoutique.getInstance().ouvrirBoutique(stage, id);
+        } catch (Exception e) {
+            System.err.println("Erreur lors de l'ouverture de la boutique : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Ouvre l'inventaire des cosmétiques.
+     */
+    public void inventaire() {
+        try {
+            String id = "guest";
+            Joueur j = jeu.getJoueur();
+            if (j != null) {
+                id = String.valueOf(j.getPseudo());
+            }
+            Stage stage = (Stage) inventaireButton.getScene().getWindow();
+            GestionnaireBoutique.getInstance().ouvrirInventaire(stage, id);
+        } catch (Exception e) {
+            System.err.println("Erreur lors de l'ouverture de l'inventaire : " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
