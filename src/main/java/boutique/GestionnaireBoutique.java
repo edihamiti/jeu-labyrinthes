@@ -11,37 +11,27 @@ import boutique.service.IServiceAchat;
 import boutique.service.IServiceEquipement;
 import boutique.service.ServiceAchat;
 import boutique.service.ServiceEquipement;
+import controleur.AppControleur;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import modele.Jeu;
 
 /**
  * Gestionnaire central de la boutique suivant le pattern Singleton.
  * Coordonne l'accès aux services de la boutique et gère l'ouverture de l'interface.
  */
 public class GestionnaireBoutique {
-    private static GestionnaireBoutique instance;
-
     private final IServiceAchat serviceAchat;
     private final IServiceEquipement serviceEquipement;
     private final IDepotCosmetique depotCosmetique;
     private final IDepotInventaire depotInventaire;
 
-    private GestionnaireBoutique() {
+    public GestionnaireBoutique() {
         this.depotCosmetique = new DepotCosmetiqueMemoire();
         this.depotInventaire = new DepotInventaireJson();
         this.serviceAchat = new ServiceAchat(depotCosmetique, depotInventaire);
         this.serviceEquipement = new ServiceEquipement(depotCosmetique, depotInventaire);
-    }
-
-    /**
-     * Récupère l'instance unique du gestionnaire de boutique.
-     *
-     * @return l'instance du gestionnaire
-     */
-    public static GestionnaireBoutique getInstance() {
-        if (instance == null) instance = new GestionnaireBoutique();
-        return instance;
     }
 
     /**
@@ -50,12 +40,14 @@ public class GestionnaireBoutique {
      * @param stagePrincipal le stage de l'application
      * @param idJoueur       identifiant du joueur (String)
      */
-    public void ouvrirBoutique(Stage stagePrincipal, String idJoueur) {
+    public void ouvrirBoutique(Stage stagePrincipal, String idJoueur, Jeu jeu, AppControleur appControleur) {
         try {
             FXMLLoader chargeur = new FXMLLoader(getClass().getResource("/boutique/Boutique.fxml"));
             Scene scene = new Scene(chargeur.load());
             ControleurBoutique controleur = chargeur.getController();
             controleur.initialiser(serviceAchat, serviceEquipement, depotCosmetique, depotInventaire, idJoueur);
+            controleur.setJeu(jeu);
+            controleur.setAppControleur(appControleur);
             stagePrincipal.setTitle("Boutique");
             stagePrincipal.setScene(scene);
             stagePrincipal.setMaximized(true);
@@ -70,12 +62,14 @@ public class GestionnaireBoutique {
      * @param stagePrincipal le stage de l'application
      * @param idJoueur       identifiant du joueur (String)
      */
-    public void ouvrirInventaire(Stage stagePrincipal, String idJoueur) {
+    public void ouvrirInventaire(Stage stagePrincipal, String idJoueur, Jeu jeu, AppControleur appControleur) {
         try {
             FXMLLoader chargeur = new FXMLLoader(getClass().getResource("/boutique/InventaireCosmetique.fxml"));
             Scene scene = new Scene(chargeur.load());
             ControleurCasier controleur = chargeur.getController();
             controleur.initialiser(serviceEquipement, depotCosmetique, depotInventaire, idJoueur);
+            controleur.setJeu(jeu);
+            controleur.setAppControleur(appControleur);
             stagePrincipal.setTitle("Mon Casier");
             stagePrincipal.setScene(scene);
             stagePrincipal.setMaximized(true);

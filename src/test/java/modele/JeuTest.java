@@ -1,5 +1,6 @@
 package modele;
 
+import boutique.GestionnaireBoutique;
 import modele.defi.Defi;
 import modele.defi.repository.DefiJson;
 import modele.defi.repository.DefisRepo;
@@ -22,6 +23,7 @@ class JeuTest {
     void setUp() throws PseudoException {
         joueur = new Joueur("TestJoueur");
         labyrinthe = new Labyrinthe(5, 5, 25.0);
+        GestionnaireBoutique boutique = new GestionnaireBoutique();
 
         DefiJson defiJson = new DefiJson();
         defisRepo = defiJson.charger();
@@ -37,7 +39,7 @@ class JeuTest {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("MOYEN1 non trouvé"));
 
-        jeu = new Jeu(ModeJeu.MODE_LIBRE, joueur, labyrinthe, facile1);
+        jeu = new Jeu(ModeJeu.MODE_LIBRE, joueur, labyrinthe, facile1, boutique);
     }
 
     @Test

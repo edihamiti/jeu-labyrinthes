@@ -1,5 +1,6 @@
 package modele;
 
+import boutique.GestionnaireBoutique;
 import modele.defi.Defi;
 import modele.joueursRepositories.JSONRepository;
 import modele.joueursRepositories.JoueurRepository;
@@ -21,14 +22,16 @@ public class Jeu {
     private Defi defiEnCours;
     private int nombreDeplacements;
     private GameTimer gameTimer;
+    private GestionnaireBoutique boutique;
 
     /**
      * @param modeJeu     un mode de jeu
      * @param joueur      un joueur
      * @param labyrinthe  un labyrinthe
      * @param defiEnCours un défi en cours
+     * @param boutique    un gestionnaire de boutique
      */
-    public Jeu(ModeJeu modeJeu, Joueur joueur, Labyrinthe labyrinthe, Defi defiEnCours) {
+    public Jeu(ModeJeu modeJeu, Joueur joueur, Labyrinthe labyrinthe, Defi defiEnCours, GestionnaireBoutique boutique) {
         this.modeJeu = modeJeu;
         this.joueur = joueur;
         this.labyrinthe = labyrinthe;
@@ -37,7 +40,7 @@ public class Jeu {
     }
 
     public Jeu() {
-
+        this.boutique = new GestionnaireBoutique();
     }
 
     public Vision getVision() {
@@ -237,5 +240,13 @@ public class Jeu {
     public void resetTimer() {
         this.gameTimer = new GameTimer();
         this.nombreDeplacements = 0;
+    }
+
+    public GestionnaireBoutique getBoutique() {
+        return boutique;
+    }
+
+    public void setBoutique(GestionnaireBoutique boutique) {
+        this.boutique = boutique;
     }
 }

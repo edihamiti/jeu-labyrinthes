@@ -140,7 +140,7 @@ public class HomePageControleur extends Controleur {
                 id = String.valueOf(j.getPseudo());
             }
             Stage stage = (Stage) boutiqueButton.getScene().getWindow();
-            GestionnaireBoutique.getInstance().ouvrirBoutique(stage, id);
+            jeu.getBoutique().ouvrirBoutique(stage, id, jeu, appControleur);
         } catch (Exception e) {
             System.err.println("Erreur lors de l'ouverture de la boutique : " + e.getMessage());
             e.printStackTrace();
@@ -158,7 +158,7 @@ public class HomePageControleur extends Controleur {
                 id = String.valueOf(j.getPseudo());
             }
             Stage stage = (Stage) inventaireButton.getScene().getWindow();
-            GestionnaireBoutique.getInstance().ouvrirInventaire(stage, id);
+            jeu.getBoutique().ouvrirInventaire(stage, id, jeu, appControleur);
         } catch (Exception e) {
             System.err.println("Erreur lors de l'ouverture de l'inventaire : " + e.getMessage());
             e.printStackTrace();

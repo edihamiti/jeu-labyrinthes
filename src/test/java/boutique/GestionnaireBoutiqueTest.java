@@ -15,17 +15,7 @@ class GestionnaireBoutiqueTest {
 
     @BeforeEach
     void setUp() {
-        gestionnaire = GestionnaireBoutique.getInstance();
-    }
-
-    @Test
-    void getInstance_retourneMemeInstance() {
-        GestionnaireBoutique instance1 = GestionnaireBoutique.getInstance();
-        GestionnaireBoutique instance2 = GestionnaireBoutique.getInstance();
-
-        assertNotNull(instance1);
-        assertNotNull(instance2);
-        assertSame(instance1, instance2, "Les deux instances devraient être identiques (Singleton)");
+        gestionnaire = new GestionnaireBoutique();
     }
 
     @Test
