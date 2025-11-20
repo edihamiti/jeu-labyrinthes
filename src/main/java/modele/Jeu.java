@@ -135,8 +135,6 @@ public class Jeu {
             return false;
         }
 
-        gameTimer.startTimer(); // TODO: REVÉRIFIER TOUT ÇA JE SUIS PAS SÛR DE CE QUE J'AI FAIT
-
         int nouveauX = this.labyrinthe.getJoueurX() + dx;
         int nouveauY = this.labyrinthe.getJoueurY() + dy;
 
