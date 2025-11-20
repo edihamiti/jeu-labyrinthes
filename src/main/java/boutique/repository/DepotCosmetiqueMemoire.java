@@ -38,36 +38,40 @@ public class DepotCosmetiqueMemoire implements IDepotCosmetique {
                 TypeCosmetique.TEXTURE_SORTIE, 0, "/textures/default/texture_sortie.png"
         ));
         cosmetiques.add(new Cosmetique(
+                "default_joueur", "Pion",
+                TypeCosmetique.TEXTURE_JOUEUR, 0, "/textures/default/texture_joueur.png"
+        ));
+        cosmetiques.add(new Cosmetique(
                 "mur_brique", "Mur en brique",
                 TypeCosmetique.TEXTURE_MUR, 100, "/textures/mur_brique.png"
         ));
         cosmetiques.add(new Cosmetique(
                 "chemin_stone", "Chemin en pierre",
-                TypeCosmetique.TEXTURE_CHEMIN, 0, "/textures/chemin_stone.png"
+                TypeCosmetique.TEXTURE_CHEMIN, 100, "/textures/chemin_stone.png"
         ));
         cosmetiques.add(new Cosmetique(
                 "sortie_stone", "Sortie en pierre",
-                TypeCosmetique.TEXTURE_SORTIE, 0, "/textures/sortie_stone.png"
+                TypeCosmetique.TEXTURE_SORTIE, 100, "/textures/sortie_stone.png"
         ));
         cosmetiques.add(new Cosmetique(
                 "joueur_homme", "Joueur homme",
-                TypeCosmetique.TEXTURE_JOUEUR, 0, "/textures/joueur_homme.png"
+                TypeCosmetique.TEXTURE_JOUEUR, 100, "/textures/joueur_homme.png"
         ));
         cosmetiques.add(new Cosmetique(
                 "mur_noel", "Mur de Noël",
-                TypeCosmetique.TEXTURE_MUR, 100, "/textures/mur_noel.png"
+                TypeCosmetique.TEXTURE_MUR, 200, "/textures/mur_noel.png"
         ));
         cosmetiques.add(new Cosmetique(
                 "chemin_noel", "Chemin de Noël",
-                TypeCosmetique.TEXTURE_CHEMIN, 100, "/textures/chemin_noel.png"
+                TypeCosmetique.TEXTURE_CHEMIN, 200, "/textures/chemin_noel.png"
         ));
         cosmetiques.add(new Cosmetique(
                 "joueur_noel", "Père Noël",
-                TypeCosmetique.TEXTURE_JOUEUR, 100, "/textures/joueur_noel.png"
+                TypeCosmetique.TEXTURE_JOUEUR, 200, "/textures/joueur_noel.png"
         ));
         cosmetiques.add(new Cosmetique(
                 "sortie_noel", "Sapin de Noël",
-                TypeCosmetique.TEXTURE_SORTIE, 100, "/textures/sortie_noel.png"
+                TypeCosmetique.TEXTURE_SORTIE, 200, "/textures/sortie_noel.png"
         ));
     }
 

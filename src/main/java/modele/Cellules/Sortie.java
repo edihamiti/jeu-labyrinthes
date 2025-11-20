@@ -9,6 +9,9 @@ public class Sortie extends Cellule {
     static Image imageCache;
     String imagePath = "";
 
+    public Sortie() {
+    }
+
     public Sortie(int x, int y) {
         this.setX(x);
         this.setY(y);

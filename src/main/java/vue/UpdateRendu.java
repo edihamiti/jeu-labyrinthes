@@ -1,10 +1,15 @@
 package vue;
 
+import boutique.modele.TypeCosmetique;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import modele.Cellules.Cellule;
+import modele.Cellules.Chemin;
+import modele.Cellules.Mur;
+import modele.Cellules.Sortie;
+import modele.Jeu;
 import modele.Labyrinthe;
 
 import java.util.HashSet;
@@ -16,14 +21,17 @@ import java.util.Set;
  */
 public class UpdateRendu implements Rendu {
 
-    private final Image imgMur = new Image(getClass().getResourceAsStream("/textures/default/texture_mur.png"));
-    private final Image imgChemin = new Image(getClass().getResourceAsStream("/textures/default/texture_chemin.png"));
-    private final Image imgJoueur = new Image(getClass().getResourceAsStream("/textures/default/texture_joueur.png"));
     private final Image imgBrouillard = new Image(getClass().getResourceAsStream("/img/brouillard.png"));
 
     private Labyrinthe labyrinthe;
     private VBox conteneurLabyrinthe;
     private int porteeVision;
+    private Jeu jeu;
+
+    private Mur mur = new Mur();
+    private Chemin chemin = new Chemin();
+    private Sortie sortie = new Sortie();
+    private Image imageJoueur;
 
     // Set pour mémoriser les cellules explorées (révélées sur la carte)
     private Set<String> cellulesExplorees = new HashSet<>();
@@ -34,14 +42,28 @@ public class UpdateRendu implements Rendu {
      * @param labyrinthe          Le labyrinthe à rendre.
      * @param conteneurLabyrinthe Le conteneur VBox pour afficher la carte.
      * @param porteeVision        La portée de vision du joueur.
+     * @param jeu                 Le jeu contenant les informations sur les textures.
      */
-    public UpdateRendu(Labyrinthe labyrinthe, VBox conteneurLabyrinthe, int porteeVision) {
+    public UpdateRendu(Labyrinthe labyrinthe, VBox conteneurLabyrinthe, int porteeVision, Jeu jeu) {
         this.labyrinthe = labyrinthe;
         this.conteneurLabyrinthe = conteneurLabyrinthe;
         this.porteeVision = porteeVision;
+        this.jeu = jeu;
 
         // Réinitialiser les cellules explorées pour un nouveau labyrinthe
         cellulesExplorees.clear();
+
+        initTextureEquipe();
+    }
+
+    /**
+     * Initialise les textures équipées par le joueur.
+     */
+    private void initTextureEquipe() {
+        mur.setImagePath(jeu.getBoutique().obtenirTextureEquipee(jeu.getJoueur().getPseudo(), TypeCosmetique.TEXTURE_MUR));
+        chemin.setImagePath(jeu.getBoutique().obtenirTextureEquipee(jeu.getJoueur().getPseudo(), TypeCosmetique.TEXTURE_CHEMIN));
+        sortie.setImagePath(jeu.getBoutique().obtenirTextureEquipee(jeu.getJoueur().getPseudo(), TypeCosmetique.TEXTURE_SORTIE));
+        imageJoueur = new Image(getClass().getResourceAsStream(jeu.getBoutique().obtenirTextureEquipee(jeu.getJoueur().getPseudo(), TypeCosmetique.TEXTURE_JOUEUR)));
     }
 
     /**
@@ -130,16 +152,16 @@ public class UpdateRendu implements Rendu {
 
                 if (i == joueurX && j == joueurY) {
                     // Toujours afficher le joueur (visible sur la carte)
-                    gc.drawImage(imgJoueur, x, y, tailleCellule, tailleCellule);
+                    gc.drawImage(imageJoueur, x, y, tailleCellule, tailleCellule);
                 } else if (cellulesExplorees.contains(cle)) {
                     // Cette cellule a été explorée, l'afficher selon son type
                     if (cellules[i][j].estMur()) {
-                        gc.drawImage(imgMur, x, y, tailleCellule, tailleCellule);
+                        gc.drawImage(mur.getTexture(), x, y, tailleCellule, tailleCellule);
                     } else if (cellules[i][j].estChemin() || cellules[i][j].estEntree()) {
-                        gc.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
+                        gc.drawImage(chemin.getTexture(), x, y, tailleCellule, tailleCellule);
                     } else if (cellules[i][j].estSortie()) {
                         // NE PAS afficher la sortie sur la carte (selon les spécifications)
-                        gc.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
+                        gc.drawImage(chemin.getTexture(), x, y, tailleCellule, tailleCellule);
                     }
                 } else {
                     // Cellule non explorée, afficher le brouillard

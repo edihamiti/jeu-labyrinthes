@@ -10,5 +10,5 @@ public interface VisionLabyrinthe {
 
     boolean requiresMinimap();
 
-    Rendu createMinimapRendu(Labyrinthe lab, VBox container);
+    Rendu createMinimapRendu(Labyrinthe lab, VBox container, Jeu jeu);
 }

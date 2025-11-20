@@ -10,7 +10,7 @@ import vue.Rendu;
 public class VisionLocale implements VisionLabyrinthe {
     @Override
     public Rendu createRendu(Labyrinthe lab, VBox container, Jeu jeu) {
-        return new LocaleRendu(lab, container);
+        return new LocaleRendu(lab, container, jeu);
     }
 
     @Override
@@ -19,7 +19,7 @@ public class VisionLocale implements VisionLabyrinthe {
     }
 
     @Override
-    public Rendu createMinimapRendu(Labyrinthe lab, VBox container) {
-        return new MiniMapRendu(lab, container);
+    public Rendu createMinimapRendu(Labyrinthe lab, VBox container, Jeu jeu) {
+        return new MiniMapRendu(lab, container, jeu);
     }
 }

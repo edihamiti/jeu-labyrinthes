@@ -19,7 +19,7 @@ public class VisionLibre implements VisionLabyrinthe {
     }
 
     @Override
-    public Rendu createMinimapRendu(Labyrinthe lab, VBox container) {
-        return new MiniMapRendu(lab, container);
+    public Rendu createMinimapRendu(Labyrinthe lab, VBox container, Jeu jeu) {
+        return new MiniMapRendu(lab, container, jeu);
     }
 }

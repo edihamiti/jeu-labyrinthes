@@ -32,7 +32,7 @@ public class VisionUpdate implements VisionLabyrinthe {
 
     @Override
     public Rendu createRendu(Labyrinthe lab, VBox container, Jeu jeu) {
-        return new UpdateRendu(lab, container, porteeVision);
+        return new UpdateRendu(lab, container, porteeVision, jeu);
     }
 
     @Override
@@ -41,8 +41,8 @@ public class VisionUpdate implements VisionLabyrinthe {
     }
 
     @Override
-    public Rendu createMinimapRendu(Labyrinthe lab, VBox container) {
-        return new MiniMapRendu(lab, container);
+    public Rendu createMinimapRendu(Labyrinthe lab, VBox container, Jeu jeu) {
+        return new MiniMapRendu(lab, container, jeu);
     }
 }
 

@@ -304,7 +304,7 @@ public class JeuControleur extends Controleur {
         // Configurer la minimap si nécessaire
         if (visionStrategy.requiresMinimap()) {
             overlayMinimap.setVisible(true);
-            this.renduMinimap = visionStrategy.createMinimapRendu(jeu.getLabyrinthe(), minimap);
+            this.renduMinimap = visionStrategy.createMinimapRendu(jeu.getLabyrinthe(), minimap, this.getJeu());
         } else {
             overlayMinimap.setVisible(false);
             this.renduMinimap = null;

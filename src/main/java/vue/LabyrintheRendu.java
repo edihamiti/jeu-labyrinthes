@@ -24,7 +24,7 @@ public class LabyrintheRendu implements Rendu {
 
     private Mur mur = new Mur();
     private Chemin chemin = new Chemin();
-    private Sortie sortie = new Sortie(1, 1);
+    private Sortie sortie = new Sortie();
     private Image imageJoueur;
 
     /**
