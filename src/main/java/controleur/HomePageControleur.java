@@ -39,6 +39,7 @@ public class HomePageControleur {
     public VBox contentPage;
     public Text modeLibreText;
     public Text modeProgressionText;
+    public Text leaderboardText;
     private boolean modeProgression;
     private boolean isChargerProfilActive;
     private Sauvegarde saves;
@@ -82,6 +83,7 @@ public class HomePageControleur {
         nomMode.setText("Mode progression");
         descriptionMode.setText("Complète des labyrinthes pour débloquer de nouveaux niveaux !");
         chargerProfilButton.setVisible(true);
+        leaderboardText.getStyleClass().removeAll("selected");
         modeProgressionText.getStyleClass().add("selected");
         modeLibreText.getStyleClass().removeAll("selected");
         modeProgression = true;
@@ -97,6 +99,7 @@ public class HomePageControleur {
         nomMode.setText("Mode libre");
         descriptionMode.setText("Entrainez vous à l’infini dans le mode libre !");
         chargerProfilButton.setVisible(false);
+        leaderboardText.getStyleClass().removeAll("selected");
         chargerProfilButton.maxWidth(0);
         modeLibreText.getStyleClass().add("selected");
         modeProgressionText.getStyleClass().removeAll("selected");
@@ -174,6 +177,9 @@ public class HomePageControleur {
 
     private void afficherLeaderboard() {
         // Centrer la zone entière
+        leaderboardText.getStyleClass().add("selected");
+        modeProgressionText.getStyleClass().removeAll("selected");
+        modeLibreText.getStyleClass().removeAll("selected");
         contentPage.setAlignment(Pos.CENTER);
         profilsContainer.setVisible(true);
         profilsContainer.setManaged(true);
