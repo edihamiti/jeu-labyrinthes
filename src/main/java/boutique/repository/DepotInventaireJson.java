@@ -51,7 +51,7 @@ public class DepotInventaireJson implements IDepotInventaire {
     public void sauvegarder(String idJoueur, InventaireJoueur inventaire) {
         try {
             String json = gson.toJson(inventaire);
-            Path fichier = Paths.get(repertoireSauvegarde, idJoueur, "_inventaire.json");
+            Path fichier = Paths.get(repertoireSauvegarde + idJoueur + "_inventaire.json");
             Files.writeString(fichier, json);
         } catch (IOException e) {
             System.err.println("Erreur sauvegarde: " + e.getMessage());
@@ -61,7 +61,7 @@ public class DepotInventaireJson implements IDepotInventaire {
     @Override
     public InventaireJoueur charger(String idJoueur) {
         try {
-            Path fichier = Paths.get(repertoireSauvegarde, idJoueur, "_inventaire.json");
+            Path fichier = Paths.get(repertoireSauvegarde + idJoueur + "_inventaire.json");
             if (Files.exists(fichier)) {
                 String json = Files.readString(fichier);
                 return gson.fromJson(json, InventaireJoueur.class);
