@@ -34,7 +34,6 @@ public class HomePageControleur {
     public Label nomMode;
     public Label descriptionMode;
     public VBox chargerProfilButton;
-    public VBox profilsContainer;
     public Button nouvellePartieButton;
     public VBox contentPage;
     public Text modeLibreText;
@@ -43,6 +42,7 @@ public class HomePageControleur {
     private boolean modeProgression;
     private boolean isChargerProfilActive;
     private Sauvegarde saves;
+    public VBox leaderboardContainer;
 
     // Constructeur par défaut (obligatoire pour JavaFX)
     public HomePageControleur() {
@@ -88,8 +88,8 @@ public class HomePageControleur {
         modeLibreText.getStyleClass().removeAll("selected");
         modeProgression = true;
         nouvellePartieButton.setVisible(true);
-        profilsContainer.setVisible(false);
-        profilsContainer.setManaged(false);
+        leaderboardContainer.setVisible(false);
+        leaderboardContainer.setManaged(false);
     }
 
     /**
@@ -105,8 +105,8 @@ public class HomePageControleur {
         modeProgressionText.getStyleClass().removeAll("selected");
         modeProgression = false;
         nouvellePartieButton.setVisible(true);
-        profilsContainer.setVisible(false);
-        profilsContainer.setManaged(false);
+        leaderboardContainer.setVisible(false);
+        leaderboardContainer.setManaged(false);
 
     }
 
@@ -181,11 +181,11 @@ public class HomePageControleur {
         modeProgressionText.getStyleClass().removeAll("selected");
         modeLibreText.getStyleClass().removeAll("selected");
         contentPage.setAlignment(Pos.CENTER);
-        profilsContainer.setVisible(true);
-        profilsContainer.setManaged(true);
-        profilsContainer.getChildren().clear();
-        profilsContainer.setAlignment(Pos.CENTER);
-        profilsContainer.setFillWidth(false);
+        leaderboardContainer.setVisible(true);
+        leaderboardContainer.setManaged(true);
+        leaderboardContainer.getChildren().clear();
+        leaderboardContainer.setAlignment(Pos.CENTER);
+        leaderboardContainer.setFillWidth(false);
 
         Leaderboard leaderboard = new Leaderboard(Jeu.getInstance().getSauvegarde());
         List<Joueur> joueurs = leaderboard.getClassementComplet();
@@ -217,7 +217,7 @@ public class HomePageControleur {
         HBox.setHgrow(scoreHeader, Priority.ALWAYS);
 
         header.getChildren().addAll(rankHeader, pseudoHeader, scoreHeader);
-        profilsContainer.getChildren().add(header);
+        leaderboardContainer.getChildren().add(header);
 
         // --- LIGNES ---
         int rang = 1;
@@ -247,7 +247,7 @@ public class HomePageControleur {
             HBox.setHgrow(scoreLabel, Priority.ALWAYS);
 
             row.getChildren().addAll(rankLabel, pseudoLabel, scoreLabel);
-            profilsContainer.getChildren().add(row);
+            leaderboardContainer.getChildren().add(row);
             rang++;
         }
 
@@ -257,7 +257,7 @@ public class HomePageControleur {
             // Centrer le message vide aussi
             VBox wrapper = new VBox(vide);
             wrapper.setAlignment(Pos.CENTER);
-            profilsContainer.getChildren().add(wrapper);
+            leaderboardContainer.getChildren().add(wrapper);
         }
     }
 }
