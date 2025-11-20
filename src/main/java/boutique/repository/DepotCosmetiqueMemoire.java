@@ -53,6 +53,10 @@ public class DepotCosmetiqueMemoire implements IDepotCosmetique {
                 "joueur_homme", "Joueur homme",
                 TypeCosmetique.TEXTURE_JOUEUR, 0, "/textures/joueur_homme.png"
         ));
+        cosmetiques.add(new Cosmetique(
+                "mur_noel", "Mur de Noël",
+                TypeCosmetique.TEXTURE_MUR, 100, "/textures/mur_noel.png"
+        ));
     }
 
     @Override

@@ -105,7 +105,7 @@ class ServiceAchatTest {
         serviceAchat = new ServiceAchat(depotCosmetique, depotInventaire);
 
         String idCosmetique1 = "mur_brique";
-        String idCosmetique2 = "mur_pierre";
+        String idCosmetique2 = "sortie_stone";
         ResultatAchat resultat1 = serviceAchat.acheterCosmetique(idJoueur, idCosmetique1);
         ResultatAchat resultat2 = serviceAchat.acheterCosmetique(idJoueur, idCosmetique2);
 
