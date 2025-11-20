@@ -200,7 +200,7 @@ public class Jeu {
         resultat.append("Nombre de déplacements : ").append(nombreDeplacements).append("\n");
 
         if (victoire && this.joueur != null && this.defiEnCours != null) {
-            int scoreObtenu = CalculateurScore.calculerScore(defiEnCours, gameTimer.getDuration());
+            int scoreObtenu = CalculateurScore.calculerScore(defiEnCours, nombreDeplacements);
             this.joueur.ajouterScore(scoreObtenu, defiEnCours);
             this.sauvegarde.sauvegarder();
             resultat.append("Points gagnés : ").append(scoreObtenu);
