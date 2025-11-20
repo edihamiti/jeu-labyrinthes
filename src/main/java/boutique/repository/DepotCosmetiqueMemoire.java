@@ -57,6 +57,18 @@ public class DepotCosmetiqueMemoire implements IDepotCosmetique {
                 "mur_noel", "Mur de Noël",
                 TypeCosmetique.TEXTURE_MUR, 100, "/textures/mur_noel.png"
         ));
+        cosmetiques.add(new Cosmetique(
+                "chemin_noel", "Chemin de Noël",
+                TypeCosmetique.TEXTURE_CHEMIN, 100, "/textures/chemin_noel.png"
+        ));
+        cosmetiques.add(new Cosmetique(
+                "joueur_noel", "Père Noël",
+                TypeCosmetique.TEXTURE_JOUEUR, 100, "/textures/joueur_noel.png"
+        ));
+        cosmetiques.add(new Cosmetique(
+                "sortie_noel", "Sapin de Noël",
+                TypeCosmetique.TEXTURE_SORTIE, 100, "/textures/sortie_noel.png"
+        ));
     }
 
     @Override
