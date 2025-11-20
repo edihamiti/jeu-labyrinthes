@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
  */
 public class Sortie extends Cellule {
     static Image imageCache;
-    String imagePath = "/img/sortie.png";
+    String imagePath = "";
 
     public Sortie(int x, int y) {
         this.setX(x);
@@ -15,10 +15,12 @@ public class Sortie extends Cellule {
     }
 
     public Image getTexture() {
-        if (imageCache == null) {
-            imageCache = new Image(getClass().getResourceAsStream(imagePath));
-        }
         return imageCache;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+        imageCache = new Image(getClass().getResourceAsStream(imagePath));
     }
 
     @Override

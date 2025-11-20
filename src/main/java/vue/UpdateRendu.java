@@ -16,9 +16,9 @@ import java.util.Set;
  */
 public class UpdateRendu implements Rendu {
 
-    private final Image imgMur = new Image(getClass().getResourceAsStream("/img/mur.png"));
-    private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/chemin.png"));
-    private final Image imgJoueur = new Image(getClass().getResourceAsStream("/img/joueur.png"));
+    private final Image imgMur = new Image(getClass().getResourceAsStream("/textures/default/texture_mur.png"));
+    private final Image imgChemin = new Image(getClass().getResourceAsStream("/textures/default/texture_chemin.png"));
+    private final Image imgJoueur = new Image(getClass().getResourceAsStream("/textures/default/texture_joueur.png"));
     private final Image imgBrouillard = new Image(getClass().getResourceAsStream("/img/brouillard.png"));
 
     private Labyrinthe labyrinthe;

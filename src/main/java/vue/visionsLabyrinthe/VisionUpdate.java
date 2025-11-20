@@ -1,6 +1,7 @@
 package vue.visionsLabyrinthe;
 
 import javafx.scene.layout.VBox;
+import modele.Jeu;
 import modele.Labyrinthe;
 import vue.MiniMapRendu;
 import vue.Rendu;
@@ -30,7 +31,7 @@ public class VisionUpdate implements VisionLabyrinthe {
     }
 
     @Override
-    public Rendu createRendu(Labyrinthe lab, VBox container) {
+    public Rendu createRendu(Labyrinthe lab, VBox container, Jeu jeu) {
         return new UpdateRendu(lab, container, porteeVision);
     }
 

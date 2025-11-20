@@ -7,18 +7,24 @@ import javafx.scene.image.Image;
  */
 public class Chemin extends Cellule {
     static Image imageCache;
-    String imagePath = "/img/chemin.png";
+    String imagePath = "";
 
     public Chemin(int x, int y) {
         this.setX(x);
         this.setY(y);
     }
 
+    public Chemin() {
+        imageCache = new Image(getClass().getResourceAsStream(imagePath));
+    }
+
     public Image getTexture() {
-        if (imageCache == null) {
-            imageCache = new Image(getClass().getResourceAsStream(imagePath));
-        }
         return imageCache;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+        imageCache = new Image(getClass().getResourceAsStream(imagePath));
     }
 
     @Override

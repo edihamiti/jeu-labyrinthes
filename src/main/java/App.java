@@ -18,7 +18,7 @@ public class App extends Application {
         Jeu jeu = new Jeu();
 
         stage.setTitle("Le jeu des Labyrinthes");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("img/sortie.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("textures/default/texture_sortie.png")));
 
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/ChoisirPseudo.fxml")));
         Scene scene = new Scene(loader.load());

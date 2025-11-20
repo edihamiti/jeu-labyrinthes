@@ -79,7 +79,7 @@ public class ControleurBoutique extends Controleur {
         carte.setMaxWidth(250);
 
         try {
-            Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/" + cosmetique.cheminTexture())), 210, 210, true, true);
+            Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(cosmetique.cheminTexture())), 210, 210, true, true);
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(210);
             imageView.setFitHeight(210);

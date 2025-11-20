@@ -195,7 +195,7 @@ public class JeuControleur extends Controleur {
     private void deplacer(int nouveauX, int nouveauY) throws IOException {
 
         if (!jeu.isRunning()) {
-            jeu.startTimer();
+            jeu.startTimer(); //TODO: VÉRIFIER QUE JE FAIT PAS DE LA MERDE ICI
         }
 
         Random random = new Random();
@@ -299,7 +299,7 @@ public class JeuControleur extends Controleur {
         }
 
         // Configurer le rendu principal
-        this.renduLabyrinthe = visionStrategy.createRendu(jeu.getLabyrinthe(), conteneurLabyrinthe);
+        this.renduLabyrinthe = visionStrategy.createRendu(jeu.getLabyrinthe(), conteneurLabyrinthe, this.getJeu());
 
         // Configurer la minimap si nécessaire
         if (visionStrategy.requiresMinimap()) {

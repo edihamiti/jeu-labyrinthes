@@ -9,11 +9,11 @@ import modele.Labyrinthe;
 
 public class LimiteeRendu implements Rendu {
 
-    private final Image imgMur = new Image(getClass().getResourceAsStream("/img/mur.png"));
-    private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/chemin.png"));
-    private final Image imgSortie = new Image(getClass().getResourceAsStream("/img/sortie.png"));
-    private final Image imgJoueur = new Image(getClass().getResourceAsStream("/img/joueur.png"));
-    private final Image imgRedWall = new Image(getClass().getResourceAsStream("/img/redWall.png"));
+    private final Image imgMur = new Image(getClass().getResourceAsStream("/textures/default/texture_mur.png"));
+    private final Image imgChemin = new Image(getClass().getResourceAsStream("/textures/default/texture_chemin.png"));
+    private final Image imgSortie = new Image(getClass().getResourceAsStream("/textures/default/texture_sortie.png"));
+    private final Image imgJoueur = new Image(getClass().getResourceAsStream("/textures/default/texture_joueur.png"));
+    private final Image imgRedWall = new Image(getClass().getResourceAsStream("/textures/default/texture_mur_blocked.png"));
     private final Image imgBrouillard = new Image(getClass().getResourceAsStream("/img/brouillard.png"));
     private Labyrinthe labyrinthe;
     private VBox conteneurLabyrinthe;
@@ -125,8 +125,7 @@ public class LimiteeRendu implements Rendu {
                 boolean dansPorteeVision = (distanceX <= porteeVueLocale && distanceY <= porteeVueLocale);
                 if (i == joueurX && j == joueurY) {
                     gc.drawImage(imgJoueur, x, y, tailleCellule, tailleCellule);
-                }
-                else if (dansPorteeVision) {
+                } else if (dansPorteeVision) {
                     if (cellules[i][j].estMur()) {
                         if (i == lastBlockedX && j == lastBlockedY) {
                             gc.drawImage(imgRedWall, x, y, tailleCellule, tailleCellule);
@@ -138,8 +137,7 @@ public class LimiteeRendu implements Rendu {
                     } else if (cellules[i][j].estSortie()) {
                         gc.drawImage(imgSortie, x, y, tailleCellule, tailleCellule);
                     }
-                }
-                else {
+                } else {
                     gc.drawImage(imgBrouillard, x, y, tailleCellule, tailleCellule);
                 }
             }

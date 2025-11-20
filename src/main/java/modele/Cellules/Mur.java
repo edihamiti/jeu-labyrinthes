@@ -7,7 +7,13 @@ import javafx.scene.image.Image;
  */
 public class Mur extends Cellule {
     static Image imageCache;
-    String imagePath = "/img/mur.png";
+    static Image imageCacheBlocked;
+    String imagePath = "";
+
+    public Mur() {
+        imageCache = new Image(getClass().getResourceAsStream(imagePath));
+        imageCacheBlocked = new Image(getClass().getResourceAsStream(imagePath));
+    }
 
     public Mur(int x, int y) {
         this.setX(x);
@@ -15,10 +21,18 @@ public class Mur extends Cellule {
     }
 
     public Image getTexture() {
-        if (imageCache == null) {
-            imageCache = new Image(getClass().getResourceAsStream(imagePath));
-        }
         return imageCache;
+    }
+
+    public Image getTextureBlocked() {
+        return imageCacheBlocked;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+        imageCache = new Image(getClass().getResourceAsStream(imagePath));
+        String[] split = imagePath.split("\\.");
+        imageCacheBlocked = new Image(getClass().getResourceAsStream(split[0] + "_blocked.png"));
     }
 
     @Override
