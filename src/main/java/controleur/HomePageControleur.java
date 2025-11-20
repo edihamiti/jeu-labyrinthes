@@ -86,6 +86,8 @@ public class HomePageControleur {
         modeLibreText.getStyleClass().removeAll("selected");
         modeProgression = true;
         nouvellePartieButton.setVisible(true);
+        profilsContainer.setVisible(false);
+        profilsContainer.setManaged(false);
     }
 
     /**
@@ -100,6 +102,9 @@ public class HomePageControleur {
         modeProgressionText.getStyleClass().removeAll("selected");
         modeProgression = false;
         nouvellePartieButton.setVisible(true);
+        profilsContainer.setVisible(false);
+        profilsContainer.setManaged(false);
+
     }
 
     public void quit() {
