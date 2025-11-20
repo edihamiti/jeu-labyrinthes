@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Text?>
 <HBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="controleur.HomePageControleur"
-      stylesheets="styles/styles.css"
+      stylesheets="styles/styles.css, styles/leaderboard.css"
       spacing="20">
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
@@ -40,6 +40,14 @@
                     <StackPane>
                         <Rectangle styleClass="tabs-rectangle"/>
                         <Text text="Mode Libre" fx:id="modeLibreText" styleClass="tabs-text"/>
+                    </StackPane>
+                </graphic>
+            </Button>
+            <Button onAction="#leaderboard" styleClass="tab">
+                <graphic>
+                    <StackPane>
+                        <Rectangle width="4" styleClass="tabs-rectangle"/>
+                        <Text text="Leaderboard" fx:id="leaderboardText" styleClass="tabs-text"/>
                     </StackPane>
                 </graphic>
             </Button>
@@ -80,6 +88,11 @@
                    styleClass="subtitle"/>
         </VBox>
 
+        <VBox fx:id="leaderboardContainer"
+              spacing="8"
+              visible="false"
+              managed="false"/>
+
         <!-- Spacer -->
         <VBox VBox.vgrow="ALWAYS"/>
 
@@ -88,6 +101,7 @@
             <Button fx:id="button" onAction="#lancerJeu" text="Lancer" styleClass="button-filled"
                     HBox.hgrow="ALWAYS"/>
         </HBox>
+
     </VBox>
 
 </HBox>

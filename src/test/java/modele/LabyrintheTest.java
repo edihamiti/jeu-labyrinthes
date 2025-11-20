@@ -1,28 +1,40 @@
 package modele;
 
+import org.junit.jupiter.api.Test;
+
+import modele.Cellules.Cellule;
+import modele.Cellules.Chemin;
+import modele.Cellules.Entree;
+import modele.Cellules.Mur;
+import modele.Cellules.Sortie;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 class LabyrintheTest {
 
-    /**@Test void calculePlusCourtChemin() {
-    // Crée un labyrinthe de test
-    Labyrinthe labyrinthe = new Labyrinthe(10, 10, 20.0);
-    labyrinthe.generer();
+    /**@Test
+    void calculePlusCourtChemin() {
+        // Crée un labyrinthe de test
+        Labyrinthe labyrinthe = new Labyrinthe(10, 10, 20.0);
+        labyrinthe.generer();
 
-    // Calcule le plus court chemin
-    int longueurChemin = labyrinthe.calculePlusCourtChemin();
+        // Calcule le plus court chemin
+        int longueurChemin = labyrinthe.calculePlusCourtChemin();
 
 
-    // Vérifie que la longueur du chemin est supérieure à zéro
-    assertTrue(longueurChemin > 0, "La longueur du plus court chemin doit être supérieure à zéro.");
+        // Vérifie que la longueur du chemin est supérieure à zéro
+        assertTrue(longueurChemin > 0, "La longueur du plus court chemin doit être supérieure à zéro.");
     }
 
-     @Test public void testGenerer_creeEntreeEtSortie() {
-     Labyrinthe l = new Labyrinthe(12, 12, 50);
-     l.generer();
-     Cellule[][] cellules = l.getCellules();
-     assertNotNull(cellules, "Les cellules ne doivent pas être null après génération");
+        @Test
+    public void testGenerer_creeEntreeEtSortie() {
+        Labyrinthe l = new Labyrinthe(12, 12, 50);
+        l.generer();
+        Cellule[][] cellules = l.getCellules();
+        assertNotNull(cellules, "Les cellules ne doivent pas être null après génération");
 
-     // L'entrée est positionnée en (0,1)
-     assertTrue(cellules[0][1] instanceof Entree, "Une Entrée doit exister en (0,1)");
+        // L'entrée est positionnée en (0,1)
+        assertTrue(cellules[0][1] instanceof Entree, "Une Entrée doit exister en (0,1)");
 
      boolean foundExit = false;
      for (int i = 0; i < l.getLargeurMax(); i++) {
