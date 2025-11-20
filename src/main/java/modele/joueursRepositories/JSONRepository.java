@@ -131,4 +131,10 @@ public class JSONRepository implements JoueurRepository {
     public int hashCode() {
         return Objects.hashCode(joueurs);
     }
+
+
+    @Override
+    public List<Joueur> getAllJoueurs() {
+        return new ArrayList<>(joueurs.values());
+    }
 }

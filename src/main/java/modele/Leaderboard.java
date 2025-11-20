@@ -1,32 +1,20 @@
 package modele;
 
-import java.util.*;
+import modele.joueursRepositories.JoueurRepository;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Classe représentant un leaderboard basé sur les joueurs enregistrés dans Sauvegarde.
- */
 public class Leaderboard {
 
-    private final Sauvegarde sauvegarde;
+    private final JoueurRepository sauvegarde;
 
-    /**
-     * Constructeur du leaderboard.
-     *
-     * @param sauvegarde la sauvegarde contenant les joueurs
-     */
-    public Leaderboard(Sauvegarde sauvegarde) {
+    public Leaderboard(JoueurRepository sauvegarde) {
         this.sauvegarde = sauvegarde;
     }
 
-    /**
-     * Retourne tous les joueurs triés du meilleur au moins bon.
-     *
-     * @return liste triée des joueurs
-     */
     public List<Joueur> getClassementComplet() {
-        return sauvegarde.getJoueurs()
-                .values()
+        return sauvegarde.getAllJoueurs()
                 .stream()
                 .sorted(Comparator.comparingInt(Joueur::getScore).reversed())
                 .collect(Collectors.toList());

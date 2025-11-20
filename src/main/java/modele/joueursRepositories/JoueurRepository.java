@@ -3,6 +3,7 @@ package modele.joueursRepositories;
 import modele.Joueur;
 import modele.PseudoException;
 
+import java.util.List;
 import java.util.Map;
 
 public interface JoueurRepository {
@@ -55,4 +56,12 @@ public interface JoueurRepository {
      *
      */
     void chargerJoueurs();
+
+    /**
+     * Récupère la liste de tous les joueurs.
+     *
+     * @return une liste contenant tous les joueurs
+     */
+    List<Joueur> getAllJoueurs();
+
 }

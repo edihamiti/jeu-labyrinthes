@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import modele.Jeu;
 import modele.Joueur;
 import modele.Leaderboard;
-import modele.Sauvegarde;
+import modele.joueursRepositories.JoueurRepository;
 import vue.ChargerProfileRendu;
 
 import java.io.IOException;
@@ -34,8 +34,6 @@ public class HomePageControleur extends Controleur {
     public Label nomMode;
     @FXML
     public Label descriptionMode;
-    public VBox chargerProfilButton;
-    public Button nouvellePartieButton;
     @FXML
     public Button button;
     @FXML
@@ -55,8 +53,7 @@ public class HomePageControleur extends Controleur {
     public Text inventaireText;
 
     private boolean modeProgression;
-    private boolean isChargerProfilActive;
-    private Sauvegarde saves;
+
     public VBox leaderboardContainer;
 
     // Constructeur par défaut (obligatoire pour JavaFX)
@@ -93,12 +90,10 @@ public class HomePageControleur extends Controleur {
     public void modeProgression() {
         nomMode.setText("Mode progression");
         descriptionMode.setText("Complète des labyrinthes pour débloquer de nouveaux niveaux !");
-        chargerProfilButton.setVisible(true);
         leaderboardText.getStyleClass().removeAll("selected");
         modeProgressionText.getStyleClass().add("selected");
         modeLibreText.getStyleClass().removeAll("selected");
         modeProgression = true;
-        nouvellePartieButton.setVisible(true);
         leaderboardContainer.setVisible(false);
         leaderboardContainer.setManaged(false);
     }
@@ -109,13 +104,10 @@ public class HomePageControleur extends Controleur {
     public void modeLibre() {
         nomMode.setText("Mode libre");
         descriptionMode.setText("Entrainez vous à l’infini dans le mode libre !");
-        chargerProfilButton.setVisible(false);
         leaderboardText.getStyleClass().removeAll("selected");
-        chargerProfilButton.maxWidth(0);
         modeLibreText.getStyleClass().add("selected");
         modeProgressionText.getStyleClass().removeAll("selected");
         modeProgression = false;
-        nouvellePartieButton.setVisible(true);
         leaderboardContainer.setVisible(false);
         leaderboardContainer.setManaged(false);
 
@@ -198,11 +190,6 @@ public class HomePageControleur extends Controleur {
     public void leaderboard() {
         nomMode.setText("Leaderboard");
         descriptionMode.setText("Visualisez les meilleurs scores !");
-
-        // cacher les autres boutons
-        chargerProfilButton.setVisible(false);
-        nouvellePartieButton.setVisible(false);
-
         afficherLeaderboard();
     }
 
@@ -218,7 +205,7 @@ public class HomePageControleur extends Controleur {
         leaderboardContainer.setAlignment(Pos.CENTER);
         leaderboardContainer.setFillWidth(false);
 
-        Leaderboard leaderboard = new Leaderboard(Jeu.getInstance().getSauvegarde());
+        Leaderboard leaderboard = new Leaderboard(jeu.getSauvegarde());
         List<Joueur> joueurs = leaderboard.getClassementComplet();
 
         // --- ENTÊTE ---
