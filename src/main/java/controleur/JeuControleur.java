@@ -195,7 +195,7 @@ public class JeuControleur extends Controleur {
     private void deplacer(int nouveauX, int nouveauY) throws IOException {
 
         if (!jeu.isRunning()) {
-            jeu.startTimer(); //TODO: VÉRIFIER QUE JE FAIT PAS DE LA MERDE ICI
+            jeu.startTimer();
         }
 
         Random random = new Random();
