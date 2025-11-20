@@ -34,6 +34,7 @@ public class HandlerVictoire {
 
         controleur.setRejouer(onRejouer);
         controleur.setRetourMenu(onRetourMenu);
+        controleur.setJeu(jeu);
 
         Stage popupStage = new Stage();
         popupStage.initOwner(ownerStage);

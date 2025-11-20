@@ -57,6 +57,7 @@ public class ModeProgressionControleur extends Controleur {
         try {
             System.out.println("[DEBUG] Enregistrement du labyrinthe dans le Jeu");
             // Enregistrer le défi en cours
+            jeu.setModeJeu(ModeJeu.MODE_PROGRESSION);
             jeu.setDefiEnCours(defi);
             jeu.setLabyrinthe(defi);
 

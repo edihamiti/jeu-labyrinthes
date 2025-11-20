@@ -24,17 +24,23 @@ import java.util.Random;
  * Contrôleur pour la gestion du jeu de labyrinthe.
  */
 public class JeuControleur extends Controleur {
+    private static final int SCENE_WIDTH = 1400;
+    private static final int SCENE_HEIGHT = 900;
+    private static final int WOOD_SOUND_PROBABILITY = 1; // 1% de chance
     private static boolean premierLancement = true;
+
     @FXML
     public VBox minimap;
     @FXML
     public VBox overlayMinimap;
     @FXML
     private VBox conteneurLabyrinthe;
+
     private Rendu renduLabyrinthe;
     private Rendu renduMinimap;
     private GenerateurLabyrinthe generateur;
     private HandlerVictoire handlerVictoire;
+    private final Random random = new Random();
 
     /**
      * Initialise le contrôleur et configure les événements de déplacement du joueur.
@@ -42,63 +48,86 @@ public class JeuControleur extends Controleur {
     @FXML
     public void initialize() {
         this.handlerVictoire = new HandlerVictoire();
+        configurerListenersScene();
+    }
 
+    private void configurerListenersScene() {
         conteneurLabyrinthe.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
-                if (premierLancement) {
-                    afficherPopupTouches();
-                    premierLancement = false;
-                }
-
-                newScene.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
-                    try {
-                        switch (event.getCode()) {
-                            case UP, Z -> deplacerHaut();
-                            case RIGHT, D -> deplacerDroite();
-                            case DOWN, S -> deplacerBas();
-                            case LEFT, Q -> deplacerGauche();
-                        }
-                        event.consume();
-                    } catch (IOException e) {
-                        System.err.println(e.getMessage());
-                    }
-                });
-
-                newScene.widthProperty().addListener((obsWidth, oldWidth, newWidth) -> {
-                    if (jeu.getLabyrinthe() != null) afficherJeu();
-                });
-                newScene.heightProperty().addListener((obsHeight, oldHeight, newHeight) -> {
-                    if (jeu.getLabyrinthe() != null) afficherJeu();
-                });
+                initialiserNouvelleScene(newScene);
             }
         });
+    }
+
+    private void initialiserNouvelleScene(Scene scene) {
+        if (premierLancement) {
+            afficherPopupTouches();
+            premierLancement = false;
+        }
+
+        configurerGestionClavier(scene);
+        configurerRedimensionnement(scene);
+    }
+
+    private void configurerGestionClavier(Scene scene) {
+        scene.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, event -> {
+            try {
+                switch (event.getCode()) {
+                    case UP, Z -> deplacerHaut();
+                    case RIGHT, D -> deplacerDroite();
+                    case DOWN, S -> deplacerBas();
+                    case LEFT, Q -> deplacerGauche();
+                }
+                event.consume();
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
+            }
+        });
+    }
+
+    private void configurerRedimensionnement(Scene scene) {
+        scene.widthProperty().addListener((obs, oldWidth, newWidth) -> rafraichirSiLabyrinthePresent());
+        scene.heightProperty().addListener((obs, oldHeight, newHeight) -> rafraichirSiLabyrinthePresent());
+    }
+
+    private void rafraichirSiLabyrinthePresent() {
+        if (jeu.getLabyrinthe() != null) {
+            afficherJeu();
+        }
     }
 
 
     private void afficherPopupTouches() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/PopupCommandes.fxml"));
-            Parent popupView = loader.load();
-
-            // Injecter les dépendances dans le contrôleur
-            Object controller = loader.getController();
-            if (controller instanceof Controleur) {
-                ((Controleur) controller).setJeu(this.jeu);
-                ((Controleur) controller).setAppControleur(this.appControleur);
-            }
-
-            Stage popupStage = new Stage();
-            popupStage.initOwner(conteneurLabyrinthe.getScene().getWindow());
-            popupStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
-            popupStage.setTitle("Commandes de jeu");
-            popupStage.setResizable(false);
-
-            Scene scene = new Scene(popupView);
-            popupStage.setScene(scene);
-            popupStage.setAlwaysOnTop(true);
-            popupStage.show();
+            Parent popupView = chargerVueAvecDependances("/PopupCommandes.fxml");
+            afficherPopup(popupView, "Commandes de jeu");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.err.println("Erreur lors de l'affichage du popup: " + e.getMessage());
+        }
+    }
+
+    private void afficherPopup(Parent contenu, String titre) {
+        Stage popupStage = new Stage();
+        popupStage.initOwner(conteneurLabyrinthe.getScene().getWindow());
+        popupStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
+        popupStage.setTitle(titre);
+        popupStage.setResizable(false);
+        popupStage.setScene(new Scene(contenu));
+        popupStage.setAlwaysOnTop(true);
+        popupStage.show();
+    }
+
+    private Parent chargerVueAvecDependances(String cheminFxml) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(cheminFxml));
+        Parent vue = loader.load();
+        injecterDependances(loader.getController());
+        return vue;
+    }
+
+    private void injecterDependances(Object controller) {
+        if (controller instanceof Controleur) {
+            ((Controleur) controller).setJeu(this.jeu);
+            ((Controleur) controller).setAppControleur(this.appControleur);
         }
     }
 
@@ -108,36 +137,25 @@ public class JeuControleur extends Controleur {
      * @throws IOException si le chargement de la vue échoue
      */
     public void retourMenu() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomePage.fxml"));
-        Parent menuView = loader.load();
-        Controleur controleur = loader.getController();
-        controleur.setAppControleur(this.appControleur);
-        controleur.setJeu(this.jeu);
-        Scene scene = new Scene(menuView, 1400, 900);
-        Stage stage = (Stage) conteneurLabyrinthe.getScene().getWindow();
-        stage.setScene(scene);
-        stage.setMaximized(true);
-        stage.setTitle("Jeu des Labyrinthes - Menu Principal");
+        String cheminFxml = jeu.getModeJeu().equals(ModeJeu.MODE_PROGRESSION)
+            ? "/ModeProgression.fxml"
+            : "/ModeLibreParametres.fxml";
 
-
+        chargerEtAfficherScene(cheminFxml, "Jeu des Labyrinthes");
         appControleur.resetGame();
     }
 
     private void retourModeProgression() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
-        Parent modeProgressionView = loader.load();
+        chargerEtAfficherScene("/ModeProgression.fxml", "Jeu des Labyrinthes");
+    }
 
-        // Injecter les dépendances dans le contrôleur
-        Object controller = loader.getController();
-        if (controller instanceof Controleur) {
-            ((Controleur) controller).setJeu(this.jeu);
-            ((Controleur) controller).setAppControleur(this.appControleur);
-        }
-
+    private void chargerEtAfficherScene(String cheminFxml, String titre) throws IOException {
+        Parent vue = chargerVueAvecDependances(cheminFxml);
         Stage stage = (Stage) conteneurLabyrinthe.getScene().getWindow();
-        Scene scene = new Scene(modeProgressionView, 1400, 900);
+        Scene scene = new Scene(vue, SCENE_WIDTH, SCENE_HEIGHT);
         stage.setScene(scene);
         stage.setMaximized(true);
+        stage.setTitle(titre);
     }
 
     public void afficherJeu() {
@@ -193,53 +211,37 @@ public class JeuControleur extends Controleur {
      * @throws IOException si une erreur survient lors du déplacement
      */
     private void deplacer(int nouveauX, int nouveauY) throws IOException {
-
         if (!jeu.isRunning()) {
             jeu.startTimer();
         }
 
-        Random random = new Random();
         if (jeu.getLabyrinthe().deplacer(nouveauX, nouveauY)) {
-            SoundManager.playSound("move.mp3");
-            if (random.nextInt(100) > 95) SoundManager.playSound("bois.mp3");
-
-            jeu.setNombreDeplacements(jeu.getNombreDeplacements() + 1);
-
-            if (jeu.getLabyrinthe().estSurSortie(nouveauX, nouveauY)) {
-                victoire();
-            }
+            gererDeplacementValide(nouveauX, nouveauY);
         } else {
-            SoundManager.playSound("block.mp3");
-            renduLabyrinthe.setBlockedWall(nouveauX, nouveauY);
-            if (overlayMinimap.isVisible() && renduMinimap != null) {
-                renduMinimap.setBlockedWall(nouveauX, nouveauY);
-            }
+            gererDeplacementInvalide(nouveauX, nouveauY);
         }
     }
 
-//    private int calculerScore(int nombreDeplacements) { // TODO : Rebouger tout ça dans le calculateur
-//        if (Jeu.getInstance().getJoueur() != null && Jeu.getInstance().getDefiEnCours() != null) {
-//            Defi defi = Jeu.getInstance().getDefiEnCours();
-//            int pointsBase = defi.getPoints();
-//            int etape = defi.getEtape();
-//
-//            //étapes 1, 2 et 3
-//            if (etape <= 3) {
-//                return pointsBase;
-//            }
-//
-//            //étapes 4, 5 et 6
-//            int deplacementsOptimal = (int) (defi.getDistanceMin() * 1.5);
-//
-//            if (nombreDeplacements > deplacementsOptimal) {
-//                int deplacementsSupplementaires = nombreDeplacements - deplacementsOptimal;
-//                int penalite = deplacementsSupplementaires / 2; // 1 point de pénalité par 2 déplacements supplémentaires
-//                return Math.max(0, pointsBase - penalite);
-//            }
-//            return pointsBase;
-//        }
-//        return 0;
-//    }
+    private void gererDeplacementValide(int x, int y) throws IOException {
+        SoundManager.playSound("move.mp3");
+        if (random.nextInt(100) < WOOD_SOUND_PROBABILITY) {
+            SoundManager.playSound("bois.mp3");
+        }
+
+        jeu.setNombreDeplacements(jeu.getNombreDeplacements() + 1);
+
+        if (jeu.getLabyrinthe().estSurSortie(x, y)) {
+            victoire();
+        }
+    }
+
+    private void gererDeplacementInvalide(int x, int y) {
+        SoundManager.playSound("block.mp3");
+        renduLabyrinthe.setBlockedWall(x, y);
+        if (overlayMinimap.isVisible() && renduMinimap != null) {
+            renduMinimap.setBlockedWall(x, y);
+        }
+    }
 
     /**
      * Gère la victoire du joueur lorsqu'il atteint la sortie du labyrinthe.
@@ -285,23 +287,23 @@ public class JeuControleur extends Controleur {
     }
 
     public void setRenduLabyrinthe() {
-        Vision vision = Vision.VUE_LIBRE; // Vision par défaut
-        VisionLabyrinthe visionStrategy;
+        VisionLabyrinthe visionStrategy = obtenirStrategieVision();
+        configurerRendus(visionStrategy);
+    }
 
+    private VisionLabyrinthe obtenirStrategieVision() {
         if (jeu.getDefiEnCours() != null) {
-            vision = jeu.getDefiEnCours().vision();
+            Vision vision = jeu.getDefiEnCours().vision();
             int porteeVision = jeu.getDefiEnCours().portee();
-
-            // Obtenir la stratégie avec la portée personnalisée si nécessaire
-            visionStrategy = VisionFactory.getStrategy(vision, porteeVision);
+            return VisionFactory.getStrategy(vision, porteeVision);
         } else {
-            visionStrategy = VisionFactory.getStrategy(vision, 0);
+            return VisionFactory.getStrategy(Vision.VUE_LIBRE, 0);
         }
+    }
 
-        // Configurer le rendu principal
+    private void configurerRendus(VisionLabyrinthe visionStrategy) {
         this.renduLabyrinthe = visionStrategy.createRendu(jeu.getLabyrinthe(), conteneurLabyrinthe);
 
-        // Configurer la minimap si nécessaire
         if (visionStrategy.requiresMinimap()) {
             overlayMinimap.setVisible(true);
             this.renduMinimap = visionStrategy.createMinimapRendu(jeu.getLabyrinthe(), minimap);
