@@ -15,6 +15,7 @@ import modele.Jeu;
 import modele.Joueur;
 import modele.PseudoException;
 import vue.ProfilsRendu;
+import vue.Router;
 
 import java.io.IOException;
 
@@ -77,15 +78,17 @@ public class ChoisirPseudoControleur extends Controleur {
             jeu.setJoueur(pseudo);
             System.out.println("[\u001B[34mDEBUG\u001B[0m] Joueur initialisé dans le modèle Jeu");
 
-            Parent homepageView = loader.load();
-            HomePageControleur controleur = loader.getController();
-            controleur.setJeu(this.jeu);
-            controleur.setAppControleur(this.appControleur);
+//            Parent homepageView = loader.load();
+//            HomePageControleur controleur = loader.getController();
+//            controleur.setJeu(this.jeu);
+//            controleur.setAppControleur(this.appControleur);
+//
+//            Stage stage = (Stage) startButton.getScene().getWindow();
+//            Scene jeuScene = new Scene(homepageView, 1400, 900);
+//            stage.setScene(jeuScene);
+//            stage.setMaximized(true);
 
-            Stage stage = (Stage) startButton.getScene().getWindow();
-            Scene jeuScene = new Scene(homepageView, 1400, 900);
-            stage.setScene(jeuScene);
-            stage.setMaximized(true);
+            Router.route("/HomePage.fxml");
 
             System.out.println("Jeu lancé !");
         } catch (IOException e) {

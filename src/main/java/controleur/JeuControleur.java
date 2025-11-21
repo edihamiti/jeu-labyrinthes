@@ -12,7 +12,9 @@ import modele.TypeLabyrinthe;
 import modele.Vision;
 import modele.generateurs.GenerateurLabyrinthe;
 import vue.HandlerVictoire;
+import vue.ParametresLabyrinthe;
 import vue.Rendu;
+import vue.Router;
 import vue.SoundManager;
 import vue.visionsLabyrinthe.VisionFactory;
 import vue.visionsLabyrinthe.VisionLabyrinthe;
@@ -23,7 +25,7 @@ import java.util.Random;
 /**
  * Contrôleur pour la gestion du jeu de labyrinthe.
  */
-public class JeuControleur extends Controleur {
+public class JeuControleur extends Controleur implements Router.DataReceiver {
     private static final int SCENE_WIDTH = 1400;
     private static final int SCENE_HEIGHT = 900;
     private static final int WOOD_SOUND_PROBABILITY = 1; // 1% de chance
@@ -137,25 +139,8 @@ public class JeuControleur extends Controleur {
      * @throws IOException si le chargement de la vue échoue
      */
     public void retourMenu() throws IOException {
-        String cheminFxml = jeu.getModeJeu().equals(ModeJeu.MODE_PROGRESSION)
-            ? "/ModeProgression.fxml"
-            : "/ModeLibreParametres.fxml";
-
-        chargerEtAfficherScene(cheminFxml, "Jeu des Labyrinthes");
         appControleur.resetGame();
-    }
-
-    private void retourModeProgression() throws IOException {
-        chargerEtAfficherScene("/ModeProgression.fxml", "Jeu des Labyrinthes");
-    }
-
-    private void chargerEtAfficherScene(String cheminFxml, String titre) throws IOException {
-        Parent vue = chargerVueAvecDependances(cheminFxml);
-        Stage stage = (Stage) conteneurLabyrinthe.getScene().getWindow();
-        Scene scene = new Scene(vue, SCENE_WIDTH, SCENE_HEIGHT);
-        stage.setScene(scene);
-        stage.setMaximized(true);
-        stage.setTitle(titre);
+        Router.home();
     }
 
     public void afficherJeu() {
@@ -259,13 +244,9 @@ public class JeuControleur extends Controleur {
         );
     }
 
-    private void handleRejouer() {
+    public void handleRejouer() {
         try {
-            if (jeu.getModeJeu().equals(ModeJeu.MODE_PROGRESSION)) {
-                retourModeProgression();
-            } else {
-                rejouer();
-            }
+            Router.back();
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -277,13 +258,6 @@ public class JeuControleur extends Controleur {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-    }
-
-    private void rejouer() throws IOException {
-        jeu.resetTimer();
-        this.generateur.generer(jeu.getLabyrinthe());
-        setRenduLabyrinthe();
-        afficherJeu();
     }
 
     public void setRenduLabyrinthe() {
@@ -342,5 +316,25 @@ public class JeuControleur extends Controleur {
 
         // Afficher le jeu
         afficherJeu();
+    }
+
+    /**
+     * Reçoit des données du Router lors de la navigation.
+     * Utilisé pour passer les paramètres du labyrinthe depuis les écrans de configuration.
+     *
+     * @param data les données reçues (doit être une instance de ParametresLabyrinthe)
+     */
+    @Override
+    public void receiveData(Object data) {
+        if (data instanceof ParametresLabyrinthe) {
+            ParametresLabyrinthe params = (ParametresLabyrinthe) data;
+            setParametresLab(
+                params.getLargeur(),
+                params.getHauteur(),
+                params.getPourcentageMurs(),
+                params.getDistanceMin(),
+                params.getTypeLabyrinthe()
+            );
+        }
     }
 }

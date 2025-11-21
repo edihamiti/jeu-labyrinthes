@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import modele.Jeu;
 import modele.Joueur;
+import vue.Router;
 
 /**
  * Gestionnaire central de la boutique suivant le pattern Singleton.
@@ -99,6 +100,7 @@ public class GestionnaireBoutique {
             stagePrincipal.setTitle("Mon Casier");
             stagePrincipal.setScene(scene);
             stagePrincipal.setMaximized(true);
+            Router.addToHistory("/InventaireCosmetique.fxml");
         } catch (Exception e) {
             e.printStackTrace();
         }

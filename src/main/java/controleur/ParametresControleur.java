@@ -3,16 +3,14 @@ package controleur;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.stage.Stage;
 import modele.Jeu;
 import modele.ModeJeu;
 import modele.PseudoException;
 import modele.TypeLabyrinthe;
+import vue.ParametresLabyrinthe;
+import vue.Router;
 
 import java.io.IOException;
 
@@ -160,18 +158,7 @@ public class ParametresControleur extends Controleur {
     public void retourClicked() {
         try {
             appControleur.resetGame();
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomePage.fxml"));
-            Parent menuView = loader.load();
-            Controleur controleur = loader.getController();
-            controleur.setAppControleur(this.appControleur);
-            controleur.setJeu(this.jeu);
-            Scene scene = new Scene(menuView, 1400, 900);
-            Stage stage = (Stage) largeurField.getScene().getWindow();
-            stage.setScene(scene);
-            stage.setMaximized(true);
-            stage.setTitle("Jeu des Labyrinthes");
-
+            Router.back();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
@@ -202,25 +189,13 @@ public class ParametresControleur extends Controleur {
             }
             System.out.println("\tDistanceMin : " + distanceMinEffective);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
-            Parent jeuView = loader.load();
+            // Créer les paramètres du labyrinthe
+            ParametresLabyrinthe params = new ParametresLabyrinthe(
+                largeur, hauteur, pourcentageMurs, distanceMinEffective, typeLabyrinthe
+            );
 
-            controleur.JeuControleur jeuControleur = loader.getController();
-
-            // Injecter les dépendances dans le contrôleur
-            if (jeuControleur != null) {
-                jeuControleur.setJeu(this.jeu);
-                jeuControleur.setAppControleur(this.appControleur);
-            }
-
-            // Appeler setParametresLab APRÈS le chargement du FXML
-            jeuControleur.setParametresLab(largeur, hauteur, pourcentageMurs, distanceMinEffective, typeLabyrinthe);
-
-            Stage stage = (Stage) validerButton.getScene().getWindow();
-            Scene jeuScene = new Scene(jeuView, 1400, 900);
-            stage.setScene(jeuScene);
-            stage.setMaximized(true);
-            stage.setTitle("Jeu des Labyrinthes - Mode Libre");
+            // Utiliser le Router pour naviguer vers le jeu avec les paramètres
+            Router.route("/Jeu.fxml", params);
         } catch (IOException e) {
             System.err.println("Erreur lors du lancement du mode libre !");
             System.err.println(e.getMessage());

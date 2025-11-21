@@ -15,7 +15,7 @@
 
     <HBox alignment="CENTER_LEFT">
         <!--Bouton retour Menu-->
-        <Button text="← Retour au menu" onAction="#retourMenu" styleClass="button-outlined"/>
+        <Button text="← Retour au menu" onAction="#handleRejouer" styleClass="button-outlined"/>
         <!-- Spacer -->
         <VBox HBox.hgrow="ALWAYS"/>
         <!--Titre-->
