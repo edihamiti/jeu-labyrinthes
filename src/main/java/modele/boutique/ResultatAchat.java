@@ -1,4 +1,4 @@
-package boutique.service;
+package modele.boutique;
 
 /**
  * Représente le résultat d'une tentative d'achat de cosmétique.

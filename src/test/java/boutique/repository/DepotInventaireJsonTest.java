@@ -1,6 +1,7 @@
 package boutique.repository;
 
-import boutique.modele.InventaireJoueur;
+import modele.boutique.InventaireJoueur;
+import modele.boutique.DepotInventaireJson;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 

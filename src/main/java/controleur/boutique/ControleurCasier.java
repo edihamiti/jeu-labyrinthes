@@ -1,19 +1,15 @@
-package boutique.controleur;
+package controleur.boutique;
 
-import boutique.modele.Cosmetique;
-import boutique.modele.InventaireJoueur;
-import boutique.modele.TypeCosmetique;
-import boutique.repository.IDepotCosmetique;
-import boutique.repository.IDepotInventaire;
-import boutique.service.IServiceEquipement;
-import boutique.service.ResultatEquipement;
+import modele.boutique.Cosmetique;
+import modele.boutique.InventaireJoueur;
+import modele.boutique.TypeCosmetique;
+import modele.boutique.IDepotCosmetique;
+import modele.boutique.IDepotInventaire;
+import modele.boutique.IServiceEquipement;
+import modele.boutique.ResultatEquipement;
 import controleur.Controleur;
-import controleur.HomePageControleur;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,7 +18,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import vue.Router;
 
 import java.io.IOException;

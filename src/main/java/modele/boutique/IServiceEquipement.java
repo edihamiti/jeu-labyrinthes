@@ -1,6 +1,4 @@
-package boutique.service;
-
-import boutique.modele.TypeCosmetique;
+package modele.boutique;
 
 /**
  * Service gérant l'équipement de cosmétiques par les joueurs.
@@ -12,7 +10,7 @@ public interface IServiceEquipement {
      * Tente d'équiper un cosmétique pour un joueur.
      * Vérifie que le joueur possède le cosmétique avant de l'équiper.
      *
-     * @param idJoueur l'identifiant du joueur
+     * @param idJoueur     l'identifiant du joueur
      * @param idCosmetique l'identifiant du cosmétique à équiper
      * @return le résultat de la tentative d'équipement
      */
@@ -23,7 +21,7 @@ public interface IServiceEquipement {
      * Retourne la texture par défaut si aucune texture n'est équipée.
      *
      * @param idJoueur l'identifiant du joueur
-     * @param type le type de cosmétique
+     * @param type     le type de cosmétique
      * @return le chemin vers la texture équipée ou la texture par défaut
      */
     String obtenirTextureEquipee(String idJoueur, TypeCosmetique type);

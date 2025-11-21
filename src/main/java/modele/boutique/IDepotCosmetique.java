@@ -1,7 +1,4 @@
-package boutique.repository;
-
-import boutique.modele.Cosmetique;
-import boutique.modele.TypeCosmetique;
+package modele.boutique;
 
 import java.util.List;
 import java.util.Optional;

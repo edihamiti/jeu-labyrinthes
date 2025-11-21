@@ -1,6 +1,6 @@
 package modele;
 
-import boutique.GestionnaireBoutique;
+import modele.boutique.GestionnaireBoutique;
 import modele.defi.Defi;
 import modele.joueursRepositories.JSONRepository;
 import modele.joueursRepositories.JoueurRepository;

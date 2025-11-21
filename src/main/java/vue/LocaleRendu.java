@@ -1,6 +1,6 @@
 package vue;
 
-import boutique.modele.TypeCosmetique;
+import modele.boutique.TypeCosmetique;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

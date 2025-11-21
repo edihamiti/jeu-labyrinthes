@@ -1,4 +1,4 @@
-package boutique.modele;
+package modele.boutique;
 
 /**
  * Énumération des différents types de cosmétiques disponibles dans la boutique.
@@ -6,16 +6,24 @@ package boutique.modele;
  */
 public enum TypeCosmetique {
 
-    /** Texture pour les murs du labyrinthe */
+    /**
+     * Texture pour les murs du labyrinthe
+     */
     TEXTURE_MUR("Mur"),
 
-    /** Texture pour le personnage du joueur */
+    /**
+     * Texture pour le personnage du joueur
+     */
     TEXTURE_JOUEUR("Joueur"),
 
-    /** Texture pour les chemins praticables */
+    /**
+     * Texture pour les chemins praticables
+     */
     TEXTURE_CHEMIN("Chemin"),
 
-    /** Texture pour la sortie du labyrinthe */
+    /**
+     * Texture pour la sortie du labyrinthe
+     */
     TEXTURE_SORTIE("Sortie");
 
     private final String nomAffichage;

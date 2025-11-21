@@ -1,4 +1,4 @@
-package boutique.modele;
+package modele.boutique;
 
 /**
  * Représente un cosmétique disponible dans la boutique.

@@ -1,6 +1,6 @@
 package modele;
 
-import boutique.GestionnaireBoutique;
+import modele.boutique.GestionnaireBoutique;
 import modele.defi.Defi;
 import modele.defi.repository.DefiJson;
 import modele.defi.repository.DefisRepo;

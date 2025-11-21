@@ -1,4 +1,4 @@
-package boutique.modele;
+package modele.boutique;
 
 /**
  * Interface pour observer les événements de la boutique.

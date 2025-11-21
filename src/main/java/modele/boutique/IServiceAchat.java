@@ -1,4 +1,4 @@
-package boutique.service;
+package modele.boutique;
 
 /**
  * Service gérant les achats de cosmétiques dans la boutique.

@@ -1,4 +1,4 @@
-package boutique.modele;
+package modele.boutique;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -71,7 +71,7 @@ public class InventaireJoueur {
     /**
      * Équipe un cosmétique pour un type donné.
      *
-     * @param type le type de cosmétique à équiper
+     * @param type         le type de cosmétique à équiper
      * @param idCosmetique l'identifiant du cosmétique à équiper
      */
     public void equiperCosmetique(TypeCosmetique type, String idCosmetique) {
