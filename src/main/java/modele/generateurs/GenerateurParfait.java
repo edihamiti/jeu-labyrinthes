@@ -5,15 +5,48 @@ import modele.Labyrinthe;
 
 import java.util.*;
 
+
+/**
+ * Générateur d'un labyrinthe parfait.
+ *
+ * Un labyrinthe parfait est un labyrinthe sans cycles,
+ * où il n'existe qu'un seul chemin possible entre deux cellules accessibles.
+ *
+ * Fonctionnement général :
+ * - Toutes les cases sont initialisées en murs
+ * - Une entrée est placée aléatoirement sur le bord gauche
+ * - Le labyrinthe est creusé par exploration en profondeur (backtracking)
+ * - La sortie est ensuite placée en respectant une distance minimale
+ *   depuis l'entrée
+ * - En mode "clé en poche", une clé est placée sur le chemin optimal
+ *   vers la sortie, et la sortie se situe au-delà de la clé
+ */
 public class GenerateurParfait extends GenerateurLabyrinthe {
     int distanceMin;
     boolean cleEnPoche = false;
 
+
+    /**
+     * Constructeur standard.
+     *
+     * @param largeur largeur maximale du labyrinthe
+     * @param hauteur hauteur maximale du labyrinthe
+     * @param distanceMin distance minimale souhaitée entre l'entrée et la sortie
+     */
     public GenerateurParfait(int largeur, int hauteur, int distanceMin) {
         super(largeur, hauteur);
         this.distanceMin = distanceMin;
     }
 
+
+    /**
+     * Constructeur avec activation du mode "clé obligatoire".
+     *
+     * @param largeur largeur maximale du labyrinthe
+     * @param hauteur hauteur maximale du labyrinthe
+     * @param distanceMin distance minimale souhaitée entre l'entrée et la sortie
+     * @param cleEnPoche true pour placer une clé avant la sortie
+     */
     public GenerateurParfait(int largeur, int hauteur, int distanceMin, boolean cleEnPoche) {
         super(largeur, hauteur);
         this.distanceMin = distanceMin;
@@ -22,7 +55,15 @@ public class GenerateurParfait extends GenerateurLabyrinthe {
 
 
     /**
-     * Génère le labyrinthe en utilisant l'algorithme de génération de labyrinthe.
+     * Génère le labyrinthe parfait complet.
+     *
+     * Étapes :
+     * - Initialise toutes les cases en murs
+     * - Place l'entrée aléatoirement
+     * - Creuse le labyrinthe avec un backtracking
+     * - Place soit uniquement la sortie, soit la clé et la sortie selon le mode
+     *
+     * @param lab labyrinthe à remplir
      */
     public void generer(Labyrinthe lab) {
         System.out.println("=== DEBUT GENERATION PARFAIT ===");
@@ -98,8 +139,15 @@ public class GenerateurParfait extends GenerateurLabyrinthe {
         System.out.println("=== FIN GENERATION PARFAIT ===");
     }
 
+
     /**
-     * Place la sortie en respectant la distance minimale et maximale (distanceMin + 5)
+     * Place la sortie sur une cellule respectant la distance minimale et maximale
+     * (distanceMin + 5) depuis l'entrée.
+     * Si aucun candidat ne correspond, choisit la case la plus proche.
+     *
+     * @param cellules tableau des cellules du labyrinthe
+     * @param entreeX coordonnée X de l'entrée
+     * @param entreeY coordonnée Y de l'entrée
      */
     private void placerSortieAvecDistance(Cellule[][] cellules, int entreeX, int entreeY) {
         int[][] distances = calculerDistances(cellules, entreeX, entreeY);
@@ -154,8 +202,15 @@ public class GenerateurParfait extends GenerateurLabyrinthe {
         }
     }
 
+
     /**
-     * Calcule les distances depuis l'entrée en utilisant BFS
+     * Calcule les distances depuis l'entrée vers toutes les cases accessibles
+     * en utilisant un parcours en largeur (BFS).
+     *
+     * @param cellules tableau du labyrinthe
+     * @param entreeX coordonnée X de départ
+     * @param entreeY coordonnée Y de départ
+     * @return matrice des distances (-1 pour les cellules non accessibles)
      */
     private int[][] calculerDistances(Cellule[][] cellules, int entreeX, int entreeY) {
         int[][] distances = new int[largeurMax][hauteurMax];
@@ -203,10 +258,13 @@ public class GenerateurParfait extends GenerateurLabyrinthe {
     }
 
     /**
-     * Place la clé et la sortie en s'assurant que :
-     * - La clé est accessible depuis l'entrée
-     * - La clé est sur le chemin optimal vers la sortie
-     * - La sortie est plus loin que la clé depuis l'entrée
+     * Mode avancé : place une clé et la sortie.
+     * La clé est sur le chemin optimal vers la sortie et doit être récupérée avant.
+     *
+     * @param cellules tableau du labyrinthe
+     * @param entreeX coordonnée X de l'entrée
+     * @param entreeY coordonnée Y de l'entrée
+     * @param lab labyrinthe à mettre à jour
      */
     private void placerCleEtSortie(Cellule[][] cellules, int entreeX, int entreeY, Labyrinthe lab) {
 
@@ -278,8 +336,15 @@ public class GenerateurParfait extends GenerateurLabyrinthe {
         lab.setPositionSortie(sortieX, sortieY);
     }
 
+
     /**
-     * Placement simple pour les petits labyrinthes
+     * Placement simple pour les petits labyrinthes.
+     * Place la sortie sur la case la plus éloignée et la clé à mi-chemin.
+     *
+     * @param cellules tableau du labyrinthe
+     * @param distances matrice des distances depuis l'entrée
+     * @param distanceMax distance maximale parcourue
+     * @param lab labyrinthe à mettre à jour
      */
     private void placementSimple(Cellule[][] cellules, int[][] distances, int distanceMax, Labyrinthe lab) {
         List<int[]> tousLesChemins = new ArrayList<>();
@@ -316,8 +381,17 @@ public class GenerateurParfait extends GenerateurLabyrinthe {
         }
     }
 
+
     /**
-     * Trouve le chemin optimal entre deux points en utilisant BFS avec reconstruction du chemin
+     * Trouve le chemin optimal entre deux points en reconstruisant
+     * le parcours BFS.
+     *
+     * @param cellules tableau du labyrinthe
+     * @param startX coordonnée X de départ
+     * @param startY coordonnée Y de départ
+     * @param endX coordonnée X d'arrivée
+     * @param endY coordonnée Y d'arrivée
+     * @return liste ordonnée des coordonnées du chemin optimal
      */
     private List<int[]> trouverCheminOptimal(Cellule[][] cellules, int startX, int startY, int endX, int endY) {
         Queue<int[]> queue = new LinkedList<>();
