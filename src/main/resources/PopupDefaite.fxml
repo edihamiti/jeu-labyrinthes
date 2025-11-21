@@ -31,7 +31,7 @@
             <Insets top="10" right="30" bottom="10" left="30"/>
         </padding>
 
-        <Label text="Dommage ! Vous avez ateint le nombre de déplacement maximum" wrapText="true"
+        <Label text="Dommage ! Vous avez ateint le nombre de déplacement maximum" wrapText="true" alignment="CENTER" textAlignment="CENTER"
                style="-fx-text-fill: -color-1; -fx-font-size: 16px; -fx-font-weight: 600;"/>
 
         <!-- Séparateur -->

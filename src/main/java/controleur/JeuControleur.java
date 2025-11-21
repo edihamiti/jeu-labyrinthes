@@ -214,9 +214,7 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
         jeu.setNombreDeplacements(jeu.getNombreDeplacements() + 1);
 
         if (jeu.getNombreDeplacements() >= nbDeplacementMax()) {
-            System.out.printf("Nombre de deplacements max %d\n", nbDeplacementMax());
             defaite();
-            System.out.println("c'est cassé");
         }
 
         if (jeu.getLabyrinthe().estSurSortie(x, y)) {
