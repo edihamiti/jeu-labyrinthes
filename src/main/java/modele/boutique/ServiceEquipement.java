@@ -1,10 +1,4 @@
-package boutique.service;
-
-import boutique.modele.Cosmetique;
-import boutique.modele.InventaireJoueur;
-import boutique.modele.TypeCosmetique;
-import boutique.repository.IDepotCosmetique;
-import boutique.repository.IDepotInventaire;
+package modele.boutique;
 
 import java.util.Optional;
 

@@ -1,5 +1,7 @@
 package boutique.modele;
 
+import modele.boutique.InventaireJoueur;
+import modele.boutique.TypeCosmetique;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

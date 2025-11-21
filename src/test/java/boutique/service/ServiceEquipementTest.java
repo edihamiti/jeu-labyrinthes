@@ -1,11 +1,13 @@
 package boutique.service;
 
-import boutique.modele.Cosmetique;
-import boutique.modele.InventaireJoueur;
-import boutique.modele.TypeCosmetique;
-import boutique.repository.DepotCosmetiqueMemoire;
+import modele.boutique.Cosmetique;
+import modele.boutique.InventaireJoueur;
+import modele.boutique.TypeCosmetique;
+import modele.boutique.DepotCosmetiqueMemoire;
 import boutique.repository.DepotInventaireTest;
-import boutique.repository.IDepotCosmetique;
+import modele.boutique.IDepotCosmetique;
+import modele.boutique.ResultatEquipement;
+import modele.boutique.ServiceEquipement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

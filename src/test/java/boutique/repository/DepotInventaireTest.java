@@ -1,6 +1,7 @@
 package boutique.repository;
 
-import boutique.modele.InventaireJoueur;
+import modele.boutique.InventaireJoueur;
+import modele.boutique.IDepotInventaire;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +32,6 @@ public class DepotInventaireTest implements IDepotInventaire {
     public boolean aEteSauvegarde(String idJoueur) {
         return inventaires.containsKey(idJoueur);
     }
-    
+
 }
 

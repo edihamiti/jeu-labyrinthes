@@ -1,7 +1,8 @@
 package boutique;
 
-import boutique.modele.TypeCosmetique;
-import boutique.repository.IDepotInventaire;
+import modele.boutique.GestionnaireBoutique;
+import modele.boutique.TypeCosmetique;
+import modele.boutique.IDepotInventaire;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

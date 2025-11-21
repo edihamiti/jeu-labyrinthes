@@ -1,4 +1,4 @@
-package boutique.service;
+package modele.boutique;
 
 /**
  * Représente le résultat d'une tentative d'équipement de cosmétique.
@@ -44,11 +44,15 @@ public class ResultatEquipement {
     /**
      * @return true si l'équipement a réussi, false sinon
      */
-    public boolean estReussi() { return succes; }
+    public boolean estReussi() {
+        return succes;
+    }
 
     /**
      * @return le message descriptif du résultat
      */
-    public String getMessage() { return message; }
+    public String getMessage() {
+        return message;
+    }
 
 }

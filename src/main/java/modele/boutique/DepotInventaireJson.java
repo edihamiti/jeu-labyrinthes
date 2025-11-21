@@ -1,6 +1,5 @@
-package boutique.repository;
+package modele.boutique;
 
-import boutique.modele.InventaireJoueur;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

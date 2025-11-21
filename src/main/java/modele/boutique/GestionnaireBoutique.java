@@ -1,17 +1,7 @@
-package boutique;
+package modele.boutique;
 
-import boutique.controleur.ControleurBoutique;
-import boutique.controleur.ControleurCasier;
-import boutique.modele.InventaireJoueur;
-import boutique.modele.TypeCosmetique;
-import boutique.repository.DepotCosmetiqueMemoire;
-import boutique.repository.DepotInventaireJson;
-import boutique.repository.IDepotCosmetique;
-import boutique.repository.IDepotInventaire;
-import boutique.service.IServiceAchat;
-import boutique.service.IServiceEquipement;
-import boutique.service.ServiceAchat;
-import boutique.service.ServiceEquipement;
+import controleur.boutique.ControleurBoutique;
+import controleur.boutique.ControleurCasier;
 import controleur.AppControleur;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
