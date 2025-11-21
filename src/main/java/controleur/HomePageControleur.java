@@ -51,8 +51,11 @@ public class HomePageControleur extends Controleur {
     public Text boutiqueText;
     @FXML
     public Text inventaireText;
+    @FXML
+    public Text modeCleText;
 
     private boolean modeProgression;
+    private boolean modeCle;
 
     public VBox leaderboardContainer;
 
@@ -93,7 +96,9 @@ public class HomePageControleur extends Controleur {
         leaderboardText.getStyleClass().removeAll("selected");
         modeProgressionText.getStyleClass().add("selected");
         modeLibreText.getStyleClass().removeAll("selected");
+        modeCleText.getStyleClass().removeAll("selected");
         modeProgression = true;
+        modeCle = false;
         leaderboardContainer.setVisible(false);
         leaderboardContainer.setManaged(false);
     }
@@ -107,11 +112,30 @@ public class HomePageControleur extends Controleur {
         leaderboardText.getStyleClass().removeAll("selected");
         modeLibreText.getStyleClass().add("selected");
         modeProgressionText.getStyleClass().removeAll("selected");
+        modeCleText.getStyleClass().removeAll("selected");
         modeProgression = false;
+        modeCle = false;
         leaderboardContainer.setVisible(false);
         leaderboardContainer.setManaged(false);
 
     }
+
+    /**
+     * Sélectionne le mode chasse à la clé et met à jour l'interface en conséquence.
+     */
+    public void modeCle() {
+        nomMode.setText("Mode Chasse à la Clé");
+        descriptionMode.setText("Trouvez la clé dans le brouillard pour débloquer la sortie !");
+        leaderboardText.getStyleClass().removeAll("selected");
+        modeProgressionText.getStyleClass().removeAll("selected");
+        modeLibreText.getStyleClass().removeAll("selected");
+        modeCleText.getStyleClass().add("selected");
+        modeProgression = false;
+        modeCle = true;
+        leaderboardContainer.setVisible(false);
+        leaderboardContainer.setManaged(false);
+    }
+
 
     public void quit() {
         System.exit(0);
@@ -125,6 +149,8 @@ public class HomePageControleur extends Controleur {
             FXMLLoader loader;
             if (modeProgression) {
                 loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
+            } else if (modeCle) {
+                loader = new FXMLLoader(getClass().getResource("/ModeCle.fxml"));
             } else {
                 loader = new FXMLLoader(getClass().getResource("/ModeLibreParametres.fxml"));
             }
