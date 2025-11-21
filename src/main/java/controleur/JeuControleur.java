@@ -309,6 +309,7 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
         if (jeu.getDefiEnCours() != null) {
             Vision vision = jeu.getDefiEnCours().vision();
             int porteeVision = jeu.getDefiEnCours().portee();
+            System.out.println("[obtenirStrategieVision] Finis");
             return VisionFactory.getStrategy(vision, porteeVision);
         } else {
             return VisionFactory.getStrategy(Vision.VUE_LIBRE, 0);
@@ -365,8 +366,7 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
      */
     @Override
     public void receiveData(Object data) {
-        if (data instanceof ParametresLabyrinthe) {
-            ParametresLabyrinthe params = (ParametresLabyrinthe) data;
+        if (data instanceof ParametresLabyrinthe params) {
             setParametresLab(
                     params.getLargeur(),
                     params.getHauteur(),

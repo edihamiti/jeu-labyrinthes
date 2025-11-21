@@ -214,5 +214,41 @@
     "distanceMin": 288,
     "typeLabyrinthe": "PARFAIT",
     "portee": 1
+  },
+  {
+    "name": "FACILE7",
+    "etape": 7,
+    "largeur": 17,
+    "hauteur": 13,
+    "pourcentageMurs": 100.0,
+    "points": 200,
+    "vision": "VUE_AVEUGLE",
+    "distanceMin": 288,
+    "typeLabyrinthe": "PARFAIT",
+    "portee": 0
+  },
+  {
+    "name": "MOYEN7",
+    "etape": 7,
+    "largeur": 21,
+    "hauteur": 23,
+    "pourcentageMurs": 100.0,
+    "points": 350,
+    "vision": "VUE_AVEUGLE",
+    "distanceMin": 288,
+    "typeLabyrinthe": "PARFAIT",
+    "portee": 0
+  },
+  {
+    "name": "DIFFICILE7",
+    "etape": 7,
+    "largeur": 30,
+    "hauteur": 30,
+    "pourcentageMurs": 100.0,
+    "points": 500,
+    "vision": "VUE_AVEUGLE",
+    "distanceMin": 288,
+    "typeLabyrinthe": "PARFAIT",
+    "portee": 0
   }
 ]
