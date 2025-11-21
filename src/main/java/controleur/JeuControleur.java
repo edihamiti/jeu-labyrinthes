@@ -38,6 +38,7 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
     private Rendu renduMinimap;
     private GenerateurLabyrinthe generateur;
     private HandlerVictoire handlerVictoire;
+    private HandlerDefaite handlerDefaite;
     private final Random random = new Random();
 
     /**
@@ -46,6 +47,7 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
     @FXML
     public void initialize() {
         this.handlerVictoire = new HandlerVictoire();
+        this.handlerDefaite = new HandlerDefaite();
         configurerListenersScene();
     }
 
@@ -211,9 +213,19 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
 
         jeu.setNombreDeplacements(jeu.getNombreDeplacements() + 1);
 
+        if (jeu.getNombreDeplacements() >= nbDeplacementMax()) {
+            System.out.printf("Nombre de deplacements max %d\n", nbDeplacementMax());
+            defaite();
+            System.out.println("c'est cassé");
+        }
+
         if (jeu.getLabyrinthe().estSurSortie(x, y)) {
             victoire();
         }
+    }
+
+    private int nbDeplacementMax() {
+        return jeu.getLabyrinthe().calculePlusCourtChemin()*2;
     }
 
     private void gererDeplacementInvalide(int x, int y) {
@@ -222,6 +234,17 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
         if (overlayMinimap.isVisible() && renduMinimap != null) {
             renduMinimap.setBlockedWall(x, y);
         }
+    }
+
+    private void defaite() throws IOException {
+        Stage ownerStage = (Stage) conteneurLabyrinthe.getScene().getWindow();
+
+        handlerDefaite.handleDefaite(
+                jeu,
+                ownerStage,
+                this::handleRejouer,
+                this::handleRetourMenu
+        );
     }
 
     /**
