@@ -22,6 +22,21 @@ public class ServiceAchat implements IServiceAchat {
         this.depotInventaire = depotInventaire;
     }
 
+
+    /**
+     * Tente d'acheter un cosmétique pour un joueur.
+     *
+     * Les étapes de validation sont :
+     * 1. Vérifier que le cosmétique existe dans le dépôt.
+     * 2. Vérifier que le joueur ne possède pas déjà le cosmétique.
+     * 3. Vérifier que le joueur a suffisamment de points pour l'achat.
+     * 4. Déduire le prix du score du joueur et ajouter le cosmétique à son inventaire.
+     * 5. Sauvegarder l'inventaire mis à jour.
+     *
+     * @param pseudoJoueur l'identifiant du joueur
+     * @param idCosmetique l'identifiant du cosmétique à acheter
+     * @return un objet {@link ResultatAchat} représentant le succès ou l'échec de l'achat
+     */
     @Override
     public ResultatAchat acheterCosmetique(String pseudoJoueur, String idCosmetique) {
         InventaireJoueur inventaire = depotInventaire.charger(pseudoJoueur);

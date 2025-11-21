@@ -22,6 +22,20 @@ public class ServiceEquipement implements IServiceEquipement {
         this.depotInventaire = depotInventaire;
     }
 
+
+    /**
+     * Équipe un cosmétique pour un joueur.
+     *
+     * Les étapes de validation sont :
+     * 1. Vérifier que le joueur possède le cosmétique.
+     * 2. Vérifier que le cosmétique existe dans le dépôt.
+     * 3. Équiper le cosmétique pour le type correspondant (mur, joueur, chemin, sortie).
+     * 4. Sauvegarder l'inventaire mis à jour.
+     *
+     * @param idJoueur l'identifiant du joueur
+     * @param idCosmetique l'identifiant du cosmétique à équiper
+     * @return un objet {@link ResultatEquipement} représentant le succès ou l'échec de l'opération
+     */
     @Override
     public ResultatEquipement equiperCosmetique(String idJoueur, String idCosmetique) {
         InventaireJoueur inventaire = depotInventaire.charger(idJoueur);
@@ -44,6 +58,16 @@ public class ServiceEquipement implements IServiceEquipement {
         return ResultatEquipement.reussi();
     }
 
+
+    /**
+     * Obtient le chemin de la texture actuellement équipée pour un type de cosmétique donné.
+     *
+     * Si aucun cosmétique n'est équipé pour ce type, retourne la texture par défaut.
+     *
+     * @param idJoueur l'identifiant du joueur
+     * @param type le type de cosmétique (mur, chemin, joueur, sortie)
+     * @return le chemin du fichier de texture à utiliser
+     */
     @Override
     public String obtenirTextureEquipee(String idJoueur, TypeCosmetique type) {
         InventaireJoueur inventaire = depotInventaire.charger(idJoueur);
@@ -58,6 +82,13 @@ public class ServiceEquipement implements IServiceEquipement {
                 .orElse(obtenirTextureParDefaut(type));
     }
 
+
+    /**
+     * Fournit le chemin de la texture par défaut pour un type de cosmétique.
+     *
+     * @param type le type de cosmétique
+     * @return le chemin vers la texture par défaut
+     */
     private String obtenirTextureParDefaut(TypeCosmetique type) {
         return "/textures/default/" + type.name().toLowerCase() + ".png";
     }

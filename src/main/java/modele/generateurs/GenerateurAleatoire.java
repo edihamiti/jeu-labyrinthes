@@ -1,3 +1,6 @@
+/**
+ * Package contenant les générateurs de labyrinthes.
+ */
 package modele.generateurs;
 
 import java.util.LinkedList;
@@ -7,16 +10,48 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
+/**
+ * Générateur de labyrinthe aléatoire basé sur un pourcentage de murs restant.
+ * Le fonctionnement est le suivant :
+ * - Toutes les cases sont initialisées en murs
+ * - Un chemin principal est creusé à partir de l'entrée
+ * - Des chemins secondaires peuvent être ajoutés pour enrichir la carte
+ * - Des murs sont ensuite remplacés aléatoirement par des chemins
+ *   jusqu'à atteindre le pourcentage de murs souhaité
+ */
 public class GenerateurAleatoire extends GenerateurLabyrinthe {
     double pourcentageMurs;
     private int nbChemins = 0;
     Cellule[][] cellules;
 
+
+    /**
+     * Crée un générateur aléatoire avec une taille donnée et un pourcentage de murs.
+     *
+     * @param largeur largeur maximale du labyrinthe
+     * @param hauteur hauteur maximale du labyrinthe
+     * @param pourcentageMurs pourcentage de cellules qui doivent être des murs
+     */
     public GenerateurAleatoire(int largeur, int hauteur, double pourcentageMurs) {
         super(largeur, hauteur);
         this.pourcentageMurs = pourcentageMurs;
     }
 
+
+    /**
+     * Génère le labyrinthe complet puis met à jour l'objet Labyrinthe fourni.
+     *
+     * Déroulement :
+     * - Initialise chaque cellule comme mur
+     * - Place une entrée en colonne 0
+     * - Creuse un chemin principal par exploration en profondeur
+     * - Ajoute éventuellement des chemins secondaires
+     * - Continue à convertir des murs en chemins de façon aléatoire
+     *   jusqu'à atteindre le pourcentage souhaité
+     *
+     * @param lab labyrinthe à remplir
+     */
     public void generer(Labyrinthe lab) {
         nbChemins = 0;
 
@@ -64,6 +99,20 @@ public class GenerateurAleatoire extends GenerateurLabyrinthe {
         lab.setJeuEnCours(true);
     }
 
+
+    /**
+     * Creuse le chemin principal à partir d'une position donnée.
+     * Utilise une pile et un système de visite pour explorer le labyrinthe.
+     *
+     * Lorsqu'aucune direction n'est plus disponible :
+     * - on remonte dans la pile
+     * - à la fin, la dernière case visitée devient la sortie
+     *
+     * @param cellules tableau des cellules
+     * @param startX coordonnée X de départ
+     * @param startY coordonnée Y de départ
+     * @param lab labyrinthe à modifier
+     */
     public void faireChemin(Cellule[][] cellules, int startX, int startY, Labyrinthe lab) {
         Random random = new Random();
         LinkedList<int[]> pile = new LinkedList<>();
@@ -135,6 +184,16 @@ public class GenerateurAleatoire extends GenerateurLabyrinthe {
         }
     }
 
+
+    /**
+     * Tente de creuser un chemin secondaire à partir d'une case donnée.
+     * Le chemin continue tant qu'il existe au moins une direction adjacente
+     * où se trouve un mur.
+     *
+     * @param cellules tableau des cellules
+     * @param startX position X de départ
+     * @param startY position Y de départ
+     */
     public void faireCheminAlternatif(Cellule[][] cellules, int startX, int startY) {
         Random random = new Random();
         int[][] directions = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
