@@ -33,6 +33,8 @@ public abstract class Cellule {
         return false;
     }
 
+    public boolean estCle(){ return false;}
+
     public int getX() {
         return x;
     }

@@ -43,6 +43,14 @@
                     </StackPane>
                 </graphic>
             </Button>
+            <Button onAction="#modeCle" styleClass="tab">
+                <graphic>
+                    <StackPane>
+                        <Rectangle styleClass="tabs-rectangle"/>
+                        <Text text="Mode Clé" fx:id="modeCleText" styleClass="tabs-text"/>
+                    </StackPane>
+                </graphic>
+            </Button>
             <Button onAction="#leaderboard" styleClass="tab">
                 <graphic>
                     <StackPane>

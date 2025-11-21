@@ -143,6 +143,22 @@ public class Jeu {
             this.labyrinthe.setJoueurY(nouveauY);
             nombreDeplacements++;
 
+            if (this.labyrinthe.getCellules()[nouveauX][nouveauY].estCle() && !this.labyrinthe.isCleObtenue()) {
+                this.labyrinthe.setCleObtenue();
+                System.out.println("Clé obtenue ! La sortie est maintenant accessible.");
+
+                this.labyrinthe.getCellules()[nouveauX][nouveauY] = new modele.Cellules.Chemin(nouveauX, nouveauY);
+
+                for (int i = 0; i < this.labyrinthe.getLargeurMax(); i++) {
+                    for (int j = 0; j < this.labyrinthe.getHauteurMax(); j++) {
+                        if (this.labyrinthe.getCellules()[i][j].estSortie() &&
+                                this.labyrinthe.getCellules()[i][j] instanceof modele.Cellules.Sortie sortie) {
+                            sortie.deverrouillee();
+                        }
+                    }
+                }
+            }
+
             if (this.labyrinthe.estSurSortie(nouveauX, nouveauY)) {
                 this.labyrinthe.setJeuEnCours(false);
             }
