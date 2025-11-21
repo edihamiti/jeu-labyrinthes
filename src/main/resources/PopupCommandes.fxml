@@ -66,7 +66,7 @@
         <!-- Objectif -->
         <HBox alignment="CENTER_LEFT" spacing="10">
             <Label style="-fx-font-size: 20px;"/>
-            <Label text="Objectif : Atteignez la sortie pour gagner !"
+            <Label text="Objectif : Atteignez la sortie pour gagner ! Mais attention à atteindre la sortie en moins de déplacmeent que le double du chemin optimal"
                    wrapText="true"
                    style="-fx-text-fill: -color-1; -fx-font-size: 16px; -fx-font-weight: 600;"/>
         </HBox>
