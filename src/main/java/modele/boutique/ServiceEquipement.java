@@ -26,7 +26,7 @@ public class ServiceEquipement implements IServiceEquipement {
     /**
      * Équipe un cosmétique pour un joueur.
      *
-     * <p>Les étapes de validation sont :
+     * Les étapes de validation sont :
      * 1. Vérifier que le joueur possède le cosmétique.
      * 2. Vérifier que le cosmétique existe dans le dépôt.
      * 3. Équiper le cosmétique pour le type correspondant (mur, joueur, chemin, sortie).
@@ -62,7 +62,7 @@ public class ServiceEquipement implements IServiceEquipement {
     /**
      * Obtient le chemin de la texture actuellement équipée pour un type de cosmétique donné.
      *
-     * <p>Si aucun cosmétique n'est équipé pour ce type, retourne la texture par défaut.
+     * Si aucun cosmétique n'est équipé pour ce type, retourne la texture par défaut.
      *
      * @param idJoueur l'identifiant du joueur
      * @param type le type de cosmétique (mur, chemin, joueur, sortie)

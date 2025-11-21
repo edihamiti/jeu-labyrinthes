@@ -26,7 +26,7 @@ public class ServiceAchat implements IServiceAchat {
     /**
      * Tente d'acheter un cosmétique pour un joueur.
      *
-     * <p>Les étapes de validation sont :
+     * Les étapes de validation sont :
      * 1. Vérifier que le cosmétique existe dans le dépôt.
      * 2. Vérifier que le joueur ne possède pas déjà le cosmétique.
      * 3. Vérifier que le joueur a suffisamment de points pour l'achat.
