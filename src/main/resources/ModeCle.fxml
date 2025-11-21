@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controleur.ModeCleControleur"
+      stylesheets="styles/styles.css"
+      spacing="20"
+      alignment="CENTER">
+
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <!-- Titre -->
+    <VBox alignment="CENTER" spacing="10">
+        <Label text="Mode Chasse à la Clé" styleClass="title"/>
+        <Label text="Trouvez la clé cachée dans le brouillard pour débloquer la sortie !"
+               styleClass="subtitle" textAlignment="CENTER" wrapText="true"/>
+    </VBox>
+
+    <!-- Sélection de difficulté -->
+    <VBox alignment="CENTER" spacing="20" styleClass="panel">
+        <padding>
+            <Insets top="20" right="30" bottom="20" left="30"/>
+        </padding>
+
+        <Label text="Choisissez votre difficulté" styleClass="section-title"/>
+
+        <HBox spacing="20" alignment="CENTER">
+            <Button fx:id="btnFacile" text="Facile" onAction="#lancerFacile" styleClass="button-filled" prefWidth="150"/>
+            <Button fx:id="btnMoyen" text="Moyen" onAction="#lancerMoyen" styleClass="button-filled" prefWidth="150"/>
+            <Button fx:id="btnDifficile" text="Difficile" onAction="#lancerDifficile" styleClass="button-filled" prefWidth="150"/>
+        </HBox>
+
+        <VBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Facile : Petit labyrinthe (10x10), portée de vision 4" styleClass="help-text"/>
+            <Label text="Moyen : Labyrinthe moyen (15x15), portée de vision 3" styleClass="help-text"/>
+            <Label text="Difficile : Grand labyrinthe (20x20), portée de vision 2" styleClass="help-text"/>
+        </VBox>
+    </VBox>
+
+    <!-- Spacer -->
+    <VBox VBox.vgrow="ALWAYS"/>
+
+    <!-- Bouton retour -->
+    <HBox alignment="CENTER">
+        <Button fx:id="btnRetour" text="Retour au menu" onAction="#retourClicked" styleClass="button-ghost"/>
+    </HBox>
+
+</VBox>
