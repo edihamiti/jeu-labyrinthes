@@ -6,8 +6,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import modele.LabyrintheObserver;
+import modele.Cellules.Sortie;
 import modele.Labyrinthe;
+import modele.LabyrintheObserver;
 import modele.TypeLabyrinthe;
 import modele.Vision;
 import modele.generateurs.GenerateurLabyrinthe;
@@ -26,19 +27,19 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
     private static final int SCENE_HEIGHT = 900;
     private static final int WOOD_SOUND_PROBABILITY = 1; // 1% de chance
     private static boolean premierLancement = true;
-
+    private final Random random = new Random();
     @FXML
     public VBox minimap;
     @FXML
     public VBox overlayMinimap;
     @FXML
     private VBox conteneurLabyrinthe;
-
     private Rendu renduLabyrinthe;
     private Rendu renduMinimap;
     private GenerateurLabyrinthe generateur;
     private HandlerVictoire handlerVictoire;
-    private final Random random = new Random();
+    private boolean isModeCle = false;
+    private int porteeVisionCle = 0;
 
     /**
      * Initialise le contrôleur et configure les événements de déplacement du joueur.
@@ -196,6 +197,7 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
             jeu.startTimer();
         }
 
+
         if (jeu.getLabyrinthe().deplacer(nouveauX, nouveauY)) {
             gererDeplacementValide(nouveauX, nouveauY);
         } else {
@@ -204,12 +206,31 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
     }
 
     private void gererDeplacementValide(int x, int y) throws IOException {
+        boolean surCle = jeu.getLabyrinthe().getCellules()[x][y].estCle() && !jeu.getLabyrinthe().isCleObtenue();
+
         SoundManager.playSound("move.mp3");
+
         if (random.nextInt(100) < WOOD_SOUND_PROBABILITY) {
             SoundManager.playSound("bois.mp3");
         }
 
         jeu.setNombreDeplacements(jeu.getNombreDeplacements() + 1);
+
+        if (surCle) {
+            jeu.getLabyrinthe().setCleObtenue();
+
+            jeu.getLabyrinthe().getCellules()[x][y] = new modele.Cellules.Chemin(x, y);
+
+            for (int i = 0; i < jeu.getLabyrinthe().getLargeurMax(); i++) {
+                for (int j = 0; j < jeu.getLabyrinthe().getHauteurMax(); j++) {
+                    if (jeu.getLabyrinthe().getCellules()[i][j].estSortie() &&
+                            jeu.getLabyrinthe().getCellules()[i][j].estSortie()) {
+                        Sortie sortie = (Sortie) jeu.getLabyrinthe().getCellules()[i][j];
+                        sortie.deverrouillee();
+                    }
+                }
+            }
+        }
 
         if (jeu.getLabyrinthe().estSurSortie(x, y)) {
             victoire();
@@ -337,4 +358,30 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
     public void update() {
         afficherJeu();
     }
+
+    /**
+     * Définit les paramètres du labyrinthe avec le mode clé activé.
+     * Utilise la génération de base (sans distanceMin) et configure la vision avec brouillard.
+     */
+    public void setParametresLabAvecCle(int largeur, int hauteur, double pourcentageMurs, int porteeVision) {
+        this.isModeCle = true;
+        this.porteeVisionCle = porteeVision;
+
+        jeu.setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs, 0));
+
+        this.generateur = new modele.generateurs.GenerateurParfait(largeur, hauteur, 0, true);
+        this.generateur.generer(jeu.getLabyrinthe());
+
+        jeu.resetTimer();
+
+        vue.visionsLabyrinthe.VisionCle visionCle = new vue.visionsLabyrinthe.VisionCle(porteeVision);
+
+        this.renduLabyrinthe = visionCle.createRendu(jeu.getLabyrinthe(), conteneurLabyrinthe, this.jeu);
+
+        overlayMinimap.setVisible(false);
+        this.renduMinimap = null;
+
+        afficherJeu();
+    }
+
 }

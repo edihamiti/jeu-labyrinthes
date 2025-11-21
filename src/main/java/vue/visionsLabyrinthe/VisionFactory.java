@@ -12,6 +12,7 @@ public class VisionFactory {
         strategies.put(Vision.VUE_LOCAL, new VisionLocale());
         strategies.put(Vision.VUE_LIMITEE, new VisionLimitee());
         strategies.put(Vision.VUE_CARTE, new VisionCarte());
+        strategies.put(Vision.VUE_CLE, new VisionCle());
     }
 
     public static VisionLabyrinthe getStrategy(Vision vision, int porteeVision) {

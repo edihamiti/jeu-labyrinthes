@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controleur.ModeCleControleur"
+      stylesheets="styles/styles.css"
+      spacing="20"
+      alignment="CENTER">
+
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <!-- Bouton retour -->
+    <HBox>
+        <Button fx:id="btnRetour" styleClass="button-outlined" text="← Retour" onAction="#retourClicked"/>
+        <Region HBox.hgrow="ALWAYS"/>
+    </HBox>
+
+
+    <!-- Titre -->
+    <VBox alignment="CENTER" spacing="10">
+        <Label text="Mode Chasse à la Clé" styleClass="title"/>
+        <Label text="Trouvez la clé cachée dans le brouillard pour débloquer la sortie !"
+               styleClass="subtitle" textAlignment="CENTER" wrapText="true"/>
+    </VBox>
+
+    <!-- Sélection de difficulté -->
+    <VBox alignment="CENTER" spacing="20" styleClass="panel">
+        <padding>
+            <Insets top="20" right="30" bottom="20" left="30"/>
+        </padding>
+
+        <Label text="Choisissez votre difficulté" styleClass="title"/>
+
+        <HBox spacing="20" alignment="CENTER">
+            <Button fx:id="btnFacile" text="Facile" onAction="#lancerFacile" styleClass="button-filled"
+                    prefWidth="150" graphicTextGap= "10">
+                <graphic>
+                    <ImageView fitWidth="32" fitHeight="32" preserveRatio="true">
+                        <Image url="@/img/difficultees/facile.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button fx:id="btnMoyen" text="Moyen" onAction="#lancerMoyen" styleClass="button-filled" prefWidth="150" graphicTextGap= "10">
+                <graphic>
+                    <ImageView fitWidth="32" fitHeight="32" preserveRatio="true">
+                        <Image url="@/img/difficultees/moyen.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button fx:id="btnDifficile" text="Difficile" onAction="#lancerDifficile" styleClass="button-filled"
+                    prefWidth="150" graphicTextGap= "10">
+                <graphic>
+                    <ImageView fitWidth="32" fitHeight="32" preserveRatio="true">
+                        <Image url="@/img/difficultees/difficile.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
+        </HBox>
+
+    </VBox>
+
+    <!-- Spacer -->
+    <VBox VBox.vgrow="ALWAYS"/>
+
+
+</VBox>

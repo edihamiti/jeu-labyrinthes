@@ -2,6 +2,7 @@ package modele;
 
 import modele.defi.Defi;
 import modele.Cellules.Cellule;
+import modele.defi.Defi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,11 @@ public class Labyrinthe {
     private int joueurX;
     private int joueurY;
     private boolean jeuEnCours;
+    private boolean cleObtenue;
+    private int cleX;
+    private int cleY;
     private List<LabyrintheObserver> observers;
+
 
     /**
      * Constructeur pour un labyrinthe.
@@ -43,6 +48,7 @@ public class Labyrinthe {
         this.joueurY = 1;
         this.jeuEnCours = true;
         this.observers = new ArrayList<>();
+        this.cleObtenue = false;
     }
 
     /**
@@ -76,21 +82,20 @@ public class Labyrinthe {
         return pathfinder.findShortestPath(cellules, largeurMax, hauteurMax);
     }
 
-    public double getPourcentageMurs() {
-        return pourcentageMurs;
-    }
-
     public boolean isJeuEnCours() {
         return jeuEnCours;
     }
+
 
     public int getJoueurY() {
         return joueurY;
     }
 
+
     public int getJoueurX() {
         return joueurX;
     }
+
 
     public int getDistanceMin() {
         return distanceMin;
@@ -118,8 +123,12 @@ public class Labyrinthe {
         notifyObservers();
     }
 
-    public void setCellules(Cellule[][] cellules) {
-        this.cellules = cellules;
+    public boolean getCleObtenue(){
+        return cleObtenue;
+    }
+
+    public void setCleObtenue(){
+        this.cleObtenue = cleObtenue;
     }
 
     /**
@@ -135,6 +144,13 @@ public class Labyrinthe {
         } else if (cellules[x][y] == null || cellules[x][y].estMur()) {
             return false;
         }
+
+        if (cellules[x][y].estSortie() && cellules[x][y] instanceof modele.Cellules.Sortie sortie) {
+            if (sortie.estVerrouillee() && !cleObtenue) {
+                return false;
+            }
+        }
+
         return !cellules[x][y].estMur();
     }
 
@@ -162,11 +178,29 @@ public class Labyrinthe {
         return cellules;
     }
 
+    public void setCellules(Cellule[][] cellules) {
+        this.cellules = cellules;
+    }
+
     public void addObserver(LabyrintheObserver observer) {
         observers.add(observer);
     }
 
     public void notifyObservers() {
         observers.forEach(LabyrintheObserver::update);
+    }
+
+    public boolean isCleObtenue() {
+        return cleObtenue;
+    }
+
+
+    public void setPositionCle(int x, int y) {
+        this.cleX = x;
+        this.cleY = y;
+    }
+
+    public void resetCleObtenue() {
+        this.cleObtenue = false;
     }
 }
