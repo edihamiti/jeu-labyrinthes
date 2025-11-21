@@ -11,6 +11,7 @@ import modele.Labyrinthe;
 import modele.LabyrintheObserver;
 import modele.TypeLabyrinthe;
 import modele.Vision;
+import modele.*;
 import modele.generateurs.GenerateurLabyrinthe;
 import vue.*;
 import vue.visionsLabyrinthe.VisionFactory;
@@ -38,6 +39,7 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
     private Rendu renduMinimap;
     private GenerateurLabyrinthe generateur;
     private HandlerVictoire handlerVictoire;
+    private HandlerDefaite handlerDefaite;
     private boolean isModeCle = false;
     private int porteeVisionCle = 0;
 
@@ -47,6 +49,7 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
     @FXML
     public void initialize() {
         this.handlerVictoire = new HandlerVictoire();
+        this.handlerDefaite = new HandlerDefaite();
         configurerListenersScene();
     }
 
@@ -232,9 +235,19 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
             }
         }
 
+        if (ModeJeu.MODE_PROGRESSION == jeu.getModeJeu()) {
+            if (jeu.getNombreDeplacements() >= nbDeplacementMax()) {
+                defaite();
+            }
+        }
+
         if (jeu.getLabyrinthe().estSurSortie(x, y)) {
             victoire();
         }
+    }
+
+    private int nbDeplacementMax() {
+        return jeu.getLabyrinthe().calculePlusCourtChemin()*2;
     }
 
     private void gererDeplacementInvalide(int x, int y) {
@@ -243,6 +256,17 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
         if (overlayMinimap.isVisible() && renduMinimap != null) {
             renduMinimap.setBlockedWall(x, y);
         }
+    }
+
+    private void defaite() throws IOException {
+        Stage ownerStage = (Stage) conteneurLabyrinthe.getScene().getWindow();
+
+        handlerDefaite.handleDefaite(
+                jeu,
+                ownerStage,
+                this::handleRejouer,
+                this::handleRetourMenu
+        );
     }
 
     /**
