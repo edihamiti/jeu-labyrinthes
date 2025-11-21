@@ -49,3 +49,48 @@ Liste des travaux de la semaine :
 - Création de la vue locale ainsi que le minimap. (Enzo)
 - Amélioration de notre algorithm de génération. (Bastien, Amaury)
 - Amélioration de l'expérience utilisateur. (Amaury, Bastien, Edi, Enzo)
+
+## Semaine 44
+
+Durant cette semaine, nous avons continué à développer les fonctionnalités avancées du jeu.
+
+Liste des travaux de la semaine :
+
+- Création du système de boutique avec gestion des cosmétiques et de l'inventaire. (Amaury, Bastien, Edi, Enzo)
+- Implémentation du système de score avec calcul basé sur la performance du joueur. (Amaury)
+- Création du système de défi structuré avec paramètres personnalisables par niveau. (Bastien, Enzo)
+- Ajout de nouveaux types de cellules : Piège et Clé pour enrichir le gameplay. (Amaury, Edi)
+- Mise en place du système de timer pour suivre la durée de jeu. (Enzo)
+- Création du système de sons avec effets audio pour les déplacements et les événements. (Bastien)
+- Amélioration des tests unitaires pour couvrir les nouvelles fonctionnalités. (Amaury, Bastien, Edi, Enzo)
+- Refactoring du code pour améliorer la maintenabilité. (Amaury, Bastien, Edi, Enzo)
+
+## Semaine 45
+
+Cette semaine, nous avons finalisé les fonctionnalités principales et amélioré l'interface utilisateur.
+
+Liste des travaux de la semaine :
+
+- Implémentation du système de leaderboard avec classement des joueurs par score. (Enzo)
+- Création des différents modes de vision : VisionCarte, VisionCle, VisionLibre, VisionLimitee, VisionLocale. (Amaury, Bastien)
+- Développement de l'interface de la boutique avec FXML et son contrôleur. (Edi, Enzo)
+- Mise en place du système d'inventaire avec sauvegarde JSON. (Enzo)
+- Création des popups de victoire et défaite avec affichage des statistiques. (Bastien, Edi)
+- Ajout du mode clé avec gameplay spécifique. (Amaury, Enzo)
+- Intégration des textures et ressources graphiques pour les cosmétiques. (Amaury, Bastien, Edi, Enzo)
+- Tests et corrections de bugs. (Amaury, Bastien, Edi, Enzo)
+
+## Semaine 46
+
+Finalisation du projet avec polish et documentation.
+
+Liste des travaux de la semaine :
+
+- Finalisation du système de boutique avec achat et équipement de cosmétiques. (Amaury, Bastien, Edi, Enzo)
+- Amélioration de l'algorithme de pathfinding pour l'affichage du chemin optimal. (Amaury)
+- Optimisation des performances du rendu graphique. (Bastien, Enzo)
+- Ajout de la minimap et des différentes vues du labyrinthe. (Enzo)
+- Finalisation des popup de commandes et d'aide. (Edi)
+- Tests de l'intégration complète et corrections finales. (Amaury, Bastien, Edi, Enzo)
+- Rédaction et mise à jour de la documentation (README.md). (Amaury, Bastien, Edi, Enzo)
+- Préparation du rendu final du projet. (Amaury, Bastien, Edi, Enzo)
