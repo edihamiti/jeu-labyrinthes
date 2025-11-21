@@ -46,6 +46,13 @@ public class DepotInventaireJson implements IDepotInventaire {
         }
     }
 
+
+    /**
+     * Sauvegarde l'inventaire d'un joueur dans un fichier JSON.
+     *
+     * @param idJoueur   identifiant unique du joueur
+     * @param inventaire inventaire du joueur à sauvegarder
+     */
     @Override
     public void sauvegarder(String idJoueur, InventaireJoueur inventaire) {
         try {
@@ -57,6 +64,13 @@ public class DepotInventaireJson implements IDepotInventaire {
         }
     }
 
+
+    /**
+     * Charge l'inventaire d'un joueur depuis un fichier JSON.
+     *
+     * @param idJoueur identifiant unique du joueur
+     * @return inventaire du joueur si le fichier existe, sinon un inventaire vide
+     */
     @Override
     public InventaireJoueur charger(String idJoueur) {
         try {

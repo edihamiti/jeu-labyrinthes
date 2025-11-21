@@ -5,22 +5,41 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
 /**
- * Implémentation en mémoire du dépôt de cosmétiques.
- * Stocke les cosmétiques dans une liste et les initialise au démarrage.
+ * Dépôt de cosmétiques stocké en mémoire.
+ *
+ * Cette classe implémente {@link IDepotCosmetique} et fournit un
+ * ensemble de cosmétiques prédéfinis disponibles au démarrage.
+ *
+ * Elle permet de :
+ * - obtenir tous les cosmétiques,
+ * - obtenir des cosmétiques filtrés par type,
+ * - obtenir un cosmétique spécifique par son identifiant.
+ *
+ * Les cosmétiques sont initialisés dans la méthode {@link #initialiserCosmetiques()}.
  */
 public class DepotCosmetiqueMemoire implements IDepotCosmetique {
 
     private final List<Cosmetique> cosmetiques;
 
+
     /**
-     * Construit le dépôt et initialise la liste des cosmétiques disponibles.
+     * Constructeur.
+     * Initialise la liste des cosmétiques disponibles.
      */
     public DepotCosmetiqueMemoire() {
         this.cosmetiques = new ArrayList<>();
         initialiserCosmetiques();
     }
 
+
+    /**
+     * Initialise la liste des cosmétiques prédéfinis.
+     *
+     * Les cosmétiques incluent des textures par défaut, ainsi que
+     * des thèmes spécifiques comme Noël ou pierre.
+     */
     private void initialiserCosmetiques() {
         cosmetiques.add(new Cosmetique(
                 "default_mur", "Mur de feuille",
@@ -72,11 +91,24 @@ public class DepotCosmetiqueMemoire implements IDepotCosmetique {
         ));
     }
 
+
+    /**
+     * Obtient tous les cosmétiques disponibles.
+     *
+     * @return liste de tous les cosmétiques
+     */
     @Override
     public List<Cosmetique> obtenirTous() {
         return new ArrayList<>(cosmetiques);
     }
 
+
+    /**
+     * Obtient tous les cosmétiques d'un type spécifique.
+     *
+     * @param type type de cosmétique recherché
+     * @return liste des cosmétiques correspondant au type
+     */
     @Override
     public List<Cosmetique> obtenirParType(TypeCosmetique type) {
         return cosmetiques.stream()
@@ -84,6 +116,13 @@ public class DepotCosmetiqueMemoire implements IDepotCosmetique {
                 .collect(Collectors.toList());
     }
 
+
+    /**
+     * Obtient un cosmétique par son identifiant unique.
+     *
+     * @param id identifiant du cosmétique
+     * @return un Optional contenant le cosmétique si trouvé, sinon vide
+     */
     @Override
     public Optional<Cosmetique> obtenirParId(String id) {
         return cosmetiques.stream()
