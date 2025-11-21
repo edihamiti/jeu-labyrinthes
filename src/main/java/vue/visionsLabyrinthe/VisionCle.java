@@ -29,7 +29,7 @@ public class VisionCle implements VisionLabyrinthe{
     }
 
     public Rendu createRendu(Labyrinthe lab, VBox container, Jeu jeu) {
-        return new CleRendu(lab, container,3, jeu);
+        return new CleRendu(lab, container, porteeVision, jeu);
     }
 
     @Override

@@ -141,7 +141,7 @@ public class CleRendu implements Rendu {
                 boolean dansPorteeVision = (distanceX <= porteeVision && distanceY <= porteeVision);
 
                 if (i == joueurX && j == joueurY) {
-                    gc.drawImage(imgJoueur, x, y, tailleCellule, tailleCellule);
+                    gc.drawImage(imageJoueur, x, y, tailleCellule, tailleCellule);
                 }
                 else if (dansPorteeVision) {
                     if (cellules[i][j].estMur()) {

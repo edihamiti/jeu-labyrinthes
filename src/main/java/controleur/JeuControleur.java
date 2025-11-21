@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import modele.Cellules.Cellule;
 import modele.Cellules.Sortie;
 import modele.Labyrinthe;
 import modele.LabyrintheObserver;
@@ -24,8 +25,6 @@ import java.util.Random;
  * Contrôleur pour la gestion du jeu de labyrinthe.
  */
 public class JeuControleur extends Controleur implements Router.DataReceiver, LabyrintheObserver {
-    private static final int SCENE_WIDTH = 1400;
-    private static final int SCENE_HEIGHT = 900;
     private static final int WOOD_SOUND_PROBABILITY = 1; // 1% de chance
     private static boolean premierLancement = true;
     private final Random random = new Random();
@@ -224,13 +223,13 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
 
             jeu.getLabyrinthe().getCellules()[x][y] = new modele.Cellules.Chemin(x, y);
 
-            for (int i = 0; i < jeu.getLabyrinthe().getLargeurMax(); i++) {
-                for (int j = 0; j < jeu.getLabyrinthe().getHauteurMax(); j++) {
-                    if (jeu.getLabyrinthe().getCellules()[i][j].estSortie() &&
-                            jeu.getLabyrinthe().getCellules()[i][j].estSortie()) {
-                        Sortie sortie = (Sortie) jeu.getLabyrinthe().getCellules()[i][j];
-                        sortie.deverrouillee();
-                    }
+            int sortieX = jeu.getLabyrinthe().getSortieX();
+            int sortieY = jeu.getLabyrinthe().getSortieY();
+            if (sortieX >= 0 && sortieY >= 0) {
+                Cellule celluleSortie = jeu.getLabyrinthe().getCellules()[sortieX][sortieY];
+                if (celluleSortie.estSortie()) {
+                    Sortie sortie = (Sortie) celluleSortie;
+                    sortie.deverrouillee();
                 }
             }
         }
@@ -404,6 +403,8 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
 
         overlayMinimap.setVisible(false);
         this.renduMinimap = null;
+
+        jeu.getLabyrinthe().addObserver(this);
 
         afficherJeu();
     }

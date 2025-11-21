@@ -9,7 +9,7 @@ public class VisionFactory {
 
     static {
         strategies.put(Vision.VUE_LIBRE, new VisionLibre());
-        strategies.put(Vision.VUE_LOCAL, new VisionLocale());
+        strategies.put(Vision.VUE_LOCALE, new VisionLocale());
         strategies.put(Vision.VUE_LIMITEE, new VisionLimitee());
         strategies.put(Vision.VUE_CARTE, new VisionCarte());
         strategies.put(Vision.VUE_CLE, new VisionCle());
