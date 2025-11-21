@@ -8,10 +8,25 @@ import javafx.scene.image.Image;
 public class Sortie extends Cellule {
     static Image imageCache;
     String imagePath = "/img/sortie.png";
+    private boolean verrouillee = false;
 
     public Sortie(int x, int y) {
         this.setX(x);
         this.setY(y);
+    }
+
+    public Sortie(int x, int y, boolean verrouillee) {
+        this.setX(x);
+        this.setY(y);
+        this.verrouillee =  verrouillee;
+    }
+
+    public boolean estVerrouillee(){
+        return verrouillee;
+    }
+
+    public void deverrouillee(){
+        this.verrouillee = false;
     }
 
     public Image getTexture() {
