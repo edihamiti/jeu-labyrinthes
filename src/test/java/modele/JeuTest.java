@@ -53,8 +53,8 @@ class JeuTest {
     @Test
     void testVision() {
         assertEquals(Vision.VUE_LIBRE, jeu.getVision());
-        jeu.setVision(Vision.VUE_LOCAL);
-        assertEquals(Vision.VUE_LOCAL, jeu.getVision());
+        jeu.setVision(Vision.VUE_LOCALE);
+        assertEquals(Vision.VUE_LOCALE, jeu.getVision());
     }
 
     @Test

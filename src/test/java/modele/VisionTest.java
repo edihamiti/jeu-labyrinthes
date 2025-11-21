@@ -10,13 +10,13 @@ class VisionTest {
         Vision[] visions = Vision.values();
         //assertEquals(2, visions.length);
         assertTrue(contains(visions, Vision.VUE_LIBRE));
-        assertTrue(contains(visions, Vision.VUE_LOCAL));
+        assertTrue(contains(visions, Vision.VUE_LOCALE));
     }
 
     /**
      * @Test void testVisionValueOf() {
      * assertEquals(Vision.VUE_LIBRE, Vision.valueOf("VUE_LIBRE"));
-     * assertEquals(Vision.VUE_LOCAL, Vision.valueOf("VUE_LOCAL"));
+     * assertEquals(Vision.VUE_LOCALE, Vision.valueOf("VUE_LOCALE"));
      * }
      **/
 

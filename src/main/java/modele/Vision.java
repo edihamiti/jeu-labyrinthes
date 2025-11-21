@@ -2,7 +2,7 @@ package modele;
 
 public enum Vision {
     VUE_LIBRE,
-    VUE_LOCAL,
+    VUE_LOCALE,
     VUE_CARTE,
     VUE_LIMITEE,
     VUE_CLE,

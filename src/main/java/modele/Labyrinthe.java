@@ -26,7 +26,9 @@ public class Labyrinthe {
     private boolean cleObtenue;
     private int cleX;
     private int cleY;
-    private List<LabyrintheObserver> observers;
+    private int sortieX;
+    private int sortieY;
+    private final List<LabyrintheObserver> observers;
 
 
     /**
@@ -128,7 +130,7 @@ public class Labyrinthe {
     }
 
     public void setCleObtenue(){
-        this.cleObtenue = cleObtenue;
+        this.cleObtenue = true;
     }
 
     /**
@@ -198,6 +200,19 @@ public class Labyrinthe {
     public void setPositionCle(int x, int y) {
         this.cleX = x;
         this.cleY = y;
+    }
+
+    public void setPositionSortie(int x, int y) {
+        this.sortieX = x;
+        this.sortieY = y;
+    }
+
+    public int getSortieX() {
+        return sortieX;
+    }
+
+    public int getSortieY() {
+        return sortieY;
     }
 
     public void resetCleObtenue() {

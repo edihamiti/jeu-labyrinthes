@@ -275,6 +275,7 @@ public class GenerateurParfait extends GenerateurLabyrinthe {
         lab.setPositionCle(cleX, cleY);
 
         cellules[sortieX][sortieY] = new Sortie(sortieX, sortieY, true);
+        lab.setPositionSortie(sortieX, sortieY);
     }
 
     /**
@@ -300,6 +301,7 @@ public class GenerateurParfait extends GenerateurLabyrinthe {
 
         int[] sortie = tousLesChemins.get(0);
         cellules[sortie[0]][sortie[1]] = new Sortie(sortie[0], sortie[1], true);
+        lab.setPositionSortie(sortie[0], sortie[1]);
 
         int indexCle = Math.min(tousLesChemins.size() / 2, tousLesChemins.size() - 1);
         int[] cle = tousLesChemins.get(indexCle);

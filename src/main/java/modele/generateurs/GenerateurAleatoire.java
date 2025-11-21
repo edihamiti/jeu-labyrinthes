@@ -30,7 +30,7 @@ public class GenerateurAleatoire extends GenerateurLabyrinthe {
         int entreeX = 0;
         int entreeY = 1;
         cellules[entreeX][entreeY] = new Entree(entreeX, entreeY);
-        faireChemin(cellules, entreeX, entreeY);
+        faireChemin(cellules, entreeX, entreeY, lab);
 
         for (int i = 1; i < largeurMax - 1; i++) {
             for (int j = 1; j < hauteurMax - 1; j++) {
@@ -64,7 +64,7 @@ public class GenerateurAleatoire extends GenerateurLabyrinthe {
         lab.setJeuEnCours(true);
     }
 
-    public void faireChemin(Cellule[][] cellules, int startX, int startY) {
+    public void faireChemin(Cellule[][] cellules, int startX, int startY, Labyrinthe lab) {
         Random random = new Random();
         LinkedList<int[]> pile = new LinkedList<>();
         boolean[][] visite = new boolean[largeurMax][hauteurMax];
@@ -121,13 +121,16 @@ public class GenerateurAleatoire extends GenerateurLabyrinthe {
         if (!pile.isEmpty()) {
             int[] derniere = pile.peek();
             cellules[derniere[0]][derniere[1]] = new Sortie(derniere[0], derniere[1]);
+            lab.setPositionSortie(derniere[0], derniere[1]);
         } else if (derniereVisite != null) {
             cellules[derniereVisite[0]][derniereVisite[1]] = new Sortie(derniereVisite[0], derniereVisite[1]);
+            lab.setPositionSortie(derniereVisite[0], derniereVisite[1]);
         } else {
             int ex = startX;
             int ey = startY + 1;
             if (ey > 0 && ey < hauteurMax - 1) {
                 cellules[ex][ey] = new Sortie(ex, ey);
+                lab.setPositionSortie(ex, ey);
             }
         }
     }
