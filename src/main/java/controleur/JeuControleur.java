@@ -36,6 +36,9 @@ public class JeuControleur extends Controleur {
     private GenerateurLabyrinthe generateur;
     private HandlerVictoire handlerVictoire;
 
+    private boolean isModeCle = false;
+    private int porteeVisionCle = 0;
+
     /**
      * Initialise le contrôleur et configure les événements de déplacement du joueur.
      */
@@ -199,11 +202,29 @@ public class JeuControleur extends Controleur {
         }
 
         Random random = new Random();
+
+        boolean surCle = jeu.getLabyrinthe().getCellules()[nouveauX][nouveauY].estCle() && !jeu.getLabyrinthe().isCleObtenue();
+
         if (jeu.getLabyrinthe().deplacer(nouveauX, nouveauY)) {
             SoundManager.playSound("move.mp3");
             if (random.nextInt(100) > 95) SoundManager.playSound("bois.mp3");
 
             jeu.setNombreDeplacements(jeu.getNombreDeplacements() + 1);
+
+            if (surCle) {
+                jeu.getLabyrinthe().cleObtenueProperty().set(true);
+
+                jeu.getLabyrinthe().getCellules()[nouveauX][nouveauY] = new modele.Cellules.Chemin(nouveauX, nouveauY);
+
+                for (int i = 0; i < jeu.getLabyrinthe().getLargeurMax(); i++) {
+                    for (int j = 0; j < jeu.getLabyrinthe().getHauteurMax(); j++) {
+                        if (jeu.getLabyrinthe().getCellules()[i][j].estSortie() &&
+                            jeu.getLabyrinthe().getCellules()[i][j] instanceof modele.Cellules.Sortie sortie) {
+                            sortie.deverrouillee();
+                        }
+                    }
+                }
+            }
 
             if (jeu.getLabyrinthe().estSurSortie(nouveauX, nouveauY)) {
                 victoire();
@@ -216,30 +237,6 @@ public class JeuControleur extends Controleur {
             }
         }
     }
-
-//    private int calculerScore(int nombreDeplacements) { // TODO : Rebouger tout ça dans le calculateur
-//        if (Jeu.getInstance().getJoueur() != null && Jeu.getInstance().getDefiEnCours() != null) {
-//            Defi defi = Jeu.getInstance().getDefiEnCours();
-//            int pointsBase = defi.getPoints();
-//            int etape = defi.getEtape();
-//
-//            //étapes 1, 2 et 3
-//            if (etape <= 3) {
-//                return pointsBase;
-//            }
-//
-//            //étapes 4, 5 et 6
-//            int deplacementsOptimal = (int) (defi.getDistanceMin() * 1.5);
-//
-//            if (nombreDeplacements > deplacementsOptimal) {
-//                int deplacementsSupplementaires = nombreDeplacements - deplacementsOptimal;
-//                int penalite = deplacementsSupplementaires / 2; // 1 point de pénalité par 2 déplacements supplémentaires
-//                return Math.max(0, pointsBase - penalite);
-//            }
-//            return pointsBase;
-//        }
-//        return 0;
-//    }
 
     /**
      * Gère la victoire du joueur lorsqu'il atteint la sortie du labyrinthe.
@@ -279,8 +276,29 @@ public class JeuControleur extends Controleur {
 
     private void rejouer() throws IOException {
         jeu.resetTimer();
+
+        jeu.getLabyrinthe().resetCleObtenue();
+
+        if (isModeCle) {
+            this.generateur = new modele.generateurs.GenerateurParfait(
+                jeu.getLabyrinthe().getLargeur(),
+                jeu.getLabyrinthe().getHauteur(),
+                0,
+                true
+            );
+        }
+
         this.generateur.generer(jeu.getLabyrinthe());
-        setRenduLabyrinthe();
+
+        if (isModeCle) {
+            vue.visionsLabyrinthe.VisionCle visionCle = new vue.visionsLabyrinthe.VisionCle(porteeVisionCle);
+            this.renduLabyrinthe = visionCle.createRendu(jeu.getLabyrinthe(), conteneurLabyrinthe);
+            overlayMinimap.setVisible(false);
+            this.renduMinimap = null;
+        } else {
+            setRenduLabyrinthe();
+        }
+
         afficherJeu();
     }
 
@@ -341,4 +359,33 @@ public class JeuControleur extends Controleur {
         // Afficher le jeu
         afficherJeu();
     }
+
+    /**
+     * Définit les paramètres du labyrinthe avec le mode clé activé.
+     * Utilise la génération de base (sans distanceMin) et configure la vision avec brouillard.
+     */
+    public void setParametresLabAvecCle(int largeur, int hauteur, double pourcentageMurs, int porteeVision) {
+        this.isModeCle = true;
+        this.porteeVisionCle = porteeVision;
+
+        jeu.setLabyrinthe(new Labyrinthe(largeur, hauteur, pourcentageMurs, 0));
+
+        this.generateur = new modele.generateurs.GenerateurParfait(largeur, hauteur, 0, true);
+        this.generateur.generer(jeu.getLabyrinthe());
+
+        jeu.resetTimer();
+
+        vue.visionsLabyrinthe.VisionCle visionCle = new vue.visionsLabyrinthe.VisionCle(porteeVision);
+
+        this.renduLabyrinthe = visionCle.createRendu(jeu.getLabyrinthe(), conteneurLabyrinthe);
+
+        overlayMinimap.setVisible(false);
+        this.renduMinimap = null;
+
+        jeu.getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
+        jeu.getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
+
+        afficherJeu();
+    }
+
 }
