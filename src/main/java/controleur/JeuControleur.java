@@ -6,10 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import modele.LabyrintheObserver;
-import modele.Labyrinthe;
-import modele.TypeLabyrinthe;
-import modele.Vision;
+import modele.*;
 import modele.generateurs.GenerateurLabyrinthe;
 import vue.*;
 import vue.visionsLabyrinthe.VisionFactory;
@@ -213,8 +210,10 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
 
         jeu.setNombreDeplacements(jeu.getNombreDeplacements() + 1);
 
-        if (jeu.getNombreDeplacements() >= nbDeplacementMax()) {
-            defaite();
+        if (ModeJeu.MODE_PROGRESSION == jeu.getModeJeu()) {
+            if (jeu.getNombreDeplacements() >= nbDeplacementMax()) {
+                defaite();
+            }
         }
 
         if (jeu.getLabyrinthe().estSurSortie(x, y)) {
