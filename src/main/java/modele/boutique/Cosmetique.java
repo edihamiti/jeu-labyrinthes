@@ -58,6 +58,9 @@ public record Cosmetique(String id, String nom, TypeCosmetique type, int prix, S
         return cheminTexture;
     }
 
+    /**
+     * @return nom et prix du cosmétique sous la forme "Nom (XX pts)"
+     */
     @Override
     public String toString() {
         return nom + " (" + prix + " pts)";

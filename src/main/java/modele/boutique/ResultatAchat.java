@@ -10,6 +10,14 @@ public class ResultatAchat {
     private final String message;
     private final Integer nouveauScore;
 
+
+    /**
+     * Constructeur privé pour forcer l'utilisation des méthodes statiques.
+     *
+     * @param succes      true si l'achat a réussi, false sinon
+     * @param message     message descriptif
+     * @param nouveauScore nouveau score après achat ou null si échec
+     */
     private ResultatAchat(boolean succes, String message, Integer nouveauScore) {
         this.succes = succes;
         this.message = message;

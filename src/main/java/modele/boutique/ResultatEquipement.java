@@ -9,6 +9,13 @@ public class ResultatEquipement {
     private final boolean succes;
     private final String message;
 
+
+    /**
+     * Constructeur privé pour forcer l'utilisation des méthodes statiques.
+     *
+     * @param succes  true si l'équipement a réussi, false sinon
+     * @param message message descriptif associé au résultat
+     */
     private ResultatEquipement(boolean succes, String message) {
         this.succes = succes;
         this.message = message;
