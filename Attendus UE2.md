@@ -305,6 +305,24 @@ Fin
 Pour la generation de labyrinthe parfait, il est utilisé aussi dans 2 classes qui sont les mêmes que pour la génération
 de labyrinthe aléatoire.
 
+# 4. Efficacité et Mesures
+
+Pour évaluer l'efficacité de nos algorithmes de génération de labyrinthes, nous avons mis en place une classe TestPerformance
+qui exécute plusieurs tests de génération avec des tailles et des pourcentages de murs variés.
+
+![Classe TestPerformance](/TestPerfo.png)
+
+## Conclusion sur nos résultats et la structure du TP2 
+
+Notre structure à base de Cellule (polymorphisme) offre une meilleure
+extensibilité et maintenabilité meme si cela vaut une légère surcharge mémoire.
+
+Les deux tableaux de booléens sont plus performants en termes de
+mémoire et de vitesse d'accès brute, mais beaucoup moins flexibles aux changements.
+
+Pour un projet évolutif notre structure avec les cellules est largement préférable .
+
+
 # 5. Complément et Bilan
 
 ## Complément
