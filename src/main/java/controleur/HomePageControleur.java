@@ -94,6 +94,7 @@ public class HomePageControleur extends Controleur {
         modeProgression = true;
         leaderboardContainer.setVisible(false);
         leaderboardContainer.setManaged(false);
+        button.setVisible(true);
     }
 
     /**
@@ -108,6 +109,7 @@ public class HomePageControleur extends Controleur {
         modeProgression = false;
         leaderboardContainer.setVisible(false);
         leaderboardContainer.setManaged(false);
+        button.setVisible(true);
 
     }
 
@@ -184,6 +186,7 @@ public class HomePageControleur extends Controleur {
         leaderboardContainer.getChildren().clear();
         leaderboardContainer.setAlignment(Pos.CENTER);
         leaderboardContainer.setFillWidth(false);
+        button.setVisible(false);
 
         Leaderboard leaderboard = new Leaderboard(jeu.getSauvegarde());
         List<Joueur> joueurs = leaderboard.getClassementComplet();
