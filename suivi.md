@@ -47,7 +47,7 @@ Liste des travaux de la semaine :
 - Transformation de notre modèle Jeu en singleton, pour nous permettre de stocker et récupéré toutes les données utiles
   au jeu. (Enzo)
 - Création de la vue locale ainsi que le minimap. (Enzo)
-- Amélioration de notre algorithm de génération. (Bastien, Amaury)
+- Amélioration de notre algorithme de génération. (Bastien, Amaury)
 - Amélioration de l'expérience utilisateur. (Amaury, Bastien, Edi, Enzo)
 
 ## Semaine 44
@@ -72,11 +72,11 @@ Cette semaine, nous avons finalisé les fonctionnalités principales et amélior
 Liste des travaux de la semaine :
 
 - Implémentation du système de leaderboard avec classement des joueurs par score. (Enzo)
-- Création des différents modes de vision : VisionCarte, VisionCle, VisionLibre, VisionLimitee, VisionLocale. (Amaury, Bastien)
+- Création des différents modes de vision : VisionCarte, VisionClé, VisionLibre, VisionLimitée, VisionLocale. (Amaury, Bastien)
 - Développement de l'interface de la boutique avec FXML et son contrôleur. (Edi, Enzo)
 - Mise en place du système d'inventaire avec sauvegarde JSON. (Enzo)
-- Création des popups de victoire et défaite avec affichage des statistiques. (Bastien, Edi)
-- Ajout du mode clé avec gameplay spécifique. (Amaury, Enzo)
+- Création des fenêtres popup de victoire et défaite avec affichage des statistiques. (Bastien, Edi)
+- Ajout du mode clé avec jouabilité spécifique. (Amaury, Enzo)
 - Intégration des textures et ressources graphiques pour les cosmétiques. (Amaury, Bastien, Edi, Enzo)
 - Tests et corrections de bugs. (Amaury, Bastien, Edi, Enzo)
 
@@ -90,7 +90,7 @@ Liste des travaux de la semaine :
 - Amélioration de l'algorithme de pathfinding pour l'affichage du chemin optimal. (Amaury)
 - Optimisation des performances du rendu graphique. (Bastien, Enzo)
 - Ajout de la minimap et des différentes vues du labyrinthe. (Enzo)
-- Finalisation des popup de commandes et d'aide. (Edi)
+- Finalisation des fenêtres popup de commandes et d'aide. (Edi)
 - Tests de l'intégration complète et corrections finales. (Amaury, Bastien, Edi, Enzo)
 - Rédaction et mise à jour de la documentation (README.md). (Amaury, Bastien, Edi, Enzo)
 - Préparation du rendu final du projet. (Amaury, Bastien, Edi, Enzo)
