@@ -1,11 +1,10 @@
 package modele;
 
 import modele.defi.Defi;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import modele.Cellules.Cellule;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -20,9 +19,10 @@ public class Labyrinthe {
     private final int largeurMax;
     private final int hauteurMax;
     private Cellule[][] cellules;
-    private final IntegerProperty joueurX;
-    private final IntegerProperty joueurY;
-    private final BooleanProperty jeuEnCours;
+    private int joueurX;
+    private int joueurY;
+    private boolean jeuEnCours;
+    private List<LabyrintheObserver> observers;
 
     /**
      * Constructeur pour un labyrinthe.
@@ -39,9 +39,10 @@ public class Labyrinthe {
         this.distanceMin = distanceMin;
         this.largeurMax = largeur + 2;
         this.hauteurMax = hauteur + 2;
-        this.joueurX = new SimpleIntegerProperty(0);
-        this.joueurY = new SimpleIntegerProperty(1);
-        this.jeuEnCours = new SimpleBooleanProperty(true);
+        this.joueurX = 0;
+        this.joueurY = 1;
+        this.jeuEnCours = true;
+        this.observers = new ArrayList<>();
     }
 
     /**
@@ -80,15 +81,15 @@ public class Labyrinthe {
     }
 
     public boolean isJeuEnCours() {
-        return jeuEnCours.get();
+        return jeuEnCours;
     }
 
     public int getJoueurY() {
-        return joueurY.get();
+        return joueurY;
     }
 
     public int getJoueurX() {
-        return joueurX.get();
+        return joueurX;
     }
 
     public int getDistanceMin() {
@@ -104,15 +105,17 @@ public class Labyrinthe {
     }
 
     public void setJeuEnCours(boolean jeuEnCours) {
-        this.jeuEnCours.set(jeuEnCours);
+        this.jeuEnCours = jeuEnCours;
     }
 
     public void setJoueurY(int joueurY) {
-        this.joueurY.set(joueurY);
+        this.joueurY = joueurY;
+        notifyObservers();
     }
 
     public void setJoueurX(int joueurX) {
-        this.joueurX.set(joueurX);
+        this.joueurX =  joueurX;
+        notifyObservers();
     }
 
     public void setCellules(Cellule[][] cellules) {
@@ -138,8 +141,8 @@ public class Labyrinthe {
     public boolean deplacer(int x, int y) {
         if (!peutDeplacer(x, y)) return false;
 
-        joueurX.set(x);
-        joueurY.set(y);
+        setJoueurX(x);
+        setJoueurY(y);
         return true;
     }
 
@@ -159,15 +162,11 @@ public class Labyrinthe {
         return cellules;
     }
 
-    public IntegerProperty joueurXProperty() {
-        return joueurX;
+    public void addObserver(LabyrintheObserver observer) {
+        observers.add(observer);
     }
 
-    public IntegerProperty joueurYProperty() {
-        return joueurY;
-    }
-
-    public BooleanProperty jeuEnCoursProperty() {
-        return jeuEnCours;
+    public void notifyObservers() {
+        observers.forEach(LabyrintheObserver::update);
     }
 }

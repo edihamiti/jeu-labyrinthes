@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import modele.LabyrintheObserver;
 import modele.Labyrinthe;
 import modele.TypeLabyrinthe;
 import modele.Vision;
@@ -20,7 +21,7 @@ import java.util.Random;
 /**
  * Contrôleur pour la gestion du jeu de labyrinthe.
  */
-public class JeuControleur extends Controleur implements Router.DataReceiver {
+public class JeuControleur extends Controleur implements Router.DataReceiver, LabyrintheObserver {
     private static final int SCENE_WIDTH = 1400;
     private static final int SCENE_HEIGHT = 900;
     private static final int WOOD_SOUND_PROBABILITY = 1; // 1% de chance
@@ -306,8 +307,7 @@ public class JeuControleur extends Controleur implements Router.DataReceiver {
         setRenduLabyrinthe();
 
         // Ajouter les listeners pour la position du joueur
-        jeu.getLabyrinthe().joueurXProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
-        jeu.getLabyrinthe().joueurYProperty().addListener((obs, oldVal, newVal) -> afficherJeu());
+        jeu.getLabyrinthe().addObserver(this);
 
         // Afficher le jeu
         afficherJeu();
@@ -331,5 +331,10 @@ public class JeuControleur extends Controleur implements Router.DataReceiver {
                     params.getTypeLabyrinthe()
             );
         }
+    }
+
+    @Override
+    public void update() {
+        afficherJeu();
     }
 }
