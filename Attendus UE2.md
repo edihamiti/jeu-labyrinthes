@@ -9,8 +9,25 @@ Groupe I5 :
 
 *pourcentage d'investissement calculé par le nombre de commits.
 
+# 2. Structures de données pour les labyrinthes
 
-# 3 Algorithmes de génération
+## Structure pour les labyrinthes aléatoires
+
+Pour la génération et la représentation des labyrinthes aléatoires, nous avons opté pour un tableau à deux dimensions d'objets de type `Cellule`. Cette structure est définie et instanciée dans la classe `GenerateurAleatoire` ainsi que dans la classe principale `Labyrinthe`.
+
+Contrairement à une simple matrice de booléens ou d'entiers, notre approche se base sur du polymorphisme : chaque case de la grille est une instance d'une classe héritant de la classe abstraite `Cellule`(soit `Mur`, `Chemin`, `Entree` ou `Sortie`). Cela permet de potentiellement d'autres états futurs sans modifier la structure du tableau.
+
+## Structure pour les labyrinthes parfaits et justification
+
+Pour les labyrinthes parfaits, implémentés dans la classe `GenerateurParfait`, nous avons conservé cette même structure de double tableau d'objets `Cellule`. Cette modélisation n'est pas celle proposée dans le sujet de TP, qui proposait l'utilisation de deux tableau de booléens distincts (`murVerticaux`et `murHorizontaux`).
+
+Nous pensons que cette structure est plus efficace pour plusieurs raisons : 
+
+* L'information est centralisé, elle regroupe tout en une seule entité plutôt que de devoir interroger deux tableaux différents pour connaître les limites d'une case.
+* Pour nos algorithmes de parcours, il est plus intuitif de manipuler des noeuds (les cases `Chemin`) et leur voisin direct plutôt que de calculer des intersections de murs.
+* Notre structure nous permet d'intégrer plus facilement des éléments de jeu différents (comme les cellules `Cle`ou une `Sortie` qui est conditionelle) directement dans la grille, ce qui serait impossible avec de simples tableaux de booléens gérant uniquement les murs.
+
+# 3. Algorithmes de génération
 
 ## Labyrinthe Aléatoire
 
