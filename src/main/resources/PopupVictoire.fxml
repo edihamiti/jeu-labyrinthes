@@ -60,7 +60,7 @@
             <Insets top="10" right="30" left="30"/>
         </padding>
         <Button text="Menu principal" onAction="#retourMenu" styleClass="button-outlined" prefWidth="150"/>
-        <Button text="Rejouer" onAction="#rejouer" styleClass="button-filled" prefWidth="150"/>
+        <Button text="Continuer" onAction="#rejouer" styleClass="button-filled" prefWidth="150"/>
     </HBox>
 </VBox>
 
