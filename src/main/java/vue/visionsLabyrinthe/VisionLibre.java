@@ -1,6 +1,7 @@
 package vue.visionsLabyrinthe;
 
 import javafx.scene.layout.VBox;
+import modele.Jeu;
 import modele.Labyrinthe;
 import vue.LabyrintheRendu;
 import vue.MiniMapRendu;
@@ -8,8 +9,8 @@ import vue.Rendu;
 
 public class VisionLibre implements VisionLabyrinthe {
     @Override
-    public Rendu createRendu(Labyrinthe lab, VBox container) {
-        return new LabyrintheRendu(lab, container);
+    public Rendu createRendu(Labyrinthe lab, VBox container, Jeu jeu) {
+        return new LabyrintheRendu(lab, container, jeu);
     }
 
     @Override
@@ -18,7 +19,7 @@ public class VisionLibre implements VisionLabyrinthe {
     }
 
     @Override
-    public Rendu createMinimapRendu(Labyrinthe lab, VBox container) {
-        return new MiniMapRendu(lab, container);
+    public Rendu createMinimapRendu(Labyrinthe lab, VBox container, Jeu jeu) {
+        return new MiniMapRendu(lab, container, jeu);
     }
 }

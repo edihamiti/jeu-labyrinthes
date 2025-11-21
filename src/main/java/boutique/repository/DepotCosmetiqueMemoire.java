@@ -26,36 +26,52 @@ public class DepotCosmetiqueMemoire implements IDepotCosmetique {
 
     private void initialiserCosmetiques() {
         cosmetiques.add(new Cosmetique(
+                "default_mur", "Mur de feuille",
+                TypeCosmetique.TEXTURE_MUR, 0, "/textures/default/texture_mur.png"
+        ));
+        cosmetiques.add(new Cosmetique(
+                "default_chemin", "Chemin de forêt",
+                TypeCosmetique.TEXTURE_CHEMIN, 0, "/textures/default/texture_chemin.png"
+        ));
+        cosmetiques.add(new Cosmetique(
+                "default_sortie", "Sortie de forêt",
+                TypeCosmetique.TEXTURE_SORTIE, 0, "/textures/default/texture_sortie.png"
+        ));
+        cosmetiques.add(new Cosmetique(
+                "default_joueur", "Pion",
+                TypeCosmetique.TEXTURE_JOUEUR, 0, "/textures/default/texture_joueur.png"
+        ));
+        cosmetiques.add(new Cosmetique(
                 "mur_brique", "Mur en brique",
-                TypeCosmetique.TEXTURE_MUR, 100, "textures/mur_brique.png"
+                TypeCosmetique.TEXTURE_MUR, 100, "/textures/mur_brique.png"
         ));
         cosmetiques.add(new Cosmetique(
-                "mur_pierre", "Mur en pierre",
-                TypeCosmetique.TEXTURE_MUR, 150, "textures/mur_pierre.png"
+                "chemin_stone", "Chemin en pierre",
+                TypeCosmetique.TEXTURE_CHEMIN, 100, "/textures/chemin_stone.png"
         ));
         cosmetiques.add(new Cosmetique(
-                "mur_bois", "Mur en bois",
-                TypeCosmetique.TEXTURE_MUR, 120, "textures/mur_bois.png"
+                "sortie_stone", "Sortie en pierre",
+                TypeCosmetique.TEXTURE_SORTIE, 100, "/textures/sortie_stone.png"
         ));
         cosmetiques.add(new Cosmetique(
-                "joueur_rouge", "Joueur rouge",
-                TypeCosmetique.TEXTURE_JOUEUR, 200, "textures/joueur_rouge.png"
+                "joueur_homme", "Joueur homme",
+                TypeCosmetique.TEXTURE_JOUEUR, 100, "/textures/joueur_homme.png"
         ));
         cosmetiques.add(new Cosmetique(
-                "joueur_bleu", "Joueur bleu",
-                TypeCosmetique.TEXTURE_JOUEUR, 200, "textures/joueur_bleu.png"
+                "mur_noel", "Mur de Noël",
+                TypeCosmetique.TEXTURE_MUR, 200, "/textures/mur_noel.png"
         ));
         cosmetiques.add(new Cosmetique(
-                "joueur_vert", "Joueur vert",
-                TypeCosmetique.TEXTURE_JOUEUR, 250, "textures/joueur_vert.png"
+                "chemin_noel", "Chemin de Noël",
+                TypeCosmetique.TEXTURE_CHEMIN, 200, "/textures/chemin_noel.png"
         ));
         cosmetiques.add(new Cosmetique(
-                "sol_herbe", "Sol herbe",
-                TypeCosmetique.TEXTURE_CHEMIN, 80, "textures/sol_herbe.png"
+                "joueur_noel", "Père Noël",
+                TypeCosmetique.TEXTURE_JOUEUR, 200, "/textures/joueur_noel.png"
         ));
         cosmetiques.add(new Cosmetique(
-                "sol_sable", "Sol sable",
-                TypeCosmetique.TEXTURE_CHEMIN, 90, "textures/sol_sable.png"
+                "sortie_noel", "Sapin de Noël",
+                TypeCosmetique.TEXTURE_SORTIE, 200, "/textures/sortie_noel.png"
         ));
     }
 

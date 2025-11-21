@@ -69,7 +69,7 @@ class ServiceEquipementTest {
     void equiperCosmetique_remplacementCosmetiqueEquipe() {
         String idJoueur = "joueur1";
         String idCosmetique1 = "mur_brique";
-        String idCosmetique2 = "mur_pierre";
+        String idCosmetique2 = "mur_noel";
 
         InventaireJoueur inventaire = depotInventaire.charger(idJoueur);
         inventaire.ajouterCosmetique(idCosmetique1);
@@ -107,7 +107,7 @@ class ServiceEquipementTest {
         String idJoueur = "joueur1";
         String texture = serviceEquipement.obtenirTextureEquipee(idJoueur, TypeCosmetique.TEXTURE_MUR);
 
-        assertEquals("textures/default/texture_mur.png", texture);
+        assertEquals("/textures/default/texture_mur.png", texture);
     }
 
     @Test
@@ -121,24 +121,24 @@ class ServiceEquipementTest {
         depotInventaire.sauvegarder(idJoueur, inventaire);
         String texture = serviceEquipement.obtenirTextureEquipee(idJoueur, TypeCosmetique.TEXTURE_JOUEUR);
 
-        assertEquals("textures/default/texture_joueur.png", texture);
+        assertEquals("/textures/default/texture_joueur.png", texture);
     }
 
     @Test
     void obtenirTextureEquipee_tousLesTypesParDefaut() {
         String idJoueur = "joueur1";
 
-        assertEquals("textures/default/texture_mur.png", serviceEquipement.obtenirTextureEquipee(idJoueur, TypeCosmetique.TEXTURE_MUR));
-        assertEquals("textures/default/texture_joueur.png", serviceEquipement.obtenirTextureEquipee(idJoueur, TypeCosmetique.TEXTURE_JOUEUR));
-        assertEquals("textures/default/texture_chemin.png", serviceEquipement.obtenirTextureEquipee(idJoueur, TypeCosmetique.TEXTURE_CHEMIN));
-        assertEquals("textures/default/texture_sortie.png", serviceEquipement.obtenirTextureEquipee(idJoueur, TypeCosmetique.TEXTURE_SORTIE));
+        assertEquals("/textures/default/texture_mur.png", serviceEquipement.obtenirTextureEquipee(idJoueur, TypeCosmetique.TEXTURE_MUR));
+        assertEquals("/textures/default/texture_joueur.png", serviceEquipement.obtenirTextureEquipee(idJoueur, TypeCosmetique.TEXTURE_JOUEUR));
+        assertEquals("/textures/default/texture_chemin.png", serviceEquipement.obtenirTextureEquipee(idJoueur, TypeCosmetique.TEXTURE_CHEMIN));
+        assertEquals("/textures/default/texture_sortie.png", serviceEquipement.obtenirTextureEquipee(idJoueur, TypeCosmetique.TEXTURE_SORTIE));
     }
 
     @Test
     void equiperCosmetique_plusieursCosmetiquesDifferentsTypes() {
         String idJoueur = "joueur1";
         String idMur = "mur_brique";
-        String idJoueurTexture = "joueur_rouge";
+        String idJoueurTexture = "joueur_homme";
         InventaireJoueur inventaire = depotInventaire.charger(idJoueur);
         inventaire.ajouterCosmetique(idMur);
         inventaire.ajouterCosmetique(idJoueurTexture);
@@ -158,7 +158,7 @@ class ServiceEquipementTest {
     @Test
     void obtenirTextureEquipee_apresEquipement() {
         String idJoueur = "joueur1";
-        String idCosmetique = "sol_herbe";
+        String idCosmetique = "chemin_stone";
         Cosmetique cosmetique = depotCosmetique.obtenirParId(idCosmetique).orElseThrow();
         InventaireJoueur inventaire = depotInventaire.charger(idJoueur);
         inventaire.ajouterCosmetique(idCosmetique);

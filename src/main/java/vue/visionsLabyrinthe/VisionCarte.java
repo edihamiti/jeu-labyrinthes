@@ -1,6 +1,7 @@
 package vue.visionsLabyrinthe;
 
 import javafx.scene.layout.VBox;
+import modele.Jeu;
 import modele.Labyrinthe;
 import vue.LocaleRendu;
 import vue.Rendu;
@@ -31,9 +32,9 @@ public class VisionCarte implements VisionLabyrinthe {
     }
 
     @Override
-    public Rendu createRendu(Labyrinthe lab, VBox container) {
+    public Rendu createRendu(Labyrinthe lab, VBox container, Jeu jeu) {
         // Vue principale = Vue locale (montre seulement la zone autour du joueur)
-        return new LocaleRendu(lab, container, porteeVision);
+        return new LocaleRendu(lab, container, porteeVision, jeu);
     }
 
     @Override
@@ -42,9 +43,9 @@ public class VisionCarte implements VisionLabyrinthe {
     }
 
     @Override
-    public Rendu createMinimapRendu(Labyrinthe lab, VBox container) {
+    public Rendu createMinimapRendu(Labyrinthe lab, VBox container, Jeu jeu) {
         // Minimap = Carte progressive (se révèle au fur et à mesure, sans la sortie)
-        return new UpdateRendu(lab, container, porteeVision);
+        return new UpdateRendu(lab, container, porteeVision, jeu);
     }
 }
 

@@ -1,9 +1,15 @@
 package vue;
 
+import boutique.modele.TypeCosmetique;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import modele.Cellules.Cellule;
+import modele.Cellules.Chemin;
+import modele.Cellules.Mur;
+import modele.Cellules.Sortie;
+import modele.Jeu;
 import modele.Labyrinthe;
 
 /**
@@ -11,19 +17,35 @@ import modele.Labyrinthe;
  */
 public class LabyrintheRendu implements Rendu {
     private Labyrinthe labyrinthe;
+    private final Jeu jeu;
     private VBox contienLabyrinthe;
     private int lastBlockedX = -1;
     private int lastBlockedY = -1;
+
+    private Mur mur = new Mur();
+    private Chemin chemin = new Chemin();
+    private Sortie sortie = new Sortie();
+    private Image imageJoueur;
 
     /**
      * Constructeur de la classe LabyrintheRendu.
      *
      * @param labyrinthe        Le labyrinthe à rendre.
      * @param contienLabyrinthe Le conteneur VBox pour afficher le labyrinthe.
+     * @param jeu
      */
-    public LabyrintheRendu(Labyrinthe labyrinthe, VBox contienLabyrinthe) {
+    public LabyrintheRendu(Labyrinthe labyrinthe, VBox contienLabyrinthe, Jeu jeu) {
         this.labyrinthe = labyrinthe;
+        this.jeu = jeu;
         this.contienLabyrinthe = contienLabyrinthe;
+        initTextureEquipe();
+    }
+
+    private void initTextureEquipe() {
+        mur.setImagePath(jeu.getBoutique().obtenirTextureEquipee(jeu.getJoueur().getPseudo(), TypeCosmetique.TEXTURE_MUR));
+        chemin.setImagePath(jeu.getBoutique().obtenirTextureEquipee(jeu.getJoueur().getPseudo(), TypeCosmetique.TEXTURE_CHEMIN));
+        sortie.setImagePath(jeu.getBoutique().obtenirTextureEquipee(jeu.getJoueur().getPseudo(), TypeCosmetique.TEXTURE_SORTIE));
+        imageJoueur = new Image(getClass().getResourceAsStream(jeu.getBoutique().obtenirTextureEquipee(jeu.getJoueur().getPseudo(), TypeCosmetique.TEXTURE_JOUEUR)));
     }
 
     /**
@@ -100,15 +122,23 @@ public class LabyrintheRendu implements Rendu {
                 double y = i * tailleCellule;
 
                 if (labyrinthe[i][j].estChemin() || labyrinthe[i][j].estEntree()) {
-                    graphicsContext.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
+                    graphicsContext.drawImage(chemin.getTexture(), x, y, tailleCellule, tailleCellule);
                 } else if (labyrinthe[i][j].estSortie()) {
-                    graphicsContext.drawImage(imgSortie, x, y, tailleCellule, tailleCellule);
+                    graphicsContext.drawImage(sortie.getTexture(), x, y, tailleCellule, tailleCellule);
                 } else if (labyrinthe[i][j].estMur()) {
-                    graphicsContext.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
+                    graphicsContext.drawImage(mur.getTexture(), x, y, tailleCellule, tailleCellule);
                 } else {
                     graphicsContext.clearRect(x, y, tailleCellule, tailleCellule);
                 }
             }
+        }
+
+        int px = this.labyrinthe.getJoueurX();
+        int py = this.labyrinthe.getJoueurY();
+        if (px >= 0 && py >= 0) {
+            double x = py * tailleCellule;
+            double y = px * tailleCellule;
+            graphicsContext.drawImage(imageJoueur, x, y, tailleCellule, tailleCellule);
         }
 
         for (int i = 0; i < largeurMax; i++) {
@@ -120,20 +150,12 @@ public class LabyrintheRendu implements Rendu {
                     double h = tailleCellule + overlap;
 
                     if (i == lastBlockedX && j == lastBlockedY) {
-                        graphicsContext.drawImage(imgRedWall, x, y, w, h);
+                        graphicsContext.drawImage(mur.getTextureBlocked(), x, y, w, h);
                     } else {
-                        graphicsContext.drawImage(imgMur, x, y, w, h);
+                        graphicsContext.drawImage(mur.getTexture(), x, y, w, h);
                     }
                 }
             }
-        }
-
-        int px = this.labyrinthe.getJoueurX();
-        int py = this.labyrinthe.getJoueurY();
-        if (px >= 0 && py >= 0) {
-            double x = py * tailleCellule;
-            double y = px * tailleCellule;
-            graphicsContext.drawImage(imgJoueur, x, y, tailleCellule, tailleCellule);
         }
 
         lastBlockedX = -1;

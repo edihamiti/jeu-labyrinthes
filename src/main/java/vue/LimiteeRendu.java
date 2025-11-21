@@ -1,25 +1,31 @@
 package vue;
 
+import boutique.modele.TypeCosmetique;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import modele.Cellules.Cellule;
+import modele.Cellules.Chemin;
+import modele.Cellules.Mur;
+import modele.Cellules.Sortie;
+import modele.Jeu;
 import modele.Labyrinthe;
 
 public class LimiteeRendu implements Rendu {
 
-    private final Image imgMur = new Image(getClass().getResourceAsStream("/img/mur.png"));
-    private final Image imgChemin = new Image(getClass().getResourceAsStream("/img/chemin.png"));
-    private final Image imgSortie = new Image(getClass().getResourceAsStream("/img/sortie.png"));
-    private final Image imgJoueur = new Image(getClass().getResourceAsStream("/img/joueur.png"));
-    private final Image imgRedWall = new Image(getClass().getResourceAsStream("/img/redWall.png"));
     private final Image imgBrouillard = new Image(getClass().getResourceAsStream("/img/brouillard.png"));
     private Labyrinthe labyrinthe;
     private VBox conteneurLabyrinthe;
     private int porteeVision;
     private int lastBlockedX = -1;
     private int lastBlockedY = -1;
+    private Jeu jeu;
+
+    private Mur mur = new Mur();
+    private Chemin chemin = new Chemin();
+    private Sortie sortie = new Sortie();
+    private Image imageJoueur;
 
     /**
      * Constructeur de la classe LimiteeRendu.
@@ -27,11 +33,14 @@ public class LimiteeRendu implements Rendu {
      * @param labyrinthe          Le labyrinthe à rendre.
      * @param conteneurLabyrinthe Le conteneur VBox pour afficher le labyrinthe.
      * @param porteeVision        La portée de vision du joueur.
+     * @param jeu                 Le jeu contenant les informations sur les textures.
      */
-    public LimiteeRendu(Labyrinthe labyrinthe, VBox conteneurLabyrinthe, int porteeVision) {
+    public LimiteeRendu(Labyrinthe labyrinthe, VBox conteneurLabyrinthe, int porteeVision, Jeu jeu) {
         this.labyrinthe = labyrinthe;
         this.conteneurLabyrinthe = conteneurLabyrinthe;
         this.porteeVision = porteeVision;
+        this.jeu = jeu;
+        initTextureEquipe();
     }
 
     /**
@@ -39,9 +48,20 @@ public class LimiteeRendu implements Rendu {
      *
      * @param labyrinthe          Le labyrinthe à rendre.
      * @param conteneurLabyrinthe Le conteneur VBox pour afficher le labyrinthe.
+     * @param jeu                 Le jeu contenant les informations sur les textures.
      */
-    public LimiteeRendu(Labyrinthe labyrinthe, VBox conteneurLabyrinthe) {
-        this(labyrinthe, conteneurLabyrinthe, 2);
+    public LimiteeRendu(Labyrinthe labyrinthe, VBox conteneurLabyrinthe, Jeu jeu) {
+        this(labyrinthe, conteneurLabyrinthe, 2, jeu);
+    }
+
+    /**
+     * Initialise les textures équipées par le joueur.
+     */
+    private void initTextureEquipe() {
+        mur.setImagePath(jeu.getBoutique().obtenirTextureEquipee(jeu.getJoueur().getPseudo(), TypeCosmetique.TEXTURE_MUR));
+        chemin.setImagePath(jeu.getBoutique().obtenirTextureEquipee(jeu.getJoueur().getPseudo(), TypeCosmetique.TEXTURE_CHEMIN));
+        sortie.setImagePath(jeu.getBoutique().obtenirTextureEquipee(jeu.getJoueur().getPseudo(), TypeCosmetique.TEXTURE_SORTIE));
+        imageJoueur = new Image(getClass().getResourceAsStream(jeu.getBoutique().obtenirTextureEquipee(jeu.getJoueur().getPseudo(), TypeCosmetique.TEXTURE_JOUEUR)));
     }
 
     /**
@@ -115,6 +135,9 @@ public class LimiteeRendu implements Rendu {
         Canvas canvas = new Canvas(hauteurMax * tailleCellule, largeurMax * tailleCellule);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
+        int overlap = Math.max(2, tailleCellule / 4);
+        double halfOverlap = overlap / 2.0;
+
         for (int i = 0; i < largeurMax; i++) {
             for (int j = 0; j < hauteurMax; j++) {
                 double x = j * tailleCellule;
@@ -123,24 +146,46 @@ public class LimiteeRendu implements Rendu {
                 int distanceX = Math.abs(i - joueurX);
                 int distanceY = Math.abs(j - joueurY);
                 boolean dansPorteeVision = (distanceX <= porteeVueLocale && distanceY <= porteeVueLocale);
-                if (i == joueurX && j == joueurY) {
-                    gc.drawImage(imgJoueur, x, y, tailleCellule, tailleCellule);
-                }
-                else if (dansPorteeVision) {
-                    if (cellules[i][j].estMur()) {
-                        if (i == lastBlockedX && j == lastBlockedY) {
-                            gc.drawImage(imgRedWall, x, y, tailleCellule, tailleCellule);
-                        } else {
-                            gc.drawImage(imgMur, x, y, tailleCellule, tailleCellule);
-                        }
-                    } else if (cellules[i][j].estChemin() || cellules[i][j].estEntree()) {
-                        gc.drawImage(imgChemin, x, y, tailleCellule, tailleCellule);
+
+                if (dansPorteeVision) {
+                    if (cellules[i][j].estChemin() || cellules[i][j].estEntree()) {
+                        gc.drawImage(chemin.getTexture(), x, y, tailleCellule, tailleCellule);
                     } else if (cellules[i][j].estSortie()) {
-                        gc.drawImage(imgSortie, x, y, tailleCellule, tailleCellule);
+                        gc.drawImage(sortie.getTexture(), x, y, tailleCellule, tailleCellule);
+                    } else if (cellules[i][j].estMur()) {
+                        gc.drawImage(mur.getTexture(), x, y, tailleCellule, tailleCellule);
+                    } else {
+                        gc.clearRect(x, y, tailleCellule, tailleCellule);
                     }
-                }
-                else {
+                } else {
                     gc.drawImage(imgBrouillard, x, y, tailleCellule, tailleCellule);
+                }
+            }
+        }
+
+        if (joueurX >= 0 && joueurY >= 0) {
+            double x = joueurY * tailleCellule;
+            double y = joueurX * tailleCellule;
+            gc.drawImage(imageJoueur, x, y, tailleCellule, tailleCellule);
+        }
+
+        for (int i = 0; i < largeurMax; i++) {
+            for (int j = 0; j < hauteurMax; j++) {
+                int distanceX = Math.abs(i - joueurX);
+                int distanceY = Math.abs(j - joueurY);
+                boolean dansPorteeVision = (distanceX <= porteeVueLocale && distanceY <= porteeVueLocale);
+
+                if (dansPorteeVision && cellules[i][j].estMur()) {
+                    double x = j * tailleCellule - halfOverlap;
+                    double y = i * tailleCellule - halfOverlap;
+                    double w = tailleCellule + overlap;
+                    double h = tailleCellule + overlap;
+
+                    if (i == lastBlockedX && j == lastBlockedY) {
+                        gc.drawImage(mur.getTextureBlocked(), x, y, w, h);
+                    } else {
+                        gc.drawImage(mur.getTexture(), x, y, w, h);
+                    }
                 }
             }
         }
