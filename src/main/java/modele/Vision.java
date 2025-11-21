@@ -5,4 +5,5 @@ public enum Vision {
     VUE_LOCAL,
     VUE_CARTE,
     VUE_LIMITEE,
+    VUE_CLE,
 }
