@@ -11,13 +11,12 @@
 
 ## Table des matières
 
-- [À propos](#-à-propos)
-- [Technologies utilisées](#️-technologies-utilisées)
-- [Prérequis](#-prérequis)
-- [Installation et Lancement](#-installation-et-lancement)
-- [Utilisation](#-utilisation)
-- [Captures d'écran](#-captures-décran)
-- [Auteurs](#-auteurs)
+- [À propos](#à-propos)
+- [Auteurs](#auteurs)
+- [Technologies utilisées](#technologies-utilisées)
+- [Prérequis](#prérequis)
+- [Installation et Lancement](#installation-et-lancement)
+- [UML](#uml)
 
 ## À propos
 
