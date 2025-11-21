@@ -67,13 +67,6 @@
             <version>${javafx.version}</version>
         </dependency>
 
-        <!-- JSON library -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20250517</version>
-        </dependency>
-
         <!-- JavaFX Media for audio support -->
         <dependency>
             <groupId>org.openjfx</groupId>
