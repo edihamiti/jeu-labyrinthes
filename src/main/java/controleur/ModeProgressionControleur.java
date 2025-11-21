@@ -2,17 +2,15 @@ package controleur;
 
 import modele.defi.Defi;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import modele.Jeu;
 import modele.Joueur;
 import modele.ModeJeu;
 import vue.EtapesRendu;
+import vue.ParametresLabyrinthe;
+import vue.Router;
 
 import java.io.IOException;
 
@@ -57,30 +55,21 @@ public class ModeProgressionControleur extends Controleur {
         try {
             System.out.println("[DEBUG] Enregistrement du labyrinthe dans le Jeu");
             // Enregistrer le défi en cours
+            jeu.setModeJeu(ModeJeu.MODE_PROGRESSION);
             jeu.setDefiEnCours(defi);
             jeu.setLabyrinthe(defi);
 
             System.out.println("[DEBUG] Lancement du mode progression");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Jeu.fxml"));
-            Parent jeuView = loader.load();
 
-            JeuControleur jeuControleur = loader.getController();
+            // Créer les paramètres du labyrinthe
+            ParametresLabyrinthe params = new ParametresLabyrinthe(
+                defi.largeur(), defi.hauteur(), defi.pourcentageMurs(),
+                defi.distanceMin(), defi.typeLabyrinthe()
+            );
 
-            // Injecter les dépendances dans le contrôleur
-            if (jeuControleur != null) {
-                jeuControleur.setJeu(this.jeu);
-                jeuControleur.setAppControleur(this.appControleur);
-            }
+            // Utiliser le Router pour naviguer vers le jeu et lui envoyer les paramètres
+            Router.route("/Jeu.fxml", params);
 
-            if (jeuControleur != null) {
-                jeuControleur.setParametresLab(defi.largeur(), defi.hauteur(), defi.pourcentageMurs(), defi.distanceMin(), defi.typeLabyrinthe());
-            }
-
-            Stage stage = (Stage) etapesContainer.getScene().getWindow();
-            Scene jeuScene = new Scene(jeuView, 1400, 900);
-            stage.setScene(jeuScene);
-            stage.setMaximized(true);
-            stage.setTitle("Jeu des Labyrinthes - Mode Progression");
 
             System.out.println("[\u001B[34mDEBUG\u001B[0m] Jeu lancé !");
         } catch (IOException e) {
@@ -91,18 +80,7 @@ public class ModeProgressionControleur extends Controleur {
     public void retour() {
         try {
             appControleur.resetGame();
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomePage.fxml"));
-            Parent menuView = loader.load();
-            Controleur controleur = loader.getController();
-            controleur.setAppControleur(this.appControleur);
-            controleur.setJeu(this.jeu);
-            Scene scene = new Scene(menuView, 1400, 900);
-            Stage stage = (Stage) etapesContainer.getScene().getWindow();
-            stage.setScene(scene);
-            stage.setMaximized(true);
-            stage.setTitle("Jeu des Labyrinthes");
-
+            Router.back();
         } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);

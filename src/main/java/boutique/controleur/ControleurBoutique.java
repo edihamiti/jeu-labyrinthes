@@ -22,6 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import vue.Router;
 
 import java.io.IOException;
 import java.util.List;
@@ -156,19 +157,8 @@ public class ControleurBoutique extends Controleur {
 
     @FXML
     private void fermerBoutique() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/HomePage.fxml"));
-
-        Parent homepageView = loader.load();
-        HomePageControleur controleur = loader.getController();
-        controleur.setJeu(this.jeu);
-        controleur.setAppControleur(this.appControleur);
-
-        Stage stage = (Stage) labelScore.getScene().getWindow();
-        Scene jeuScene = new Scene(homepageView, 1400, 900);
-        stage.setScene(jeuScene);
-        stage.setMaximized(true);
-
-        System.out.println("Jeu lancé !");
+        Router.back();
+        System.out.println("Retour à l'accueil !");
     }
 
     /*private void afficherSucces(String message) {

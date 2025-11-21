@@ -1,12 +1,9 @@
 package controleur;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -20,6 +17,7 @@ import modele.Joueur;
 import modele.Leaderboard;
 import modele.joueursRepositories.JoueurRepository;
 import vue.ChargerProfileRendu;
+import vue.Router;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -122,29 +120,11 @@ public class HomePageControleur extends Controleur {
      */
     public void lancerJeu() {
         try {
-            FXMLLoader loader;
             if (modeProgression) {
-                loader = new FXMLLoader(getClass().getResource("/ModeProgression.fxml"));
+                Router.route("/ModeProgression.fxml");
             } else {
-                loader = new FXMLLoader(getClass().getResource("/ModeLibreParametres.fxml"));
+                Router.route("/ModeLibreParametres.fxml");
             }
-            Parent jeuView = loader.load();
-
-            // Injecter les dépendances dans le contrôleur
-            Object controller = loader.getController();
-            if (controller instanceof Controleur) {
-                ((Controleur) controller).setJeu(this.jeu);
-                ((Controleur) controller).setAppControleur(this.appControleur);
-            }
-
-            Stage stage = (Stage) button.getScene().getWindow();
-
-            Scene jeuScene = new Scene(jeuView, 1400, 900);
-
-            stage.setScene(jeuScene);
-            stage.setMaximized(true);
-            stage.setTitle("Jeu des Labyrinthes");
-
             System.out.println("Jeu lancé !");
 
         } catch (IOException e) {
