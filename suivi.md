@@ -47,5 +47,51 @@ Liste des travaux de la semaine :
 - Transformation de notre modèle Jeu en singleton, pour nous permettre de stocker et récupéré toutes les données utiles
   au jeu. (Enzo)
 - Création de la vue locale ainsi que le minimap. (Enzo)
-- Amélioration de notre algorithm de génération. (Bastien, Amaury)
+- Amélioration de notre algorithme de génération. (Bastien, Amaury)
 - Amélioration de l'expérience utilisateur. (Amaury, Bastien, Edi, Enzo)
+
+## Semaine 44
+
+- Refactorisation du code pour qu'il accepte différents types de générateurs de labyrinthes. (Edi)
+- Modification du calcul des points pour qu'il prenne en note le temps pris à finir un labyrinthe. (Amaury)
+
+## Semaine 45
+
+- Ajout de l'étape 4 et 5 (sans leurs vues). (Edi)
+- Fix de bugs avec la génération de labyrinthe suite au refactor précedent. (Edi)
+- Petits ajustements. (Amaury, Bastien, Edi, Enzo)
+
+## Semaine 46
+
+Durant cette semaine, nous avons principalement entamé de refactorisation du code afin qu'il adhère plus aux
+principes SOLID. Nous avons aussi commencé à développer la boutique de cosmétique
+
+- Optimisations des méthodes de chargement des textures. (Enzo, Edi)
+- Fix de bugs en rapport avec la sauvegarde. (Edi)
+- Ajout de la vue de l'étape 5. (Amaury)
+- Refactorisation du code pour qu'il adhère plus aux principes SOLID. (Edi, Enzo, Amaury, Bastien)
+  - Extraction du calcul du plus court chemin dans une classe dédiée.
+  - Ajout d'un système de vision avec VisionFactory avec une enum et les implémentations spécifiques pour chaque type de
+    vision.
+  - Extraction de la logique de fin de partie dans une classe dédiée
+- Début du développement de la boutique de cosmétique. (Enzo)
+- Ajustements mineurs. (Amaury, Bastien, Edi, Enzo)
+- Début du développement sur la vue limitée. (Amaury)
+- Ajout d'un leaderboard. (Bastien)
+- Suppression de patterns Singleton utilisés dans certaines classes. (Edi)
+
+## Semaine 47
+
+- Mise à jour de la documentation. (Amaury, Bastien, Edi, Enzo)
+- Mise à jour de la génération de labyrinthe parfaits pour qu'il prenne en compte la distance minimale entre l'entrée et la sortie. (Amaury)
+- Mise à jour de la gestion des défis avec un nouveau format JSON. (Enzo)
+- Mise à jour des calculs de points pour prendre en compte le nombre de déplacements. (Amaury)
+- Suppression de patterns Singleton utilisés dans certaines classes. (Edi, Bastien)
+- Fix de bugs divers. (Amaury, Bastien, Edi, Enzo)
+- Nettoyage du code afin de faciliter la maintenance. (Bastien)
+- Ajouts de différentes textures pour la boutique. (Enzo, Edi)
+- Migration vers un système de routage centralisé avec la classe `Router` (utilisation d'une pile centralisée pour le routage entre les différentes vues). (Edi)
+- Suppression d'utilisations de `Properties` JavaFX dans le modele (passage vers un pattern Observeur/Observable)
+- Ajout d'un mode de jeu "Chasse à la Clé" avec une sortie vérouillée. (Amaury)
+- Ajout d'une limite de mouvements pour le mode progression. (Bastien, Enzo)
+- Ajout d'une étape 7 : "Étape Aveugle" où le joueur doit trouver le labyrinthe sans le voir, seulement avec le son. (Edi)
