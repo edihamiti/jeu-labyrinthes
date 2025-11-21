@@ -10,6 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+
+/**
+ * Représente un joueur avec son pseudo, sa progression dans les défis,
+ * son score et son inventaire d'objets.
+ */
 public class Joueur {
 
     private String pseudo;
@@ -19,6 +24,14 @@ public class Joueur {
     private int score;
     private ArrayList<Item> inventaire;
 
+
+    /**
+     * Crée un joueur avec un pseudo donné et initialise sa progression,
+     * son score et son inventaire.
+     *
+     * @param pseudo pseudo du joueur
+     * @throws PseudoException si le pseudo est vide, trop long ou contient des caractères invalides
+     */
     public Joueur(String pseudo) throws PseudoException {
         if (pseudo == null || pseudo.trim().isEmpty())
             throw new PseudoException("Le pseudo ne peut pas être vide ou composé que d'espace(s)");
@@ -96,6 +109,7 @@ public class Joueur {
         }
     }
 
+    /** Retourne une représentation textuelle du joueur */
     @Override
     public String toString() {
         return "Joueur{" +
@@ -105,6 +119,7 @@ public class Joueur {
                 '}';
     }
 
+    /** Vérifie l'égalité entre deux joueurs sur le pseudo */
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -112,6 +127,7 @@ public class Joueur {
         return Objects.equals(pseudo, joueur.pseudo);
     }
 
+    /** Retourne le hashcode basé sur le pseudo */
     @Override
     public int hashCode() {
         return Objects.hash(pseudo);

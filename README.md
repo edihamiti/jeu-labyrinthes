@@ -110,4 +110,4 @@ mvn javafx:run
 
 ## UML
 
-![](/uml.54.26.png)
+![](/img/uml.png)
