@@ -7,15 +7,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.Labyrinthe;
-import modele.ModeJeu;
 import modele.TypeLabyrinthe;
 import modele.Vision;
 import modele.generateurs.GenerateurLabyrinthe;
-import vue.HandlerVictoire;
-import vue.ParametresLabyrinthe;
-import vue.Rendu;
-import vue.Router;
-import vue.SoundManager;
+import vue.*;
 import vue.visionsLabyrinthe.VisionFactory;
 import vue.visionsLabyrinthe.VisionLabyrinthe;
 
@@ -275,9 +270,11 @@ public class JeuControleur extends Controleur implements Router.DataReceiver {
         }
     }
 
+    private void configurerRendus(VisionLabyrinthe visionStrategy) {
         // Configurer le rendu principal
         this.renduLabyrinthe = visionStrategy.createRendu(jeu.getLabyrinthe(), conteneurLabyrinthe, this.getJeu());
 
+        // Configurer la minimap si nécessaire
         if (visionStrategy.requiresMinimap()) {
             overlayMinimap.setVisible(true);
             this.renduMinimap = visionStrategy.createMinimapRendu(jeu.getLabyrinthe(), minimap, this.getJeu());
@@ -329,11 +326,11 @@ public class JeuControleur extends Controleur implements Router.DataReceiver {
         if (data instanceof ParametresLabyrinthe) {
             ParametresLabyrinthe params = (ParametresLabyrinthe) data;
             setParametresLab(
-                params.getLargeur(),
-                params.getHauteur(),
-                params.getPourcentageMurs(),
-                params.getDistanceMin(),
-                params.getTypeLabyrinthe()
+                    params.getLargeur(),
+                    params.getHauteur(),
+                    params.getPourcentageMurs(),
+                    params.getDistanceMin(),
+                    params.getTypeLabyrinthe()
             );
         }
     }
