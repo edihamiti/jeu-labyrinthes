@@ -66,6 +66,7 @@ public class GestionnaireBoutique {
             stagePrincipal.setTitle("Boutique");
             stagePrincipal.setScene(scene);
             stagePrincipal.setMaximized(true);
+            Router.addToHistory("/Boutique.fxml");
         } catch (Exception e) {
             e.printStackTrace();
         }
