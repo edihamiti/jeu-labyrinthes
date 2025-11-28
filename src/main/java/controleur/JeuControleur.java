@@ -220,6 +220,7 @@ public class JeuControleur extends Controleur implements Router.DataReceiver, La
 
         if (surCle) {
             jeu.getLabyrinthe().setCleObtenue();
+            SoundManager.playSound("cle.mp3");
 
             jeu.getLabyrinthe().getCellules()[x][y] = new modele.Cellules.Chemin(x, y);
 
