@@ -204,6 +204,7 @@ public class HomePageControleur extends Controleur {
         leaderboardText.getStyleClass().add("selected");
         modeProgressionText.getStyleClass().removeAll("selected");
         modeLibreText.getStyleClass().removeAll("selected");
+        modeCleText.getStyleClass().removeAll("selected");
         contentPage.setAlignment(Pos.CENTER);
         leaderboardContainer.setVisible(true);
         leaderboardContainer.setManaged(true);
