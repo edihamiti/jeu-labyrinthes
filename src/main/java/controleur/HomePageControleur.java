@@ -3,7 +3,6 @@ package controleur;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -12,15 +11,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import modele.Jeu;
 import modele.Joueur;
 import modele.Leaderboard;
-import modele.joueursRepositories.JoueurRepository;
-import vue.ChargerProfileRendu;
 import vue.Router;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -63,6 +58,7 @@ public class HomePageControleur extends Controleur {
 
 
     // Méthode d'initialisation appelée automatiquement après le chargement du FXML
+
     /**
      * Initialise les composants de la page d'accueil.
      */
@@ -130,6 +126,7 @@ public class HomePageControleur extends Controleur {
         modeProgressionText.getStyleClass().removeAll("selected");
         modeLibreText.getStyleClass().removeAll("selected");
         modeCleText.getStyleClass().add("selected");
+        button.setVisible(true);
         modeProgression = false;
         modeCle = true;
         leaderboardContainer.setVisible(false);
@@ -148,7 +145,7 @@ public class HomePageControleur extends Controleur {
         try {
             if (modeProgression) {
                 Router.route("/ModeProgression.fxml");
-            } else if(modeCle){
+            } else if (modeCle) {
                 Router.route("/ModeCle.fxml");
             } else {
                 Router.route("/ModeLibreParametres.fxml");
@@ -195,6 +192,7 @@ public class HomePageControleur extends Controleur {
             e.printStackTrace();
         }
     }
+
     public void leaderboard() {
         nomMode.setText("Leaderboard");
         descriptionMode.setText("Visualisez les meilleurs scores !");
