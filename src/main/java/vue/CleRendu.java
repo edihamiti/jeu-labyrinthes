@@ -21,14 +21,14 @@ public class CleRendu implements Rendu {
     private final Image imgCle = new Image(getClass().getResourceAsStream("/img/cle.png"));
     private Labyrinthe labyrinthe;
     private VBox conteneurLabyrinthe;
-    private int porteeVision;
+    private final int porteeVision;
     private int lastBlockedX = -1;
     private int lastBlockedY = -1;
-    private Jeu jeu;
+    private final Jeu jeu;
 
-    private Mur mur = new Mur();
-    private Chemin chemin = new Chemin();
-    private Sortie sortie = new Sortie();
+    private final Mur mur = new Mur();
+    private final Chemin chemin = new Chemin();
+    private final Sortie sortie = new Sortie();
     private Image imageJoueur;
 
     /**
@@ -131,6 +131,40 @@ public class CleRendu implements Rendu {
 
         System.out.println("[CleRendu DEBUG] Clé obtenue: " + cleObtenue);
 
+        int overlap = Math.max(2, tailleCellule / 4);
+        double halfOverlap = overlap / 2.0;
+
+        for (int i = 0; i < largeurMax; i++) {
+            for (int j = 0; j < hauteurMax; j++) {
+                double x = j * tailleCellule;
+                double y = i * tailleCellule;
+
+                int distanceX = Math.abs(i - joueurX);
+                int distanceY = Math.abs(j - joueurY);
+                boolean dansPorteeVision = (distanceX <= porteeVision && distanceY <= porteeVision);
+
+                if (dansPorteeVision) {
+                    if (cellules[i][j].estChemin() || cellules[i][j].estEntree()) {
+                        gc.drawImage(chemin.getTexture(), x, y, tailleCellule, tailleCellule);
+                    } else if (cellules[i][j].estSortie()) {
+                        gc.drawImage(sortie.getTexture(), x, y, tailleCellule, tailleCellule);
+                    } else if (cellules[i][j].estMur()) {
+                        gc.drawImage(mur.getTexture(), x, y, tailleCellule, tailleCellule);
+                    } else if (cellules[i][j].estCle()) {
+                        if (cleObtenue) {
+                            gc.drawImage(chemin.getTexture(), x, y, tailleCellule, tailleCellule);
+                        } else {
+                            gc.drawImage(chemin.getTexture(), x, y, tailleCellule, tailleCellule);
+                        }
+                    } else {
+                        gc.clearRect(x, y, tailleCellule, tailleCellule);
+                    }
+                } else {
+                    gc.drawImage(imgBrouillard, x, y, tailleCellule, tailleCellule);
+                }
+            }
+        }
+
         for (int i = 0; i < largeurMax; i++) {
             for (int j = 0; j < hauteurMax; j++) {
                 double x = j * tailleCellule;
@@ -142,30 +176,29 @@ public class CleRendu implements Rendu {
 
                 if (i == joueurX && j == joueurY) {
                     gc.drawImage(imageJoueur, x, y, tailleCellule, tailleCellule);
+                } else if (dansPorteeVision && cellules[i][j].estCle() && !cleObtenue) {
+                    gc.drawImage(imgCle, x, y, tailleCellule, tailleCellule);
                 }
-                else if (dansPorteeVision) {
-                    if (cellules[i][j].estMur()) {
-                        if (i == lastBlockedX && j == lastBlockedY) {
-                            gc.drawImage(mur.getTextureBlocked(), x, y, tailleCellule, tailleCellule);
-                        } else {
-                            gc.drawImage(mur.getTexture(), x, y, tailleCellule, tailleCellule);
-                        }
+            }
+        }
+
+        for (int i = 0; i < largeurMax; i++) {
+            for (int j = 0; j < hauteurMax; j++) {
+                int distanceX = Math.abs(i - joueurX);
+                int distanceY = Math.abs(j - joueurY);
+                boolean dansPorteeVision = (distanceX <= porteeVision && distanceY <= porteeVision);
+
+                if (dansPorteeVision && cellules[i][j].estMur()) {
+                    double x = j * tailleCellule - halfOverlap;
+                    double y = i * tailleCellule - halfOverlap;
+                    double w = tailleCellule + overlap;
+                    double h = tailleCellule + overlap;
+
+                    if (i == lastBlockedX && j == lastBlockedY) {
+                        gc.drawImage(mur.getTextureBlocked(), x, y, w, h);
+                    } else {
+                        gc.drawImage(mur.getTexture(), x, y, w, h);
                     }
-                    else if (cellules[i][j].estCle() && !cleObtenue) {
-                        gc.drawImage(imgCle, x, y, tailleCellule, tailleCellule);
-                    }
-                    else if (cellules[i][j].estCle() && cleObtenue) {
-                        gc.drawImage(chemin.getTexture(), x, y, tailleCellule, tailleCellule);
-                    }
-                    else if (cellules[i][j].estChemin() || cellules[i][j].estEntree()) {
-                        gc.drawImage(chemin.getTexture(), x, y, tailleCellule, tailleCellule);
-                    }
-                    else if (cellules[i][j].estSortie()) {
-                        gc.drawImage(sortie.getTexture(), x, y, tailleCellule, tailleCellule);
-                    }
-                }
-                else {
-                    gc.drawImage(imgBrouillard, x, y, tailleCellule, tailleCellule);
                 }
             }
         }
